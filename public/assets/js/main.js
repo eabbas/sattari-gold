@@ -1,5 +1,7 @@
 let hamburgerMenu = document.getElementById('hamburgerMenu')
 let menuBlock = document.getElementById('menuBlock')
+let openSearchSectionBtn = document.getElementById('openSearchSectionBtn')
+let searchSection = document.getElementById('searchSection')
 hamburgerMenu.addEventListener('click', () => {
    menuBlock.classList.remove('invisible')
    menuBlock.classList.remove('opacity-0')
@@ -36,4 +38,23 @@ drop_downs.forEach(element => {
       element.children[1].classList.toggle('invisible')
       element.children[1].classList.toggle('opacity-0')
    })
+})
+
+openSearchSectionBtn.addEventListener('click', ()=>{
+   searchSection.classList.remove('invisible')
+   searchSection.classList.remove('opacity-0')
+   searchSection.children[0].classList.remove('-translate-y-full')
+})
+
+document.addEventListener('click', (e)=>{
+   if(!searchSection.children[0].contains(e.target) && !openSearchSectionBtn.contains(e.target)){
+      searchSection.classList.add('invisible')
+      searchSection.classList.add('opacity-0')
+      searchSection.children[0].classList.add('-translate-y-full')
+   }
+   if(searchSection.children[0].children[0].contains(e.target)){
+      searchSection.classList.add('invisible')
+      searchSection.classList.add('opacity-0')
+      searchSection.children[0].classList.add('-translate-y-full')
+   }
 })
