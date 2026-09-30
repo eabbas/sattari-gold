@@ -17,7 +17,7 @@
             <aside class="invisible opacity-0 transition-all duration-300 md:visible md:opacity-100 fixed top-1/2 w-10/12 -translate-y-1/2 right-1/2 translate-x-1/2 md:translate-x-0 md:translate-y-0 z-999 md:z-0 md:static md:block bg-white border border-[#e4e4e7] rounded-xl h-[500px] overflow-y-auto md:h-max md:overflow-hidden" id="filterSection">
                 <div class="flex justify-between p-[18px] border-b border-[#e4e4e7] font-bold">
                     <span>فیلترها</span>
-                    <button id="resetFilters" class="text-[#ef394e] border-0 bg-transparent text-xs cursor-pointer">حذف
+                    <button id="resetFilters" class="text-[#c3924d] border-0 bg-transparent text-xs cursor-pointer">حذف
                         فیلترها</button>
                 </div>
 
@@ -25,7 +25,7 @@
                     <div class="font-semibold text-sm mb-[15px]">دسته‌بندی</div>
                     @foreach ($categories as $category)
                         <label class="flex items-center gap-2 my-3 text-[13px] text-[#52525b]"><input
-                            class="accent-[#ef394e] w-[17px] h-[17px] categories" type="checkbox" data-filter="{{ $category->id }}">{{ $category->title }}</label>
+                            class="accent-[#c3924d] w-[17px] h-[17px] categories" type="checkbox" data-filter="{{ $category->id }}">{{ $category->title }}</label>
                     @endforeach
                 </section>
 
@@ -40,13 +40,13 @@
                 </section>
                 <section class="p-[18px]">
                     <label class="flex items-center gap-2 my-3 text-[13px] text-[#52525b]">
-                        <input id="hasDescount" class="accent-[#ef394e] w-[17px] h-[17px]" type="checkbox">
+                        <input id="hasDescount" class="accent-[#c3924d] w-[17px] h-[17px]" type="checkbox">
                         تخفیف خورده
                     </label>
                 </section>
                 <section class="p-[18px]">
                     <label class="flex items-center gap-2 my-3 text-[13px] text-[#52525b]">
-                        <input id="exists" class="accent-[#ef394e] w-[17px] h-[17px]" type="checkbox">
+                        <input id="exists" class="accent-[#c3924d] w-[17px] h-[17px]" type="checkbox">
                         فقط کالاهای موجود
                     </label>
                 </section>
@@ -58,7 +58,7 @@
                     <div class="flex items-center gap-2 flex-wrap">
                         <span class="text-xs text-[#71717a]">مرتب‌سازی:</span>
                         <button
-                            class="sort-btn text-xs border-0 bg-transparent text-[#ef394e] font-bold px-2.5 py-2 rounded-[7px] cursor-pointer"
+                            class="sort-btn text-xs border-0 bg-transparent text-[#c3924d] font-bold px-2.5 py-2 rounded-[7px] cursor-pointer"
                             data-sort-by="created_at" data-sort-type="desc">جدیدترین</button>
                         <button
                             class="sort-btn text-xs border-0 bg-transparent text-[#52525b] px-2.5 py-2 rounded-[7px] cursor-pointer"
@@ -85,7 +85,7 @@
                             class="group relative min-w-0 bg-white p-[17px] border-l border-b border-[#e4e4e7] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_6px_22px_rgba(0,0,0,.08)]">
                             @if ($product->percent)
                                 <span
-                                    class="absolute top-[25px] right-[25px] z-10 bg-[#ef394e] text-white rounded-[5px] text-[10px] px-[7px] py-1 in-fa">{{ $product->percent }} %</span>
+                                    class="absolute top-[25px] right-[25px] z-10 bg-[#c3924d] text-white rounded-[5px] text-[10px] px-[7px] py-1 in-fa">{{ $product->percent }} %</span>
                             @endif
                             {{-- <button
                                 class="absolute top-[22px] left-5 z-10 border-0 bg-white text-xl text-[#aaa]">♡</button> --}}
@@ -132,5 +132,5 @@
         </div>
     </main>
     
-    <script src="{{ asset('js/filterStore.js') }}"></script>
+    <script src="{{ asset('assets/js/filterStore.js') }}"></script>
 @endsection

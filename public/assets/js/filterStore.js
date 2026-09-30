@@ -30,7 +30,7 @@ function getFilters() {
                     link.classList = 'group relative min-w-0 bg-white p-[17px] border-l border-b border-[#e4e4e7] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_6px_22px_rgba(0,0,0,.08)]'
                     let elements = ``
                     if (product.percent){
-                        elements += `<span class="absolute top-[25px] right-[25px] z-10 bg-[#ef394e] text-white rounded-[5px] text-[10px] px-[7px] py-1 in-fa">${ product.percent } %</span>`
+                        elements += `<span class="absolute top-[25px] right-[25px] z-10 bg-[#c3924d] text-white rounded-[5px] text-[10px] px-[7px] py-1 in-fa">${ product.percent } %</span>`
                     }
                     elements += `
                         <img src="${imgPath+product.image}"
@@ -120,12 +120,12 @@ sortBtn.forEach(btn=>{
     btn.addEventListener('click', ()=>{
         sortBtn.forEach(button=>{
             button.classList.remove('font-bold')
-            button.classList.remove('text-[#ef394e]')
+            button.classList.remove('text-[#c3924d]')
             button.classList.add('text-[#52525b]')
         })
         btn.classList.remove('text-[#52525b]')
         btn.classList.add('font-bold')
-        btn.classList.add('text-[#ef394e]')
+        btn.classList.add('text-[#c3924d]')
         filters.sortBy = btn.dataset.sortBy
         filters.sortType = btn.dataset.sortType
         getFilters()
@@ -161,10 +161,10 @@ resetFilters.addEventListener('click', ()=>{
         if(index == 0){
             btn.classList.remove('text-[#52525b]')
             btn.classList.add('font-bold')
-            btn.classList.add('text-[#ef394e]')
+            btn.classList.add('text-[#c3924d]')
         } else {
             btn.classList.remove('font-bold')
-            btn.classList.remove('text-[#ef394e]')
+            btn.classList.remove('text-[#c3924d]')
             btn.classList.add('text-[#52525b]')
         }
     })

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\category;
 use App\Models\product;
+use App\Models\logo;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -19,7 +20,7 @@ class SearchController extends Controller
         $sortType = $filters['sortType'] ?? 'desc';
         $sortBy = $filters['sortBy'] ?? 'created_at';
         $keyword = $filters['keyword'] ?? null;
-        $products = product::where(function ($query) use ($writer, $exists, $hasDescount, $fromPrice, $toPrice) {
+        $products = product::where(function ($query) use ($exists, $hasDescount, $fromPrice, $toPrice) {
             if ($fromPrice && !$toPrice) {
                 $query->where('products.primary_price', '>=', $fromPrice);
             }
@@ -101,6 +102,7 @@ class SearchController extends Controller
                 $product->percent = intval($x * 100);
             }
         }
-        return view('search', ['products' => $products, 'categories'=>$categories, 'title'=>$title]);
+        $logo = logo::first();
+        return view('search', ['products' => $products, 'categories'=>$categories, 'title'=>$title, 'logo'=>$logo]);
     }
 }
