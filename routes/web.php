@@ -8,6 +8,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
+use App\Http\Controllers\SearchController;
 use App\Http\Middleware\checkAdminMiddleware;
 use App\Http\Middleware\checklogin;
 use Illuminate\Support\Facades\Route;
@@ -193,6 +194,15 @@ Route::group([
     // Route::post('/search', 'search')->withoutMiddleware(checkAdminMiddleware::class)->name('search');
     // Route::post('/searchResult', 'searchResult')->withoutMiddleware(checkAdminMiddleware::class)->name('searchResult');
     // Route::post('/admin/deleteAll', 'deleteAll')->name('deleteAll');
+});
+
+Route::group([
+    'prefix'=>'search',
+    'controller'=>SearchController::class,
+    'as'=>'search.'
+], function(){
+    // Route::post('/', 'search')->name('search');
+    Route::post('/', 'page')->name('page');
 });
 
 // fallback and missing
