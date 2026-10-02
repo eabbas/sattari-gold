@@ -1,9 +1,18 @@
 @extends('app.document')
 @section('title', 'ستاری گلد | صفحه اول')
 @section('content')
-    
-
-
+    @if (session('success'))
+        <div
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-25 right-10 z-5000 flex justify-center items-center transition-all duration-300">
+            <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('success') }} </span>
+        </div>
+    @endif
+    @if (session('failure'))
+        <div
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-25 right-10 z-5000 flex justify-center items-center transition-all duration-300">
+            <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('failure') }} </span>
+        </div>
+    @endif
     <!-- hero -->
     <section
         class="2xl:container mx-auto w-full bg-[url('{{ asset('storage/' . $header->header_bg) }}')] bg-cover bg-no-repeat flex flex-col justify-center items-center pb-5 pt-20 lg:pt-10">
@@ -20,21 +29,21 @@
                     style="background: #A56920;
                     background: linear-gradient(0deg, rgba(165, 105, 32, 1) 0%, rgba(227, 171, 90, 1) 100%);">
                     <svg class="w-[31px] h-[31px] text-white group-hover:translate-x-[10px] transition-all duration-300"
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                        fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                            stroke-width="1.3" d="M19 12H5m14 0-4 4m4-4-4-4" />
+                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                        viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3"
+                            d="M19 12H5m14 0-4 4m4-4-4-4" />
                     </svg>
                     <span class="text-xs lg:text-sm font-bold text-white">{{ $header->btnText }}</span>
                 </a>
                 <!-- <a href="#" class="group flex justify-center items-center w-1/3 lg:w-1/4 gap-2 lg:gap-3 border-1 border-[#A56920] py-2 lg:py-3 pr-6 rounded-full">
-                    <span class="text-xs lg:text-sm font-bold text-[#A56920]">فروش طلا</span>
-                    <svg class="w-[31px] h-[31px] text-[#A56920] group-hover:-translate-x-[10px] transition-all duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3"
-                            d="M5 12h14M5 12l4-4m-4 4 4 4" />
-                    </svg>
-                </a> -->
+                                                            <span class="text-xs lg:text-sm font-bold text-[#A56920]">فروش طلا</span>
+                                                            <svg class="w-[31px] h-[31px] text-[#A56920] group-hover:-translate-x-[10px] transition-all duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                                                width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3"
+                                                                    d="M5 12h14M5 12l4-4m-4 4 4 4" />
+                                                            </svg>
+                                                        </a> -->
             </div>
         </div>
         <!-- value bar -->
@@ -47,8 +56,8 @@
                         <svg class="w-[24px] h-[24px] text-emerald-400" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                             viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="1.3" d="M12 6v13m0-13 4 4m-4-4-4 4" />
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3"
+                                d="M12 6v13m0-13 4 4m-4-4-4 4" />
                         </svg>
                         % 1.1 +
                     </span>
@@ -63,8 +72,8 @@
                         <svg class="w-[24px] h-[24px] text-emerald-400" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                             viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="1.3" d="M12 6v13m0-13 4 4m-4-4-4 4" />
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3"
+                                d="M12 6v13m0-13 4 4m-4-4-4 4" />
                         </svg>
                         % 1.16 +
                     </span>
@@ -78,8 +87,8 @@
                         <svg class="w-[24px] h-[24px] text-emerald-400" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                             viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="1.3" d="M12 6v13m0-13 4 4m-4-4-4 4" />
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3"
+                                d="M12 6v13m0-13 4 4m-4-4-4 4" />
                         </svg>
                         % 1.1 +
                     </span>
@@ -239,29 +248,54 @@
                 <!-- items -->
                 @foreach ($products as $product)
                     <div class="w-full rounded-xl flex flex-col" style="box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);">
-                        <a href="#" class="block w-full rounded-md">
+                        <a href="{{ route('product.show', [$product]) }}" class="block w-full rounded-md">
                             <img src="{{ asset('storage/' . $product['mainImg']) }}"
                                 class="block w-full h-40 object-cover rounded-md" alt="">
                         </a>
                         <div class="w-full flex flex-col gap-2 p-3">
-                            <a href="#" class="block">
+                            <a href="{{ route('product.show', [$product]) }}" class="block">
                                 <h3 class="text-gray-800 font-bold text-sm lg:text-base">{{ $product['title'] }}</h3>
                             </a>
                             @foreach ($product->categories as $category)
                                 <span class="text-gray-500 text-xs font-bold">{{ $category->title }}</span>
                             @endforeach
                             <div class="w-full flex flex-row items-center justify-between mt-2">
-                                <div class="flex flex-row items-center gap-1 lg:text-base">
+                                @if ($product->primary_price)
+                                    @if ($product->secondary_price)
+                                        <div class="space-y-2">
+                                            <div class="line-through text-[#a1a1aa] text-[10px] in-fa">
+                                                {{ $product->primary_price }}
+                                                تومان</div>
+                                            <div class="flex flex-row items-center gap-1 lg:text-base">
+                                                <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">از</span>
+                                                <span
+                                                    class="text-xs lg:text-sm font-bold text-gray-800 in-fa">{{ $product->secondary_price }}</span>
+                                                <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">تومان</span>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="flex flex-row items-center gap-1 lg:text-base">
+                                            <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">از</span>
+                                            <span
+                                                class="text-xs lg:text-sm font-bold text-gray-800 in-fa">{{ $product->primary_price }}</span>
+                                            <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">تومان</span>
+                                        </div>
+                                    @endif
+                                @else
+                                    <span class="text-[10px] text-gray-500">برای استعلام قیمت تماس
+                                        بگیرید</span>
+                                @endif
+                                {{-- <div class="flex flex-row items-center gap-1 lg:text-base">
                                     <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">از</span>
                                     <span
                                         class="text-xs lg:text-sm font-bold text-gray-800 in-fa">{{ $product->primary_price }}</span>
                                     <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">تومان</span>
-                                </div>
-                                <a href="#"
+                                </div> --}}
+                                <a href="{{ route('product.show', [$product]) }}"
                                     class="size-7 bg-[#efe7d8] rounded-full flex justify-center items-center">
                                     <svg class="size-5 text-[#e1a84f]" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        fill="none" viewBox="0 0 24 24">
+                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                        viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                             stroke-width="3" d="M5 12h14M5 12l4-4m-4 4 4 4" />
                                     </svg>
@@ -690,7 +724,5 @@
         </div>
     </section>
     <!-- app -->
-
-    <!-- footer -->
 
 @endsection

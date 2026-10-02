@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\category;
 use App\Models\category_product;
+use App\Models\logo;
 use App\Models\product;
 use App\Models\product_attribute;
 use App\Models\product_media;
@@ -262,9 +263,11 @@ class ProductController extends Controller
         } else {
             $product['mainImg'] = 'default.jpg';
         }
+        $logo = logo::first();
         return view('user.product.show', [
             'product' => $product,
-            'categories' => $categories
+            'categories' => $categories,
+            'logo' => $logo
         ]);
     }
     public function index()

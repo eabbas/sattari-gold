@@ -20,10 +20,9 @@ class HomeController extends Controller
         $header = header::first();
         $menus = menu::where('parent_id', 0)->where('status', 1)->get();
         $products = product::where('show_in_home', 1)->get();
-        // $categories = category::with('products')->has('products')->get();
-        $categories = category::all();
+        $categories = category::with('products')->has('products')->get();
+        // $categories = category::all();
         $logo = logo::first();
-        // return $logo;
         foreach ($products as $product) {
             if ($product->media->isNotEmpty()) {
                 foreach ($product->media as $media) {

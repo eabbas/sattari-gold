@@ -4,23 +4,130 @@
     font-family: "IRANSansX";
 }
 
-:root{
-    /*--primary-text-color: #0D1B2A;*/
-    --primary-text-color: #111827;
-    --secondary-text-color: #6B7280;
-    --primary-color: #fc8e21;
-    --hover-primary-color: #e57200;
-    --color-blue: #0867d5;
-    --color-green: #3aae3f;
-    --color-gray: #6a6a6a;
-    --color-red: #d23334;
+:root {
+    /* =========================
+     BRAND COLORS
+  ========================= */
+    --color-primary: #C99532;
+    --color-primary-hover: #A87522;
+    --color-primary-light: #E8C77F;
+    --color-primary-soft: #F6EBD5;
+    --color-primary-dark: #805515;
+
+    /* =========================
+     BACKGROUND COLORS
+  ========================= */
+    --color-bg: #F7F3EB;
+    --color-bg-soft: #F1E9DC;
+    --color-surface: #FFFFFF;
+    --color-surface-hover: #FCF8F0;
+    --color-surface-muted: #EEE8DD;
+
+    /* =========================
+     TEXT COLORS
+  ========================= */
+    --color-text: #202630;
+    --color-text-secondary: #77766F;
+    --color-text-muted: #A19D93;
+    --color-text-inverse: #FFFFFF;
+
+    /* =========================
+     DARK SECTION / FOOTER
+  ========================= */
+    --color-dark: #151A22;
+    --color-dark-soft: #202630;
+    --color-dark-border: #343943;
+
+    /* =========================
+     BORDER COLORS
+  ========================= */
+    --color-border: #E7E0D5;
+    --color-border-strong: #D8CBB6;
+    --color-border-gold: #D7B36C;
+
+    /* =========================
+     STATUS COLORS
+  ========================= */
+    --color-success: #39866A;
+    --color-success-soft: #E7F3EC;
+    --color-danger: #C64E46;
+    --color-warning: #D99A2B;
+
+    /* =========================
+     GRADIENTS
+  ========================= */
+    --gradient-gold: linear-gradient(135deg,
+            #E3BE70 0%,
+            #C99532 48%,
+            #A87522 100%);
+
+    --gradient-background: linear-gradient(180deg,
+            #FFFFFF 0%,
+            #F7F3EB 100%);
+
+    --gradient-dark: linear-gradient(135deg,
+            #202630 0%,
+            #151A22 100%);
+
+    /* =========================
+     SHADOWS
+  ========================= */
+    --shadow-sm: 0 2px 8px rgba(32, 38, 48, 0.05);
+
+    --shadow-md: 0 8px 24px rgba(32, 38, 48, 0.08);
+
+    --shadow-gold: 0 6px 18px rgba(201, 149, 50, 0.22);
+
+    /* =========================
+     BORDER RADIUS
+  ========================= */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --radius-xl: 24px;
+    --radius-full: 999px;
+
+    /* =========================
+     SPACING
+  ========================= */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+
+    /* =========================
+     TYPOGRAPHY
+  ========================= */
+    --font-family: "Vazirmatn", sans-serif;
+
+    --font-xs: 12px;
+    --font-sm: 14px;
+    --font-md: 16px;
+    --font-lg: 20px;
+    --font-xl: 28px;
+    --font-2xl: 36px;
+
+    /* =========================
+     TRANSITIONS
+  ========================= */
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+}
+
+.shadow-1 {
+    box-shadow: 0 0 3px 3px rgba(201, 149, 50, 0.22);
+}
+
+.shadow {
+    box-shadow: 0 0 5px 5px rgba(201, 149, 50, 0.22);
 }
 
 .in-fa {
-  font-family: 'IRANSansXFaNum';
+    font-family: 'IRANSansXFaNum';
 }
-
-
 
 .samim {
     font-family: "Samim";
@@ -79,7 +186,7 @@ input[type="number"] {
     box-shadow: 0px 0px 25px -8px black;
 }
 
-.img__parent:hover + .profaill {
+.img__parent:hover+.profaill {
     visibility: visible;
 }
 
@@ -242,25 +349,30 @@ input[type="number"] {
     opacity: 1;
 }
 
-.closeButtonXmark > svg > path {
+.closeButtonXmark>svg>path {
     transition: all 300ms;
 }
+
 .closeButtonXmark:hover {
     border-color: black;
 }
-.closeButtonXmark:hover svg > path {
+
+.closeButtonXmark:hover svg>path {
     fill: black;
 }
 
 tr {
     border-top: 1px solid rgba(128, 128, 128, 0.169);
 }
+
 thead tr:first-child {
     border-top: none;
 }
+
 .border {
     border: none;
 }
+
 td {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -269,6 +381,7 @@ td {
 .shadow__profaill__list_products {
     box-shadow: 0 0 6px -1px rgb(162, 159, 159);
 }
+
 .shadow__fhoto__insetting__profaill {
     box-shadow: 0px 0px 15px -1px gray;
 }
@@ -316,9 +429,10 @@ td {
     }
 }
 
-.close_icon > svg > path {
+.close_icon>svg>path {
     transition: all 300ms;
 }
+
 .close_icon:hover svg path {
     fill: white;
 }
@@ -334,6 +448,7 @@ td {
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
 }
+
 .loader::after,
 .loader::before {
     content: "";
@@ -353,6 +468,7 @@ td {
     animation: rotationBack 0.5s linear infinite;
     transform-origin: center center;
 }
+
 .loader::before {
     width: 32px;
     height: 32px;
@@ -364,20 +480,23 @@ td {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
 }
+
 @keyframes rotationBack {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(-360deg);
     }
 }
 
-.activeCatCareer::before{
+.activeCatCareer::before {
     content: '';
     position: absolute;
     bottom: 0;
@@ -389,17 +508,20 @@ td {
     transition: all 300ms ease-in-out;
 }
 
-.arrow{
+.arrow {
     animation: selected 1500ms infinite;
 }
-@keyframes selected{
-    0%{
+
+@keyframes selected {
+    0% {
         transform: translate(13px, -13px);
     }
-    50%{
+
+    50% {
         transform: translate(27px, -13px);
     }
-    100%{
+
+    100% {
         transform: translate(13px, -13px);
     }
 }
