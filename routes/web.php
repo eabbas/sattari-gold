@@ -164,6 +164,23 @@ Route::group([
     })->name('relatedProducts');
 });
 
+// deal routes
+Route::group([
+    'prefix'=>'deal',
+    'controller'=>DealController::class,
+    'middleware'=>[checklogin::class],
+    'as'=>'deal.'
+], function(){
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+    Route::get('/edit/{deal}', 'edit')->name('edit');
+    Route::post('/update/{deal}', 'update')->name('update');
+    Route::get('/delete/{deal}', 'delete')->name('delete');
+    Route::get('/single/{deal}', 'single')->name('single');
+    Route::get('/', 'list')->name('list');
+    Route::get('/adminIndex', 'adminIndex')->name('adminIndex');
+});
+
 // fallback and missing
 Route::fallback([HomeController::class, 'pageNotFound'])->name('fallback');
 Route::get('/missing', [HomeController::class, 'pageNotFound'])->name('missing');
