@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\DealController;
 use App\Http\Middleware\checkAdminMiddleware;
 use App\Http\Middleware\checklogin;
 use Illuminate\Support\Facades\Route;
