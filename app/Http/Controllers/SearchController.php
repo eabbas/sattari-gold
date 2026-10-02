@@ -77,12 +77,12 @@ class SearchController extends Controller
     public function page(Request $request)
     {
         $title = $request->input('title');
-        // $products = product::with('media')->with('categories')->get();
         $products = product::with('media')->with('categories')->where('title', 'like', '%' . $title . '%')
             ->orWhere('summary', 'like', '%' . $title . '%')
             ->orWhere('description', 'like', '%' . $title . '%')
             ->orderBy('created_at', 'desc')->get();
-        $categories = category::all();
+        // $categories = category::all();
+        $categories = category::with('products')->has('products')->get();
         foreach ($products as $product) {
             if ($product->media->isNotEmpty()) {
                 foreach ($product->media as $media) {
@@ -103,6 +103,34 @@ class SearchController extends Controller
             }
         }
         $logo = logo::first();
-        return view('search', ['products' => $products, 'categories'=>$categories, 'title'=>$title, 'logo'=>$logo]);
+        return view('search', ['products' => $products, 'categories' => $categories, 'title' => $title, 'logo' => $logo]);
+    }
+
+    public function relatedProducts(category $category)
+    {
+        $title = $category->title;
+        $products = $category->products;
+        $categories = category::with('products')->has('products')->get();
+        foreach ($products as $product) {
+            if ($product->media->isNotEmpty()) {
+                foreach ($product->media as $media) {
+                    if ($media->is_main) {
+                        $product->image  = $media->media_path;
+                        break;
+                    } else {
+                        $product->image = 'default.jpg';
+                    }
+                }
+            } else {
+                $product->image = 'default.jpg';
+            }
+            if ($product->secondary_price) {
+                $campare = $product->primary_price - $product->secondary_price;
+                $x = $campare / $product->primary_price;
+                $product->percent = intval($x * 100);
+            }
+        }
+        $logo = logo::first();
+        return view('search', ['products' => $products, 'categories' => $categories, 'title' => $title, 'logo' => $logo]);
     }
 }

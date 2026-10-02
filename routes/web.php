@@ -89,34 +89,6 @@ Route::group([
         Route::post('/update', 'update')->name('update');
         Route::post('/show', 'show')->name('show');
     });
-    // Route::group([
-    //     'prefix' => 'service',
-    //     'controller' => ServiceController::class,
-    //     'as' => 'service.'
-    // ], function () {
-    //     Route::get('/create', 'create')->name('create');
-    //     Route::post('/store', 'store')->name('store');
-    //     Route::post('/edit', 'edit')->name('edit');
-    //     Route::post('/show', 'show')->name('show');
-    //     Route::post('/update', 'update')->name('update');
-    //     Route::get('/delete/{id}', 'delete')->name('delete');
-    // });
-    // Route::group([
-    //     'prefix' => 'introduction',
-    //     'controller' => IntroductionController::class,
-    //     'as' => 'introduction.'
-    // ], function () {
-    //     Route::get('/create', 'create')->name('create');
-    //     Route::post('/store', 'store')->name('store');
-    // });
-    // Route::group([
-    //     'prefix' => 'defaultComment',
-    //     'controller' => DefaultCommentController::class,
-    //     'as' => 'defaultComment.'
-    // ], function () {
-    //     Route::get('/create', 'create')->name('create');
-    //     Route::post('/store', 'store')->name('store');
-    // });
 });
 
 // category routes
@@ -134,9 +106,6 @@ Route::group([
     Route::post('/update', 'update')->name('update');
     Route::get('/delete/{id}', 'delete')->name('delete');
     Route::get('/list', 'index')->withoutMiddleware(checkAdminMiddleware::class)->name('index');
-    Route::get('/relatedProducts/{category}', 'relatedProducts')->withoutMiddleware(checkAdminMiddleware::class)->missing(function () {
-        return to_route('missing');
-    })->name('relatedProducts');
     Route::get('/show/{category}', 'show')->withoutMiddleware(checkAdminMiddleware::class)->missing(function () {
         return to_route('missing');
     })->name('show');
@@ -180,29 +149,18 @@ Route::group([
     Route::get('/transactions/list', 'transactionsList')->middleware(checkAdminMiddleware::class)->name('transactionsList');
     Route::get('/transactions/user/{user}', 'transactionsListSingle')->middleware(checkAdminMiddleware::class)->name('transactionsListSingle');
     Route::post('/submitChanges', 'submitChanges')->name('submitChanges');
-    // Route::get('/create', 'create')->name('create');
-    // Route::post('/store', 'store')->name('store');
-    // Route::get('/admin/list', 'adminIndex')->name('adminIndex');
-    // Route::post('/edit/', 'edit')->name('edit');
-    // Route::post('/update', 'update')->name('update');
-    // Route::get('/delete/{id}', 'delete')->name('delete');
-    // Route::get('/show/{product}', 'show')->withoutMiddleware(checkAdminMiddleware::class)->missing(function () {
-    //     return to_route('missing');
-    // })->name('show');
-    // Route::get('/list', 'index')->withoutMiddleware(checkAdminMiddleware::class)->name('index');
-    // Route::post('/filterRelatedProducts', 'filter')->withoutMiddleware(checkAdminMiddleware::class)->name('filter');
-    // Route::post('/search', 'search')->withoutMiddleware(checkAdminMiddleware::class)->name('search');
-    // Route::post('/searchResult', 'searchResult')->withoutMiddleware(checkAdminMiddleware::class)->name('searchResult');
-    // Route::post('/admin/deleteAll', 'deleteAll')->name('deleteAll');
 });
 
+// search routes
 Route::group([
-    'prefix'=>'search',
-    'controller'=>SearchController::class,
-    'as'=>'search.'
-], function(){
-    // Route::post('/', 'search')->name('search');
+    'prefix' => 'search',
+    'controller' => SearchController::class,
+    'as' => 'search.'
+], function () {
     Route::post('/', 'page')->name('page');
+    Route::get('/relatedProducts/{category}', 'relatedProducts')->missing(function () {
+        return to_route('missing');
+    })->name('relatedProducts');
 });
 
 // fallback and missing

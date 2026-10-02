@@ -30,31 +30,34 @@ window.addEventListener('scroll', () => {
 let drop_downs = document.querySelectorAll('.drop_down')
 drop_downs.forEach(element => {
    element.addEventListener('click', function () {
-      // drop_downs.forEach(el => {
-      //    el.children[1].classList.add('invisible')
-      //    el.children[1].classList.add('opacity-0')
-      // });
       element.children[0].children[1].classList.toggle('rotate-180')
       element.children[1].classList.toggle('invisible')
       element.children[1].classList.toggle('opacity-0')
    })
 })
 
-openSearchSectionBtn.addEventListener('click', ()=>{
+openSearchSectionBtn.addEventListener('click', () => {
    searchSection.classList.remove('invisible')
    searchSection.classList.remove('opacity-0')
    searchSection.children[0].classList.remove('-translate-y-full')
 })
 
-document.addEventListener('click', (e)=>{
-   if(!searchSection.children[0].contains(e.target) && !openSearchSectionBtn.contains(e.target)){
+document.addEventListener('click', (e) => {
+   if (!searchSection.children[0].contains(e.target) && !openSearchSectionBtn.contains(e.target)) {
       searchSection.classList.add('invisible')
       searchSection.classList.add('opacity-0')
       searchSection.children[0].classList.add('-translate-y-full')
    }
-   if(searchSection.children[0].children[0].contains(e.target)){
+   if (searchSection.children[0].children[0].contains(e.target)) {
       searchSection.classList.add('invisible')
       searchSection.classList.add('opacity-0')
       searchSection.children[0].classList.add('-translate-y-full')
    }
+})
+
+let modals = document.querySelectorAll('.modal');
+modals.forEach(modal => {
+   setTimeout(() => {
+      modal.classList.add('opacity-0', 'invisible')
+   }, 3000)
 })
