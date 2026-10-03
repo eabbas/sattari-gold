@@ -91,4 +91,15 @@ class DealController extends Controller
         }
         return redirect()->back()->with('success', "$weight گرم طلا به سپرده شما افزوده شد");
     }
+
+    public function list(){
+        $logo = logo::first();
+        return view('user.deal.myDeals', ['logo'=>$logo]);
+    }
+
+    public function adminIndex(){
+        $deals = deal::all();
+        $logo = logo::first();
+        return view('admin.deal.index', ['logo'=>$logo, 'deals'=>$deals]);
+    }
 }
