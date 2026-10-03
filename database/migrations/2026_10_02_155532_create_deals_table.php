@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('transaction_id');
-            $table->integer('goldWeight');
-            $table->integer('goldPrice');
+            $table->decimal('goldWeight', 6, 2);
+            $table->decimal('goldPrice', 16, 6);
             $table->integer('buyPrice')->nullable();
             $table->string('date');
             $table->string('time');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

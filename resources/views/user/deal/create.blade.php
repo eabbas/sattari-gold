@@ -19,7 +19,18 @@
         }
     </style>
 
-
+    @if (session('success'))
+        <div
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
+            <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('success') }} </span>
+        </div>
+    @endif
+    @if (session('failure'))
+        <div
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
+            <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('failure') }} </span>
+        </div>
+    @endif
     <div class="w-full bg-[#fdf5f6] min-h-screen relative shadow-2xl overflow-hidden flex flex-col">
 
         <div class="w-full overflow-y-auto pb-24 px-4">
@@ -148,13 +159,16 @@
 
 
 
-            <form action="{{ route('deal.store') }}" method="POST" class="w-full absolute -bottom-full transition-all duration-300 right-0 bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100"
+            <form action="{{ route('deal.store') }}" method="POST"
+                class="w-full absolute -bottom-full transition-all duration-300 right-0 bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100"
                 id="mainBlock">
                 @csrf
+                <input type="hidden" name="goldPrice" id="goldPrice">
                 <input type="hidden" name="action" id="actionInp">
                 <input type="hidden" name="calcBy" id="calcBy">
                 <div class="flex justify-between items-center p-4 border-b border-gray-100">
-                    <button type="button" class="text-gray-500 hover:text-gray-800 transition cursor-pointer" onclick="closeBlock()">
+                    <button type="button" class="text-gray-500 hover:text-gray-800 transition cursor-pointer"
+                        onclick="closeBlock()">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M6 18L18 6M6 6l12 12">
@@ -196,7 +210,8 @@
                     <div>
                         <div id="inputContainer"
                             class="flex border border-gray-300 rounded-xl overflow-hidden focus-within:border-brand-red focus-within:ring-1 focus-within:ring-brand-red transition bg-white">
-                            <input type="number" id="userInput" name="userInput" step="0.01" min="0" placeholder="مبلغ کل"
+                            <input type="number" id="userInput" name="userInput" step="0.0001" min="0"
+                                placeholder="مبلغ کل"
                                 class="w-full bg-transparent px-4 py-3.5 focus:outline-none text-left font-semibold text-lg"
                                 dir="ltr">
                             <div id="inputUnit"

@@ -13,10 +13,13 @@ let buyBox = document.getElementById('buyBox')
 let sellBox = document.getElementById('sellBox')
 let actionInp = document.getElementById('actionInp')
 let calcBy = document.getElementById('calcBy')
-let maxWeight = 200
-let minWeight = 0.01
-let currentMode = 'price'
 let dealPopupTitle = document.getElementById('dealPopupTitle')
+let goldPrice = document.getElementById('goldPrice')
+let maxWeight = 200
+let minWeight = 0.0001
+let currentMode = 'price'
+
+goldPrice.value = pricePerGram
 
 function closeBlock(){
     dealBlock.classList.add('invisible')
@@ -115,7 +118,7 @@ userInput.addEventListener('input', function () {
         let weight = price / pricePerGram
 
         if (weight < minWeight) {
-            showError('مبلغ وارد شده بسیار کم است (کمتر از ۰.۰۱ گرم).')
+            showError('مبلغ وارد شده بسیار کم است (کمتر از ۰.۰۰۰۱ گرم).')
             resultOutput.value = ''
             disableSubmitButton()
             return
@@ -133,7 +136,7 @@ userInput.addEventListener('input', function () {
         let weight = value
 
         if (weight < minWeight) {
-            showError('حداقل وزن مجاز ۰.۰۱ گرم است.')
+            showError('حداقل وزن مجاز ۰.۰۰۰۱ گرم است.')
             resultOutput.value = ''
             disableSubmitButton()
             return

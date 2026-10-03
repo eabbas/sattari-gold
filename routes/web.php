@@ -14,6 +14,15 @@ use App\Http\Middleware\checkAdminMiddleware;
 use App\Http\Middleware\checklogin;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/test', function(){
+    $dateTime = explode(' ', now());
+    $dateJalali = verta($dateTime[0]);
+    $date = explode(' ', $dateJalali);
+    $date = implode('/', explode('-', $date[0]));
+    $time = $dateTime[1];
+    dd($date, $time);
+});
+
 // home routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
