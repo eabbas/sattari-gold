@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('date');
             $table->string('time');
             $table->text('description')->nullable();
+            $table->tinyInteger('isApproved')->default(0);
             $table->timestamps();
         });
     }
