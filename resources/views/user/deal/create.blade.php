@@ -148,11 +148,13 @@
 
 
 
-            <div class="w-full absolute -bottom-full transition-all duration-300 right-0 bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100"
+            <form action="{{ route('deal.store') }}" method="POST" class="w-full absolute -bottom-full transition-all duration-300 right-0 bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100"
                 id="mainBlock">
-
+                @csrf
+                <input type="hidden" name="action" id="actionInp">
+                <input type="hidden" name="calcBy" id="calcBy">
                 <div class="flex justify-between items-center p-4 border-b border-gray-100">
-                    <button class="text-gray-500 hover:text-gray-800 transition cursor-pointer" onclick="closeBlock()">
+                    <button type="button" class="text-gray-500 hover:text-gray-800 transition cursor-pointer" onclick="closeBlock()">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M6 18L18 6M6 6l12 12">
@@ -176,11 +178,11 @@
                     </div>
 
                     <div class="flex bg-gray-100 p-1 rounded-xl">
-                        <button id="btnByPrice"
+                        <button id="btnByPrice" type="button"
                             class="flex-1 py-2 text-sm font-medium rounded-lg transition-all duration-300 bg-white text-brand-red shadow-sm">
                             بر اساس مبلغ (ریال)
                         </button>
-                        <button id="btnByWeight"
+                        <button id="btnByWeight" type="button"
                             class="flex-1 py-2 text-sm font-medium rounded-lg transition-all duration-300 text-gray-500 hover:text-gray-700">
                             بر اساس وزن (گرم)
                         </button>
@@ -194,7 +196,7 @@
                     <div>
                         <div id="inputContainer"
                             class="flex border border-gray-300 rounded-xl overflow-hidden focus-within:border-brand-red focus-within:ring-1 focus-within:ring-brand-red transition bg-white">
-                            <input type="number" id="userInput" step="0.01" min="0" placeholder="مبلغ کل"
+                            <input type="number" id="userInput" name="userInput" step="0.01" min="0" placeholder="مبلغ کل"
                                 class="w-full bg-transparent px-4 py-3.5 focus:outline-none text-left font-semibold text-lg"
                                 dir="ltr">
                             <div id="inputUnit"
@@ -207,7 +209,7 @@
 
                     <div>
                         <div class="flex border border-gray-300 rounded-xl overflow-hidden bg-gray-50">
-                            <input type="text" id="resultOutput" readonly placeholder="وزن (گرم)"
+                            <input type="text" id="resultOutput" name="resultOutput" readonly placeholder="وزن (گرم)"
                                 class="w-full bg-transparent px-4 py-3.5 focus:outline-none text-left font-bold text-brand-red"
                                 dir="ltr">
                             <div id="resultUnit"
@@ -223,7 +225,7 @@
                     </div>
 
                     <div>
-                        <textarea rows="2" placeholder="توضیحات"
+                        <textarea rows="2" placeholder="توضیحات" name="description"
                             class="w-full border border-gray-300 rounded-xl px-4 py-3.5 focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition resize-none"></textarea>
                     </div>
 
@@ -233,7 +235,7 @@
                     </button>
 
                 </div>
-            </div>
+            </form>
         </div>
     </div>
     <script>

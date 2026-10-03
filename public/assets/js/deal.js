@@ -11,6 +11,8 @@ let inputError = document.getElementById('inputError')
 let submitBtn = document.getElementById('submitBtn')
 let buyBox = document.getElementById('buyBox')
 let sellBox = document.getElementById('sellBox')
+let actionInp = document.getElementById('actionInp')
+let calcBy = document.getElementById('calcBy')
 let maxWeight = 200
 let minWeight = 0.01
 let currentMode = 'price'
@@ -27,9 +29,11 @@ function closeBlock(){
 function openBlock(el){
     if(el.id == 'buyBox'){
         dealPopupTitle.innerText = 'خرید آبشده نقدی'
+        actionInp.value = 'buy'
     }
     if(el.id == 'sellBox'){
         dealPopupTitle.innerText = 'فروش آبشده نقدی'
+        actionInp.value = 'sell'
     }
     dealBlock.classList.remove('invisible')
     dealBlock.classList.remove('opacity-0')
@@ -65,7 +69,7 @@ function switchMode(mode) {
             'flex-1 py-2 text-sm font-medium rounded-lg transition-all duration-300 bg-white text-brand-red shadow-sm'
         btnByWeight.className =
             'flex-1 py-2 text-sm font-medium rounded-lg transition-all duration-300 text-gray-500 hover:text-gray-700'
-
+        calcBy.value = 'price'
         userInput.placeholder = 'مبلغ کل'
         inputUnit.innerText = 'ریال'
         resultOutput.placeholder = 'وزن (گرم)'
@@ -75,7 +79,7 @@ function switchMode(mode) {
             'flex-1 py-2 text-sm font-medium rounded-lg transition-all duration-300 bg-white text-brand-red shadow-sm'
         btnByPrice.className =
             'flex-1 py-2 text-sm font-medium rounded-lg transition-all duration-300 text-gray-500 hover:text-gray-700'
-
+        calcBy.value = 'weight'
         userInput.placeholder = 'وزن (گرم)'
         inputUnit.innerText = 'گرم'
         resultOutput.placeholder = 'مبلغ کل'

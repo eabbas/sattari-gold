@@ -16,4 +16,8 @@ class DealController extends Controller
         $asset = Auth::user()->wallet->asset;
         return view('user.deal.create', ['asset'=>$asset]);
     }
+
+    public function store(Request $request){
+        dd($request->all());
+    }
 }
