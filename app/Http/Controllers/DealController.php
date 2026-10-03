@@ -15,6 +15,7 @@ class DealController extends Controller
 {
     public function create()
     {
+        $logo = logo::first();
         $totalGoldWeight = 0;
         if(count(Auth::user()->deals)){
             foreach(Auth::user()->deals as $deal){
@@ -25,7 +26,7 @@ class DealController extends Controller
         if(Auth::user()->wallet){
             $asset = Auth::user()->wallet->asset;
         }
-        return view('user.deal.create', ['asset' => $asset, 'totalGoldWeight'=>$totalGoldWeight]);
+        return view('user.deal.create', ['asset' => $asset, 'totalGoldWeight'=>$totalGoldWeight, 'logo'=>$logo]);
     }
 
     public function store(Request $request)

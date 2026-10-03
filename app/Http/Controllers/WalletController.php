@@ -134,7 +134,17 @@ class WalletController extends Controller
                     $wallet->save();
                 }
                 if ($transaction['type'] == 'buy') {
+                    Log::info($transaction->deal);
                     $transaction->deal->update(['isApproved'=>$item['isApproved']]);
+                }
+            }
+            if ($transaction->isApproved == -1) {
+                if($transaction->type == 'buy'){
+                    $total = $transaction->amount;
+                    $wallet = wallet::find($transaction['wallet_id']);
+                    $total += $wallet['asset'];
+                    $wallet->asset = $total;
+                    $wallet->save();
                 }
             }
         }

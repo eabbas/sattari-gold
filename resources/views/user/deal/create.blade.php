@@ -137,55 +137,45 @@
                 <h3 class="text-sm font-semibold mb-6">معاملات من در برنامه</h3>
                 @if (count(Auth::user()->deals))
                     <div class="border p-5 mb-10">
-                        <h3 class="mb-10">{{ $user->name }} {{ $user->family }} : </h3>
                         <table class="w-full max-h-20 overflow-auto">
                             <thead class="w-full">
-                                <tr class="w-full mb-10 px-4 grid grid-cols-4">
+                                <tr class="w-full mb-10 px-4 grid grid-cols-6">
                                     <th>نوع / زمان</th>
-                                    <th>وضعیت</th>
-                                    <th>فیش واریز</th>
+                                    <th class="col-span-2">وضعیت</th>
+                                    <th>قیمت وقت طلا</th>
+                                    <th>وزن</th>
                                     <th>مبلغ تراکنش</th>
                                 </tr>
                             </thead>
                             <tbody class="w-full">
-                                @foreach ($Auth::user()->deals as $deal)
-                                    <tr class="w-full mb-10 px-4 grid grid-cols-4">
+                                @foreach (Auth::user()->deals as $deal)
+                                    <tr class="w-full mb-10 px-4 grid grid-cols-6">
                                         <td class="flex flex-col items-center gap-2">
                                             @if ($deal->transaction->type == 'buy')
                                                 <span class="text-green-500">خرید</span>
                                             @elseif ($deal->transaction->type == 'sell')
                                                 <span class="text-red-500">خرید</span>
-                                            
                                             @endif
-                                            <span class="text-xs text-gray-400">{{ $deal['created_at'] }}</span>
+                                            <span class="text-xs text-gray-400 in-fa">{{ $deal->date . ' - ' .  $deal->time }}</span>
                                         </td>
-                                        <td class="flex justify-center items-center">
-                                            @if ($deal['isApproved'] == 0)
-                                                <select name="isApproved" id="isApproved"
-                                                    onchange="alterStatus({{ $deal->wallet_id }}, {{ $deal->id }}, this)">
-                                                    <option value="0">در انتظار تایید
-                                                    </option>
-                                                    <option value="1">تایید شده
-                                                    </option>
-                                                    <option value="-1">رد شده
-                                                    </option>
-                                                </select>
-                                            @endif
-                                            @if ($deal['isApproved'] == 1)
-                                                <span class="text-gray-500">تایید شده</span>
-                                            @endif
-                                            @if ($deal['isApproved'] == -1)
-                                                <span class="text-gray-500">رد شده</span>
+                                        <td class="flex justify-center items-center col-span-2">
+                                            @if ($deal->transaction->isApproved == 1)
+                                                <span class="text-green-500">تایید شده</span>
+                                            @elseif ($deal->transaction->isApproved == -1)
+                                                <span class="text-red-500">رد شده</span>
+                                            @elseif ($deal->transaction->isApproved == 0)
+                                                <span class="text-gray-500">در انتظار تایید</span>
                                             @endif
                                         </td>
                                         <td class="flex justify-center items-center">
-                                            @if ($deal['type'] == 'deposit')
-                                                <img src="{{ asset('storage/' . $deal->receipt) }}" alt=""
-                                                    class="size-20">
-                                            @endif
+                                            <span class="text-gray-500 in-fa">{{ number_format($deal->goldPrice) }}</span>
                                         </td>
                                         <td class="flex flex-col items-center gap-2">
-                                            <span>{{ $deal['amount'] }}</span>
+                                            <span class="in-fa">{{ $deal->goldWeight }}</span>
+                                            <span class="text-xs text-gray-400">گرم</span>
+                                        </td>
+                                        <td class="flex flex-col items-center gap-2">
+                                            <span class="in-fa">{{ number_format($deal->transaction->amount) }}</span>
                                             <span class="text-xs text-gray-400">تومان</span>
                                         </td>
                                     </tr>
