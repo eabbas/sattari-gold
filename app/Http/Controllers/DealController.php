@@ -15,11 +15,17 @@ class DealController extends Controller
 {
     public function create()
     {
+        $totalGoldWeight = 0;
+        if(count(Auth::user()->deals)){
+            foreach(Auth::user()->deals as $deal){
+                $totalGoldWeight += $deal->goldWeight;
+            }
+        }
         $asset = 0;
         if(Auth::user()->wallet){
             $asset = Auth::user()->wallet->asset;
         }
-        return view('user.deal.create', ['asset' => $asset]);
+        return view('user.deal.create', ['asset' => $asset, 'totalGoldWeight'=>$totalGoldWeight]);
     }
 
     public function store(Request $request)
@@ -49,10 +55,13 @@ class DealController extends Controller
             }
             if($calcBy == 'weight'){
                 if ($wallet) {
-                    $amount = $output;
-                    $total = $wallet->asset - $output;
+                    $outputArr = explode(',', $output);
+                    $result = implode('', $outputArr);
+                    $amount = $result;
+                    $total = $wallet->asset - $result;
                     $weight = $input;
                 }
+                
             }
             if (!$wallet || $total < 0) {
                 return redirect()->back()->with('failure', 'موجودی کیف پول شما کافی نیست.');

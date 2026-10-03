@@ -119,14 +119,14 @@
                     <div class="bg-white rounded-xl border border-gray-200 p-4 flex items-center justify-between">
                         <div class="flex flex-col">
                             <span class="text-xs text-gray-500 mb-1">موجودی ریال</span>
-                            <span class="text-gray-400 tracking-widest">*****</span>
+                            <span class="text-gray-400 tracking-widest in-fa">{{ number_format($asset) }}</span>
                         </div>
                         <span class="text-xl">💳</span>
                     </div>
                     <div class="bg-white rounded-xl border border-gray-200 p-4 flex items-center justify-between">
                         <div class="flex flex-col">
                             <span class="text-xs text-gray-500 mb-1">موجودی طلایی</span>
-                            <span class="text-gray-400 tracking-widest">*****</span>
+                            <span class="text-gray-400 tracking-widest in-fa">{{ $totalGoldWeight }}</span>
                         </div>
                         <span class="text-xl">🧈</span>
                     </div>
@@ -193,18 +193,18 @@
 
                     <div class="flex bg-gray-100 p-1 rounded-xl">
                         <button id="btnByPrice" type="button"
-                            class="flex-1 py-2 text-sm font-medium rounded-lg transition-all duration-300 bg-white text-brand-red shadow-sm">
+                            class="flex-1 py-2 text-sm font-medium rounded-lg transition-all duration-300 bg-white text-brand-red shadow-sm in-fa">
                             بر اساس مبلغ (ریال)
                         </button>
                         <button id="btnByWeight" type="button"
-                            class="flex-1 py-2 text-sm font-medium rounded-lg transition-all duration-300 text-gray-500 hover:text-gray-700">
+                            class="flex-1 py-2 text-sm font-medium rounded-lg transition-all duration-300 text-gray-500 hover:text-gray-700 in-fa">
                             بر اساس وزن (گرم)
                         </button>
                     </div>
 
                     <div class="flex justify-between items-center text-xs text-gray-500 px-1 -mb-2">
                         <span>موجودی کیف پول شما:</span>
-                        <span class="font-semibold text-gray-700">۵۰,۰۰۰,۰۰۰ ریال</span>
+                        <span class="font-semibold text-gray-700 in-fa">{{ number_format($asset) }} ریال</span>
                     </div>
 
                     <div>
@@ -212,10 +212,10 @@
                             class="flex border border-gray-300 rounded-xl overflow-hidden focus-within:border-brand-red focus-within:ring-1 focus-within:ring-brand-red transition bg-white">
                             <input type="number" id="userInput" name="userInput" step="0.0001" min="0"
                                 placeholder="مبلغ کل"
-                                class="w-full bg-transparent px-4 py-3.5 focus:outline-none text-left font-semibold text-lg"
+                                class="w-full bg-transparent px-4 py-3.5 focus:outline-none text-left font-semibold text-lg in-fa"
                                 dir="ltr">
                             <div id="inputUnit"
-                                class="bg-gray-100 px-4 py-3.5 border-r border-gray-300 text-gray-500 text-sm flex items-center justify-center">
+                                class="bg-gray-100 px-4 py-3.5 border-r border-gray-300 text-gray-500 text-sm flex items-center justify-center in-fa">
                                 ریال
                             </div>
                         </div>
@@ -225,10 +225,10 @@
                     <div>
                         <div class="flex border border-gray-300 rounded-xl overflow-hidden bg-gray-50">
                             <input type="text" id="resultOutput" name="resultOutput" readonly placeholder="وزن (گرم)"
-                                class="w-full bg-transparent px-4 py-3.5 focus:outline-none text-left font-bold text-brand-red"
+                                class="w-full bg-transparent px-4 py-3.5 focus:outline-none text-left font-bold text-brand-red in-fa"
                                 dir="ltr">
                             <div id="resultUnit"
-                                class="bg-gray-100 px-4 py-3.5 border-r border-gray-300 text-gray-500 text-sm flex items-center justify-center">
+                                class="bg-gray-100 px-4 py-3.5 border-r border-gray-300 text-gray-500 text-sm flex items-center justify-center in-fa">
                                 گرم
                             </div>
                         </div>
@@ -241,7 +241,7 @@
 
                     <div>
                         <textarea rows="2" placeholder="توضیحات" name="description"
-                            class="w-full border border-gray-300 rounded-xl px-4 py-3.5 focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition resize-none"></textarea>
+                            class="w-full border border-gray-300 rounded-xl px-4 py-3.5 focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition resize-none in-fa"></textarea>
                     </div>
 
                     <button id="submitBtn" disabled
@@ -255,7 +255,7 @@
     </div>
     <script>
         let pricePerGram = 242139414
-        let userWalletBalance = {{ $asset }}
+        let userWalletBalance = "{{ $asset }}"
     </script>
     <script src="{{ asset('assets/js/deal.js') }}"></script>
 @endsection
