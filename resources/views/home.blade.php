@@ -1,5 +1,5 @@
 @extends('app.document')
-@section('title', 'ستاری گلد | صفحه اول')
+@section('title', 'طلای ستاری | صفحه اول')
 @section('content')
     @if (session('success'))
         <div

@@ -14,6 +14,7 @@ let sellBox = document.getElementById('sellBox')
 let maxWeight = 200
 let minWeight = 0.01
 let currentMode = 'price'
+let dealPopupTitle = document.getElementById('dealPopupTitle')
 
 function closeBlock(){
     dealBlock.classList.add('invisible')
@@ -23,7 +24,13 @@ function closeBlock(){
     switchMode('price')
 }
 
-function openBlock(){
+function openBlock(el){
+    if(el.id == 'buyBox'){
+        dealPopupTitle.innerText = 'خرید آبشده نقدی'
+    }
+    if(el.id == 'sellBox'){
+        dealPopupTitle.innerText = 'فروش آبشده نقدی'
+    }
     dealBlock.classList.remove('invisible')
     dealBlock.classList.remove('opacity-0')
     dealBlock.querySelector('#mainBlock').classList.remove('-bottom-full')
@@ -35,8 +42,6 @@ document.addEventListener('click', (e)=>{
         closeBlock()
     }
 })
-
-
 
 function formatNumber(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
