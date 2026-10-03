@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\logo;
 use App\Models\transaction;
 use App\Models\User;
 use App\Models\wallet;
@@ -103,7 +104,8 @@ class WalletController extends Controller
     public function transactionsList()
     {
         $users = User::all();
-        return view('admin.user.transactionsList', ['users' => $users]);
+        $logo = logo::first();
+        return view('admin.user.transactionsList', ['users' => $users, 'logo' => $logo]);
     }
     public function transactionsListSingle(User $user)
     {

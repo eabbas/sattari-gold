@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {{-- <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> --}}
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> --}}
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/IMG_20251225_131334_688.png') }}">
+
     <script src="{{ asset('assets/js/tailwind.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
     <link rel="stylesheet" href="{{ url('assets/css/style.css') }}" type="text/css">
@@ -26,36 +26,72 @@
             </svg>
         </div>
     </div>
-    <main class="w-full lg:h-dvh flex flex-row items-center p-4">
-        <div class="w-full lg:w-1/2 lg:h-full p-4 lg:p-10 flex flex-col items-center gap-10">
-            <h2 class="text-2xl font-bold text-gray-800 text-center mt-10">ثبت رمز عبور جدید</h2>
-
-            <form action="{{ route('user.savePassword') }}" method="post" class="w-9/12 flex flex-col gap-4"
-                id="form">
-                @csrf
-                <input type="hidden" name="user_id" value="{{ $user->id }}">
-                <div class="w-full">
-                    <input type="password"
-                        class="w-full outline-none px-5 py-2 border border-gray-300 rounded-lg placeholder-gray-300 transition-all duration-300 focus:border-blue-700/30 focus:bg-blue-100/30 focus:inset-shadow-sm inset-shadow-blue-700/10"
-                        name="password" id="password" placeholder="رمز عبور">
-                </div>
-
-                <button onclick="checkAuth(event)"
-                    class="py-3 rounded-md text-white text-sm font-bold bg-sky-500 cursor-pointer transition-all duration-300 hover:bg-sky-600">ورود</button>
-            </form>
-        </div>
-        <div class="hidden lg:flex items-center justify-center w-1/2 h-full rounded-lg relative">
+    <main
+        class="max-w-[1700px] mx-auto bg-[url({{ asset('assets/img/bagrand.png') }})] bg-cover bg-center min-h-screen">
+        <section class="w-11/12 mx-auto flex items-center justify-between">
+            <!-- بازگشت -->
             <a href="{{ route('home') }}"
-                class="px-4 py-1.5 bg-gray-700/30 rounded-full flex flex-row items-center absolute top-5 right-5 transition-all duration-300 hover:bg-gray-700/50">
-                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                    class="size-3 fill-white" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M19 12H5m14 0-4 4m4-4-4-4" />
+                class="text-(--color-primary) px-4 py-2 border-1 border-(--color-border-gold) flex items-center justify-center mt-10 rounded-full">
+                <svg fill="currentColor" class="group-hover:-translate-x-1 transition size-5 rotate-180"
+                    xmlns="http://www.w3.org/2000/svg" width="" height="" viewBox="0 0 256 256">
+                    <path
+                        d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z">
+                    </path>
                 </svg>
-                <span class="text-xs text-white">بازگشت به خانه</span>
+                <span class="text-(--color-text) font-bold">برگشت به خانه</span>
             </a>
-            <img src="{{ asset('assets/img/hero.webp') }}" class="w-2/3 h-auto" alt="">
-        </div>
+            <!-- title -->
+        </section>
+        <section class="w-11/12 mx-auto flex items-start justify-between gap-10 mt-10">
+            <div id="login"
+                class="w-full md:w-6/12 xl:w-4/12 bg-(--color-primary-soft)/50 relative z-2 rounded-2xl mx-auto border-1 border-(--color-border-gold) h-auto py-5 px-4">
+                <div class="w-12/12 flex items-center justify-center gap-5 ml-5">
+                    <div
+                        class="w-5/10 flex items-center justify-center text-xl font-semibold text-(--color-primary) p-3 border-b-2 border-(--color-border-gold) cursor-pointer">
+                        ثبت رمز عبور جدید</div>
+                </div>
+                <form action="{{ route('user.savePassword') }}" method="POST"
+                    class="w-full flex flex-col items-center justify-center" id="form">
+                    @csrf
+                    <input type="hidden" name="user_id" value="{{ $user->id }}">
+                    <div class="w-full flex flex-col gap-y-3">
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="password" class="text-(--color-primary)">رمز عبور</label>
+                            <input id="password" type="password" placeholder="رمز عبور" name="password"
+                                class="placeholder:text-right placeholder-(--color-zinc-400) text-sm block w-full rounded-md border-3 border-(--color-border-strong) px-3 py-3 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
+                            @error('password')
+                                <span class="text-xs text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="flex flex-row items-center gap-2 mt-2">
+                            <span class="text-gray-400 ">حساب کاربری دارید؟</span>
+                            <a href="{{ route('user.login') }}" class=" text-gray-800 font-bold">ورود</a>
+                        </div>
+                        <button onclick="checkAuth(event)"
+                            class="w-full flex items-center justify-center gap-x-1 text-md font-bold mt-5 py-3 rounded-lg text-white bg-[image:var(--gradient-gold)] hover:opacity-85 transition cursor-pointer">بازیابی</button>
+                        <div class="flex items-center justify-center gap-x-2 mt-3">
+                            <span class="text-lg text-(--color-zinc-800)">حساب کاربری ندارید؟</span>
+                            <a href="{{ route('user.signup') }}"
+                                class="text-lg text-(--color-primary) font-bold cursor-pointer underline">ثبت نام کنید!
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="w-fit lg:w-8/12 h-full hidden md:flex flex-col items-start justify-start mt-5">
+                <div class="relative px-5 py-3 flex flex-col gap-5">
+                    <div class="absolute inset-0 bg-white/5 backdrop-blur-sm rounded-lg"></div>
+                    <div class="relative z-10 text-5xl font-bold flex flex-col gap-5 bg-inherit">
+                        <span class="">به دنیای ارزشمند طلا</span>
+                        <span class="text-(--color-primary)">خوش آمدید</span>
+                    </div>
+                    <div class="relative z-10 w-90 line-clamp-2">
+                        <span class="text-(--color-text-secondary)">با ثبت نام در ستاری گلد، به جدید ترین قیمت ها،
+                            محصولات متنوع و امکانات ویژه دسترسی پیدا کنید</span>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <script>

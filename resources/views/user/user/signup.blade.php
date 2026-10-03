@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url('assets/css/style.css') }}" type="text/css">
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> --}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> --}}
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/IMG_20251225_131334_688.png') }}">
+
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
     <script src="{{ asset('assets/js/tailwind.js') }}"></script>
     <title>ستاری گلد | ثبت نام</title>
@@ -38,132 +38,119 @@
             <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('failure') }} </span>
         </div>
     @endif
-    <main class="w-full lg:h-dvh flex flex-row items-center p-4">
-        <div class="w-full lg:w-1/2 lg:h-full p-4 lg:p-10 flex flex-col items-center gap-10">
-            <h2 class="text-2xl font-bold text-gray-800 text-center mt-10">ثبت نام</h2>
-            <div class="flex flex-row items-center gap-2">
-                <span class="text-gray-400 text-xs">حساب کاربری دارید؟</span>
-                <a href="{{ route('user.login') }}" class="text-xs text-gray-800 font-bold">ورود</a>
-            </div>
-            <form action="{{ route('user.store') }}" method="post" class="w-9/12 flex flex-col gap-4" id="signupForm">
-                @csrf
-                <div class="w-full">
-                    <input type="text"
-                        class="w-full outline-none px-5 py-2 border border-gray-300 rounded-lg placeholder-gray-300 transition-all duration-300 focus:border-blue-700/30 focus:bg-blue-100/30 focus:inset-shadow-sm inset-shadow-blue-700/10"
-                        name="name" id="name" placeholder="نام" value="{{ old('name') }}">
-                    @error('name')
-                        <span class="text-xs text-red-500">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="w-full">
-                    <input type="text"
-                        class="w-full outline-none px-5 py-2 border border-gray-300 rounded-lg placeholder-gray-300 transition-all duration-300 focus:border-blue-700/30 focus:bg-blue-100/30 focus:inset-shadow-sm inset-shadow-blue-700/10"
-                        name="family" id="family" placeholder="نام خانوادگی" value="{{ old('family') }}">
-                    @error('family')
-                        <span class="text-xs text-red-500">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="w-full">
-                    <input type="number"
-                        class="w-full outline-none px-5 py-2 border border-gray-300 rounded-lg placeholder-gray-300 transition-all duration-300 focus:border-blue-700/30 focus:bg-blue-100/30 focus:inset-shadow-sm inset-shadow-blue-700/10"
-                        name="phoneNumber" id="phoneNumber" placeholder="شماره تلفن" value="{{ old('phoneNumber') }}">
-                    @error('phoneNumber')
-                        <span class="text-xs text-red-500">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="w-full">
-                    <input type="number"
-                        class="w-full outline-none px-5 py-2 border border-gray-300 rounded-lg placeholder-gray-300 transition-all duration-300 focus:border-blue-700/30 focus:bg-blue-100/30 focus:inset-shadow-sm inset-shadow-blue-700/10"
-                        name="nationalCode" id="nationalCode" placeholder="کد ملی" value="{{ old('nationalCode') }}">
-                    @error('nationalCode')
-                        <span class="text-xs text-red-500">{{ $message }}</span>
-                    @enderror
-                </div>
-                {{-- <div class="w-full grid grid-cols-3 gap-5">
-                    <div class="">
-                        <label for="day" class="text-xs text-gray-500">روز:</label>
-                        <select name="day" id="day"
-                            class="w-full outline-none px-5 py-2 border border-gray-300 rounded-lg placeholder-gray-300 transition-all duration-300 focus:border-blue-700/30 focus:bg-blue-100/30 focus:inset-shadow-sm inset-shadow-blue-700/10">
-                            @for ($i = 1; $i <= 31; $i++)
-                                <option value="{{ $i }}">{{ $i }}</option>
-                            @endfor
-                        </select>
-                    </div>
-                    <div class="">
-                        <label for="month" class="text-xs text-gray-500">ماه:</label>
-                        <select name="month" id="month"
-                            class="w-full outline-none px-5 py-2 border border-gray-300 rounded-lg placeholder-gray-300 transition-all duration-300 focus:border-blue-700/30 focus:bg-blue-100/30 focus:inset-shadow-sm inset-shadow-blue-700/10">
-                            <option value="1">فروردین</option>
-                            <option value="2">اردیبهشت</option>
-                            <option value="3">خرداد</option>
-                            <option value="4">تیر</option>
-                            <option value="5">مرداد</option>
-                            <option value="6">شهریور</option>
-                            <option value="7">مهر</option>
-                            <option value="8">آبان</option>
-                            <option value="9">آذر</option>
-                            <option value="10">دی</option>
-                            <option value="11">بهمن</option>
-                            <option value="12">اسفند</option>
-                        </select>
-                    </div>
-                    <div class="">
-                        <label for="year" class="text-xs text-gray-500">سال:</label>
-                        <select name="year" id="year"
-                            class="w-full outline-none px-5 py-2 border border-gray-300 rounded-lg placeholder-gray-300 transition-all duration-300 focus:border-blue-700/30 focus:bg-blue-100/30 focus:inset-shadow-sm inset-shadow-blue-700/10">
-                            @for ($i = 1330; $i <= 1400; $i++)
-                                <option value="{{ $i }}">{{ $i }}</option>
-                            @endfor
-                        </select>
-                    </div>
-                </div> --}}
-                <div class="w-full">
-                    <input type="password"
-                        class="w-full outline-none px-5 py-2 border border-gray-300 rounded-lg placeholder-gray-300 transition-all duration-300 focus:border-blue-700/30 focus:bg-blue-100/30 focus:inset-shadow-sm inset-shadow-blue-700/10"
-                        name="password" id="password" placeholder="رمز عبور" value="{{ old('password') }}">
-                    @error('password')
-                        <span class="text-xs text-red-500">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="w-full flex flex-row items-start gap-4">
-                    <div class="w-3/4 flex flex-col gap-1">
-                        <input type="number"
-                            class="w-full outline-none px-5 py-2 border border-gray-300 rounded-lg placeholder-gray-300 transition-all duration-300 focus:border-blue-700/30 focus:bg-blue-100/30 focus:inset-shadow-sm inset-shadow-blue-700/10"
-                            name="code" id="code" placeholder="کد ارسال شده" value="{{ old('code') }}">
-                        @error('code')
-                            <span class="text-xs text-red-500">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <button type="button"
-                        class="w-1/4 h-10 py-2.5 lg:py-0 text-sm lg:text-base bg-sky-500 flex items-center justify-center rounded-lg text-white transition-all duration-300 hover:bg-sky-600 cursor-pointer"
-                        onclick="sendCode()" id="countDown">
-                        ارسال کد
-                    </button>
-                </div>
-                <div class="w-full flex flex-row items-center gap-2">
-                    <input type="checkbox" name="accept" id="accept">
-                    <label for="accept" class="text-sm flex flex-row justify-start items-center gap-2 text-gray-400">
-                        <a href="#" class="text-gray-800 font-bold">شرایط و قوانین</a>
-                        را میپذیرم
-                    </label>
-                </div>
-                <button onclick="checkAuth(event)"
-                    class="py-3 rounded-md text-white text-sm font-bold bg-sky-500 cursor-pointer transition-all duration-300 hover:bg-sky-600">ثبت
-                    نام</button>
-            </form>
+    @if (session('message'))
+        <div
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
+            <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('failure') }} </span>
         </div>
-        <div class="hidden lg:flex items-center justify-center w-1/2 h-full rounded-lg relative">
+    @endif
+    <main
+        class="max-w-[1700px] mx-auto bg-[url({{ asset('assets/img/bagrand.png') }})] bg-cover bg-center min-h-screen">
+        <section class="w-11/12 mx-auto flex items-center justify-between">
             <a href="{{ route('home') }}"
-                class="px-4 py-1.5 bg-gray-700/30 rounded-full flex flex-row items-center absolute top-5 right-5 transition-all duration-300 hover:bg-gray-700/50">
-                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg" class="size-3 fill-white" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M19 12H5m14 0-4 4m4-4-4-4" />
+                class="text-(--color-primary) px-4 py-2 border-1 border-(--color-border-gold) flex items-center justify-center mt-10 rounded-full">
+                <svg fill="currentColor" class="group-hover:-translate-x-1 transition size-5 rotate-180"
+                    xmlns="http://www.w3.org/2000/svg" width="" height="" viewBox="0 0 256 256">
+                    <path
+                        d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z">
+                    </path>
                 </svg>
-                <span class="text-xs text-white">بازگشت به خانه</span>
+                <span class="text-(--color-text) font-bold">برگشت به خانه</span>
             </a>
-            <img src="{{ asset('assets/img/hero.webp') }}" class="w-2/3 h-auto" alt="">
-        </div>
+        </section>
+        <section class="w-11/12 mx-auto flex items-start justify-between gap-10 mt-10">
+            <div id="login"
+                class="mb-5 w-full md:w-6/12 xl:w-4/12 bg-(--color-primary-soft)/50 relative z-2 rounded-2xl mx-auto border-1 border-(--color-border-gold) h-auto py-5 px-4">
+                <div class="w-12/12 flex items-center justify-center gap-5 ml-5">
+                    <div
+                        class="w-3/10 flex items-center justify-center text-xl font-semibold text-(--color-primary) p-3 border-b-2 border-(--color-border-gold) cursor-pointer">
+                        ثبت نام</div>
+                </div>
+                <form action="{{ route('user.store') }}" method="POST"
+                    class="w-full flex flex-col items-center justify-center" id="signupForm">
+                    @csrf
+                    <div class="w-full flex flex-col gap-y-3">
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="name" class="text-(--color-primary)">نام</label>
+                            <input id="name" type="text" placeholder="نام" name="name"
+                                value="{{ old('name') }}"
+                                class="placeholder:text-right placeholder-(--color-zinc-400) text-sm block w-full rounded-md border-3 border-(--color-border-strong) px-3 py-3 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
+                            @error('name')
+                                <span class="text-xs text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="family" class="text-(--color-primary)">نام خانوادگی</label>
+                            <input id="family" type="text" placeholder="نام خانوادگی" name="family"
+                                value="{{ old('family') }}"
+                                class="placeholder:text-right placeholder-(--color-zinc-400) text-sm block w-full rounded-md border-3 border-(--color-border-strong) px-3 py-3 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
+                            @error('family')
+                                <span class="text-xs text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="phoneNumber" class="text-(--color-primary)">شماره تلفن</label>
+                            <input id="phoneNumber" type="number" placeholder="شماره تلفن" name="phoneNumber"
+                                value="{{ old('phoneNumber') }}"
+                                class="placeholder:text-right placeholder-(--color-zinc-400) text-sm block w-full rounded-md border-3 border-(--color-border-strong) px-3 py-3 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
+                            @error('phoneNumber')
+                                <span class="text-xs text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="nationalCode" class="text-(--color-primary)">کد ملی</label>
+                            <input id="nationalCode" type="number" placeholder="کد ملی" name="nationalCode"
+                                value="{{ old('nationalCode') }}"
+                                class="placeholder:text-right placeholder-(--color-zinc-400) text-sm block w-full rounded-md border-3 border-(--color-border-strong) px-3 py-3 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
+                            @error('nationalCode')
+                                <span class="text-xs text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="password" class="text-(--color-primary)">رمز عبور</label>
+                            <input id="password" type="password" placeholder="رمز عبور" name="password"
+                                class="placeholder:text-right placeholder-(--color-zinc-400) text-sm block w-full rounded-md border-3 border-(--color-border-strong) px-3 py-3 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
+                            @error('password')
+                                <span class="text-xs text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="code" class="text-(--color-primary)">کد ارسال شده</label>
+                            <div class="w-full flex items-center justify-between gap-2">
+                                <input placeholder="کد ارسال شده" type="number" name="code" id="code"
+                                    class="w-7/12 placeholder:text-right placeholder-(--color-zinc-400) text-sm block rounded-md border-3 border-(--color-border-strong) px-3 py-3 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
+                                <button type="button" onclick="sendCode()" id="countDown"
+                                    class="w-5/12 bg-[image:var(--gradient-gold)] flex items-center justify-center text-white rounded-md px-3 py-3 cursor-pointer">ارسال
+                                    کد</button>
+                            </div>
+                        </div>
+                        <button onclick="checkAuth(event)"
+                            class="w-full flex items-center justify-center gap-x-1 text-md font-bold mt-5 py-3 rounded-lg text-white bg-[image:var(--gradient-gold)] hover:opacity-85 transition">
+                            ثبت نام
+                        </button>
+                        <div class="flex items-center justify-center gap-x-2 mt-3">
+                            <span class="text-lg text-(--color-zinc-800)">حساب کاربری دارید؟</span>
+                            <a href="{{ route('user.login') }}"
+                                class="text-lg text-(--color-primary) font-bold cursor-pointer underline">وارد شوید
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="w-fit lg:w-8/12 h-full hidden md:flex flex-col items-start justify-start mt-5">
+                <div class="relative px-5 py-3 flex flex-col gap-5">
+                    <div class="absolute inset-0 bg-white/5 backdrop-blur-sm rounded-lg"></div>
+                    <div class="relative z-10 text-5xl font-bold flex flex-col gap-5 bg-inherit">
+                        <span class="">به دنیای ارزشمند طلا</span>
+                        <span class="text-(--color-primary)">خوش آمدید</span>
+                    </div>
+                    <div class="relative z-10 w-90 line-clamp-2">
+                        <span class="text-(--color-text-secondary)">با ثبت نام در ستاری گلد، به جدید ترین قیمت ها،
+                            محصولات متنوع و امکانات ویژه دسترسی پیدا کنید</span>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
     <script>
         let code = document.getElementById('code')
@@ -278,6 +265,17 @@
                                 location.assign("{{ route('user.login') }}")
                             }, 2000)
                         } else {
+                            if (user.nationalCode) {
+                                showMessage('open')
+                                element.innerHTML = `
+                                <span class="text-shadow-lg">این کد ملی قبلا ثبت شده است.</span>
+                                `
+                                message.children[0].appendChild(element)
+                                setTimeout(() => {
+                                    showMessage('close')
+                                }, 2000)
+                                return
+                            }
                             if (!user.checkCode) {
                                 showMessage('open')
                                 element.innerHTML = `

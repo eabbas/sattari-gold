@@ -17,7 +17,8 @@ class ProductController extends Controller
     public function create()
     {
         $cats = category::all();
-        return view('admin.product.create', ['categories' => $cats]);
+        $logo = logo::first();
+        return view('admin.product.create', ['categories' => $cats, 'logo' => $logo]);
     }
     public function store(Request $request)
     {
@@ -102,7 +103,8 @@ class ProductController extends Controller
                 $product['mainImg'] = 'default.jpg';
             }
         }
-        return view('admin.product.index', ['products' => $products]);
+        $logo = logo::first();
+        return view('admin.product.index', ['products' => $products, 'logo' => $logo]);
     }
     public function edit(Request $request)
     {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\logo;
 use App\Models\menu;
 use Illuminate\Auth\RequestGuard;
 use Illuminate\Http\Request;
@@ -11,7 +12,8 @@ class MenuController extends Controller
     public function create()
     {
         $menu = menu::all();
-        return view('admin.settings.menu.create', ['menu' => $menu]);
+        $logo = logo::first();
+        return view('admin.settings.menu.create', ['menu' => $menu, 'logo' => $logo]);
     }
     public function store(Request $request)
     {

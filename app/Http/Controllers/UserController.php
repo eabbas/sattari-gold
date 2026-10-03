@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Api\NationalCode;
+use App\Models\logo;
 use App\Models\PhoneCode;
 use App\Models\role;
 use App\Models\User;
@@ -25,6 +26,11 @@ class UserController extends Controller
     }
     public function checkAuth(Request $request)
     {
+        $data['nationalCode'] = false;
+        $userNational = User::where('nationalCode', $request->nationalCode)->first();
+        if ($userNational) {
+            $data['nationalCode'] = true;
+        }
         $data['validate'] = false;
         $user = User::where('phoneNumber', $request->phoneNumber)->first();
         if ($user) {
@@ -45,6 +51,12 @@ class UserController extends Controller
             // }
         }
         return response()->json($data);
+    }
+    public function checkUserWithCode(Request $request)
+    {
+        $user = User::where('phoneNumber', $request['phoneNumber'])->first();
+        Auth::login($user);
+        return to_route('home')->with('success', "$user->name $user->family عزیز خوش آمدید.");
     }
     public function checkUser(Request $request)
     {
@@ -182,7 +194,7 @@ class UserController extends Controller
         $user = User::find($request->user_id);
         $user->password = $request->password;
         $user->save();
-        return to_route('user.login');
+        return to_route('user.login')->with('success', 'رمز عبور شما با موفقیت تغییر یافت.');
     }
     public function signup()
     {
@@ -227,9 +239,9 @@ class UserController extends Controller
     }
     public function adminSignup()
     {
-        // $logo = logo::first();
+        $logo = logo::first();
         $roles = role::all();
-        return view('admin.user.signup', ['roles' => $roles]);
+        return view('admin.user.signup', ['roles' => $roles, 'logo' => $logo]);
     }
     public function adminStore(Request $request)
     {
@@ -290,10 +302,10 @@ class UserController extends Controller
     public function index()
     {
         $users = User::paginate(10);
-        // $logo = logo::first();
+        $logo = logo::first();
         return view('admin.user.index', [
             'users' => $users,
-            // 'logo' => $logo
+            'logo' => $logo
         ]);
     }
     public function delete(User $user)
@@ -360,13 +372,13 @@ class UserController extends Controller
         $user['persianRoles'] = $roles;
         // $products = product::all();
         // $cats = category::all();
-        // $logo = logo::first();
+        $logo = logo::first();
         // $services = service::all();
         return view('user.user.profile', [
             // 'products' => $products,
             'user' => $user,
             // 'categories' => $cats,
-            // 'logo' => $logo,
+            'logo' => $logo,
             // 'services' => $services,
         ]);
     }

@@ -35,6 +35,7 @@ Route::group([
     Route::get('/login', 'login')->name('login');
     Route::get('/loginWithCode', 'loginWithCode')->name('loginWithCode');
     Route::post('/checkUser', 'checkUser')->name('checkUser');
+    Route::post('/checkUserWithCode', 'checkUserWithCode')->name('checkUserWithCode');
     Route::post('/checkUserPopup', 'checkUserPopup')->name('checkUserPopup');
     Route::post('/validate', 'validate')->name('validate');
     Route::post('/search', 'search')->name('search');
