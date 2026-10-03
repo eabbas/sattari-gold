@@ -9,9 +9,19 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\DealController;
 use App\Http\Middleware\checkAdminMiddleware;
 use App\Http\Middleware\checklogin;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/test', function(){
+    $dateTime = explode(' ', now());
+    $dateJalali = verta($dateTime[0]);
+    $date = explode(' ', $dateJalali);
+    $date = implode('/', explode('-', $date[0]));
+    $time = $dateTime[1];
+    dd($date, $time);
+});
 
 // home routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -161,6 +171,23 @@ Route::group([
     Route::get('/relatedProducts/{category}', 'relatedProducts')->missing(function () {
         return to_route('missing');
     })->name('relatedProducts');
+});
+
+// deal routes
+Route::group([
+    'prefix'=>'deal',
+    'controller'=>DealController::class,
+    'middleware'=>[checklogin::class],
+    'as'=>'deal.'
+], function(){
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+    Route::get('/edit/{deal}', 'edit')->name('edit');
+    Route::post('/update/{deal}', 'update')->name('update');
+    Route::get('/delete/{deal}', 'delete')->name('delete');
+    Route::get('/single/{deal}', 'single')->name('single');
+    Route::get('/', 'list')->name('list');
+    Route::get('/adminIndex', 'adminIndex')->name('adminIndex');
 });
 
 // fallback and missing

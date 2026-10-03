@@ -13,4 +13,7 @@ class transaction extends Model
         'isApproved',
         'receipt'
     ];
+    public function deals(){
+        return $this->hasMany(deal::class);
+    }
 }
