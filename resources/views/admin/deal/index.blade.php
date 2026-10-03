@@ -55,7 +55,7 @@
                                             @if ($deal->transaction->type == 'buy')
                                                 <span class="text-green-500">خرید</span>
                                             @elseif ($deal->transaction->type == 'sell')
-                                                <span class="text-red-500">خرید</span>
+                                                <span class="text-red-500">فروش</span>
                                             @endif
                                             <span class="text-xs text-gray-400 in-fa">{{ $deal->date . ' - ' .  $deal->time }}</span>
                                         </td>
