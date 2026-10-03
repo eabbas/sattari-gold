@@ -13,7 +13,10 @@ class transaction extends Model
         'isApproved',
         'receipt'
     ];
-    public function deals(){
-        return $this->hasMany(deal::class);
+    public function deal(){
+        return $this->hasOne(deal::class);
+    }
+    public function wallet(){
+        return $this->belongsTo(wallet::class);
     }
 }

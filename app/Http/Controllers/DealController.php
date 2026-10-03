@@ -66,13 +66,14 @@ class DealController extends Controller
             if (!$wallet || $total < 0) {
                 return redirect()->back()->with('failure', 'موجودی کیف پول شما کافی نیست.');
             }
-            $wallet->update(['asset'=>$total]);
+            
             $transaction = transaction::create([
                 'wallet_id'=>$wallet->id,
                 'amount'=>$amount,
                 'type'=>'buy',
                 'isApproved'=>0,
             ]);
+
             deal::create([
                 'user_id'=>Auth::id(),
                 'transaction_id'=>$transaction->id,
@@ -82,6 +83,7 @@ class DealController extends Controller
                 'time'=>$time,
                 'description'=>$description
             ]);
+            $wallet->update(['asset'=>$total]);
         }
         if($action == 'sell'){
             //

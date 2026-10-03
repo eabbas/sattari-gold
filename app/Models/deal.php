@@ -14,6 +14,7 @@ class deal extends Model
         'buyPrice',
         'date',
         'time',
+        'isApproved',
     ];
 
     public function user(){

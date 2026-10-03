@@ -14,8 +14,11 @@ use App\Http\Middleware\checkAdminMiddleware;
 use App\Http\Middleware\checklogin;
 use Illuminate\Support\Facades\Route;
 
+use App\Models\transaction;
+
 Route::get('/test', function(){
-    $dateTime = explode(' ', now());
+    $data = transaction::latest()->first();
+    $dateTime = explode(' ', $data->created_at);
     $dateJalali = verta($dateTime[0]);
     $date = explode(' ', $dateJalali);
     $date = implode('/', explode('-', $date[0]));

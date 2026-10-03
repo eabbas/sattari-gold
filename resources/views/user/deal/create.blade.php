@@ -22,13 +22,13 @@
     @if (session('success'))
         <div
             class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
-            <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('success') }} </span>
+            <span class="text-sm text-[var(--light-theme-text-color)] in-fa"> {{ session('success') }} </span>
         </div>
     @endif
     @if (session('failure'))
         <div
             class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
-            <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('failure') }} </span>
+            <span class="text-sm text-[var(--light-theme-text-color)] in-fa"> {{ session('failure') }} </span>
         </div>
     @endif
     <div class="w-full bg-[#fdf5f6] min-h-screen relative shadow-2xl overflow-hidden flex flex-col">
@@ -134,19 +134,79 @@
             </div>
 
             <div class="bg-white rounded-2xl shadow-sm p-6 flex flex-col items-center justify-center text-center">
-                <h3 class="text-sm font-semibold mb-6">معاملات امروز من در برنامه</h3>
-                <div class="text-gray-300 mb-4">
-                    <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                        </path>
-                    </svg>
-                </div>
-                <p class="text-sm text-gray-500 mb-6">معامله‌ای یافت نشد</p>
-                <button
-                    class="w-full border border-red-200 text-brand-red py-2 rounded-xl text-sm font-medium hover:bg-red-50 transition">
-                    مشاهده گردش حساب
-                </button>
+                <h3 class="text-sm font-semibold mb-6">معاملات من در برنامه</h3>
+                @if (count(Auth::user()->deals))
+                    <div class="border p-5 mb-10">
+                        <h3 class="mb-10">{{ $user->name }} {{ $user->family }} : </h3>
+                        <table class="w-full max-h-20 overflow-auto">
+                            <thead class="w-full">
+                                <tr class="w-full mb-10 px-4 grid grid-cols-4">
+                                    <th>نوع / زمان</th>
+                                    <th>وضعیت</th>
+                                    <th>فیش واریز</th>
+                                    <th>مبلغ تراکنش</th>
+                                </tr>
+                            </thead>
+                            <tbody class="w-full">
+                                @foreach ($Auth::user()->deals as $deal)
+                                    <tr class="w-full mb-10 px-4 grid grid-cols-4">
+                                        <td class="flex flex-col items-center gap-2">
+                                            @if ($deal->transaction->type == 'buy')
+                                                <span class="text-green-500">خرید</span>
+                                            @elseif ($deal->transaction->type == 'sell')
+                                                <span class="text-red-500">خرید</span>
+                                            
+                                            @endif
+                                            <span class="text-xs text-gray-400">{{ $deal['created_at'] }}</span>
+                                        </td>
+                                        <td class="flex justify-center items-center">
+                                            @if ($deal['isApproved'] == 0)
+                                                <select name="isApproved" id="isApproved"
+                                                    onchange="alterStatus({{ $deal->wallet_id }}, {{ $deal->id }}, this)">
+                                                    <option value="0">در انتظار تایید
+                                                    </option>
+                                                    <option value="1">تایید شده
+                                                    </option>
+                                                    <option value="-1">رد شده
+                                                    </option>
+                                                </select>
+                                            @endif
+                                            @if ($deal['isApproved'] == 1)
+                                                <span class="text-gray-500">تایید شده</span>
+                                            @endif
+                                            @if ($deal['isApproved'] == -1)
+                                                <span class="text-gray-500">رد شده</span>
+                                            @endif
+                                        </td>
+                                        <td class="flex justify-center items-center">
+                                            @if ($deal['type'] == 'deposit')
+                                                <img src="{{ asset('storage/' . $deal->receipt) }}" alt=""
+                                                    class="size-20">
+                                            @endif
+                                        </td>
+                                        <td class="flex flex-col items-center gap-2">
+                                            <span>{{ $deal['amount'] }}</span>
+                                            <span class="text-xs text-gray-400">تومان</span>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <div class="text-gray-300 mb-4">
+                        <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                            </path>
+                        </svg>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-6">معامله‌ای یافت نشد</p>
+                    <button
+                        class="w-full border border-red-200 text-brand-red py-2 rounded-xl text-sm font-medium hover:bg-red-50 transition">
+                        مشاهده گردش حساب
+                    </button>
+                @endif
             </div>
 
         </div>

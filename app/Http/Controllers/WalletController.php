@@ -6,6 +6,7 @@ use App\Models\logo;
 use App\Models\transaction;
 use App\Models\User;
 use App\Models\wallet;
+use App\Models\deal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Log;
@@ -131,6 +132,9 @@ class WalletController extends Controller
                     $total = $wallet['asset'] - $transaction['amount'];
                     $wallet->asset = $total;
                     $wallet->save();
+                }
+                if ($transaction['type'] == 'buy') {
+                    $transaction->deal->update(['isApproved'=>$item['isApproved']]);
                 }
             }
         }

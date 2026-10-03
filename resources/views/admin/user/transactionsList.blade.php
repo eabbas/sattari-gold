@@ -19,9 +19,12 @@
                             <td class="flex flex-col items-center gap-2">
                                 @if ($transaction['type'] == 'deposit')
                                     <span class="text-green-500">واریز</span>
-                                @endif
-                                @if ($transaction['type'] == 'withdraw')
+                                @elseif ($transaction['type'] == 'withdraw')
                                     <span class="text-red-500">برداشت</span>
+                                @elseif($transaction['type'] == 'buy')
+                                    <span class="text-green-500">خرید</span>
+                                @elseif($transaction['type'] == 'sell')
+                                    <span class="text-red-500">فروش</span>
                                 @endif
                                 <span class="text-xs text-gray-400">{{ $transaction['created_at'] }}</span>
                             </td>
