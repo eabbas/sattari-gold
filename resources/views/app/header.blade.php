@@ -33,9 +33,11 @@
                         <path
                             d="M0 88C0 74.7 10.7 64 24 64H424c13.3 0 24 10.7 24 24s-10.7 24-24 24H24C10.7 112 0 101.3 0 88zM0 248c0-13.3 10.7-24 24-24H424c13.3 0 24 10.7 24 24s-10.7 24-24 24H24c-13.3 0-24-10.7-24-24zM448 408c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24s10.7-24 24-24H424c13.3 0 24 10.7 24 24z" />
                     </svg>
-                    <a href="{{ route($logo->link) }}">
-                        <img src="{{ asset('storage/' . $logo->logo) }}" class="w-20 lg:w-24" alt="">
-                    </a>
+                    @if ($logo)
+                        <a href="{{ route($logo->link) }}">
+                            <img src="{{ asset('storage/' . $logo->logo) }}" class="w-20 lg:w-24" alt="">
+                        </a>
+                    @endif
                 </div>
                 <ul class="hidden lg:flex justify-center items-center gap-7">
                     {{-- @foreach ($menus as $index => $menu)
@@ -165,9 +167,11 @@
             id="menuBlock">
             <div class="w-2/3 bg-white h-full transition-all duration-300 ease-in-out delay-200 translate-x-full">
                 <div class="w-full flex justify-center p-4 border-b-2 border-[#A56920]/30">
-                    <a href="#">
-                        <img src="./img/logo.png" class="w-20 lg:w-24" alt="">
-                    </a>
+                    @if ($logo)
+                        <a href="{{ route($logo->link) }}">
+                            <img src="{{ asset('storage/' . $logo->logo) }}" class="w-20 lg:w-24" alt="">
+                        </a>
+                    @endif
                 </div>
                 <ul class="w-full p-5">
                     <li>

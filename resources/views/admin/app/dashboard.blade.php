@@ -7,7 +7,6 @@
     {{-- <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> --}}
     <link rel="stylesheet" href="{{ url('assets/css/style.css') }}" type="text/css">
     <title>@yield('title')</title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/IMG_20251225_131334_688.png') }}">
     <script src="{{ asset('assets/js/tailwind.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
 </head>
@@ -24,8 +23,10 @@
         </div>
         <div class="hidden lg:block lg:w-3/12 bg-[#0D0E12] fixed right-0 top-0 h-dvh px-5">
             <div class="flex justify-center pt-5">
-                <a href="{{ route('home') }}" class="right-0 mr-[15px]">
-                    {{-- logo --}}
+                <a href="{{ route('home') }}" class="">
+                    @if ($logo)
+                        <img src="{{ asset('storage/' . $logo->logo) }}" alt="" class="size-20">
+                    @endif
                 </a>
             </div>
             <hr class="text-[darkslategray] mt-2.5">

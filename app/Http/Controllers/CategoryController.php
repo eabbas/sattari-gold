@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\category;
+use App\Models\logo;
 use App\Models\product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -12,8 +13,10 @@ class CategoryController extends Controller
     public function create()
     {
         $categories = category::select('id', 'title')->get();
+        $logo = logo::first();
         return view('admin.category.create', [
             'categories' => $categories,
+            'logo' => $logo,
         ]);
     }
     public function store(Request $request)
@@ -44,8 +47,10 @@ class CategoryController extends Controller
     public function adminIndex()
     {
         $cats = category::all();
+        $logo = logo::first();
         return view('admin.category.index', [
             'categories' => $cats,
+            'logo' => $logo,
         ]);
     }
     public function showChildren($param)
