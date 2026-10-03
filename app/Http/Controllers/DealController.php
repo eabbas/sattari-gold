@@ -31,6 +31,7 @@ class DealController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->all());
         $action = $request->action;  // buy & sell
         $calcBy = $request->calcBy;  // price & weight
         $input = $request->userInput;

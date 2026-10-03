@@ -303,9 +303,10 @@
             </form>
         </div>
     </div>
-    <script>
+        <script>
         let pricePerGram = 242139414
         let userWalletBalance = "{{ $asset }}"
+        let userGoldBalance = "{{ $totalGoldWeight }}" 
     </script>
     <script src="{{ asset('assets/js/deal.js') }}"></script>
 @endsection
