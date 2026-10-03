@@ -134,7 +134,33 @@ class WalletController extends Controller
                     $wallet->save();
                 }
                 if ($transaction['type'] == 'buy') {
+                    Log::info($transaction->deal);
                     $transaction->deal->update(['isApproved'=>$item['isApproved']]);
+                }
+                if ($transaction['type'] == 'sell') {
+                    $transaction->deal->update(['isApproved'=>$item['isApproved']]);
+                }
+            }
+            if ($transaction->isApproved == -1) {
+                if($transaction->type == 'buy'){
+                    $total = $transaction->amount;
+                    $wallet = wallet::find($transaction['wallet_id']);
+                    $weight = $transaction->deal->goldWeight;
+                    $total += $wallet['asset'];
+                    $weight -= $wallet->goldWeight;
+                    $wallet->asset = $total;
+                    $wallet->goldWeight = $weight;
+                    $wallet->save();
+                }
+                if($transaction->type == 'sell'){
+                    $total = $transaction->amount;
+                    $wallet = wallet::find($transaction['wallet_id']);
+                    $weight = $transaction->deal->goldWeight;
+                    $total -= $wallet['asset'];
+                    $weight += $wallet->goldWeight;
+                    $wallet->asset = $total;
+                    $wallet->goldWeight = $weight;
+                    $wallet->save();
                 }
             }
         }

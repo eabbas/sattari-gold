@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id')->unique();
             $table->bigInteger('asset');
+            $table->decimal('goldWeight', 10, 5)->default(0);
             $table->timestamps();
         });
     }
