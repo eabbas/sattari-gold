@@ -9,6 +9,7 @@ class wallet extends Model
     protected $fillable = [
         'user_id',
         'asset',
+        'goldWeight',
     ];
     public function transactions()
     {
