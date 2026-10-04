@@ -15,37 +15,31 @@
     @endif
     <!-- hero -->
     <section
-        class="2xl:container mx-auto w-full bg-[url('{{ asset('storage/' . $header->header_bg) }}')] bg-cover bg-no-repeat flex flex-col justify-center items-center pb-5 pt-20 lg:pt-10">
-        <div class="w-10/12 lg:w-5/12 flex flex-col justify-center items-center">
-            <img src="{{ asset('storage/' . $header->header_img) }}" class="w-1/2 lg:w-11/12" alt="">
-            <h2 class="text-xl lg:text-3xl text-gray-800 font-bold flex justify-center items-center gap-1 mt-1.5">
-                <span>{{ $header->title }}</span>
-                {{-- <span class="text-[#c98323]">با طلا</span> --}}
-            </h2>
-            <p class="text-xs lg:text-sm text-gray-600 text-center mt-1.5">{{ $header->subTitle }}</p>
-            <div class="w-full flex justify-center items-center gap-4 pt-5">
-                <a href="{{ route($header->btnLink) }}"
-                    class="group flex justify-center items-center w-1/2 lg:w-1/3 gap-2 lg:gap-3 py-2 lg:py-3 rounded-full pl-6"
-                    style="background: #A56920;
+        class="2xl:container mx-auto w-full @if ($header) bg-[url('{{ asset('storage/' . $header->header_bg) }}')] @endif bg-cover bg-no-repeat flex flex-col justify-center items-center pb-5 pt-20 lg:pt-10">
+        @if ($header)
+            <div class="w-10/12 lg:w-5/12 flex flex-col justify-center items-center">
+                <img src="{{ asset('storage/' . $header->header_img) }}" class="w-1/2 lg:w-11/12" alt="">
+                <h2 class="text-xl lg:text-3xl text-gray-800 font-bold flex justify-center items-center gap-1 mt-1.5">
+                    <span>{{ $header->title }}</span>
+                    {{-- <span class="text-[#c98323]">با طلا</span> --}}
+                </h2>
+                <p class="text-xs lg:text-sm text-gray-600 text-center mt-1.5">{{ $header->subTitle }}</p>
+                <div class="w-full flex justify-center items-center gap-4 pt-5">
+                    <a href="{{ route($header->btnLink) }}"
+                        class="group flex justify-center items-center w-1/2 lg:w-1/3 gap-2 lg:gap-3 py-2 lg:py-3 rounded-full pl-6"
+                        style="background: #A56920;
                     background: linear-gradient(0deg, rgba(165, 105, 32, 1) 0%, rgba(227, 171, 90, 1) 100%);">
-                    <svg class="w-[31px] h-[31px] text-white group-hover:translate-x-[10px] transition-all duration-300"
-                        aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                        viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3"
-                            d="M19 12H5m14 0-4 4m4-4-4-4" />
-                    </svg>
-                    <span class="text-xs lg:text-sm font-bold text-white">{{ $header->btnText }}</span>
-                </a>
-                <!-- <a href="#" class="group flex justify-center items-center w-1/3 lg:w-1/4 gap-2 lg:gap-3 border-1 border-[#A56920] py-2 lg:py-3 pr-6 rounded-full">
-                                                            <span class="text-xs lg:text-sm font-bold text-[#A56920]">فروش طلا</span>
-                                                            <svg class="w-[31px] h-[31px] text-[#A56920] group-hover:-translate-x-[10px] transition-all duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                                width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3"
-                                                                    d="M5 12h14M5 12l4-4m-4 4 4 4" />
-                                                            </svg>
-                                                        </a> -->
+                        <svg class="w-[31px] h-[31px] text-white group-hover:translate-x-[10px] transition-all duration-300"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                            fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3"
+                                d="M19 12H5m14 0-4 4m4-4-4-4" />
+                        </svg>
+                        <span class="text-xs lg:text-sm font-bold text-white">{{ $header->btnText }}</span>
+                    </a>
+                </div>
             </div>
-        </div>
+        @endif
         <!-- value bar -->
         <div class="w-11/12 mx-auto bg-white p-3 rounded-xl  mt-4">
             <div class="bg-[#faf5f0] p-2.5 rounded-lg grid grid-cols-1 lg:grid-cols-3">
@@ -121,9 +115,8 @@
                 <div class="w-full flex flex-col items-center justify-center gap-4">
                     <div class="size-12 lg:size-18 bg-white rounded-full flex justify-center items-center"
                         style="box-shadow: -1px 2px 3px 0px rgba(0, 0, 0, 0.2);">
-                        <svg class="size-8 lg:size-11 text-[#e1a84f]" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                            viewBox="0 0 24 24">
+                        <svg class="size-8 lg:size-11 text-[#e1a84f]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                             <path
                                 d="M12.356 3.066a1 1 0 0 0-.712 0l-7 2.666A1 1 0 0 0 4 6.68a17.695 17.695 0 0 0 2.022 7.98 17.405 17.405 0 0 0 5.403 6.158 1 1 0 0 0 1.15 0 17.406 17.406 0 0 0 5.402-6.157A17.694 17.694 0 0 0 20 6.68a1 1 0 0 0-.644-.949l-7-2.666Z" />
                         </svg>

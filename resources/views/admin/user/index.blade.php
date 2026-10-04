@@ -164,7 +164,8 @@
                                 <div class="col-span-2 flex items-center justify-center">
                                     <ul class="w-[220px] lg:w-full flex flex-col items-center gap-4">
                                         <li class="flex justify-center">
-                                            <span onclick="controlUser('open',{{ $user }})"
+                                            <span
+                                                onclick="controlUser('open',{{ $user }}, {{ $user->roles->pluck('id') }})"
                                                 class="py-1 px-2 bg-blue-50 text-blue-600 border border-blue-300 text-xs rounded-md hover:bg-blue-100 cursor-pointer transition-all duration-300">بازبینی
                                                 و اصلاح</span>
                                         </li>
@@ -267,6 +268,17 @@
                             @enderror
                         </div>
                         <div class="w-1/2 flex flex-col gap-3 mt-5">
+                            <label for="roles" class="mb-2">
+                                <span>تعیین نقش : </span>
+                            </label>
+                            <select name="roles[]" id="roles" multiple size="1"
+                                class="w-full bg-[#F9F9F9] py-3 pr-5 rounded-[10px]">
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="w-1/2 flex flex-col gap-3 mt-5">
                             <label for="approvingStatus" class="mb-2">
                                 <span>وضعیت تایید : </span>
                             </label>
@@ -299,7 +311,7 @@
     </div>
     {{-- end editForm popup --}}
     <script>
-        function controlUser(state, user) {
+        function controlUser(state, user, roleIds) {
             let controlUserPopup = document.getElementById('controlUserPopup')
             if (state == 'open') {
                 controlUserPopup.classList.remove('invisible', 'opacity-0')
@@ -310,15 +322,23 @@
                 document.getElementById('popupNationalCode').value = user.nationalCode
                 let isActive = document.getElementById('isActive')
                 if (user.isActive) {
-                    isActive.setAttribute('checked', true)
+                    isActive.checked = true
                 }
                 if (!user.isActive) {
-                    isActive.removeAttribute('checked')
+                    isActive.checked = false
                 }
                 let options = document.getElementById('approvingStatus').options
                 for (let i = 0; i < options.length; i++) {
                     if (options[i].value == user.isApproved) {
-                        options[i].setAttribute('selected', true)
+                        options[i].selected = true
+                    }
+                }
+                let roles = document.getElementById('roles').options
+                for (let i = 0; i < roles.length; i++) {
+                    if (roleIds.includes(parseInt(roles[i].value))) {
+                        roles[i].selected = true
+                    } else {
+                        roles[i].selected = false
                     }
                 }
             }

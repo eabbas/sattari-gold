@@ -174,6 +174,20 @@
                             @enderror
                         </div>
                         <div class="w-full flex flex-col">
+                            <label for="nationalCode" class="mb-2 flex flex-row items-center">
+                                <span>
+                                    کد ملی :
+                                    <span class="text-rose-500">*</span>
+                                </span>
+                            </label>
+                            <input type="text"
+                                class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]"
+                                name="nationalCode" id="nationalCode" placeholder="1234567890">
+                            @error('nationalCode')
+                                <span class="text-xs text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="w-full flex flex-col">
                             <label for="password" class="mb-2">
                                 <span>
                                     رمز عبور :
@@ -183,19 +197,6 @@
                                 class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]"
                                 name="password" id="password">
                             @error('password')
-                                <span class="text-xs text-red-500">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="w-full flex flex-col">
-                            <label for="email" class="mb-2">
-                                <span>
-                                    ایمیل :
-                                </span>
-                            </label>
-                            <input type="text"
-                                class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]"
-                                name="email" id="email" placeholder="example@gmail.com">
-                            @error('email')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
@@ -234,7 +235,7 @@
                 let name = document.getElementById('name')
                 let family = document.getElementById('family')
                 let phoneNumber = document.getElementById('phoneNumber')
-                let email = document.getElementById('email')
+                let nationalCode = document.getElementById('nationalCode')
                 let imgContainer = document.getElementById('imgContainer')
                 $.ajaxSetup({
                     headers: {
@@ -253,7 +254,7 @@
                         name.value = data.name
                         family.value = data.family
                         phoneNumber.value = data.phoneNumber
-                        email.value = data.email
+                        nationalCode.value = data.nationalCode
                         imgContainer.innerHTML = ''
                         if (data.mainImage) {
                             let div = document.createElement('div')
