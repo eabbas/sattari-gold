@@ -130,25 +130,25 @@ class UserController extends Controller
         if (!$flag) {
             $code = rand(1000, 10000);
             PhoneCode::upsert(['phoneNumber' => $request->phoneNumber, 'code' => $code], ['phoneNumber'], ['code']);
-            // $ch = curl_init('https://api.iranpayamak.com/ws/v1/sms/pattern');
-            // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-            // curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            //     'Accept: application/json',
-            //     'Api-Key: M1MIQPQ9s85i6dxdzTeRGx9t87AtRQJlXNiu01e7awuQz94TkI',
-            //     'Content-Type: application/json'
-            // ]);
-            // $payload = [
-            //     'code' => '7fvdx77gveizxqn',
-            //     'attributes' => [
-            //         'activation_code' => $code,
-            //     ],
-            //     'recipient' => $request->phoneNumber,
-            //     'line_number' => '50002178584000',
-            //     'number_format' => 'english'
-            // ];
-            // curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
-            // $response = curl_exec($ch);
+            $ch = curl_init('https://api.iranpayamak.com/ws/v1/sms/pattern');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Accept: application/json',
+                'Api-Key: M1MIQPQ9s85i6dxdzTeRGx9t87AtRQJlXNiu01e7awuQz94TkI',
+                'Content-Type: application/json'
+            ]);
+            $payload = [
+                'code' => '7fvdx77gveizxqn',
+                'attributes' => [
+                    'activation_code' => $code,
+                ],
+                'recipient' => $request->phoneNumber,
+                'line_number' => '50002178584000',
+                'number_format' => 'english'
+            ];
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+            $response = curl_exec($ch);
         }
         return response()->json($flag);
     }
@@ -162,25 +162,25 @@ class UserController extends Controller
         if ($flag) {
             $code = rand(1000, 10000);
             PhoneCode::upsert(['phoneNumber' => $request->phoneNumber, 'code' => $code], ['phoneNumber'], ['code']);
-            // $ch = curl_init('https://api.iranpayamak.com/ws/v1/sms/pattern');
-            // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-            // curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            //     'Accept: application/json',
-            //     'Api-Key: M1MIQPQ9s85i6dxdzTeRGx9t87AtRQJlXNiu01e7awuQz94TkI',
-            //     'Content-Type: application/json'
-            // ]);
-            // $payload = [
-            //     'code' => '7fvdx77gveizxqn',
-            //     'attributes' => [
-            //         'activation_code' => $code,
-            //     ],
-            //     'recipient' => $request->phoneNumber,
-            //     'line_number' => '50002178584000',
-            //     'number_format' => 'english'
-            // ];
-            // curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
-            // $response = curl_exec($ch);
+            $ch = curl_init('https://api.iranpayamak.com/ws/v1/sms/pattern');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Accept: application/json',
+                'Api-Key: M1MIQPQ9s85i6dxdzTeRGx9t87AtRQJlXNiu01e7awuQz94TkI',
+                'Content-Type: application/json'
+            ]);
+            $payload = [
+                'code' => '7fvdx77gveizxqn',
+                'attributes' => [
+                    'activation_code' => $code,
+                ],
+                'recipient' => $request->phoneNumber,
+                'line_number' => '50002178584000',
+                'number_format' => 'english'
+            ];
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+            $response = curl_exec($ch);
         }
         return response()->json($flag);
     }
@@ -303,9 +303,11 @@ class UserController extends Controller
     {
         $users = User::paginate(10);
         $logo = logo::first();
+        $roles = role::all();
         return view('admin.user.index', [
             'users' => $users,
-            'logo' => $logo
+            'logo' => $logo,
+            'roles' => $roles,
         ]);
     }
     public function delete(User $user)
@@ -344,6 +346,7 @@ class UserController extends Controller
                 'popupNationalCode.required' => 'پر کردن این فیلد الزامی است.',
             ]
         );
+        // dd($request->all());
         $user = User::find($request->user_id);
         $name = $user->name;
         $user->name = $request->popupName;
@@ -352,6 +355,15 @@ class UserController extends Controller
         $user->nationalCode = $request->popupNationalCode;
         $user->isActive = $request->isActive ?? 0;
         $user->isApproved = $request->approvingStatus;
+        if (isset($request['roles'])) {
+            user_role::where('user_id', $user->id)->delete();
+            foreach ($request['roles'] as $roleId) {
+                user_role::create([
+                    'user_id' => $user->id,
+                    'role_id' => $roleId,
+                ]);
+            }
+        }
         $user->save();
         return to_route('user.index')->with('message',  $name . ' به روزرسانی شد .');
     }
@@ -396,15 +408,19 @@ class UserController extends Controller
             [
                 'name' => ['required'],
                 'family' => ['required'],
-                'email' => ['nullable', 'email'],
-                'phoneNumber' => ['required'],
+                'phoneNumber' => ['required', 'min:11', 'max:11'],
+                'nationalCode' => ['required', 'min:10', 'max:10'],
                 'mainImage' => ['max:100'],
             ],
             [
                 'name.required' => 'پر کردن این فیلد الزامی است.',
                 'family.required' => 'پر کردن این فیلد الزامی است.',
                 'phoneNumber.required' => 'پر کردن این فیلد الزامی است.',
-                'email.email' => 'ساختار ایمیل را رعایت کنید.',
+                'phoneNumber.max' => 'شماره تلفن باید 11 رقمی باشد.',
+                'phoneNumber.min' => 'شماره تلفن باید 11 رقمی باشد.',
+                'nationalCode.max' => 'کد ملی باید 10 رقمی باشد.',
+                'nationalCode.min' => 'کد ملی باید 10 رقمی باشد.',
+                'nationalCode.required' => 'پر کردن این فیلد الزامی است.',
                 'mainImage.max' => 'حجم فایل نباید بیشتر از 100 کیلوبایت باشد.',
             ]
         );
@@ -426,12 +442,13 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->family = $request->family;
         $user->phoneNumber = $request->phoneNumber;
-        $user->email = $request->email;
+        $user->nationalCode = $request->nationalCode;
         if ($request->password) {
             $password = Hash::make($request->password);
             $user->password = $password;
         }
-        $user->mainImage = $img_path;
+        // ! بعد از افزودن امکان بارگذاری عکس برای کاربر خط زیر باید کار کند
+        // $user->mainImage = $img_path;
         $user->save();
         return redirect()->back()->with('message',  'پروفایل شما با موفقیت به روزرسانی شد.');
     }

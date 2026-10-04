@@ -15,7 +15,8 @@ class WalletController extends Controller
 {
     public function wallet(User $user)
     {
-        return view('user.user.wallet', ['user' => $user]);
+        $logo = logo::first();
+        return view('user.user.wallet', ['user' => $user, 'logo' => $logo]);
     }
     public function deposit(Request $request)
     {
@@ -110,7 +111,8 @@ class WalletController extends Controller
     }
     public function transactionsListSingle(User $user)
     {
-        return view('admin.user.transactionsListSingle', ['user' => $user]);
+        $logo = logo::first();
+        return view('admin.user.transactionsListSingle', ['user' => $user, 'logo' => $logo]);
     }
     public function submitChanges(Request $request)
     {
@@ -134,8 +136,7 @@ class WalletController extends Controller
                     $wallet->save();
                 }
                 if ($transaction['type'] == 'buy') {
-                    Log::info($transaction->deal);
-                    $transaction->deal->update(['isApproved'=>$item['isApproved']]);
+                    $transaction->deal->update(['isApproved' => $item['isApproved']]);
                 }
                 if ($transaction['type'] == 'sell') {
                     $transaction->deal->update(['isApproved'=>$item['isApproved']]);
