@@ -202,7 +202,7 @@
                 <div
                     class="w-full lg:w-4/12 bg-(--color-primary)/5 border-1 border-(--color-border-gold) rounded-lg  hidden md:flex flex-col items-center overflow-hidden">
                     <div class="w-full flex items-center gap-1 bg-gradient-to-l from-(--color-primary-light) via-inherit">
-                        <img class="w-33" src="{{ asset('assets/img/gold.png') }}" alt="">
+                        <img class="w-33" src="{{ asset('assets/img/gold.webp') }}" alt="">
                         <div class="flex flex-col gap-3">
                             <span class="text-lg font-bold">چرا شمش طلای 10 گرمی؟</span>
                             <span class="text-[14px] text-(--color-text-secondary) line-clamp-2">طلا مطمعن برای سرمایه
@@ -299,7 +299,7 @@
                             <span class="text-[14px] text-(--color-text-secondary) line-clamp-3">شمش های طلا با بالاترین
                                 استاندارد های بین‍‌المللی و تحت نظارت پارلمان ;با برسو با اططمینان سرمایه کذاری کنید</span>
                         </div>
-                        <img class="w-23 lg:w-33" src="{{ asset('assets/img/golde.png') }}" alt="">
+                        <img class="w-23 lg:w-33" src="{{ asset('assets/img/gold.webp') }}" alt="">
                     </div>
                     <div class="w-full py-4 flex items-center gap-5">
                         <div
