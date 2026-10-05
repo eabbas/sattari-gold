@@ -26,7 +26,7 @@
                 <p class="text-xs lg:text-sm text-gray-600 text-center mt-1.5">{{ $header->subTitle }}</p>
                 <div class="w-full flex justify-center items-center gap-4 pt-5">
                     <a href="{{ route($header->btnLink) }}"
-                        class="group flex justify-center items-center w-1/2 lg:w-1/3 gap-2 lg:gap-3 py-2 lg:py-3 rounded-full pl-6"
+                        class="group flex justify-center items-center w-1/2 lg:w-1/3 gap-1 py-2 lg:py-3 rounded-full"
                         style="background: #A56920;
                     background: linear-gradient(0deg, rgba(165, 105, 32, 1) 0%, rgba(227, 171, 90, 1) 100%);">
                         <svg class="w-[31px] h-[31px] text-white group-hover:translate-x-[10px] transition-all duration-300"
@@ -106,7 +106,7 @@
     <section class="2xl:container mx-auto w-full bg-[#fbf7f3] py-5 lg:py-10 relative overflow-hidden">
         <div class="w-11/12 mx-auto">
             <img src="./img/img.png" class="absolute w-1/4 h-full left-0 top-0 hidden lg:block" alt="">
-            <h2 class="text-md lg:text-2xl font-bold text-gray-800 mb-2">چرا گلدکس؟</h2>
+            <h2 class="text-md lg:text-2xl font-bold text-gray-800 mb-2">چرا ستاری گلد؟</h2>
             <span class="block text-sm lg:text-base text-gray-500">انتخاب هوشمندانه برای سرمایه گذاری</span>
             <div class="w-full lg:w-3/4 mt-5 grid gap-3 grid-cols-3 lg:grid-cols-6">
 
@@ -309,7 +309,7 @@
             <div class="w-full lg:w-[30%] relative h-80 rounded-xl overflow-hidden"
                 style="box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);">
                 <div class="w-full flex flex-col gap-3 p-5">
-                    <h3 class="text-sm lg:text-xl text-gray-800 font-bold">اپلیکیشن گلدکس</h3>
+                    <h3 class="text-sm lg:text-xl text-gray-800 font-bold">اپلیکیشن ستاری گلد</h3>
                     <span class="text-xs lg:text-sm font-bold text-gray-500">همیشه و همه جا</span>
                     <span class="text-xs lg:text-sm font-bold text-gray-500">کنار شما هستیم</span>
                 </div>
@@ -639,7 +639,7 @@
             <div class="w-full lg:w-[34%] relative h-40 lg:h-44 rounded-xl overflow-hidden"
                 style="box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);">
                 <div class="w-full flex flex-col gap-3 p-5">
-                    <h3 class="text-sm lg:text-xl text-gray-800 font-bold">خبرنامه گلدکس</h3>
+                    <h3 class="text-sm lg:text-xl text-gray-800 font-bold">خبرنامه ستاری گلد</h3>
                     <span class="text-xs lg:text-sm font-bold text-gray-500">جدید ترین اخبار طلای آبشده و سپرده</span>
                 </div>
                 <div class="flex items-center gap-4 px-5">
@@ -709,7 +709,7 @@
                         پاسخگوی سوالات شما هستیم
                     </p>
                     <p class="text-sm text-gray-600 font-bold w-2/3 mt-3 leading-[2]">
-                        پشتیبانی، مشاوره و همکاری با سامانه همیشه آنلاین گلدکس
+                        پشتیبانی، مشاوره و همکاری با سامانه همیشه آنلاین ستاری گلد
                     </p>
 
                 </div>

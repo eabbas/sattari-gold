@@ -45,10 +45,10 @@ class UserController extends Controller
             }
         }
         if (!$data['validate'] && $data['checkCode']) {
-            // $result = NationalCode::check($request->nationalCode, $request->phoneNumber);
-            // if ($result['data']) {
-            $data['match'] = true;
-            // }
+            $result = NationalCode::check($request->nationalCode, $request->phoneNumber);
+            if ($result['data']) {
+                $data['match'] = true;
+            }
         }
         return response()->json($data);
     }
@@ -235,7 +235,8 @@ class UserController extends Controller
             'nationalCode' => $request->nationalCode,
             'password' => $request->password,
         ]);
-        return to_route('user.login')->with('success', 'با موفقیت ثبت نام شدید لطفا وارد شوید.');
+        Auth::login($user);
+        return to_route('home')->with('success', "$user->name $user->family عزیز با موفقیت ثبت نام شدید.");
     }
     public function adminSignup()
     {
@@ -274,10 +275,10 @@ class UserController extends Controller
         if ($user) {
             return redirect()->back()->with('failure', 'این شماره قبلا ثبت شده است ، لطفا وارد شوید.');
         }
-        // $result = NationalCode::check($request->nationalCode, $request->phoneNumber);
-        // if (!$result['data']) {
-        //     return redirect()->back()->with('failure', 'شماره تلفن و کدملی باهم مطابقت ندارند.');
-        // }
+        $result = NationalCode::check($request->nationalCode, $request->phoneNumber);
+        if (!$result['data']) {
+            return redirect()->back()->with('failure', 'شماره تلفن و کدملی باهم مطابقت ندارند.');
+        }
         $user = User::create([
             'name' => $request->name,
             'family' => $request->family,
