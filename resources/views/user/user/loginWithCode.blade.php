@@ -45,7 +45,7 @@
         </div>
     </div>
     <main
-        class="max-w-[1700px] mx-auto bg-[url({{ asset('assets/img/bagrand.png') }})] bg-cover bg-center min-h-screen">
+        class="max-w-[1700px] mx-auto bg-[url({{ asset('assets/img/background.jpeg') }})] bg-cover bg-center min-h-screen">
         <section class="w-11/12 mx-auto flex items-center justify-between">
             <!-- بازگشت -->
             <a href="{{ route('home') }}"
@@ -106,7 +106,7 @@
                                 عبور</a>
                         </div>
                         <button onclick="checkAuth(event)"
-                            class="w-full flex items-center justify-center gap-x-1 text-md font-bold mt-5 py-3 rounded-lg text-white bg-[image:var(--gradient-gold)] hover:opacity-85 transition">
+                            class="cursor-pointer w-full flex items-center justify-center gap-x-1 text-md font-bold mt-5 py-3 rounded-lg text-white bg-[image:var(--gradient-gold)] hover:opacity-85 transition">
                             ورود
                         </button>
                         <div class="flex items-center justify-center gap-x-2 mt-3">

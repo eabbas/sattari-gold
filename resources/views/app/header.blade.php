@@ -27,18 +27,16 @@
     <header class="fixed top-0 right-0 w-full flex justify-center py-4 transition-all duration-300 z-999" id="mainHeader">
         <div class="2xl:container w-full mx-auto">
             <div class="w-11/12 mx-auto flex items-center justify-between">
-                <div class="flex gap-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-8 fill-[#c39862] lg:hidden" id="hamburgerMenu"
-                        viewBox="0 0 448 512">
-                        <path
-                            d="M0 88C0 74.7 10.7 64 24 64H424c13.3 0 24 10.7 24 24s-10.7 24-24 24H24C10.7 112 0 101.3 0 88zM0 248c0-13.3 10.7-24 24-24H424c13.3 0 24 10.7 24 24s-10.7 24-24 24H24c-13.3 0-24-10.7-24-24zM448 408c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24s10.7-24 24-24H424c13.3 0 24 10.7 24 24z" />
-                    </svg>
-                    @if ($logo)
-                        <a href="{{ route($logo->link) }}">
-                            <img src="{{ asset('storage/' . $logo->logo) }}" class="w-20 lg:w-24" alt="">
-                        </a>
-                    @endif
-                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 fill-[#c39862] lg:hidden cursor-pointer"
+                    id="hamburgerMenu" viewBox="0 0 448 512">
+                    <path
+                        d="M0 88C0 74.7 10.7 64 24 64H424c13.3 0 24 10.7 24 24s-10.7 24-24 24H24C10.7 112 0 101.3 0 88zM0 248c0-13.3 10.7-24 24-24H424c13.3 0 24 10.7 24 24s-10.7 24-24 24H24c-13.3 0-24-10.7-24-24zM448 408c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24s10.7-24 24-24H424c13.3 0 24 10.7 24 24z" />
+                </svg>
+                @if ($logo)
+                    <a href="{{ route($logo->link) }}">
+                        <img src="{{ asset('storage/' . $logo->logo) }}" class="size-15" alt="">
+                    </a>
+                @endif
                 <ul class="hidden lg:flex justify-center items-center gap-7">
                     {{-- @foreach ($menus as $index => $menu)
                         @if ($index == 0)
@@ -54,7 +52,7 @@
                         @endif
                     @endforeach --}}
                     <li>
-                        <a href="#"
+                        <a href="{{ route('home') }}"
                             class="relative py-4 px-2 text-sm font-bold after:absolute after:content-[''] after:min-w-full after:transition-all after:duration-300 after:h-0.75 after:rounded-full after:bg-[#c3924d] after:bottom-0 after:right-0 transition-all duration-300 hover:text-[#C3924D] text-[#c3924d]">خانه</a>
                     </li>
                     <li class="relative drop_down">
@@ -87,19 +85,6 @@
                     </li>
                     <li>
                         <a href="#"
-                            class="relative py-4 px-2 text-sm font-bold text-gray-700 after:absolute after:content-[''] after:min-w-0 after:transition-all after:duration-300 after:h-0.75 after:rounded-full after:bg-[#c3924d] after:bottom-0 after:right-0 hover:after:min-w-full transition-all duration-300 hover:text-[#C3924D]">خدمات</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="relative py-4 px-2 text-sm font-bold text-gray-700 after:absolute after:content-[''] after:min-w-0 after:transition-all after:duration-300 after:h-0.75 after:rounded-full after:bg-[#c3924d] after:bottom-0 after:right-0 hover:after:min-w-full transition-all duration-300 hover:text-[#C3924D]">تجزیه
-                            و تحلیل</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="relative py-4 px-2 text-sm font-bold text-gray-700 after:absolute after:content-[''] after:min-w-0 after:transition-all after:duration-300 after:h-0.75 after:rounded-full after:bg-[#c3924d] after:bottom-0 after:right-0 hover:after:min-w-full transition-all duration-300 hover:text-[#C3924D]">همکاری</a>
-                    </li>
-                    <li>
-                        <a href="#"
                             class="relative py-4 px-2 text-sm font-bold text-gray-700 after:absolute after:content-[''] after:min-w-0 after:transition-all after:duration-300 after:h-0.75 after:rounded-full after:bg-[#c3924d] after:bottom-0 after:right-0 hover:after:min-w-full transition-all duration-300 hover:text-[#C3924D]">درباره
                             ما</a>
                     </li>
@@ -125,7 +110,7 @@
                             </svg>
                         </a>
                     @endif
-                    <button id="openSearchSectionBtn" class="cursor-pointer hidden lg:inline-block">
+                    <button id="openSearchSectionBtn" class="cursor-pointer inline-block">
                         <svg class="w-[20px] h-[20px] text-gray-800 " aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                             viewBox="0 0 24 24">
@@ -173,30 +158,32 @@
                         </a>
                     @endif
                 </div>
-                <ul class="w-full p-5">
-                    <li>
-                        <a href="#"
+                <ul class="w-full p-5 flex flex-col items-start gap-5">
+                    <li class="w-full">
+                        <a href="{{ route('home') }}"
                             class="text-[#c3924d] text-sm font-bold py-3 block border-b-1 border-[#c3924d]/30">خانه</a>
                     </li>
-                    <li>
-                        <a href="#"
-                            class="text-gray-800 text-sm font-bold py-3 block border-b-1 border-[#c3924d]/30">قیمت لحظه
-                            ای</a>
+                    <li class="w-full border-b-1 border-[#c3924d]/30">
+                        <div class="w-full cursor-pointer flex items-center gap-4 menu_item">
+                            <span class="text-gray-800 text-sm font-bold py-3 block ">دسته
+                                بندی</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                                class="size-4 fill-[#c3924d] transition-all duration-300">
+                                <path
+                                    d="M241 337c-9.4 9.4-24.6 9.4-33.9 0L47 177c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l143 143L367 143c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9L241 337z">
+                                </path>
+                            </svg>
+                        </div>
+                        <ul class="space-y-3 text-gray-700 max-h-0 overflow-auto mr-5 transition-all duration-300">
+                            @foreach ($categories as $category)
+                                <li>
+                                    <a
+                                        href="{{ route('search.relatedProducts', [$category]) }}">{{ $category->title }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
                     </li>
-                    <li>
-                        <a href="#"
-                            class="text-gray-800 text-sm font-bold py-3 block border-b-1 border-[#c3924d]/30">خدمات</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="text-gray-800 text-sm font-bold py-3 block border-b-1 border-[#c3924d]/30">تجزیه و
-                            تحلیل</a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="text-gray-800 text-sm font-bold py-3 block border-b-1 border-[#c3924d]/30">همکاری</a>
-                    </li>
-                    <li>
+                    <li class="w-full">
                         <a href="#"
                             class="text-gray-800 text-sm font-bold py-3 block border-b-1 border-[#c3924d]/30">درباره
                             ما</a>

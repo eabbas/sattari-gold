@@ -55,6 +55,26 @@ document.addEventListener('click', (e) => {
    }
 })
 
+let menu_items = document.querySelectorAll('.menu_item')
+menu_items.forEach(menu => {
+   menu.addEventListener('click', function () {
+      if (menu.nextElementSibling.classList.contains('max-h-0')) {
+         menu_items.forEach(element => {
+            element.children[1].classList.remove('rotate-180')
+            element.nextElementSibling.classList.add('max-h-0')
+            element.nextElementSibling.classList.remove('max-h-40')
+         });
+         menu.children[1].classList.add('rotate-180')
+         menu.nextElementSibling.classList.remove('max-h-0')
+         menu.nextElementSibling.classList.add('max-h-40')
+      } else {
+         menu.children[1].classList.remove('rotate-180')
+         menu.nextElementSibling.classList.add('max-h-0')
+         menu.nextElementSibling.classList.remove('max-h-40')
+      }
+   })
+});
+
 let modals = document.querySelectorAll('.modal');
 modals.forEach(modal => {
    setTimeout(() => {

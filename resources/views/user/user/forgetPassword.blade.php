@@ -44,7 +44,7 @@
         </div>
     </div>
     <main
-        class="max-w-[1700px] mx-auto bg-[url({{ asset('assets/img/bagrand.png') }})] bg-cover bg-center min-h-screen">
+        class="max-w-[1700px] mx-auto bg-[url({{ asset('assets/img/background.jpeg') }})] bg-cover bg-center min-h-screen">
         <section class="w-11/12 mx-auto flex items-center justify-between">
             <!-- بازگشت -->
             <a href="{{ route('home') }}"

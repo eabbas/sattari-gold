@@ -45,7 +45,7 @@
         </div>
     @endif
     <main
-        class="max-w-[1700px] mx-auto bg-[url({{ asset('assets/img/bagrand.png') }})] bg-cover bg-center min-h-screen">
+        class="max-w-[1700px] mx-auto bg-[url({{ asset('assets/img/background.jpeg') }})] bg-cover bg-center min-h-screen">
         <section class="w-11/12 mx-auto flex items-center justify-between">
             <a href="{{ route('home') }}"
                 class="text-(--color-primary) px-4 py-2 border-1 border-(--color-border-gold) flex items-center justify-center mt-10 rounded-full">
@@ -125,7 +125,7 @@
                             </div>
                         </div>
                         <button onclick="checkAuth(event)"
-                            class="w-full flex items-center justify-center gap-x-1 text-md font-bold mt-5 py-3 rounded-lg text-white bg-[image:var(--gradient-gold)] hover:opacity-85 transition">
+                            class="cursor-pointer w-full flex items-center justify-center gap-x-1 text-md font-bold mt-5 py-3 rounded-lg text-white bg-[image:var(--gradient-gold)] hover:opacity-85 transition">
                             ثبت نام
                         </button>
                         <div class="flex items-center justify-center gap-x-2 mt-3">
