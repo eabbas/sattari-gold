@@ -11,7 +11,9 @@ let filterSection = document.getElementById('filterSection')
 let filterBg = document.getElementById('filterBg')
 let chips = document.getElementById('chips')
 let resetFilters = document.getElementById('resetFilters')
-
+let timeout
+let searchInp = document.getElementById('searchInp')
+let title = document.getElementById('title')
 function getFilters() {
     $.ajax({
         url: api + 'getFilters',
@@ -102,12 +104,26 @@ categories.forEach(category => {
     })
 })
 minPrice.addEventListener('keyup', () => {
-    filters.fromPrice = minPrice.value
-    getFilters()
+    clearTimeout(timeout)
+    timeout = setTimeout(()=>{
+        filters.fromPrice = minPrice.value
+        getFilters()
+    }, 500)
 })
 maxPrice.addEventListener('keyup', () => {
-    filters.toPrice = maxPrice.value
-    getFilters()
+    clearTimeout(timeout)
+    timeout = setTimeout(()=>{
+        filters.toPrice = maxPrice.value
+        getFilters()
+    }, 500)
+})
+searchInp.addEventListener('keyup', () => {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => {
+        title.innerText = 'نتایج جستجو برای "' + searchInp.value + '"'
+        filters.keyword = searchInp.value
+        getFilters()
+    }, 500)
 })
 // searchButton.addEventListener('click', ()=>{
 //     filters.keyword = searchInput.value
