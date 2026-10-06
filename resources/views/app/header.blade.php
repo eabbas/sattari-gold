@@ -101,7 +101,7 @@
                         </a>
                     @endif
                     @if (Auth::check())
-                        <a href="{{ route('user.profile') }}" class="lg:inline-block hidden">
+                        <a href="{{ route('user.profile') }}">
                             <svg class="w-[31px] h-[31px] text-gray-800" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
@@ -128,7 +128,7 @@
                 class="w-full py-3 px-5 bg-white relative -translate-y-full transition-all duration-500">
                 @csrf
                 <svg xmlns="http://www.w3.org/2000/svg"
-                    class="w-4 lg:w-6 fill-gray-500 cursor-pointer absolute right-10 top-1/2 -translate-y-1/2"
+                    class="w-4 lg:w-6 fill-gray-500 cursor-pointer absolute right-10 top-1/2 -translate-y-1/2 max-md:hidden"
                     viewBox="0 0 448 512">
                     <path
                         d="M440.6 273.4c4.7-4.5 7.4-10.8 7.4-17.4s-2.7-12.8-7.4-17.4l-176-168c-9.6-9.2-24.8-8.8-33.9 .8s-8.8 24.8 .8 33.9L364.1 232 24 232c-13.3 0-24 10.7-24 24s10.7 24 24 24l340.1 0L231.4 406.6c-9.6 9.2-9.9 24.3-.8 33.9s24.3 9.9 33.9 .8l176-168z" />
@@ -136,7 +136,7 @@
                 <div
                     class="w-11/12 lg:w-10/12 mx-auto flex items-center gap-2 lg:gap-3.5 border-1 py-1.5 px-3 border-gray-200 rounded-full">
                     <input type="text" name="title" class="w-full py-1 outline-none" placeholder="جستجو ..."
-                        id="">
+                        id="" required>
                     <button>
                         <svg xmlns="http://www.w3.org/2000/svg" class="fill-gray-400 w-4 lg:w-6" viewBox="0 0 512 512">
                             <path

@@ -29,10 +29,10 @@
                 </div>
                 <div class="w-full flex justify-center lg:justify-normal gap-4">
                     <a href="#" class="block">
-                        <img src="./img/enamad.png" class="max-w-28 rounded-xl" alt="">
+                        <img src="{{ asset('assets/img/enamad.png') }}" class="max-w-28 rounded-xl" alt="">
                     </a>
                     <a href="#" class="block">
-                        <img src="./img/enamad.png" class="max-w-28 rounded-xl" alt="">
+                        <img src="{{ asset('assets/img/enamad.png') }}" class="max-w-28 rounded-xl" alt="">
                     </a>
                 </div>
             </div>
@@ -76,7 +76,11 @@
             </div>
             <div class="lg:w-1/4 w-full flex flex-col items-center lg:items-end justify-center gap-4 lg:gap-8">
                 <a href="#" class="w-1/2 gap-3 flex flex-col justify-center items-center">
-                    <img src="./img/logo.png" class="w-full" alt="">
+                    @if ($logo)
+                        <a href="{{ route($logo->link) }}">
+                            <img src="{{ asset('storage/' . $logo->logo) }}" class="w-20 lg:w-24" alt="">
+                        </a>
+                    @endif
                     <span class="text-white font-bold">Sattari Gold</span>
                 </a>
                 <p class="text-xs text-white flex items-center gap-1 mt-10 lg:hidden">

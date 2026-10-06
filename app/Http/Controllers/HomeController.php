@@ -36,6 +36,11 @@ class HomeController extends Controller
             } else {
                 $product['mainImg'] = 'default.jpg';
             }
+            if ($product->secondary_price) {
+                $campare = $product->primary_price - $product->secondary_price;
+                $x = $campare / $product->primary_price;
+                $product->percent = intval($x * 100);
+            }
         }
         // return $products;
         return view('home', [
