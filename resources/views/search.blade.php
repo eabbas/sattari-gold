@@ -4,12 +4,14 @@
     <main class="max-w-[1280px] mx-auto my-4 md:my-6 px-3 md:px-5">
         <div class="text-[#71717a] text-xs mb-[18px]">خانه / <b class="text-[#333]">جستجو</b></div>
 
-        <div class="flex items-end justify-between gap-2.5 mb-[18px]">
-            <div>
-                <h1 id="title" class="m-0 text-[18px] md:text-[22px]">نتایج جستجو برای "{{ $title }}"</h1>
-                <div id="resultCount" class="text-[#71717a] text-[13px]"></div>
+        @if (isset($title))
+            <div class="flex items-end justify-between gap-2.5 mb-[18px]">
+                <div>
+                    <h1 id="title" class="m-0 text-[18px] md:text-[22px]">نتایج جستجو برای "{{ $title }}"</h1>
+                    <div id="resultCount" class="text-[#71717a] text-[13px]"></div>
+                </div>
             </div>
-        </div>
+        @endif
 
         <div class="grid grid-cols-1 md:grid-cols-[250px_1fr] gap-[18px]">
             <div class="fixed w-full h-dvh bg-black/50 z-99 top-0 right-0 md:hidden invisible opacity-0 transition-all duration-300"

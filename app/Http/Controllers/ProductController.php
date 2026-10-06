@@ -274,26 +274,30 @@ class ProductController extends Controller
     }
     public function index()
     {
-        $categories = category::with('products')->has('products')->get();
+        // $title = $request->input('title');
         $products = product::all();
+        $categories = category::with('products')->has('products')->get();
         foreach ($products as $product) {
             if ($product->media->isNotEmpty()) {
                 foreach ($product->media as $media) {
-                    if ($media['is_main']) {
-                        $product['mainImg']  = $media['media_path'];
+                    if ($media->is_main) {
+                        $product->image  = $media->media_path;
                         break;
                     } else {
-                        $product['mainImg'] = 'default.jpg';
+                        $product->image = 'default.jpg';
                     }
                 }
             } else {
-                $product['mainImg'] = 'default.jpg';
+                $product->image = 'default.jpg';
+            }
+            if ($product->secondary_price) {
+                $campare = $product->primary_price - $product->secondary_price;
+                $x = $campare / $product->primary_price;
+                $product->percent = intval($x * 100);
             }
         }
-        return view('user.product.index', [
-            'categories' => $categories,
-            'products' => $products,
-        ]);
+        $logo = logo::first();
+        return view('search', ['products' => $products, 'categories' => $categories, 'logo' => $logo]);
     }
     public function filter(Request $request)
     {
