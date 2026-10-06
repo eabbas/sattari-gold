@@ -17,7 +17,7 @@
     /* =========================
      BACKGROUND COLORS
   ========================= */
-    --color-bg: #F7F3EB;
+    --color-bg: #F7F3EB;;
     --color-bg-soft: #F1E9DC;
     --color-surface: #FFFFFF;
     --color-surface-hover: #FCF8F0;
@@ -116,7 +116,11 @@
     --transition-fast: 150ms ease;
     --transition-normal: 250ms ease;
 }
-
+body {
+  font-family: var(--font-family);
+  background: var(--color-bg);
+  color: var(--color-text);
+}
 .shadow-1 {
     box-shadow: 0 0 3px 3px rgba(201, 149, 50, 0.22);
 }
