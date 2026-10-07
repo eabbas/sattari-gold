@@ -11,12 +11,13 @@ use App\Http\Controllers\WalletController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\DealController;
 use App\Http\Middleware\checkAdminMiddleware;
+use App\Http\Middleware\checkIsActive;
 use App\Http\Middleware\checklogin;
 use Illuminate\Support\Facades\Route;
 
 use App\Models\transaction;
 
-Route::get('/test', function(){
+Route::get('/test', function () {
     $data = transaction::latest()->first();
     $dateTime = explode(' ', $data->created_at);
     $dateJalali = verta($dateTime[0]);
@@ -38,7 +39,6 @@ Route::group([
     Route::get('/login', 'login')->name('login');
     Route::get('/loginWithCode', 'loginWithCode')->name('loginWithCode');
     Route::post('/checkUser', 'checkUser')->name('checkUser');
-    Route::post('/checkUserWithCode', 'checkUserWithCode')->name('checkUserWithCode');
     Route::post('/checkUserPopup', 'checkUserPopup')->name('checkUserPopup');
     Route::post('/validate', 'validate')->name('validate');
     Route::post('/search', 'search')->name('search');
@@ -156,13 +156,17 @@ Route::group([
     'controller' => WalletController::class,
     'as' => 'wallet.',
 ], function () {
-    Route::get('/user/{user}', 'wallet')->name('wallet');
-    Route::post('/deposit', 'deposit')->name('deposit');
-    Route::post('/withdraw', 'withdraw')->name('withdraw');
+    Route::get('/user/{user}', 'wallet')->missing(function () {
+        return to_route('missing');
+    })->middleware(checklogin::class)->name('wallet');
+    Route::post('/deposit', 'deposit')->middleware(checkIsActive::class)->name('deposit');
+    Route::post('/withdraw', 'withdraw')->middleware(checkIsActive::class)->name('withdraw');
     Route::post('/transactions', 'transactions')->name('transactions');
     Route::get('/transactions/list', 'transactionsList')->middleware(checkAdminMiddleware::class)->name('transactionsList');
-    Route::get('/transactions/user/{user}', 'transactionsListSingle')->middleware(checkAdminMiddleware::class)->name('transactionsListSingle');
-    Route::post('/submitChanges', 'submitChanges')->name('submitChanges');
+    Route::get('/transactions/user/{user}', 'transactionsListSingle')->missing(function () {
+        return to_route('missing');
+    })->middleware(checkAdminMiddleware::class)->name('transactionsListSingle');
+    Route::post('/submitChanges', 'submitChanges')->middleware(checkAdminMiddleware::class)->name('submitChanges');
 });
 
 // search routes
@@ -179,11 +183,11 @@ Route::group([
 
 // deal routes
 Route::group([
-    'prefix'=>'deal',
-    'controller'=>DealController::class,
-    'middleware'=>[checklogin::class],
-    'as'=>'deal.'
-], function(){
+    'prefix' => 'deal',
+    'controller' => DealController::class,
+    'middleware' => [checklogin::class],
+    'as' => 'deal.'
+], function () {
     Route::get('/create', 'create')->name('create');
     Route::post('/store', 'store')->name('store');
     Route::get('/edit/{deal}', 'edit')->name('edit');

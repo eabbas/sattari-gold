@@ -274,8 +274,7 @@ class ProductController extends Controller
     }
     public function index()
     {
-        // $title = $request->input('title');
-        $products = product::all();
+        $products = product::paginate(10);
         $categories = category::with('products')->has('products')->get();
         foreach ($products as $product) {
             if ($product->media->isNotEmpty()) {

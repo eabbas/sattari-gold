@@ -52,12 +52,6 @@ class UserController extends Controller
         }
         return response()->json($data);
     }
-    public function checkUserWithCode(Request $request)
-    {
-        $user = User::where('phoneNumber', $request['phoneNumber'])->first();
-        Auth::login($user);
-        return to_route('home')->with('success', "$user->name $user->family عزیز خوش آمدید.");
-    }
     public function checkUser(Request $request)
     {
         $user = User::where('phoneNumber', $request['phoneNumber'])->first();
@@ -235,8 +229,7 @@ class UserController extends Controller
             'nationalCode' => $request->nationalCode,
             'password' => $request->password,
         ]);
-        Auth::login($user);
-        return to_route('home')->with('success', "$user->name $user->family عزیز با موفقیت ثبت نام شدید.");
+        return to_route('user.login')->with('success', "$user->name $user->family عزیز با موفقیت ثبت نام شدید لطفا وارد شوید.");
     }
     public function adminSignup()
     {
@@ -455,21 +448,23 @@ class UserController extends Controller
     }
     public function search(Request $request)
     {
+        $roles = role::all();
+        $logo = logo::first();
         if ($request->activity == 'all' && $request->approve == 'all') {
             $users = User::where('name', 'like', '%' . $request['name'] . '%')->where('family', 'like', '%' . $request['family'] . '%')->where('phoneNumber', 'like', '%' . $request['phoneNumber'] . '%')->where('nationalCode', 'like', '%' . $request['nationalCode'] . '%')->paginate(10);
-            return view('admin.user.index', ['users' => $users]);
+            return view('admin.user.index', ['users' => $users, 'roles' => $roles, 'logo' => $logo]);
         }
         if ($request->activity != 'all' && $request->approve != 'all') {
             $users = User::where('name', 'like', '%' . $request['name'] . '%')->where('family', 'like', '%' . $request['family'] . '%')->where('phoneNumber', 'like', '%' . $request['phoneNumber'] . '%')->where('nationalCode', 'like', '%' . $request['nationalCode'] . '%')->where('isActive', $request['activity'])->where('isApproved', $request['approve'])->paginate(10);
-            return view('admin.user.index', ['users' => $users]);
+            return view('admin.user.index', ['users' => $users, 'roles' => $roles, 'logo' => $logo]);
         }
         if ($request->activity != 'all') {
             $users = User::where('name', 'like', '%' . $request['name'] . '%')->where('family', 'like', '%' . $request['family'] . '%')->where('phoneNumber', 'like', '%' . $request['phoneNumber'] . '%')->where('nationalCode', 'like', '%' . $request['nationalCode'] . '%')->where('isActive', $request['activity'])->paginate(10);
-            return view('admin.user.index', ['users' => $users]);
+            return view('admin.user.index', ['users' => $users, 'roles' => $roles, 'logo' => $logo]);
         }
         if ($request->approve != 'all') {
             $users = User::where('name', 'like', '%' . $request['name'] . '%')->where('family', 'like', '%' . $request['family'] . '%')->where('phoneNumber', 'like', '%' . $request['phoneNumber'] . '%')->where('nationalCode', 'like', '%' . $request['nationalCode'] . '%')->where('isApproved', $request['approve'])->paginate(10);
-            return view('admin.user.index', ['users' => $users]);
+            return view('admin.user.index', ['users' => $users, 'roles' => $roles, 'logo' => $logo]);
         }
     }
     public function removeActivationCode(Request $request)

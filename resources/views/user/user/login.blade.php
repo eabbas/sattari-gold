@@ -44,7 +44,7 @@
             <a href="{{ route('home') }}"
                 class="text-(--color-primary) px-4 py-2 border-1 border-(--color-border-gold) flex items-center justify-center mt-10 rounded-full">
                 <svg fill="currentColor" class="group-hover:-translate-x-1 transition size-5 rotate-180"
-                    xmlns="http://www.w3.org/2000/svg" width="" height="" viewBox="0 0 256 256">
+                    viewBox="0 0 256 256">
                     <path
                         d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z">
                     </path>
@@ -130,6 +130,15 @@
                 </div>
             </div>
         </section>
+        {{-- loader --}}
+        <div id="loader"
+            class="w-full h-full bg-black/50 fixed top-0 right-0 z-999 flex items-center justify-center transition-all duration-300 invisible opacity-0">
+            <div class="p-10 bg-white shadow-xl rounded-lg flex flex-col items-center gap-10">
+                <span class="w-20 h-20 animate-spin rounded-full border-4 border-yellow-100 border-t-yellow-600"></span>
+                <p class="text-gray-600 font-bold text-xl">در حال بارگذاری لطفا شکیبا باشید....</p>
+            </div>
+        </div>
+        {{-- loader --}}
     </main>
 
     <script>
@@ -155,6 +164,7 @@
                     showMessage('close')
                 }, 2000)
             } else {
+                loader('open')
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -170,6 +180,7 @@
                         'password': password.value
                     },
                     success: function(data) {
+                        loader('close')
                         if (!data.validate) {
                             showMessage('open')
                             element.innerHTML = `
@@ -237,6 +248,17 @@
                 message.classList.add('invisible')
             }
         }
+
+        function loader(state) {
+            let loader = document.getElementById('loader')
+            if (state == 'open') {
+                loader.classList.remove('invisible', 'opacity-0')
+            }
+            if (state == 'close') {
+                loader.classList.add('invisible', 'opacity-0')
+            }
+        }
+
         let modals = document.querySelectorAll('.modal');
         modals.forEach(modal => {
             setTimeout(() => {
