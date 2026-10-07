@@ -16,24 +16,33 @@
                     <img src="{{ asset('/assets/img/user.png') }}" alt="" class="size-full rounded-full">
                 @endif
             </div>
-            @switch($user->isApproved)
-                @case(0)
-                    <span
-                        class="text-xs text-yellow-500 bg-yellow-50 border border-yellow-300 hover:bg-yellow-100 py-1 px-3 rounded-full">در
-                        انتظار تایید</span>
-                @break
+            <div class="flex items-center gap-5">
+                @switch($user->isApproved)
+                    @case(0)
+                        <span
+                            class="text-xs text-yellow-500 bg-yellow-50 border border-yellow-300 hover:bg-yellow-100 py-1 px-3 rounded-full">در
+                            انتظار تایید</span>
+                    @break
 
-                @case(1)
-                    <span
-                        class="text-xs text-green-500 bg-green-50 border border-green-300 hover:bg-green-100 py-1 px-3 rounded-full">تایید
-                        شده </span>
-                @break
+                    @case(1)
+                        <span
+                            class="text-xs text-green-500 bg-green-50 border border-green-300 hover:bg-green-100 py-1 px-3 rounded-full">تایید
+                            شده </span>
+                    @break
 
-                @case(-1)
-                    <span class="text-xs text-red-500 bg-red-50 border border-red-300 hover:bg-red-100 py-1 px-3 rounded-full">رد
-                        شده</span>
-                @break
-            @endswitch
+                    @case(-1)
+                        <span
+                            class="text-xs text-red-500 bg-red-50 border border-red-300 hover:bg-red-100 py-1 px-3 rounded-full">رد
+                            شده</span>
+                    @break
+                @endswitch
+                @if ($user->isActive)
+                    <span class="text-xs text-gray-50 bg-gray-400 border border-gray-300 py-1 px-3 rounded-md">فعال</span>
+                @else
+                    <span class="text-xs text-gray-400 bg-gray-50 border border-gray-300 py-1 px-3 rounded-md">غیر
+                        فعال</span>
+                @endif
+            </div>
             <h1 class="mt-6 text-xl sm:text-4xl font-bold text-slate-800">{{ $user->name }} {{ $user->family }}</h1>
             <p class="mt-2 text-sm sm:text-lg text-slate-500">
                 @foreach ($user['persianRoles'] as $index => $role)
