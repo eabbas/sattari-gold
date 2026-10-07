@@ -115,6 +115,47 @@
   ========================= */
     --transition-fast: 150ms ease;
     --transition-normal: 250ms ease;
+
+      /* Typography */
+        --text-primary: #2A1B08;
+        --text-secondary: #716859;
+        --text-muted: #ACA293;
+
+        /* Borders */
+        --border-light: #E7DFD4;
+        --border: #E7E8EA;
+
+        /* Shadows */
+        --shadow-color: rgba(80, 51, 14, 0.08);
+
+        --active: #2AA261;
+        --disactive: #f95e7b;
+
+        --color_product: #DECCAD;
+
+
+
+        --primary-dashbrd: #18A878;
+        --primary-dark-dashbrd: #12845F;
+        --primary-light-dashbrd: #E8F8F2;
+
+        --secondary-dashbrd: #F4F7F6;
+
+        --background-dashbrd: #F8FAF9;
+        --color-surface-dashbrd: #FFFFFF;
+
+        --text-primary-dashbrd: #20252B;
+        --text-secondary-dashbrd: #6F777D;
+        --text-muted-dashbrd: #A0A7AC;
+
+        --border-dashbrd: #dfdfdf;
+
+        /* Status */
+        --success-dashbrd: #18A878;
+        --warning-dashbrd: #F5A623;
+        --danger-dashbrd: #E85D5D;
+        --info-dashbrd: #4A90E2;
+
 }
 body {
   font-family: var(--font-family);
@@ -529,3 +570,22 @@ td {
         transform: translate(13px, -13px);
     }
 }
+
+
+
+
+     .transition_fast {
+        transition: all 0.2s ease;
+    }
+
+    .transition_normal {
+        transition: all 0.3s ease;
+    }
+
+    .transition_slow {
+        transition: all 0.5s ease;
+    }
+
+    .cart_shadow {
+        box-shadow: 0 0 10px 4px rgb(239, 238, 238);
+    }
