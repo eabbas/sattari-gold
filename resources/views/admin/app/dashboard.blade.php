@@ -93,6 +93,7 @@
                 </div> -->
                 <!-- item_dashboard -->
                 <div class="w-full flex flex-col gap-2 justify-start items-center">
+                    @can('access', ['admin'])
                     <div class="px-2 py-2 bg-green-300 rounded-xl flex gap-3 justify-start items-center">
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="xl:size-4 size-5 fill-green-700">
@@ -107,23 +108,39 @@
                                 <path d="M32 32c17.7 0 32 14.3 32 32V400c0 8.8 7.2 16 16 16H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H80c-44.2 0-80-35.8-80-80V64C0 46.3 14.3 32 32 32zM160 224c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32s-32-14.3-32-32V256c0-17.7 14.3-32 32-32zm128-64V320c0 17.7-14.3 32-32 32s-32-14.3-32-32V160c0-17.7 14.3-32 32-32s32 14.3 32 32zm64 32c17.7 0 32 14.3 32 32v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V224c0-17.7 14.3-32 32-32zM480 96V320c0 17.7-14.3 32-32 32s-32-14.3-32-32V96c0-17.7 14.3-32 32-32s32 14.3 32 32z" />
                             </svg>
                         </div>
-                        <!-- <span class="xl:text-lg text-white font-bold">داشبورد</span> -->
+                        
                     </div>
+                   
                     <div class="px-3 py-3 rounded-xl flex gap-3 justify-start items-center">
+                       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20" id="entypo-dropbox" class="xl:size-4 size-5"><g><path d="M6.109.902L.4 4.457l3.911 3.279L10 4.043 6.109.902zm7.343 15.09a.44.44 0 0 1-.285-.102L10 13.262l-3.167 2.629a.447.447 0 0 1-.529.03l-2.346-1.533v.904L10 19.098l6.042-3.807v-.904l-2.346 1.533a.44.44 0 0 1-.244.072zM19.6 4.457L13.89.902 10 4.043l5.688 3.693L19.6 4.457zM10 11.291l3.528 2.928 5.641-3.688-3.481-2.795L10 11.291zm-3.528 2.928L10 11.291 4.311 7.736l-3.48 2.795 5.641 3.688z"></path></g></svg>
+                    </div>
+                    <a href="{{ route('deal.adminIndex') }}" class="px-3 py-3 rounded-xl flex gap-3 justify-start items-center ">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="xl:size-4 size-5 rotate-90">
                             <path d="M182.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L128 141.3V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.3l41.4 41.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-96-96zm352 333.3c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L448 370.7V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V370.7l-41.4-41.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c12.5 12.5 32.8 12.5 45.3 0l96-96z" />
                         </svg>
                         <!-- <span class="xl:text-lg text-white font-bold">داشبورد</span> -->
-                    </div>
-                    <div class="px-3 py-3 rounded-xl flex gap-3 justify-start items-center">
+                    </a>
+                    <a href="{{ route('wallet.transactionsList') }}" class="px-3 py-3 rounded-xl flex gap-3 justify-start items-center @if (Route::is('wallet.transactionsList')) text-[#FF0000] @endif">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="xl:size-4 size-5">
                             <path d="M320 464c8.8 0 16-7.2 16-16V160H256c-17.7 0-32-14.3-32-32V48H64c-8.8 0-16 7.2-16 16V448c0 8.8 7.2 16 16 16H320zM0 64C0 28.7 28.7 0 64 0H229.5c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64z" />
                         </svg>
-                    </div>
-                    @can('access', ['admin'])
+                    </a>
+                    
                     <a href="{{ route('user.index') }}" class="px-3 py-3 rounded-xl flex gap-3 justify-start items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="xl:size-4 size-5"><path d="M144 160A80 80 0 1 0 144 0a80 80 0 1 0 0 160zm368 0A80 80 0 1 0 512 0a80 80 0 1 0 0 160zM0 298.7C0 310.4 9.6 320 21.3 320H234.7c.2 0 .4 0 .7 0c-26.6-23.5-43.3-57.8-43.3-96c0-7.6 .7-15 1.9-22.3c-13.6-6.3-28.7-9.7-44.6-9.7H106.7C47.8 192 0 239.8 0 298.7zM405.3 320H618.7c11.8 0 21.3-9.6 21.3-21.3C640 239.8 592.2 192 533.3 192H490.7c-15.9 0-31 3.5-44.6 9.7c1.3 7.2 1.9 14.7 1.9 22.3c0 38.2-16.8 72.5-43.3 96c.2 0 .4 0 .7 0zM320 176a48 48 0 1 1 0 96 48 48 0 1 1 0-96zm0 144a96 96 0 1 0 0-192 96 96 0 1 0 0 192zm-58.7 80H378.7c39.8 0 73.2 27.2 82.6 64H178.7c9.5-36.8 42.9-64 82.6-64zm0-48C187.7 352 128 411.7 128 485.3c0 14.7 11.9 26.7 26.7 26.7H485.3c14.7 0 26.7-11.9 26.7-26.7C512 411.7 452.3 352 378.7 352H261.3z"/></svg>
                     </a>
+                    <div class="px-3 py-3 rounded-xl flex gap-3 justify-start items-center">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="xl:size-4 size-5"><path d="M88 0C39.4 0 0 39.4 0 88V424c0 48.6 39.4 88 88 88H552c48.6 0 88-39.4 88-88V88c0-48.6-39.4-88-88-88H88zM48 88c0-22.1 17.9-40 40-40H552c22.1 0 40 17.9 40 40V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V88zm272 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48zM268.4 274c-1.1 .2-2.2 .5-3.3 .7c-25.7 6.3-47.4 22.9-60.3 45.3c-8.2 14.1-12.8 30.5-12.8 48c0 17.7 14.3 32 32 32H416c17.7 0 32-14.3 32-32c0-17.5-4.7-33.9-12.8-48c-1.1-1.8-2.2-3.6-3.3-5.4c-13.1-19.6-33.3-34.1-56.9-39.9c-1.1-.3-2.2-.5-3.3-.7c-6.3-1.3-12.9-2-19.6-2H320 288c-6.7 0-13.3 .7-19.6 2zm7-49.5a72 72 0 1 0 89.2-113.1A72 72 0 1 0 275.4 224.5zM397.3 352H242.7c6.6-18.6 24.4-32 45.3-32h64c20.9 0 38.7 13.4 45.3 32zM223.8 160a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM96 293.3c0 14.7 11.9 26.7 26.7 26.7h46.6c13.7-33.9 41.5-60.6 76.2-72.8c-7.9-4.6-17-7.2-26.8-7.2H149.3C119.9 240 96 263.9 96 293.3zM470.7 320h46.6c14.7 0 26.7-11.9 26.7-26.7c0-29.5-23.9-53.3-53.3-53.3H421.3c-9.8 0-18.9 2.6-26.8 7.2c34.6 12.2 62.5 38.9 76.2 72.8zM512 160a48 48 0 1 0 -96 0 48 48 0 1 0 96 0z"/></svg>
+                        </div>
+                        
+                    </div>
+                    <div class="px-3 py-3 rounded-xl flex gap-3 justify-start items-center">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="xl:size-4 size-5"><path d="M256 0c17 0 33.6 1.7 49.8 4.8c7.9 1.5 21.8 6.1 29.4 20.1c2 3.7 3.6 7.6 4.6 11.8l9.3 38.5C350.5 81 360.3 86.7 366 85l38-11.2c4-1.2 8.1-1.8 12.2-1.9c16.1-.5 27 9.4 32.3 15.4c22.1 25.1 39.1 54.6 49.9 86.3c2.6 7.6 5.6 21.8-2.7 35.4c-2.2 3.6-4.9 7-8 10L459 246.3c-4.2 4-4.2 15.5 0 19.5l28.7 27.3c3.1 3 5.8 6.4 8 10c8.2 13.6 5.2 27.8 2.7 35.4c-10.8 31.7-27.8 61.1-49.9 86.3c-5.3 6-16.3 15.9-32.3 15.4c-4.1-.1-8.2-.8-12.2-1.9L366 427c-5.7-1.7-15.5 4-16.9 9.8l-9.3 38.5c-1 4.2-2.6 8.2-4.6 11.8c-7.7 14-21.6 18.5-29.4 20.1C289.6 510.3 273 512 256 512s-33.6-1.7-49.8-4.8c-7.9-1.5-21.8-6.1-29.4-20.1c-2-3.7-3.6-7.6-4.6-11.8l-9.3-38.5c-1.4-5.8-11.2-11.5-16.9-9.8l-38 11.2c-4 1.2-8.1 1.8-12.2 1.9c-16.1 .5-27-9.4-32.3-15.4c-22-25.1-39.1-54.6-49.9-86.3c-2.6-7.6-5.6-21.8 2.7-35.4c2.2-3.6 4.9-7 8-10L53 265.7c4.2-4 4.2-15.5 0-19.5L24.2 218.9c-3.1-3-5.8-6.4-8-10C8 195.3 11 181.1 13.6 173.6c10.8-31.7 27.8-61.1 49.9-86.3c5.3-6 16.3-15.9 32.3-15.4c4.1 .1 8.2 .8 12.2 1.9L146 85c5.7 1.7 15.5-4 16.9-9.8l9.3-38.5c1-4.2 2.6-8.2 4.6-11.8c7.7-14 21.6-18.5 29.4-20.1C222.4 1.7 239 0 256 0zM218.1 51.4l-8.5 35.1c-7.8 32.3-45.3 53.9-77.2 44.6L97.9 120.9c-16.5 19.3-29.5 41.7-38 65.7l26.2 24.9c24 22.8 24 66.2 0 89L59.9 325.4c8.5 24 21.5 46.4 38 65.7l34.6-10.2c31.8-9.4 69.4 12.3 77.2 44.6l8.5 35.1c24.6 4.5 51.3 4.5 75.9 0l8.5-35.1c7.8-32.3 45.3-53.9 77.2-44.6l34.6 10.2c16.5-19.3 29.5-41.7 38-65.7l-26.2-24.9c-24-22.8-24-66.2 0-89l26.2-24.9c-8.5-24-21.5-46.4-38-65.7l-34.6 10.2c-31.8 9.4-69.4-12.3-77.2-44.6l-8.5-35.1c-24.6-4.5-51.3-4.5-75.9 0zM208 256a48 48 0 1 0 96 0 48 48 0 1 0 -96 0zm48 96a96 96 0 1 1 0-192 96 96 0 1 1 0 192z"/></svg>
+                        </div>
+                        
+                    </div>
                       @endcan
 
                 </div>
@@ -137,6 +154,7 @@
 
             <div class="w-98/100 bg-white rounded-xl py-2 px-4 flex justify-start items-center">
                 <ul class="max-w-full flex gap-4 lg:gap-6 xl:gap-7 text-sm lg:text-base justify-start font-bold overflow-x-auto [&amp;::-webkit-scrollbar]:h-1.5  [&amp;::-webkit-scrollbar-thumb]:bg-(--border)  [&amp;::-webkit-scrollbar-thumb]:rounded-full text-nowrap py-2">
+                    @can('access', ['admin'])
                     <li class="text-(--active) flex justify-center flex-col items-center cursor-pointer py-1 group transition_normal">
                         <div class="flex gap-2 justify-start items-center px-2">
                             <div>
@@ -148,7 +166,7 @@
                         </div>
                         <div class="rounded-md w-full bg-(--active) h-[2px] transition_normal"></div>
                     </li>
-                    <li class="hover:text-(--active) flex justify-center flex-col items-center group cursor-pointer py-1 transition_normal">
+                    <!-- <li class="hover:text-(--active) flex justify-center flex-col items-center group cursor-pointer py-1 transition_normal">
                         <div class="flex gap-2 justify-start items-center px-2">
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="xl:size-4 size-5">
@@ -158,8 +176,29 @@
                             <span>نمودار ها</span>
                         </div>
                         <div class="rounded-md group-hover:w-full w-[0px] bg-(--active) h-[2px] transition_normal"></div>
+                    </li> -->
+                    <li class="hover:text-(--active) flex justify-center flex-col items-center group cursor-pointer py-1 transition_normal">
+                        <div class="flex gap-2 justify-start items-center px-2">
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20" id="entypo-dropbox" class="xl:size-4 size-5"><g><path d="M6.109.902L.4 4.457l3.911 3.279L10 4.043 6.109.902zm7.343 15.09a.44.44 0 0 1-.285-.102L10 13.262l-3.167 2.629a.447.447 0 0 1-.529.03l-2.346-1.533v.904L10 19.098l6.042-3.807v-.904l-2.346 1.533a.44.44 0 0 1-.244.072zM19.6 4.457L13.89.902 10 4.043l5.688 3.693L19.6 4.457zM10 11.291l3.528 2.928 5.641-3.688-3.481-2.795L10 11.291zm-3.528 2.928L10 11.291 4.311 7.736l-3.48 2.795 5.641 3.688z"></path></g></svg>
+                            </div>
+                            <span>مدیریت کالا ها</span>
+                        </div>
+                        <div class="rounded-md group-hover:w-full w-[0px] bg-(--active) h-[2px] transition_normal"></div>
                     </li>
-                    @can('access', ['admin'])
+                    <li class="hover:text-(--active) flex justify-center flex-col items-center group cursor-pointer py-1 transition_normal">
+                        <div class="flex gap-2 justify-start items-center px-2">
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="xl:size-4 size-5"><path d="M88 0C39.4 0 0 39.4 0 88V424c0 48.6 39.4 88 88 88H552c48.6 0 88-39.4 88-88V88c0-48.6-39.4-88-88-88H88zM48 88c0-22.1 17.9-40 40-40H552c22.1 0 40 17.9 40 40V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V88zm272 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48zM268.4 274c-1.1 .2-2.2 .5-3.3 .7c-25.7 6.3-47.4 22.9-60.3 45.3c-8.2 14.1-12.8 30.5-12.8 48c0 17.7 14.3 32 32 32H416c17.7 0 32-14.3 32-32c0-17.5-4.7-33.9-12.8-48c-1.1-1.8-2.2-3.6-3.3-5.4c-13.1-19.6-33.3-34.1-56.9-39.9c-1.1-.3-2.2-.5-3.3-.7c-6.3-1.3-12.9-2-19.6-2H320 288c-6.7 0-13.3 .7-19.6 2zm7-49.5a72 72 0 1 0 89.2-113.1A72 72 0 1 0 275.4 224.5zM397.3 352H242.7c6.6-18.6 24.4-32 45.3-32h64c20.9 0 38.7 13.4 45.3 32zM223.8 160a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM96 293.3c0 14.7 11.9 26.7 26.7 26.7h46.6c13.7-33.9 41.5-60.6 76.2-72.8c-7.9-4.6-17-7.2-26.8-7.2H149.3C119.9 240 96 263.9 96 293.3zM470.7 320h46.6c14.7 0 26.7-11.9 26.7-26.7c0-29.5-23.9-53.3-53.3-53.3H421.3c-9.8 0-18.9 2.6-26.8 7.2c34.6 12.2 62.5 38.9 76.2 72.8zM512 160a48 48 0 1 0 -96 0 48 48 0 1 0 96 0z"></path></svg>
+                            </div>
+                            <span>دسته بندی مشتریان</span>
+                        </div>
+                        <div class="rounded-md group-hover:w-full w-[0px] bg-(--active) h-[2px] transition_normal"></div>
+                    </li>
+                    
+
+                    
+                    
                     <li class="hover:text-(--active) flex justify-center flex-col items-center group cursor-pointer py-1 transition_normal">
                         <a href="{{ route('user.index') }}" class="flex gap-2 justify-start items-center px-2">
                             <div>
@@ -170,30 +209,48 @@
                         </a>
                         <div class="rounded-md group-hover:w-full w-[0px] bg-(--active) h-[2px] transition_normal"></div>
                     </li>
-                    @endcan
                     <li class="hover:text-(--active) flex justify-center flex-col items-center group cursor-pointer py-1 transition_normal">
                         <div class="flex gap-2 justify-start items-center px-2">
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 20 20" id="entypo-dropbox" class="xl:size-4 size-5"><g><path d="M6.109.902L.4 4.457l3.911 3.279L10 4.043 6.109.902zm7.343 15.09a.44.44 0 0 1-.285-.102L10 13.262l-3.167 2.629a.447.447 0 0 1-.529.03l-2.346-1.533v.904L10 19.098l6.042-3.807v-.904l-2.346 1.533a.44.44 0 0 1-.244.072zM19.6 4.457L13.89.902 10 4.043l5.688 3.693L19.6 4.457zM10 11.291l3.528 2.928 5.641-3.688-3.481-2.795L10 11.291zm-3.528 2.928L10 11.291 4.311 7.736l-3.48 2.795 5.641 3.688z"></path></g></svg>
+                            </div>
+                            <span>مدیریت کالا ها</span>
+                        </div>
+                        <div class="rounded-md group-hover:w-full w-[0px] bg-(--active) h-[2px] transition_normal"></div>
+                    </li>
+                    
+                    <li class="hover:text-(--active) flex justify-center flex-col items-center group cursor-pointer py-1 transition_normal">
+                        <a href="{{ route('deal.adminIndex') }}" class="flex gap-2 justify-start items-center px-2">
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="xl:size-4 size-5 rotate-90">
                                     <path d="M182.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L128 141.3V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.3l41.4 41.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-96-96zm352 333.3c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L448 370.7V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V370.7l-41.4-41.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c12.5 12.5 32.8 12.5 45.3 0l96-96z"></path>
                                 </svg>
                             </div>
                             <span>معاملات</span>
-                        </div>
+                        </a>
                         <div class="rounded-md group-hover:w-full w-[0px] bg-(--active) h-[2px] transition_normal"></div>
                     </li>
                     <li class="hover:text-(--active) flex justify-center flex-col items-center group cursor-pointer py-1 transition_normal">
-                        <div class="flex gap-2 justify-start items-center px-2">
+                        <a href="{{ route('wallet.transactionsList') }}" class="flex gap-2 justify-start items-center px-2 @if (Route::is('wallet.transactionsList')) text-[#FF0000] @endif">
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="xl:size-4 size-5">
                                     <path d="M320 464c8.8 0 16-7.2 16-16V160H256c-17.7 0-32-14.3-32-32V48H64c-8.8 0-16 7.2-16 16V448c0 8.8 7.2 16 16 16H320zM0 64C0 28.7 28.7 0 64 0H229.5c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64z"></path>
                                 </svg>
                             </div>
-                            <span>گزارش ها</span>
+                            <span>واریز و برداشت</span>
+                        </a>
+                        <div class="rounded-md group-hover:w-full w-[0px] bg-(--active) h-[2px] transition_normal"></div>
+                    </li>
+                    <li class="hover:text-(--active) flex justify-center flex-col items-center group cursor-pointer py-1 transition_normal">
+                        <div class="flex gap-2 justify-start items-center px-2">
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="xl:size-4 size-5"><path d="M256 0c17 0 33.6 1.7 49.8 4.8c7.9 1.5 21.8 6.1 29.4 20.1c2 3.7 3.6 7.6 4.6 11.8l9.3 38.5C350.5 81 360.3 86.7 366 85l38-11.2c4-1.2 8.1-1.8 12.2-1.9c16.1-.5 27 9.4 32.3 15.4c22.1 25.1 39.1 54.6 49.9 86.3c2.6 7.6 5.6 21.8-2.7 35.4c-2.2 3.6-4.9 7-8 10L459 246.3c-4.2 4-4.2 15.5 0 19.5l28.7 27.3c3.1 3 5.8 6.4 8 10c8.2 13.6 5.2 27.8 2.7 35.4c-10.8 31.7-27.8 61.1-49.9 86.3c-5.3 6-16.3 15.9-32.3 15.4c-4.1-.1-8.2-.8-12.2-1.9L366 427c-5.7-1.7-15.5 4-16.9 9.8l-9.3 38.5c-1 4.2-2.6 8.2-4.6 11.8c-7.7 14-21.6 18.5-29.4 20.1C289.6 510.3 273 512 256 512s-33.6-1.7-49.8-4.8c-7.9-1.5-21.8-6.1-29.4-20.1c-2-3.7-3.6-7.6-4.6-11.8l-9.3-38.5c-1.4-5.8-11.2-11.5-16.9-9.8l-38 11.2c-4 1.2-8.1 1.8-12.2 1.9c-16.1 .5-27-9.4-32.3-15.4c-22-25.1-39.1-54.6-49.9-86.3c-2.6-7.6-5.6-21.8 2.7-35.4c2.2-3.6 4.9-7 8-10L53 265.7c4.2-4 4.2-15.5 0-19.5L24.2 218.9c-3.1-3-5.8-6.4-8-10C8 195.3 11 181.1 13.6 173.6c10.8-31.7 27.8-61.1 49.9-86.3c5.3-6 16.3-15.9 32.3-15.4c4.1 .1 8.2 .8 12.2 1.9L146 85c5.7 1.7 15.5-4 16.9-9.8l9.3-38.5c1-4.2 2.6-8.2 4.6-11.8c7.7-14 21.6-18.5 29.4-20.1C222.4 1.7 239 0 256 0zM218.1 51.4l-8.5 35.1c-7.8 32.3-45.3 53.9-77.2 44.6L97.9 120.9c-16.5 19.3-29.5 41.7-38 65.7l26.2 24.9c24 22.8 24 66.2 0 89L59.9 325.4c8.5 24 21.5 46.4 38 65.7l34.6-10.2c31.8-9.4 69.4 12.3 77.2 44.6l8.5 35.1c24.6 4.5 51.3 4.5 75.9 0l8.5-35.1c7.8-32.3 45.3-53.9 77.2-44.6l34.6 10.2c16.5-19.3 29.5-41.7 38-65.7l-26.2-24.9c-24-22.8-24-66.2 0-89l26.2-24.9c-8.5-24-21.5-46.4-38-65.7l-34.6 10.2c-31.8 9.4-69.4-12.3-77.2-44.6l-8.5-35.1c-24.6-4.5-51.3-4.5-75.9 0zM208 256a48 48 0 1 0 96 0 48 48 0 1 0 -96 0zm48 96a96 96 0 1 1 0-192 96 96 0 1 1 0 192z"/></svg>
+                            </div>
+                            <span>تنظیمات</span>
                         </div>
                         <div class="rounded-md group-hover:w-full w-[0px] bg-(--active) h-[2px] transition_normal"></div>
                     </li>
-
+                    @endcan
                 </ul>
             </div>
             <!-- tab_sub_items_dashboard -->
