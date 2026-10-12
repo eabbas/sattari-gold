@@ -36,7 +36,7 @@
         <div class="w-full overflow-y-auto pb-24 px-4">
 
             <div class="bg-white rounded-2xl shadow-sm p-6 flex flex-col items-center justify-center text-center">
-                <h3 class="text-sm font-semibold mb-6">معاملات من در برنامه</h3>
+                <h3 class="text-sm font-bold mb-6">معاملات من در برنامه</h3>
                 @if (count(Auth::user()->deals))
                     <div class="border p-5 mb-10">
                         <table class="w-full max-h-20 overflow-auto">
@@ -58,7 +58,8 @@
                                             @elseif ($deal->transaction->type == 'sell')
                                                 <span class="text-red-500">فروش</span>
                                             @endif
-                                            <span class="text-xs text-gray-400 in-fa">{{ $deal->date . ' - ' .  $deal->time }}</span>
+                                            <span
+                                                class="text-xs text-gray-400 in-fa">{{ $deal->date . ' - ' . $deal->time }}</span>
                                         </td>
                                         <td class="flex justify-center items-center col-span-2">
                                             @if ($deal->transaction->isApproved == 1)
@@ -105,6 +106,6 @@
 
     </div>
 
-    
-    
+
+
 @endsection

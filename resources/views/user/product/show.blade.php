@@ -18,11 +18,14 @@
             <div class="w-full lg:w-4/12">
                 <div class="flex flex-col items-center">
                     <div class="relative w-full flex items-center justify-center">
-                        <div class="absolute top-5 right-3 w-46 bg-white rounded-full flex items-center justify-center px-3 py-2 shadow-lg">
+                        <div
+                            class="absolute top-5 right-3 w-46 bg-white rounded-full flex items-center justify-center px-3 py-2 shadow-lg">
                             <span class="">
-                                <svg class="size-5 fill-(--color-primary)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                    <path d="M256 0c4.6 0 9.2 1 13.4 2.9L457.7 82.8c22 9.3 38.4 31 38.3 57.2c-.5 99.2-41.3 280.7-213.6 363.2c-16.7 8-36.1 8-52.8 0C57.3 420.7 16.5 239.2 16 140c-.1-26.2 16.3-47.9 38.3-57.2L242.7 2.9C246.8 1 251.4 0 256 0z"/>
-                                 </svg>
+                                <svg class="size-5 fill-(--color-primary)" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512">
+                                    <path
+                                        d="M256 0c4.6 0 9.2 1 13.4 2.9L457.7 82.8c22 9.3 38.4 31 38.3 57.2c-.5 99.2-41.3 280.7-213.6 363.2c-16.7 8-36.1 8-52.8 0C57.3 420.7 16.5 239.2 16 140c-.1-26.2 16.3-47.9 38.3-57.2L242.7 2.9C246.8 1 251.4 0 256 0z" />
+                                </svg>
                             </span>
                             <span class="text-sm font-extrabold">اصالت کالا تضمین شده</span>
                         </div>
@@ -210,9 +213,9 @@
                 <div
                     class="w-full h-full lg:w-5/12 bg-zinc-100/60 border-1 border-(--color-border-gold) rounded-lg md:sticky top-30 hidden md:flex flex-col items-center overflow-hidden">
                     <div class="w-full flex flex-col items-center gap-3 bg-zinc-200/30 via-inherit px-8 py-10">
-                            <span class="text-lg font-bold">چرا شمش طلای 10 گرمی؟</span>
-                            <span class="text-[14px] text-(--color-text-secondary) line-clamp-2">طلا مطمعن برای سرمایه
-                                گذاری و پس‌انداز</span>
+                        <span class="text-lg font-bold">چرا شمش طلای 10 گرمی؟</span>
+                        <span class="text-[14px] text-(--color-text-secondary) line-clamp-2">طلا مطمعن برای سرمایه
+                            گذاری و پس‌انداز</span>
                     </div>
                     <span class="w-full h-[1px] bg-gradient-to-r via-(--color-primary) to-(--color-primary)"></span>
                     <div class="w-full px-8 py-8 flex items-center justify-between">
@@ -290,7 +293,7 @@
                     <p class="lg:text-lg font-bold mt-10 pb-5">مشخصات کلی</p>
                     @foreach ($product->attributes as $attribute)
                         <div class="flex items-center justify-start p-3 pb-6 w-full my-4">
-                            <div class="text-sm w-3/12 font-semibold">{{ $attribute->attribute_key }} : </div>
+                            <div class="text-sm w-3/12 font-bold">{{ $attribute->attribute_key }} : </div>
                             <div class="md:text-lg text-(--color-zinc-600) w-9/12 font-bold">
                                 {{ $attribute->attribute_value }}</div>
                         </div>

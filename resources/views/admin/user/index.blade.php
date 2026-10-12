@@ -1,6 +1,18 @@
 @extends('admin.app.dashboard')
 @section('title', 'ستاری گلد | کاربران')
 @section('content')
+    @if (session('success'))
+        <div
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
+            <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('success') }} </span>
+        </div>
+    @endif
+    @if (session('failure'))
+        <div
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
+            <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('failure') }} </span>
+        </div>
+    @endif
     @if (session('message'))
         <div
             class="modal py-5 px-8 rounded-lg shadow-lg bg-slate-100 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
@@ -14,7 +26,7 @@
         <section
             class="w-full mx-auto bg-(--secondary-dashbrd) flex items-center justify-between border-1 border-(--border-dashbrd) p-2 2 rounded-md">
             <h2 class="text-base md:text-xl font-bold">لیست مشتریان</h2>
-            <div id="openPopup-userList"
+            <div onclick="createUser('open')"
                 class="w-fit bg-(--info-dashbrd) text-xs md:text-base text-(--color-surface-dashbrd) rounded-md px-3 py-2 cursor-pointer flex items-center justify-center">
                 <span class="">
                     <svg class="size-3 md:size-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
@@ -26,14 +38,14 @@
                 </span>
                 <div class="">مشتری جدید</div>
             </div>
-            <div id="popup-userList"
-                class="popup-edit fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2 invisible opacity-0 transition-all flex items-center justify-center">
-                <div id="closePopup-userList2"
-                    class="close-popup-edit2 absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2"></div>
+            <div id="userCreatePopup"
+                class="fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2 invisible opacity-0 transition-all flex items-center justify-center">
+                <div onclick="createUser('close')"
+                    class="absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2"></div>
                 <div class="relative z-51 w-[80%] lg:w-200 bg-white rounded-md px-3 py-2">
                     <div class="w-full flex items-center justify-between border-b-1 border-(--border-dashbrd) pb-2">
                         <div class="font-bold"> مشتری جدید</div>
-                        <div id="closePopup-userList">
+                        <div onclick="createUser('close')" class="cursor-pointer">
                             <svg class="size-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 384 512">
                                 <path
@@ -42,67 +54,79 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="grid grid-cols-6 gap-2 md:gap-5 mt-5">
+                    <form action="{{ route('user.adminStore') }}" method="post"
+                        class="grid grid-cols-6 gap-2 md:gap-5 mt-5">
+                        @csrf
                         <label class="col-span-3 text-xs md:text-sm lg:text-base" for="name">
-                            نام و نام خانوادگی
+                            نام :
                             <input
                                 class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
-                                type="text" name="" id="name" placeholder="نام و نام خانوادگی">
+                                type="text" name="name" id="name" placeholder="مثال : علی"
+                                value="{{ old('name') }}">
+                            @error('name')
+                                <span class="text-xs text-red-500">{{ $message }}</span>
+                            @enderror
                         </label>
-                        <label class="col-span-3 text-xs md:text-sm lg:text-base" for="number">
-                            شماره موبایل
+                        <label class="col-span-3 text-xs md:text-sm lg:text-base" for="family">
+                            نام خانوادگی :
                             <input
                                 class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
-                                type="text" name="" id="number" placeholder="شماره موبایل">
+                                type="text" name="family" id="family" placeholder="مثال : علیزاده"
+                                value="{{ old('family') }}">
+                            @error('family')
+                                <span class="text-xs text-red-500">{{ $message }}</span>
+                            @enderror
                         </label>
-                        <label class="col-span-3 sm:col-span-2 text-xs md:text-sm lg:text-base" for="numberMeli">
-                            کدملی
+                        <label class="col-span-3 text-xs md:text-sm lg:text-base" for="phoneNumber">
+                            شماره تلفن :
                             <input
                                 class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
-                                type="text" name="" id="numberMeli" placeholder="کدملی">
+                                type="number" name="phoneNumber" id="phoneNumber" placeholder="مثال : 09146424294"
+                                value="{{ old('phoneNumber') }}">
+                            @error('phoneNumber')
+                                <span class="text-xs text-red-500">{{ $message }}</span>
+                            @enderror
                         </label>
-                        <label class="col-span-3 sm:col-span-2 text-xs md:text-sm lg:text-base" for="dey">
-                            تاریخ تولد
+                        <label class="col-span-3 text-xs md:text-sm lg:text-base" for="nationalCode">
+                            کد ملی :
                             <input
                                 class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
-                                type="text" name="" id="dey" placeholder="تاریخ تولد">
+                                type="number" name="nationalCode" id="nationalCode" placeholder="مثال : 1680270710"
+                                value="{{ old('nationalCode') }}">
+                            @error('nationalCode')
+                                <span class="text-xs text-red-500">{{ $message }}</span>
+                            @enderror
                         </label>
-                        <label class="col-span-3 sm:col-span-2 text-xs md:text-sm lg:text-base" for="user">
-                            معرف
+                        <label class="col-span-3 text-xs md:text-sm lg:text-base" for="password">
+                            رمز عبور :
                             <input
                                 class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
-                                type="text" name="" id="user" placeholder="مپپلا حسین عولیا نژاد">
+                                type="password" name="password" id="password" value="{{ old('password') }}">
+                            @error('password')
+                                <span class="text-xs text-red-500">{{ $message }}</span>
+                            @enderror
                         </label>
-                        <label class="col-span-3 sm:col-span-2 text-xs md:text-sm lg:text-base" for="user">
-                            کد حسابداری
-                            <input
-                                class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
-                                type="text" name="" id="user" placeholder="کد حسابداری">
-                        </label>
-                        <label class="col-span-3 sm:col-span-2 text-xs md:text-sm lg:text-base" for="categoryName">
-                            نام دسته‌بندی
-                            <select
-                                class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
-                                name="" id="categoryName">
-                                <option value="">salam</option>
-                                <option value="">salam</option>
-                                <option value="" selected>boy</option>
-                                <option value="">salam</option>
+                        <label class="col-span-3 text-xs md:text-sm lg:text-base" for="roles">
+                            تعیین نقش :
+                            <select name="roles[]" id="roles" multiple size="1"
+                                class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)">
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role['id'] }}" @if (in_array($role->id, old('roles', []))) selected @endif>
+                                        {{ $role['name'] }}</option>
+                                @endforeach
                             </select>
+                            @error('roles')
+                                <span class="text-xs text-red-500">{{ $message }}</span>
+                            @enderror
                         </label>
-                        <label class="col-span-6 text-xs md:text-sm lg:text-base" for="text">
-                            توضیحات
-                            <textarea
-                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
-                                name="" id="text"></textarea>
-                        </label>
-                        <button
-                            class="col-span-3 text-xs md:text-sm lg:text-base border-1 border-(--primary-dashbrd) text-(--primary-dashbrd) py-4 rounded-md">ثبت
+
+                        <button type="submit"
+                            class="col-span-3 text-xs md:text-sm lg:text-base border-1 border-(--primary-dashbrd) text-(--primary-dashbrd) py-4 rounded-md cursor-pointer">ثبت
                             مشتری</button>
-                        <button
-                            class="col-span-3 text-xs md:text-sm lg:text-base border-1 border-(--danger-dashbrd) text-(--danger-dashbrd) py-4 rounded-md">
-                            لغو</button>
-                    </div>
+                        <button type="reset"
+                            class="col-span-3 text-xs md:text-sm lg:text-base border-1 border-(--danger-dashbrd) text-(--danger-dashbrd) py-4 rounded-md cursor-pointer">
+                            بازنشانی اطلاعات</button>
+                    </form>
                 </div>
             </div>
         </section>
@@ -117,38 +141,83 @@
                     class="w-6/12 bg-zinc-200 text-xs md:text-base flex items-center justify-center rounded-t-md py-1 md:py-3 cursor-pointer customers">
                     مشتریان در انتظار تایید</div>
             </div>
-            <div id="confirmed" class="w-full">
-                <form action=""
-                    class="w-full bg-white grid grid-cols-2 md:grid-cols-4 justify-items-end gap-2 py-5 px-2">
-                    <input
-                        class="w-full border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd) text-xs md:text-base"
-                        type="text" name="" id="" placeholder="نام و نام خانوادگی">
-                    <input
-                        class="w-full border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd) text-xs md:text-base"
-                        type="text" name="" id="" placeholder="شماره موبایل">
-                    <input
-                        class="w-full border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd) text-xs md:text-base"
-                        type="text" name="" id="" placeholder="کدملی">
-                    <input
-                        class="w-full border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd) text-xs md:text-base"
-                        type="text" name="" id="" placeholder="کد حساب داری">
-                    <fieldset class="w-full border-1 border-(--border-dashbrd) rounded-md p-2">
-                        <legend class="px-2 text-(--text-secondary-dashbrd) text-xs md:text-sm">
-                            دسته بندی
-                        </legend>
-                        <input class="w-full outline-none text-xs md:text-base" type="text" name=""
-                            id="" placeholder="نام">
-                    </fieldset>
-                    <fieldset class="w-full border-1 border-(--border-dashbrd) rounded-md p-2">
-                        <legend class="px-2 text-(--text-secondary-dashbrd) text-xs md:text-sm">
-                            وضعیت مشتری
-                        </legend>
-                        <input class="w-full outline-none text-xs md:text-base" type="text" name=""
-                            id="" placeholder="نام">
-                    </fieldset>
-                    <button
-                        class="w-full md:w-fit py-3 md:px-13 mt-2 col-span-2 md:text-right border-1 border-(--border-dashbrd) rounded-md text-center">اعمال</button>
+            <div class="w-full my-10 px-5">
+                <form action="{{ route('user.search') }}" method="post"
+                    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
+                    @csrf
+                    <div class="w-full flex flex-col">
+                        <label for="name" class="mb-2">
+                            <span>
+                                نام :
+                            </span>
+                        </label>
+                        <input type="text"
+                            class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]" name="name"
+                            id="name">
+                    </div>
+                    <div class="w-full flex flex-col">
+                        <label for="family" class="mb-2">
+                            <span>
+                                نام خانوادگی :
+                            </span>
+                        </label>
+                        <input type="text"
+                            class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]" name="family"
+                            id="family">
+                    </div>
+                    <div class="w-full flex flex-col">
+                        <label for="phoneNumber" class="mb-2">
+                            <span>
+                                شماره تلفن :
+                            </span>
+                        </label>
+                        <input type="tel"
+                            class="text-right outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]"
+                            name="phoneNumber" id="phoneNumber">
+                    </div>
+                    <div class="w-full flex flex-col">
+                        <label for="nationalCode" class="mb-2">
+                            <span>
+                                کد ملی :
+                            </span>
+                        </label>
+                        <input type="number"
+                            class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]"
+                            name="nationalCode" id="nationalCode">
+                    </div>
+                    <div class="w-full flex flex-col gap-3 mt-5">
+                        <label for="approve" class="mb-2">
+                            <span>وضعیت تایید : </span>
+                        </label>
+                        <select name="approve" id="approve" class="w-full bg-[#F9F9F9] py-3 pr-5 rounded-[10px]">
+                            <option value="all">همه</option>
+                            <option value="-1">رد شده</option>
+                            <option value="0">در انتظار تایید</option>
+                            <option value="1">تایید شده</option>
+                        </select>
+                    </div>
+                    <div class="w-full flex flex-col gap-3 mt-5">
+                        <label for="activity" class="mb-2">
+                            <span>وضعیت فعالیت : </span>
+                        </label>
+                        <select name="activity" id="activity" class="w-full bg-[#F9F9F9] py-3 pr-5 rounded-[10px]">
+                            <option value="all">همه</option>
+                            <option value="1">فعال</option>
+                            <option value="0">غیر فعال</option>
+                        </select>
+                    </div>
+                    <div class="w-full flex items-center justify-center mt-5 text-center">
+                        <button type="submit"
+                            class="py-3 px-10 rounded-[10px] text-gray-700 border-1 border-gray-700 cursor-pointer">اعمال</button>
+                    </div>
+                    <div class="w-full flex items-center justify-center mt-5 text-center">
+                        <a href="{{ route('user.index') }}"
+                            class="py-3 px-10 rounded-[10px] text-gray-700 border-1 border-gray-700 cursor-pointer">حذف
+                            فیلتر</a>
+                    </div>
                 </form>
+            </div>
+            <div id="confirmed" class="w-full">
                 <div class="w-full h-5 bg-zinc-200"></div>
                 <div class="w-full overflow-x-auto">
                     <div class="w-full flex items-center justify-start gap-2 px-2 py-3">
@@ -207,8 +276,7 @@
                             @foreach ($users as $user)
                                 @if ($user->isApproved)
                                     <tr class="item_list text-xs lg:text-base">
-                                        <td
-                                            class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 flex items-center justify-center gap-2">
+                                        <td class="p-1 md:px-3 md:py-2 flex items-center justify-center gap-2">
                                             <input type="checkbox" name=""
                                                 class="row-checkbox appearance-none size-5 rounded-md border-1 border-(--border-dashbrd) checked:bg-(--primary-dark-dashbrd) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
                                             {{ $user->id }}
@@ -247,22 +315,21 @@
                                         <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
                                             قلک طلا
                                         </td>
-                                        <td
-                                            class="relative border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 flex items-center gap-3">
-                                            <button
-                                                class="open-popup-wallet w-3/6 text-(--primary-dashbrd) border-1 border-(--primary-dashbrd) rounded-md px-3 py-2 cursor-pointer">
+                                        <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
+                                            <button onclick="wallet('open', {{ $user->id }})"
+                                                class="w-3/6 text-(--primary-dashbrd) border-1 border-(--primary-dashbrd) rounded-md px-3 py-2 cursor-pointer">
                                                 کیف پول
                                             </button>
-                                            <div
-                                                class="popup-wallet fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2  invisible opacity-0 transition-all flex items-center justify-center">
-                                                <div
-                                                    class="close-popup-wallet2 absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2">
+                                            <div id="popup-wallet"
+                                                class="fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2 invisible opacity-0 transition-all flex items-center justify-center">
+                                                <div onclick="wallet('close')"
+                                                    class="absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2 cursour-pointer">
                                                 </div>
                                                 <div class="relative z-51 w-[80%] lg:w-200 bg-white rounded-md px-3 py-2">
                                                     <div
                                                         class="w-full flex items-center justify-between border-b-1 border-(--border-dashbrd) pb-2">
                                                         <div class="font-bold">کیف پول</div>
-                                                        <div class="close-popup-wallet">
+                                                        <div onclick="wallet('close')" class="cursor-pointer">
                                                             <svg class="size-6" fill="currentColor"
                                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
                                                                 <path
@@ -278,15 +345,13 @@
                                                                 <span
                                                                     class="text-xs md:text-base text-(--text-secondary-dashbrd) ml-1">نام
                                                                     :</span>
-                                                                <span class="text-xs md:text-base font-bold">امید حسن
-                                                                    نژاد</span>
+                                                                <span class="text-xs md:text-base font-bold"></span>
                                                             </div>
                                                             <div class="w-6/12">
                                                                 <span
                                                                     class="text-xs md:text-base text-(--text-secondary-dashbrd) ml-1">شماره
                                                                     :</span>
-                                                                <span
-                                                                    class="text-[10px] md:text-base font-bold">09123456789</span>
+                                                                <span class="text-[10px] md:text-base font-bold"></span>
                                                             </div>
                                                         </div>
                                                         <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
@@ -307,7 +372,7 @@
                                                                             موجودی ریال
                                                                         </span>
                                                                     </div>
-                                                                    <div class="font-bold pb-2">95.478.555</div>
+                                                                    <div class="font-bold pb-2"></div>
                                                                 </div>
                                                                 <div class="flex items-center justify-between">
                                                                     <div class="flex items-center gap-3 pt-2">
@@ -318,7 +383,6 @@
                                                                     </div>
                                                                     <div class="font-bold pt-2">
                                                                         <span class="">
-                                                                            95.478.555
                                                                         </span>
                                                                         <span
                                                                             class="text-(--text-secondary-dashbrd) text-[6px] md:text-xs">
@@ -334,15 +398,15 @@
                                                                 class="w-6/12 flex items-center gap-1 md:gap-3">
                                                                 <input class="accent-(--primary-dashbrd) size-4 md:size-5"
                                                                     type="radio" name="yes" id="plass">
-                                                                <span class="text-xs md:text-base font-bold">افزایش
-                                                                    موجودی</span>
+                                                                <span
+                                                                    class="text-xs text-green-400 md:text-base font-bold">واریز</span>
                                                             </label>
                                                             <label for="maiez"
                                                                 class="w-6/12 flex items-center gap-1 md:gap-3">
                                                                 <input class="accent-(--primary-dashbrd) size-4 md:size-5"
                                                                     type="radio" name="yes" id="maiez">
-                                                                <span class="text-xs md:text-base font-bold">کاهش
-                                                                    موجودی</span>
+                                                                <span
+                                                                    class="text-xs text-red-400 md:text-base font-bold">برداشت</span>
                                                             </label>
                                                         </div>
                                                         <label class="col-span-3" for="categoryName">
@@ -411,7 +475,7 @@
                                                             <span
                                                                 class="text-xs md:text-base text-(--text-secondary-dashbrd)">نام
                                                                 :</span>
-                                                            <span class="text-xs md:text-base font-semibold">حسین
+                                                            <span class="text-xs md:text-base font-bold">حسین
                                                                 ستاره</span>
                                                         </div>
                                                         <div
@@ -419,15 +483,14 @@
                                                             <span
                                                                 class="text-[10px] md:text-base text-(--text-secondary-dashbrd)">شماره
                                                                 موبایل :</span>
-                                                            <span
-                                                                class="text-xs md:text-base font-semibold">09123456789</span>
+                                                            <span class="text-xs md:text-base font-bold">09123456789</span>
                                                         </div>
                                                         <div
                                                             class="col-span-3 md:col-span-2 bg-zinc-100 px-2 py-3 rounded-lg flex items-center gap-2">
                                                             <span
                                                                 class="text-[10px] md:text-base text-(--text-secondary-dashbrd)">معرف
                                                                 :</span>
-                                                            <span class="text-xs md:text-base font-semibold">محمد رضا
+                                                            <span class="text-xs md:text-base font-bold">محمد رضا
                                                                 عولیافان</span>
                                                         </div>
                                                         <div
@@ -435,14 +498,14 @@
                                                             <span
                                                                 class="text-[10px] md:text-base text-(--text-secondary-dashbrd)">کد
                                                                 حساب داری :</span>
-                                                            <span class="text-xs md:text-base font-semibold">-</span>
+                                                            <span class="text-xs md:text-base font-bold">-</span>
                                                         </div>
                                                         <div
                                                             class="col-span-3 md:col-span-2 bg-zinc-100 px-2 py-3 rounded-lg flex items-center gap-2">
                                                             <span
                                                                 class="text-[10px] md:text-base text-(--text-secondary-dashbrd)">نام
                                                                 دستع بندی :</span>
-                                                            <span class="text-xs md:text-base font-semibold">-</span>
+                                                            <span class="text-xs md:text-base font-bold">-</span>
                                                         </div>
                                                         <div
                                                             class="col-span-6 bg-zinc-100 p-3 rounded-lg flex items-center justify-between gap-2">
@@ -450,7 +513,7 @@
                                                                 class="text-[10px] md:text-base text-(--text-secondary-dashbrd)">ارسال
                                                                 اطلاعات ورود از طریق پیامک به مشتری</span>
                                                             <button
-                                                                class="bg-(--primary-dashbrd) text-sm md:text-base text-white font-semibold rounded-lg px-5 md:px-10 py-1 md:py-3 cursor-pointer">ارسال</button>
+                                                                class="bg-(--primary-dashbrd) text-sm md:text-base text-white font-bold rounded-lg px-5 md:px-10 py-1 md:py-3 cursor-pointer">ارسال</button>
                                                         </div>
                                                         <div class="col-span-6 text-sm  md:text-lg font-bold">کیف پول</div>
                                                         <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
@@ -646,22 +709,8 @@
                 </div>
             </div>
             <div id="pending" class="w-full hidden">
-                <form action=""
-                    class="w-full bg-white grid grid-cols-2 md:grid-cols-4 justify-items-end gap-2 py-5 px-2">
-                    <input class="w-full border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
-                        type="text" name="" id="" placeholder="نام و نام خانوادگی">
-                    <input class="w-full border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
-                        type="text" name="" id="" placeholder="شماره موبایل">
-                    <input class="w-full border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
-                        type="text" name="" id="" placeholder="کدملی">
-                    <input class="w-full border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
-                        type="text" name="" id="" placeholder="کد حساب داری">
-                    <button
-                        class="w-fit px-13 py-3 mt-2 col-span-2 md:col-span-4 border-1 border-(--border-dashbrd) rounded-md">اعمال</button>
-                </form>
                 <div class="w-full h-5 bg-zinc-200"></div>
                 <div class="w-full overflow-x-auto">
-
                     <table class="w-full border-collapse border-1 border-(--border-dashbrd) text-sm mt-5">
                         <thead class="w-full">
                             <tr class="bg-gray-100 text-xs lg:text-base">
@@ -706,8 +755,8 @@
                                             {{ $user->nationalCode }}
                                         </td>
                                         <td
-                                            class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center text-nowrap">
-                                            {{ $user->created_at }}
+                                            class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center text-nowrap in-fa">
+                                            {{ verta($user->created_at) }}
                                         </td>
                                         <td
                                             class="relative border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center flex items-center gap-3">
@@ -833,30 +882,25 @@
     </div>
     <!-- list_users_start -->
     <script>
-        //   لسیت مشتریان / پاپاپ ایجاد مشتری جدید
-        let openPopup_userList = document.getElementById("openPopup-userList");
-        let closePopup_userList = document.getElementById("closePopup-userList");
-        let closePopup_userList2 = document.getElementById("closePopup-userList2");
-        let popup_userList = document.getElementById("popup-userList");
+        function createUser(state) {
+            let userCreatePopup = document.getElementById('userCreatePopup')
+            if (state == 'open') {
+                userCreatePopup.classList.remove('invisible', 'opacity-0')
+            }
+            if (state == 'close') {
+                userCreatePopup.classList.add('invisible', 'opacity-0')
+            }
+        }
 
-        openPopup_userList.addEventListener("click", () => {
-            popup_userList.classList.remove("invisible");
-            popup_userList.classList.remove("opacity-0");
-            popup_userList.classList.add("opacity-100");
-            popup_userList.classList.add("visible");
-        });
-        closePopup_userList.addEventListener("click", () => {
-            popup_userList.classList.add("invisible");
-            popup_userList.classList.add("opacity-0");
-            popup_userList.classList.remove("opacity-100");
-            popup_userList.classList.remove("visible");
-        });
-        closePopup_userList2.addEventListener("click", () => {
-            popup_userList.classList.add("invisible");
-            popup_userList.classList.add("opacity-0");
-            popup_userList.classList.remove("opacity-100");
-            popup_userList.classList.remove("visible");
-        });
+        function wallet(state, userId) {
+            let wallet = document.getElementById('popup-wallet')
+            if (state == 'open') {
+                wallet.classList.remove('invisible', 'opacity-0')
+            }
+            if (state == 'close') {
+                wallet.classList.add('invisible', 'opacity-0')
+            }
+        }
 
 
 
@@ -929,10 +973,6 @@
             const popup_look = item_list.querySelector(".popup-look");
             const closeBtn_look = item_list.querySelector(".close-popup-look");
             const closeBtn_look2 = item_list.querySelector(".close-popup-look2");
-            const openBtn_wallet = item_list.querySelector(".open-popup-wallet");
-            const popup_wallet = item_list.querySelector(".popup-wallet");
-            const closeBtn_wallet = item_list.querySelector(".close-popup-wallet");
-            const closeBtn_wallet2 = item_list.querySelector(".close-popup-wallet2");
 
             openBtn_edited.addEventListener("click", () => {
                 popup_edit.classList.remove("invisible");
@@ -984,26 +1024,6 @@
                 popup_look.classList.add("opacity-0");
                 popup_look.classList.remove("opacity-100");
                 popup_look.classList.remove("visible");
-            });
-
-
-            openBtn_wallet.addEventListener("click", () => {
-                popup_wallet.classList.remove("invisible");
-                popup_wallet.classList.remove("opacity-0");
-                popup_wallet.classList.add("opacity-100");
-                popup_wallet.classList.add("visible");
-            });
-            closeBtn_wallet.addEventListener("click", () => {
-                popup_wallet.classList.add("invisible");
-                popup_wallet.classList.add("opacity-0");
-                popup_wallet.classList.remove("opacity-100");
-                popup_wallet.classList.remove("visible");
-            });
-            closeBtn_wallet2.addEventListener("click", () => {
-                popup_wallet.classList.add("invisible");
-                popup_wallet.classList.add("opacity-0");
-                popup_wallet.classList.remove("opacity-100");
-                popup_wallet.classList.remove("visible");
             });
 
 

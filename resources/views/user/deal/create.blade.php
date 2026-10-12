@@ -73,7 +73,7 @@
 
                 <div class="grid grid-cols-2 gap-3">
                     <div class="border border-gray-100 rounded-xl p-3 flex flex-col items-center text-center">
-                        <span class="font-semibold mb-2">بخرید</span>
+                        <span class="font-bold mb-2">بخرید</span>
                         <span class="text-xs text-gray-500 mb-3">گرم: ۲۴۲,۶۹۳,۴۵۶</span>
                         <button
                             class="w-full bg-[#2eb85c] text-white py-2 rounded-lg font-bold text-sm shadow-md hover:bg-green-700 transition cursor-pointer"
@@ -83,7 +83,7 @@
                     </div>
 
                     <div class="border border-gray-100 rounded-xl p-3 flex flex-col items-center text-center">
-                        <span class="font-semibold mb-2">بفروشید</span>
+                        <span class="font-bold mb-2">بفروشید</span>
                         <span class="text-xs text-gray-500 mb-3">گرم: ۲۴۲,۱۶۲,۴۹۹</span>
                         <button
                             class="w-full bg-[#e53945] text-white py-2 rounded-lg font-bold text-sm shadow-md hover:bg-red-700 transition cursor-pointer"
@@ -97,7 +97,7 @@
             <div class="bg-white rounded-2xl shadow-sm p-4 mb-4">
                 <div class="flex justify-between items-center relative">
                     <div class="flex-1 text-center">
-                        <span class="block text-sm font-semibold mb-1">انس طلا</span>
+                        <span class="block text-sm font-bold mb-1">انس طلا</span>
                         <span class="block text-sm text-gray-600">۴,۳۹۵ دلار</span>
                     </div>
 
@@ -107,7 +107,7 @@
                     </div>
 
                     <div class="flex-1 text-center">
-                        <span class="block text-sm font-semibold mb-1">طلای جهانی</span>
+                        <span class="block text-sm font-bold mb-1">طلای جهانی</span>
                         <span class="block text-sm text-gray-600">۱,۰۶۹,۵۷۷,۶۱۵ ریال</span>
                     </div>
                 </div>
@@ -134,7 +134,7 @@
             </div>
 
             <div class="bg-white rounded-2xl shadow-sm p-6 flex flex-col items-center justify-center text-center">
-                <h3 class="text-sm font-semibold mb-6">معاملات من در برنامه</h3>
+                <h3 class="text-sm font-bold mb-6">معاملات من در برنامه</h3>
                 @if (count(Auth::user()->deals))
                     <div class="border p-5 mb-10">
                         <table class="w-full max-h-20 overflow-auto">
@@ -156,7 +156,8 @@
                                             @elseif ($deal->transaction->type == 'sell')
                                                 <span class="text-red-500">فروش</span>
                                             @endif
-                                            <span class="text-xs text-gray-400 in-fa">{{ $deal->date . ' - ' .  $deal->time }}</span>
+                                            <span
+                                                class="text-xs text-gray-400 in-fa">{{ $deal->date . ' - ' . $deal->time }}</span>
                                         </td>
                                         <td class="flex justify-center items-center col-span-2">
                                             @if ($deal->transaction->isApproved == 1)
@@ -233,11 +234,11 @@
                         class="border border-red-500 rounded-xl flex overflow-hidden divide-x divide-red-500 divide-x-reverse">
                         <div class="flex-1 p-3 flex justify-between items-center bg-red-50/30">
                             <span class="text-sm text-gray-500">مثقال:</span>
-                            <span class="font-semibold text-sm">۱,۰۴۸,۹۰۰,۰۰۰ ریال</span>
+                            <span class="font-bold text-sm">۱,۰۴۸,۹۰۰,۰۰۰ ریال</span>
                         </div>
                         <div class="flex-1 p-3 flex justify-between items-center bg-red-50/30">
                             <span class="text-sm text-gray-500">گرم:</span>
-                            <span class="font-semibold text-sm">۲۴۲,۱۳۹,۴۱۴ ریال</span>
+                            <span class="font-bold text-sm">۲۴۲,۱۳۹,۴۱۴ ریال</span>
                         </div>
                     </div>
 
@@ -254,7 +255,7 @@
 
                     <div class="flex justify-between items-center text-xs text-gray-500 px-1 -mb-2">
                         <span>موجودی کیف پول شما:</span>
-                        <span class="font-semibold text-gray-700 in-fa">{{ number_format($asset) }} ریال</span>
+                        <span class="font-bold text-gray-700 in-fa">{{ number_format($asset) }} ریال</span>
                     </div>
 
                     <div>
@@ -262,7 +263,7 @@
                             class="flex border border-gray-300 rounded-xl overflow-hidden focus-within:border-brand-red focus-within:ring-1 focus-within:ring-brand-red transition bg-white">
                             <input type="number" id="userInput" name="userInput" step="0.0001" min="0"
                                 placeholder="مبلغ کل"
-                                class="w-full bg-transparent px-4 py-3.5 focus:outline-none text-left font-semibold text-lg in-fa"
+                                class="w-full bg-transparent px-4 py-3.5 focus:outline-none text-left font-bold text-lg in-fa"
                                 dir="ltr">
                             <div id="inputUnit"
                                 class="bg-gray-100 px-4 py-3.5 border-r border-gray-300 text-gray-500 text-sm flex items-center justify-center in-fa">
@@ -303,10 +304,10 @@
             </form>
         </div>
     </div>
-        <script>
+    <script>
         let pricePerGram = 242139414
         let userWalletBalance = "{{ $asset }}"
-        let userGoldBalance = "{{ $totalGoldWeight }}" 
+        let userGoldBalance = "{{ $totalGoldWeight }}"
     </script>
     <script src="{{ asset('assets/js/deal.js') }}"></script>
 @endsection

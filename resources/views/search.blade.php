@@ -26,7 +26,7 @@
                 </div>
 
                 <section class="p-[18px] border-b border-[#e4e4e7]">
-                    <div class="font-semibold text-sm mb-[15px]">دسته‌بندی</div>
+                    <div class="font-bold text-sm mb-[15px]">دسته‌بندی</div>
                     @foreach ($categories as $category)
                         <label class="flex items-center gap-2 my-3 text-[13px] text-[#52525b]"><input
                                 class="accent-[#c3924d] w-[17px] h-[17px] categories" type="checkbox"
@@ -35,7 +35,7 @@
                 </section>
 
                 <section class="p-[18px] border-b border-[#e4e4e7]">
-                    <div class="font-semibold text-sm mb-[15px]">محدوده قیمت</div>
+                    <div class="font-bold text-sm mb-[15px]">محدوده قیمت</div>
                     <div class="grid grid-cols-2 gap-2">
                         <input id="minPrice" type="number" placeholder="حداقل"
                             class="w-full border border-[#e4e4e7] rounded-lg p-[9px] outline-none text-[11px]">
@@ -60,8 +60,10 @@
             <section class="min-w-0">
                 <div class="w-full flex items-center gap-3 border-1 border-gray-200 rounded-xl mb-3">
                     <input type="text" class="w-full px-3.5 py-3 outline-none" id="searchInp">
-                    <svg class="w-6 h-6 text-gray-600 ml-2.5 cursor-pointer" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+                    <svg class="w-6 h-6 text-gray-600 ml-2.5 cursor-pointer" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                            d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
                     </svg>
                 </div>
                 <div

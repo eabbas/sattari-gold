@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('family');
             $table->string('phoneNumber')->unique();
-            $table->string('nationalCode')->unique();
+            $table->string('nationalCode');
             // $table->string('birthDate');
             $table->tinyInteger('isApproved')->default(0);
             $table->tinyInteger('isActive')->default(0);
