@@ -64,7 +64,7 @@
                 class="w-full md:w-6/12 xl:w-4/12 bg-(--color-primary-soft)/50 relative z-2 rounded-2xl mx-auto border-1 border-(--color-border-gold) h-auto py-5 px-4">
                 <div class="w-12/12 flex items-center justify-center gap-5 ml-5">
                     <div
-                        class="w-4/10 flex items-center justify-center text-xl font-semibold text-(--color-primary) p-3 border-b-2 border-(--color-border-gold) cursor-pointer">
+                        class="w-4/10 flex items-center justify-center text-xl font-bold text-(--color-primary) p-3 border-b-2 border-(--color-border-gold) cursor-pointer">
                         فراموشی رمز عبور</div>
                 </div>
                 <form action="{{ route('user.setPassword') }}" method="POST"

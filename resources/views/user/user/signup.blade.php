@@ -60,10 +60,11 @@
         </section>
         <section class="w-11/12 mx-auto flex items-start justify-between gap-10 mt-10">
             <div id="login"
-                class="mb-5 w-full md:w-6/12 xl:w-4/12 bg-(--color-primary-soft)/50 relative z-2 rounded-2xl mx-auto border-1 border-(--color-border-gold) h-auto py-5 px-4">
+                class="mb-5 w-full md:w-6/12 xl:w-4/12 bg-(--color-primary-soft)/50 relative z-2 rounded-2xl mx-auto border-1 border-(--color-border-gold) max-h-130 overflow-auto py-5 px-4"
+                style="scrollbar-width: none">
                 <div class="w-12/12 flex items-center justify-center gap-5 ml-5">
                     <div
-                        class="w-3/10 flex items-center justify-center text-xl font-semibold text-(--color-primary) p-3 border-b-2 border-(--color-border-gold) cursor-pointer">
+                        class="w-3/10 flex items-center justify-center text-xl font-bold text-(--color-primary) p-3 border-b-2 border-(--color-border-gold) cursor-pointer">
                         ثبت نام</div>
                 </div>
                 <form action="{{ route('user.store') }}" method="POST"

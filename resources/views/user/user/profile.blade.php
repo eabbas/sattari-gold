@@ -7,7 +7,7 @@
             <span class="font-bold text-sm text-slate-500"> {{ session('message') }} </span>
         </div>
     @endif
-    <div class="px-4 sm:px-14 py-5">
+    <div class="w-11/12 mx-auto">
         <div class="flex flex-col items-center">
             <div class="size-25 sm:size-32 rounded-full shadow-xl flex items-center justify-center mb-10">
                 @if ($user->mainImage)
@@ -55,7 +55,7 @@
             </p>
         </div>
         <div class="flex flex-col lg:flex-row gap-6 lg:gap-2 mt-14">
-            <div class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 hover:shadow-lg transition duration-300">
+            <div class="w-full bg-white border-2 border-slate-300 rounded-2xl p-4 hover:shadow-lg transition duration-300">
                 <div class="flex flex-col items-start gap-4">
                     <div class="flex items-center gap-2">
                         <div class="rounded-xl bg-green-100 p-2">
@@ -68,11 +68,11 @@
                         <span class="text-xs sm:text-sm text-slate-400">تلفن</span>
                     </div>
                     <div>
-                        <p class="text-slate-800 font-bold mt-1 text-sm sm:text-lg">{{ $user->phoneNumber }}</p>
+                        <p class="text-slate-800 font-bold mt-1 text-sm sm:text-lg in-fa">{{ $user->phoneNumber }}</p>
                     </div>
                 </div>
             </div>
-            <div class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 hover:shadow-lg transition duration-300">
+            <div class="w-full bg-white border-2 border-slate-300 rounded-2xl p-4 hover:shadow-lg transition duration-300">
                 <div class="flex flex-col items-start gap-4">
                     <div class="flex items-center gap-2">
                         <div class="rounded-xl bg-indigo-100 p-2">
@@ -85,11 +85,11 @@
                         <span class="text-xs sm:text-sm text-slate-400">کد ملی</span>
                     </div>
                     <div>
-                        <p class="text-slate-800 font-bold mt-1 text-sm sm:text-lg">{{ $user->nationalCode }}</p>
+                        <p class="text-slate-800 font-bold mt-1 text-sm sm:text-lg in-fa">{{ $user->nationalCode }}</p>
                     </div>
                 </div>
             </div>
-            <div class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-4 hover:shadow-lg transition duration-300">
+            <div class="w-full bg-white border-2 border-slate-300 rounded-2xl p-4 hover:shadow-lg transition duration-300">
                 <div class="flex flex-col items-start gap-4">
                     <div class="flex items-center gap-2">
                         <div class="rounded-xl bg-yellow-100 p-2">
@@ -103,7 +103,7 @@
                         <span class="texttext-xs sm:-sm text-slate-400">تاریخ عضویت</span>
                     </div>
                     <div>
-                        <p class="text-slate-800 font-bold mt-1 text-sm sm:text-lg">{{ $user->created_at }}</p>
+                        <p class="text-slate-800 font-bold mt-1 text-sm sm:text-lg in-fa">{{ verta($user->created_at) }}</p>
                     </div>
                 </div>
             </div>
@@ -111,14 +111,14 @@
         <div class="my-12 h-px bg-slate-200"></div>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
             <span onclick="editForm('open', {{ $user->id }})"
-                class="text-sm py-3 px-5 text-center mx-auto w-60 sm:w-40 rounded-xl border border-slate-300 bg-slate-100 text-slate-700 transition-all duration-300 cursor-pointer">ویرایش
+                class="text-sm py-3 px-5 text-center mx-auto w-60 sm:w-40 rounded-xl border-2 border-slate-300 bg-slate-100 text-slate-700 transition-all duration-300 cursor-pointer">ویرایش
                 پروفایل</span>
             <a href="{{ route('wallet.wallet', [$user]) }}"
-                class="text-sm py-3 px-5 text-center mx-auto w-60 sm:w-40 rounded-xl border border-slate-300 bg-slate-100 text-slate-700 transition-all duration-300 cursor-pointer">کیف
+                class="text-sm py-3 px-5 text-center mx-auto w-60 sm:w-40 rounded-xl border-2 border-slate-300 bg-slate-100 text-slate-700 transition-all duration-300 cursor-pointer">کیف
                 پول</a>
             @if ($user->id == Auth::id())
                 <a href="{{ route('user.logout') }}"
-                    class="text-sm py-3 px-5 text-center mx-auto w-60 sm:w-40 rounded-xl border border-red-200 bg-red-50 text-red-500 hover:bg-red-100 transition-all duration-300">خروج</a>
+                    class="text-sm py-3 px-5 text-center mx-auto w-60 sm:w-40 rounded-xl border-2 border-red-300 bg-red-50 text-red-500 hover:bg-red-100 transition-all duration-300">خروج</a>
             @endif
         </div>
     </div>

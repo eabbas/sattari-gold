@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 use App\Models\transaction;
 
+Route::get('/x', function () {
+    
+});
+
 Route::get('/test', function () {
     $data = transaction::latest()->first();
     $dateTime = explode(' ', $data->created_at);
