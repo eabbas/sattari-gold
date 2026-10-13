@@ -139,11 +139,11 @@ class WalletController extends Controller
                     $transaction->deal->update(['isApproved' => $item['isApproved']]);
                 }
                 if ($transaction['type'] == 'sell') {
-                    $transaction->deal->update(['isApproved'=>$item['isApproved']]);
+                    $transaction->deal->update(['isApproved' => $item['isApproved']]);
                 }
             }
             if ($transaction->isApproved == -1) {
-                if($transaction->type == 'buy'){
+                if ($transaction->type == 'buy') {
                     $total = $transaction->amount;
                     $wallet = wallet::find($transaction['wallet_id']);
                     $weight = $transaction->deal->goldWeight;
@@ -153,7 +153,7 @@ class WalletController extends Controller
                     $wallet->goldWeight = $weight;
                     $wallet->save();
                 }
-                if($transaction->type == 'sell'){
+                if ($transaction->type == 'sell') {
                     $total = $transaction->amount;
                     $wallet = wallet::find($transaction['wallet_id']);
                     $weight = $transaction->deal->goldWeight;
@@ -166,5 +166,10 @@ class WalletController extends Controller
             }
         }
         return response()->json();
+    }
+    public function popupWalletData(Request $request)
+    {
+        $user = User::find($request->userId)->load('wallet');
+        return response()->json($user);
     }
 }

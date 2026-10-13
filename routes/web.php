@@ -15,22 +15,6 @@ use App\Http\Middleware\checkIsActive;
 use App\Http\Middleware\checklogin;
 use Illuminate\Support\Facades\Route;
 
-use App\Models\transaction;
-
-Route::get('/x', function () {
-    
-});
-
-Route::get('/test', function () {
-    $data = transaction::latest()->first();
-    $dateTime = explode(' ', $data->created_at);
-    $dateJalali = verta($dateTime[0]);
-    $date = explode(' ', $dateJalali);
-    $date = implode('/', explode('-', $date[0]));
-    $time = $dateTime[1];
-    dd($date, $time);
-});
-
 // home routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -171,6 +155,7 @@ Route::group([
         return to_route('missing');
     })->middleware(checkAdminMiddleware::class)->name('transactionsListSingle');
     Route::post('/submitChanges', 'submitChanges')->middleware(checkAdminMiddleware::class)->name('submitChanges');
+    Route::post('/popupWalletData', 'popupWalletData')->name('popupWalletData');
 });
 
 // search routes

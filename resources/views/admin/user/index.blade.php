@@ -1,6 +1,16 @@
 @extends('admin.app.dashboard')
 @section('title', 'ستاری گلد | کاربران')
 @section('content')
+    <div class="absolute z-999 top-0 opacity-0 invisible right-1/2 translate-x-1/2 w-2/3 lg:w-1/3 bg-white rounded-lg shadow-md transition-all duration-500"
+        id="message">
+        <div class="relative">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-4 absolute top-1/2 -translate-y-1/2 right-3 cursor-pointer"
+                onclick="showMessage('close')" viewBox="0 0 384 512">
+                <path
+                    d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z" />
+            </svg>
+        </div>
+    </div>
     @if (session('success'))
         <div
             class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
@@ -276,7 +286,7 @@
                             @foreach ($users as $user)
                                 @if ($user->isApproved)
                                     <tr class="item_list text-xs lg:text-base">
-                                        <td class="p-1 md:px-3 md:py-2 flex items-center justify-center gap-2">
+                                        <td class="p-1 md:px-3 md:py-2 flex items-center justify-center gap-2 in-fa">
                                             <input type="checkbox" name=""
                                                 class="row-checkbox appearance-none size-5 rounded-md border-1 border-(--border-dashbrd) checked:bg-(--primary-dark-dashbrd) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
                                             {{ $user->id }}
@@ -284,7 +294,8 @@
                                         <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
                                             {{ $user->name }} {{ $user->family }}
                                         </td>
-                                        <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
+                                        <td
+                                            class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center in-fa">
                                             {{ $user->phoneNumber }}
                                         </td>
                                         <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
@@ -293,7 +304,8 @@
                                         <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
                                             -
                                         </td>
-                                        <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
+                                        <td
+                                            class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center in-fa">
                                             {{ $user->nationalCode }}
                                         </td>
                                         <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
@@ -747,11 +759,11 @@
                                             {{ $user->name }} {{ $user->family }}
                                         </td>
                                         <td
-                                            class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center text-nowrap">
+                                            class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center text-nowrap in-fa">
                                             {{ $user->phoneNumber }}
                                         </td>
                                         <td
-                                            class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center text-nowrap">
+                                            class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center text-nowrap in-fa">
                                             {{ $user->nationalCode }}
                                         </td>
                                         <td
@@ -882,6 +894,25 @@
     </div>
     <!-- list_users_start -->
     <script>
+        let message = document.getElementById('message')
+        let element = document.createElement('div')
+        element.classList = "text-sm font-bold flex flex-row items-center justify-center py-3 gap-2 lg:gap-3"
+
+        function showMessage(state) {
+            if (state == 'open') {
+                message.classList.remove('top-0')
+                message.classList.remove('opacity-0')
+                message.classList.remove('invisible')
+                message.classList.add('top-2/10')
+            }
+            if (state == 'close') {
+                message.classList.remove('top-2/10')
+                message.classList.add('top-0')
+                message.classList.add('opacity-0')
+                message.classList.add('invisible')
+            }
+        }
+
         function createUser(state) {
             let userCreatePopup = document.getElementById('userCreatePopup')
             if (state == 'open') {
@@ -895,6 +926,33 @@
         function wallet(state, userId) {
             let wallet = document.getElementById('popup-wallet')
             if (state == 'open') {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    }
+                })
+                $.ajax({
+                    url: "{{ route('wallet.popupWalletData') }}",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        'userId': userId,
+                    },
+                    success: function(data) {
+                        console.log(data);
+                    },
+                    error: function() {
+                        showMessage('open')
+                        element.innerHTML = `
+                            <span>❌</span>
+                            <span class="text-shadow-lg">خطا در دریافت اطلاعات!</span>
+                        `
+                        message.children[0].appendChild(element)
+                        setTimeout(() => {
+                            showMessage('close')
+                        }, 2500)
+                    }
+                })
                 wallet.classList.remove('invisible', 'opacity-0')
             }
             if (state == 'close') {
