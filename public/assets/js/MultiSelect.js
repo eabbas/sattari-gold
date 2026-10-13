@@ -800,18 +800,29 @@ document.querySelectorAll('[data-multi-select]').forEach(select => {
         selectAll: true,
         closeListOnItemSelect: false,
         listAll: true
-    })
-})
+    });
+});
 
-const dealTypeSelect = document.getElementById('dealType')
+const dealTypeSelect = document.getElementById('dealType');
 
 new MultiSelect(dealTypeSelect, {
     search: true,
     selectAll: true,
     listAll: true,
     onChange: function (value, text, option) {
-        const selectedValues = Array.from(dealTypeSelect.selectedOptions).map(opt => opt.value)
-        dealFilters.dealType = selectedValues.length > 0 ? selectedValues : 'all';
+        const ms = dealTypeSelect._multiSelect
+        const enabledData = ms.data.filter(d => !d.disabled)
+        const allSelected = enabledData.length > 0 && enabledData.every(d => d.selected)
+
+        if (allSelected) {
+            dealFilters.dealType = ['all']
+        } else {
+            const selectedValues = Array.from(dealTypeSelect.selectedOptions).map(opt => opt.value)
+            dealFilters.dealType = selectedValues.length > 0 ? selectedValues : ['all']
+        }
+
         console.log('dealFilters:', dealFilters)
     }
 })
+
+dealFilters.dealType = ['all']

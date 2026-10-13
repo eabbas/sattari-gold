@@ -221,10 +221,17 @@
                     </fieldset> --}}
                     <fieldset class="w-full border-1 border-(--border-dashbrd) rounded-md p-2">
                         <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
-                            تاریخ
+                            از تاریخ
                         </legend>
                         <input class="w-full outline-none text-xs md:text-base in-fa" dir="ltr" type="text"
-                            name="date" id="date" placeholder="تاریخ">
+                            name="fromDate" id="fromDate" placeholder="از تاریخ">
+                    </fieldset>
+                    <fieldset class="w-full border-1 border-(--border-dashbrd) rounded-md p-2">
+                        <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
+                            تا تاریخ
+                        </legend>
+                        <input class="w-full outline-none text-xs md:text-base in-fa" dir="ltr" type="text"
+                            name="toDate" id="toDate" placeholder="تا تاریخ">
                     </fieldset>
                     <fieldset class="w-full border-1 border-(--border-dashbrd) rounded-md p-2">
                         <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
@@ -247,7 +254,7 @@
                         <input class="w-full outline-none text-xs  md:text-base in-fa" type="number" dir="ltr"
                             name="" id="dealId" placeholder=" شماره سند">
                     </fieldset>
-                    <div class="lg:col-span-2">
+                    <div class="w-1/2 lg:w-full">
                         <button
                             class="w-full md:w-fit font-bold text-xs md:text-base py-3 md:px-13 mt-2 col-span-1 md:text-right border-1 border-(--border-dashbrd) rounded-md text-center cursor-pointer" onclick="setDatas()">اعمال</button>
                     </div>
