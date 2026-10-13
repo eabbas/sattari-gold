@@ -297,51 +297,58 @@
                         </thead>
 
                         <tbody>
+                            @php
+                                $counter = 0;
+                            @endphp
+                            @foreach($deals as $deal)
+                            @php
+                                $counter++;
+                            @endphp
                             <tr class="item_fayle text-xs lg:text-base">
-                                <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
-                                    1
+                                <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center in-fa">
+                                    {{ $counter }}
                                 </td>
                                 <td
-                                    class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 flex items-center justify-around">
+                                    class="p-1 md:px-3 md:py-2 flex items-center justify-around">
                                     <div
-                                        class="w-18 px-2 py-1 bg-(--primary-dashbrd)/30 text-(--primary-dashbrd) text-center">
-                                        خریدار
+                                        class="w-18 px-2 py-1 {{ $deal->transaction->type == 'buy' ? 'bg-(--primary-dashbrd)/30 text-(--primary-dashbrd)' : 'bg-(--danger-dashbrd)/30 text-(--danger-dashbrd)' }} text-center">
+                                        {{ $deal->transaction->type == 'buy' ? 'خریدار' : 'فروشنده' }}
                                     </div>
                                     <div class="w-fit">
-                                        ماهان فضلی
+                                       {{ $deal->user->name.' '.$deal->user->family }}
                                     </div>
                                 </td>
                                 <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
                                     شمش نقره
                                 </td>
-                                <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
-                                    1 گرم
+                                <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center in-fa">
+                                    {{ $deal->goldWeight }} گرم
                                 </td>
-                                <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
-                                    1.500.000
+                                <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center in-fa">
+                                    {{ number_format($deal->goldPrice) }}
                                 </td>
-                                <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
-                                    146.254.687.254
+                                <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center in-fa">
+                                    {{ $deal->buyPrice ? number_format($deal->buyPrice) : '-' }}
                                 </td>
                                 <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
                                     <span
-                                        class="w-10 h-10 text-(--danger-dashbrd) rounded-md border-1 bordre-(--danger-dashbrd) p-1 cursor-pointer">
-                                        تلاش مجدد
+                                        class="w-10 h-10 text-(--danger-dashbrd) rounded-md border-1 bordre-(--danger-dashbrd) p-1 cursor-pointer in-fa">
+                                       {{ '100'.$deal->id }}
                                     </span>
                                 </td>
                                 <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
-                                    <span class="w-5/12 text-right">15:32</span>
+                                    <span class="w-5/12 text-right in-fa">{{ $deal->time }}</span>
                                     <span class="w-2/12 text-right mx-2">|</span>
-                                    <span class="w-5/12 text-left">1406/3/5</span>
+                                    <span class="w-5/12 text-left in-fa">{{ $deal->date }}</span>
                                 </td>
                                 <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
                                     <span
-                                        class="w-10 h-10 bg-(--primary-dashbrd)/20 text-(--primary-dashbrd) rounded-md border-1 bordre-(--primary-dashbrd) p-1 cursor-default">
-                                        تایید شده
+                                        class="w-10 h-10 bg-[{{ $deal->color }}]/20 text-[{{ $deal->color }}] rounded-md border-1 bordre-(--primary-dashbrd) p-1 cursor-default">
+                                        {{ $deal->state }}
                                     </span>
                                 </td>
                                 <td
-                                    class="relative border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 flex items-center justify-center gap-3">
+                                    class="relative p-1 md:px-3 md:py-2 flex items-center justify-center gap-3">
                                     <button
                                         class="open-popup-fayle w-fit text-(--primary-dashbrd) border-1 border-(--primary-dashbrd) rounded-md p-1 cursor-pointer text-center">
                                         <svg class="size-5 fill-(--primary-dashbrd)" xmlns="http://www.w3.org/2000/svg"
@@ -407,7 +414,8 @@
                                         </div> -->
                                 </td>
                             </tr>
-                            <tr class="item_fayle text-xs lg:text-base">
+                            @endforeach
+                            {{-- <tr class="item_fayle text-xs lg:text-base">
                                 <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
                                     1
                                 </td>
@@ -623,7 +631,7 @@
                                             </div>
                                         </div> -->
                                 </td>
-                            </tr>
+                            </tr> --}}
                         </tbody>
                     </table>
                 </div>

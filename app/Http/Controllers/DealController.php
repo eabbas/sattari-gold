@@ -155,9 +155,24 @@ class DealController extends Controller
 
     public function adminIndex()
     {
-        $deals = deal::all();
+        $deals = deal::orderBy('date', 'desc')->orderBy('time', 'desc')->get();
+        foreach($deals as $deal){
+            switch($deal->transaction->isApproved){
+                case -1:
+                    $deal->state = 'رد شده';
+                    $deal->color = '#E85D5D';
+                    break;
+                case 0:
+                    $deal->state = 'در انتظار';
+                    $deal->color = '#F5A623';
+                    break;
+                case 1:
+                    $deal->state = 'تایید شده';
+                    $deal->color = '#18A878';
+                    break;
+            }
+        }
         $logo = logo::first();
-        // dd($deals);
         return view('admin.deal.index', ['logo' => $logo, 'deals' => $deals]);
     }
 }
