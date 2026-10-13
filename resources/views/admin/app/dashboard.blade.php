@@ -10,6 +10,19 @@
     <title>@yield('title')</title>
     <script src="{{ asset('assets/js/tailwind.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
+    
+     <script>
+        let url = "{{ url('/') }}/"
+        let api = "{{ url('api/') }}/"
+        let imgPath = "{{ asset('storage/') }}/"
+        let flag = "{{ Auth::check() }}"
+        let userId = null;
+        let user = null
+        if (flag) {
+            userId = "{{ Auth::id() }}"
+            user = "{{ Auth::user() }}"
+        }
+    </script>
 </head>
 
 <body>

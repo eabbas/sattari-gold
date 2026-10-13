@@ -133,4 +133,8 @@ class SearchController extends Controller
         $logo = logo::first();
         return view('search', ['products' => $products, 'categories' => $categories, 'title' => $title, 'logo' => $logo]);
     }
+
+    public function getDealFilter(Request $request){
+        return response()->json($request->all());
+    }
 }

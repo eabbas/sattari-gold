@@ -1,7 +1,6 @@
 @extends('admin.app.dashboard')
 @section('title', 'ستاری گلد | لیست همه معاملات')
 @section('content')
-
     @if (session('success'))
         <div
             class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
@@ -178,14 +177,14 @@
         <!-- ارشیو معامله / لسیت -->
         <section class="w-full mx-auto rounded-md border-1 border-(--border-dashbrd) mt-5 pb-10 overflow-hidden">
             <div class="w-full">
-                <form action=""
+                <div
                     class="w-full bg-white grid grid-cols-2 md:grid-cols-4 justify-items-end gap-2 py-5 px-2">
                     <fieldset class="w-full border-1 border-(--border-dashbrd) rounded-md p-2">
                         <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
                             نام و نام خانوادگی
                         </legend>
                         <input class="w-full outline-none text-[10px] md:text-base" type="text" name="fullName"
-                            id="" placeholder=" نام و نام خانوادگی">
+                            id="fullName" placeholder=" نام و نام خانوادگی">
                     </fieldset>
                     {{-- <fieldset class="w-full border-1 border-(--border-dashbrd) rounded-md p-2">
                         <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
@@ -225,34 +224,34 @@
                             تاریخ
                         </legend>
                         <input class="w-full outline-none text-xs md:text-base in-fa" dir="ltr" type="text"
-                            name="date" id="" placeholder="تاریخ">
+                            name="date" id="date" placeholder="تاریخ">
                     </fieldset>
                     <fieldset class="w-full border-1 border-(--border-dashbrd) rounded-md p-2">
                         <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
                             وزن
                         </legend>
-                        <input class="w-full outline-none text-xs  md:text-base in-fa" type="number" dir="ltr"
-                            name="" id="" placeholder="وزن">
+                        <input class="w-full outline-none text-xs md:text-base in-fa" type="number" dir="ltr"
+                            name="" id="weight" placeholder="وزن">
                     </fieldset>
                     <fieldset class="w-full border-1 border-(--border-dashbrd) rounded-md p-2">
                         <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
                             مبلغ
                         </legend>
                         <input class="w-full outline-none text-xs  md:text-base in-fa" type="number" dir="ltr"
-                            name="" id="" placeholder="مبلغ">
+                            name="" id="price" placeholder="مبلغ">
                     </fieldset>
                     <fieldset class="w-full border-1 border-(--border-dashbrd) rounded-md p-2">
                         <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
                             شماره سند
                         </legend>
                         <input class="w-full outline-none text-xs  md:text-base in-fa" type="number" dir="ltr"
-                            name="" id="" placeholder=" شماره سند">
+                            name="" id="dealId" placeholder=" شماره سند">
                     </fieldset>
                     <div class="lg:col-span-2">
                         <button
-                            class="w-full md:w-fit font-bold text-xs md:text-base py-3 md:px-13 mt-2 col-span-1 md:text-right border-1 border-(--border-dashbrd) rounded-md text-center">اعمال</button>
+                            class="w-full md:w-fit font-bold text-xs md:text-base py-3 md:px-13 mt-2 col-span-1 md:text-right border-1 border-(--border-dashbrd) rounded-md text-center cursor-pointer" onclick="setDatas()">اعمال</button>
                     </div>
-                </form>
+                </div>
                 <div class="w-full h-5 bg-zinc-200"></div>
                 <div class="w-full overflow-x-auto">
                     <div class="w-full flex items-center justify-start gap-2 px-2 py-3">
@@ -669,7 +668,7 @@
             popup_report.classList.remove("visible");
         });
     </script>
-
+    <script src="{{ asset('assets/js/adminDeal.js') }}"></script>
 
 
 @endsection
