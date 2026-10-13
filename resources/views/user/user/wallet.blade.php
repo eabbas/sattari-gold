@@ -14,7 +14,7 @@
         </div>
     @endif
     <div class="w-2/3 mx-auto">
-        <div class="py-10 shadow-md rounded-2xl flex flex-col items-center justify-center gap-5">
+        {{-- <div class="py-10 shadow-md rounded-2xl flex flex-col items-center justify-center gap-5 bg-blue-300">
             <div class="flex items-center gap-2">
                 <h2 class="font-bold">موجودی کیف پول شما</h2>
                 <div onclick="showHideAsset(this, 'hide')" class="cursor-pointer">
@@ -40,7 +40,7 @@
                 <span class="text-xs text-gray-400">تومان</span>
             </div>
         </div>
-        <div class="shadow-md rounded-2xl flex flex-col items-center justify-start gap-5 py-3 px-2">
+        <div class="shadow-md rounded-2xl flex flex-col items-center justify-start gap-5 py-3 px-2 bg-blue-300">
             <div class="w-full grid grid-cols-3 gap-5 mb-10">
                 <div onclick="changeTabContent('deposit')"
                     class="tab flex items-center justify-center gap-2 text-xl text-green-600 bg-green-100 py-1 rounded-xl cursor-pointer">
@@ -115,45 +115,108 @@
                             class="bg-green-100 text-green-600 w-full py-2 rounded-xl cursor-pointer">واریز</button>
                     </div>
                 </form>
-                {{--  --}}
-                {{-- <table class="w-full">
-                    <thead class="w-full">
-                        <tr class="w-full flex justify-between mb-10 px-4">
-                            <th>نوع / زمان</th>
-                            <th>مبلغ تراکنش</th>
-                        </tr>
-                    </thead>
-                    <tbody class="w-full">
-                        @foreach ($user->walletTransactions as $transaction)
-                            @if ($transaction['type'] == 'withdraw')
-                                <tr class="w-full flex justify-between mb-10 px-4">
-                                    <td class="flex flex-col items-center gap-2">
-                                        <span class="text-red-500">برداشت</span>
-                                        <span class="text-xs text-gray-400">{{ $transaction['created_at'] }}</span>
-                                    </td>
-                                    <td class="flex flex-col items-center gap-2">
-                                        <span>{{ $transaction['amount'] }}</span>
-                                        <span class="text-xs text-gray-400">تومان</span>
-                                    </td>
-                                </tr>
-                            @endif
-                            @if ($transaction['type'] == 'deposit')
-                                <tr class="w-full flex justify-between mb-10 px-4">
-                                    <td class="flex flex-col items-center gap-2">
-                                        <span class="text-green-500">واریز</span>
-                                        <span class="text-xs text-gray-400">{{ $transaction['created_at'] }}</span>
-                                    </td>
-                                    <td class="flex flex-col items-center gap-2">
-                                        <span>{{ $transaction['amount'] }}</span>
-                                        <span class="text-xs text-gray-400">تومان</span>
-                                    </td>
-                                </tr>
-                            @endif
-                        @endforeach
-                    </tbody>
-                </table> --}}
+            </div>
+        </div> --}}
+        {{--  --}}
+        <div class="w-full bg-white rounded-md px-3 py-2">
+            <div class="grid grid-cols-6 gap-5 mt-5">
+                <div
+                    class="col-span-6 flex items-center border-1 border-(--border-dashbrd) rounded-lg divide-x-1 divide-(--border-dashbrd) px-1 md:px-2 py-2 md:py-3 gap-2">
+                    <div class="w-6/12">
+                        <span class="text-xs md:text-base text-(--text-secondary-dashbrd) ml-1">نام
+                            :</span>
+                        <span class="text-xs md:text-base font-bold">{{ Auth::user()['name'] }}
+                            {{ Auth::user()['family'] }}</span>
+                    </div>
+                    <div class="w-6/12">
+                        <span class="text-xs md:text-base text-(--text-secondary-dashbrd) ml-1">شماره
+                            :</span>
+                        <span class="text-[10px] md:text-base font-bold in-fa">{{ Auth::user()['phoneNumber'] }}</span>
+                    </div>
+                </div>
+                <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
+                    <div class="w-full bg-white divide-y-1 divide-(--border-dashbrd) p-2 rounded-lg">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3 pb-2">
+                                <span class="">
+                                    <svg class="size-5 fill-(--primary-dashbrd)" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M276.1 405.2l5.6-1.4 0 0c55.2-14.1 117.5-30 182.8-28.1c4.1-31.4 30.9-55.7 63.5-55.7V144c-35.3 0-63.9-28.6-64-63.9c-49.9-1.8-103.1 11.1-164.1 26.6l-5.6 1.4c-55.2 14.1-117.5 30-182.8 28.1C107.4 167.7 80.5 192 48 192V368c35.3 0 63.9 28.6 64 63.9c49.9 1.8 103.1-11.1 164.1-26.6zM0 60.3c16 8.2 32 14.3 48 18.7c80 22.1 160 1.7 240-18.7c96-24.5 192-48.9 288 0V398.9v52.8c-16-8.2-32-14.3-48-18.7c-80-22.1-160-1.7-240 18.7c-96 24.5-192 48.9-288 0V113.1 60.3zM384 256c0 61.9-43 112-96 112s-96-50.1-96-112s43-112 96-112s96 50.1 96 112zM256 192v32h16v64h-8H248v32h16 8 32 8 16V288H312h-8V208 192H288 272 256z" />
+                                    </svg>
+                                </span>
+                                <span class="text-xs md:text-base text-(--text-secondary-dashbrd) font-bold">
+                                    موجودی ریال
+                                </span>
+                            </div>
+                            <div class="font-bold pb-2">{{ $user->wallet['asset'] ?? 0 }}</div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3 pt-2">
+                                <span class="text-(--text-secondary-dashbrd) text-xs md:text-sm">
+                                    موجودی قابل برداشت
+                                </span>
+                            </div>
+                            <div class="font-bold pt-2">
+                                <span class="">{{ $user->wallet['asset'] ?? 0 }}</span>
+                                <span class="text-(--text-secondary-dashbrd) text-[6px] md:text-xs">
+                                    تومان
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="col-span-6 flex items-center border-1 border-(--border-dashbrd) rounded-lg divide-x-1 divide-(--border-dashbrd) px-2 py-3 gap-2">
+                    <label for="plass" class="w-6/12 flex items-center gap-1 md:gap-3">
+                        <input class="accent-(--primary-dashbrd) size-4 md:size-5" type="radio" name="yes"
+                            id="plass">
+                        <span class="text-xs text-green-400 md:text-base font-bold">واریز</span>
+                    </label>
+                    <label for="maiez" class="w-6/12 flex items-center gap-1 md:gap-3">
+                        <input class="accent-(--primary-dashbrd) size-4 md:size-5" type="radio" name="yes"
+                            id="maiez">
+                        <span class="text-xs text-red-400 md:text-base font-bold">برداشت</span>
+                    </label>
+                </div>
+                <label class="col-span-3" for="categoryName">
+                    نوع تراکنش
+                    <select
+                        class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                        name="" id="categoryName">
+                        <option value="">طلا</option>
+                        <option value="">نقره</option>
+                        <option value="" selected>ریال</option>
+                        <option value="">شمش</option>
+                    </select>
+                </label>
+                <label class="col-span-3" for="welcome">
+                    مبلغ
+                    <input
+                        class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                        type="text" name="" id="" placeholder="ریال">
+                </label>
+                <div class="w-full flex flex-col gap-4 col-span-3">
+                    <label for="receipt">تصویر رسید تراکنش : </label>
+                    <input type="file" name="receipt" id="receipt"
+                        class="w-full text-center shadow-md py-2 px-2 border border-gray-400 rounded-xl"></input>
+                    @error('receipt')
+                        <span class="text-xs text-red-400">{{ $message }}</span>
+                    @enderror
+                </div>
+                <label class="col-span-6" for="text">
+                    توضیحات
+                    <textarea
+                        class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                        name="" id="text"></textarea>
+                </label>
+                <button
+                    class="col-span-3 border-1 border-(--primary-dashbrd) text-(--primary-dashbrd) py-4 rounded-md">ثبت</button>
+                <button class="col-span-3 border-1 border-(--danger-dashbrd) text-(--danger-dashbrd) py-4 rounded-md">
+                    لغو</button>
             </div>
         </div>
+        {{--  --}}
     </div>
     <script>
         let asset = document.getElementById('asset')
