@@ -6,9 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {{-- <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script> --}}
     <link rel="stylesheet" href="{{ url('assets/css/style.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url('assets/css/MultiSelect.css') }}" type="text/css">
     <title>@yield('title')</title>
     <script src="{{ asset('assets/js/tailwind.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
+    
+     <script>
+        let url = "{{ url('/') }}/"
+        let api = "{{ url('api/') }}/"
+        let imgPath = "{{ asset('storage/') }}/"
+        let flag = "{{ Auth::check() }}"
+        let userId = null;
+        let user = null
+        if (flag) {
+            userId = "{{ Auth::id() }}"
+            user = "{{ Auth::user() }}"
+        }
+    </script>
 </head>
 
 <body>
@@ -336,6 +350,7 @@
         </div>
     </section>
     <script src="{{ asset('assets/js/app.js') }}" defer></script>
+    <script src="{{ asset('assets/js/MultiSelect.js') }}" defer></script>
 </body>
 
 </html>

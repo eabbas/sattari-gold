@@ -14,8 +14,8 @@ let resetFilters = document.getElementById('resetFilters')
 let timeout
 let searchInp = document.getElementById('searchInp')
 let title = document.getElementById('title')
-function getFilters() {
-    $.ajax({
+async function getFilters() {
+    await $.ajax({
         url: api + 'getFilters',
         type: "POST",
         dataType: "json",

@@ -59,14 +59,16 @@ class DealController extends Controller
         $cleanOutput = (float) str_replace(',', '', $output);
 
         if ($action == 'buy') {
+            $buyPrice = 0;
             if ($calcBy == 'price') {
                 $amount = (float) $input;  
                 $weight = $cleanOutput;  
+                $buyPrice = $input;
             } elseif ($calcBy == 'weight') {
                 $weight = (float) $input; 
                 $amount = $cleanOutput;  
+                $buyPrice = $amount;
             }
-
             if ($wallet->asset < $amount) {
                 return redirect()->back()->with('failure', 'موجودی کیف پول شما کافی نیست.');
             }
@@ -86,6 +88,7 @@ class DealController extends Controller
                 'transaction_id' => $transaction->id,
                 'goldWeight' => $weight,
                 'goldPrice' => $goldPrice,
+                'buyPrice' => $amount,
                 'date' => $date,
                 'time' => $time,
                 'description' => $description
@@ -95,8 +98,7 @@ class DealController extends Controller
                 'asset' => $totalAsset,
                 'goldWeight' => $totalGold
             ]);
-            Log::info($wallet->goldWeight);
-
+            
             return redirect()->back()->with('success', "$weight گرم طلا به سپرده شما افزوده شد");
         }
 
@@ -128,6 +130,7 @@ class DealController extends Controller
                 'transaction_id' => $transaction->id,
                 'goldWeight' => $weight,
                 'goldPrice' => $goldPrice,
+                'buyPrice' => $output,
                 'date' => $date,
                 'time' => $time,
                 'description' => $description
@@ -152,7 +155,23 @@ class DealController extends Controller
 
     public function adminIndex()
     {
-        $deals = deal::all();
+        $deals = deal::orderBy('date', 'desc')->orderBy('time', 'desc')->get();
+        foreach($deals as $deal){
+            switch($deal->transaction->isApproved){
+                case -1:
+                    $deal->state = 'رد شده';
+                    $deal->color = '#E85D5D';
+                    break;
+                case 0:
+                    $deal->state = 'در انتظار';
+                    $deal->color = '#F5A623';
+                    break;
+                case 1:
+                    $deal->state = 'تایید شده';
+                    $deal->color = '#18A878';
+                    break;
+            }
+        }
         $logo = logo::first();
         return view('admin.deal.index', ['logo' => $logo, 'deals' => $deals]);
     }
