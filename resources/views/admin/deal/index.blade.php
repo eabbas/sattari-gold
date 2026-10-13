@@ -184,36 +184,30 @@
                         <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
                             نام و نام خانوادگی
                         </legend>
-                        <input class="w-full outline-none text-[10px] md:text-base" type="text" name=""
-                            id="" placeholder=" نام و نام خانوادگی" value="همه">
+                        <input class="w-full outline-none text-[10px] md:text-base" type="text" name="fullName"
+                            id="" placeholder=" نام و نام خانوادگی">
                     </fieldset>
-                    <fieldset class="w-full border-1 border-(--border-dashbrd) rounded-md p-2">
+                    {{-- <fieldset class="w-full border-1 border-(--border-dashbrd) rounded-md p-2">
                         <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
                             نوع کالا
                         </legend>
-                        <input class="w-full outline-none text-xs md:text-base" type="text" list="transction"
-                            name="" id="" placeholder="تراکنش" value="همه">
-                        <datalist id="transction">
-                            <option value="همه"></option>
-                            <option value="تهران"></option>
-                            <option value="تهران"></option>
-                            <option value="تهران"></option>
-                        </datalist>
-                    </fieldset>
+                       <select id="product" class="w-10/12 lg:w-8/12" name="product[]" data-placeholder="" multiple data-multi-select>
+                            @foreach ($filter['language'] as $language)
+                                <option value="{{ $language['key'] }}" @if ($language['key'] == 'all') selected @endif>{{ $language['value'] }}</option>
+                            @endforeach
+                        </select>
+                    </fieldset> --}}
                     <fieldset class="w-full border-1 border-(--border-dashbrd) rounded-md p-2">
                         <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
                             نوع معامله
                         </legend>
-                        <input class="w-full outline-none text-xs md:text-base" type="text" list="transctionTyoe"
-                            name="" id="" placeholder="نوع تراکنش" value="همه">
-                        <datalist id="transctionTyoe">
-                            <option value="همه"></option>
-                            <option value="تهران"></option>
-                            <option value="تهران"></option>
-                            <option value="تهران"></option>
-                        </datalist>
+                        <select id="dealType" name="dealType[]" data-placeholder="انتخاب کنید" data-multi-select data-select-all-default="true"
+                            multiple>
+                            <option value="buy">خرید</option>
+                            <option value="sell">فروش</option>
+                        </select>
                     </fieldset>
-                    <fieldset class="w-full border-1 border-(--border-dashbrd) rounded-md p-2">
+                    {{-- <fieldset class="w-full border-1 border-(--border-dashbrd) rounded-md p-2">
                         <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
                             مرجع ثبت
                         </legend>
@@ -225,30 +219,39 @@
                             <option value="تهران"></option>
                             <option value="تهران"></option>
                         </datalist>
-                    </fieldset>
+                    </fieldset> --}}
                     <fieldset class="w-full border-1 border-(--border-dashbrd) rounded-md p-2">
                         <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
                             تاریخ
                         </legend>
-                        <input class="w-full outline-none text-xs md:text-base" type="text" name=""
-                            id="" placeholder="تاریخ">
+                        <input class="w-full outline-none text-xs md:text-base in-fa" dir="ltr" type="text"
+                            name="date" id="" placeholder="تاریخ">
                     </fieldset>
                     <fieldset class="w-full border-1 border-(--border-dashbrd) rounded-md p-2">
                         <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
-                            وزن/تعداد
+                            وزن
                         </legend>
-                        <input class="w-full outline-none text-xs  md:text-base" type="text" name=""
-                            id="" placeholder=" وزن/تعداد">
+                        <input class="w-full outline-none text-xs  md:text-base in-fa" type="number" dir="ltr"
+                            name="" id="" placeholder="وزن">
+                    </fieldset>
+                    <fieldset class="w-full border-1 border-(--border-dashbrd) rounded-md p-2">
+                        <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
+                            مبلغ
+                        </legend>
+                        <input class="w-full outline-none text-xs  md:text-base in-fa" type="number" dir="ltr"
+                            name="" id="" placeholder="مبلغ">
                     </fieldset>
                     <fieldset class="w-full border-1 border-(--border-dashbrd) rounded-md p-2">
                         <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
                             شماره سند
                         </legend>
-                        <input class="w-full outline-none text-xs  md:text-base" type="text" name=""
-                            id="" placeholder=" شماره سند">
+                        <input class="w-full outline-none text-xs  md:text-base in-fa" type="number" dir="ltr"
+                            name="" id="" placeholder=" شماره سند">
                     </fieldset>
-                    <button
-                        class="w-full md:w-fit font-bold text-xs md:text-base py-3 md:px-13 mt-2 col-span-1 md:text-right border-1 border-(--border-dashbrd) rounded-md text-center">اعمال</button>
+                    <div class="lg:col-span-2">
+                        <button
+                            class="w-full md:w-fit font-bold text-xs md:text-base py-3 md:px-13 mt-2 col-span-1 md:text-right border-1 border-(--border-dashbrd) rounded-md text-center">اعمال</button>
+                    </div>
                 </form>
                 <div class="w-full h-5 bg-zinc-200"></div>
                 <div class="w-full overflow-x-auto">
@@ -300,120 +303,118 @@
                             @php
                                 $counter = 0;
                             @endphp
-                            @foreach($deals as $deal)
-                            @php
-                                $counter++;
-                            @endphp
-                            <tr class="item_fayle text-xs lg:text-base">
-                                <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center in-fa">
-                                    {{ $counter }}
-                                </td>
-                                <td
-                                    class="p-1 md:px-3 md:py-2 flex items-center justify-around">
-                                    <div
-                                        class="w-18 px-2 py-1 {{ $deal->transaction->type == 'buy' ? 'bg-(--primary-dashbrd)/30 text-(--primary-dashbrd)' : 'bg-(--danger-dashbrd)/30 text-(--danger-dashbrd)' }} text-center">
-                                        {{ $deal->transaction->type == 'buy' ? 'خریدار' : 'فروشنده' }}
-                                    </div>
-                                    <div class="w-fit">
-                                       {{ $deal->user->name.' '.$deal->user->family }}
-                                    </div>
-                                </td>
-                                <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
-                                    شمش نقره
-                                </td>
-                                <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center in-fa">
-                                    {{ $deal->goldWeight }} گرم
-                                </td>
-                                <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center in-fa">
-                                    {{ number_format($deal->goldPrice) }}
-                                </td>
-                                <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center in-fa">
-                                    {{ $deal->buyPrice ? number_format($deal->buyPrice) : '-' }}
-                                </td>
-                                <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
-                                    <span
-                                        class="w-10 h-10 text-(--danger-dashbrd) rounded-md border-1 bordre-(--danger-dashbrd) p-1 cursor-pointer in-fa">
-                                       {{ '100'.$deal->id }}
-                                    </span>
-                                </td>
-                                <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
-                                    <span class="w-5/12 text-right in-fa">{{ $deal->time }}</span>
-                                    <span class="w-2/12 text-right mx-2">|</span>
-                                    <span class="w-5/12 text-left in-fa">{{ $deal->date }}</span>
-                                </td>
-                                <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
-                                    <span
-                                        class="w-10 h-10 bg-[{{ $deal->color }}]/20 text-[{{ $deal->color }}] rounded-md border-1 bordre-(--primary-dashbrd) p-1 cursor-default">
-                                        {{ $deal->state }}
-                                    </span>
-                                </td>
-                                <td
-                                    class="relative p-1 md:px-3 md:py-2 flex items-center justify-center gap-3">
-                                    <button
-                                        class="open-popup-fayle w-fit text-(--primary-dashbrd) border-1 border-(--primary-dashbrd) rounded-md p-1 cursor-pointer text-center">
-                                        <svg class="size-5 fill-(--primary-dashbrd)" xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 384 512">
-                                            <path
-                                                d="M48 448V64c0-8.8 7.2-16 16-16H224v80c0 17.7 14.3 32 32 32h80V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16zM64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V154.5c0-17-6.7-33.3-18.7-45.3L274.7 18.7C262.7 6.7 246.5 0 229.5 0H64zm90.9 233.3c-8.1-10.5-23.2-12.3-33.7-4.2s-12.3 23.2-4.2 33.7L161.6 320l-44.5 57.3c-8.1 10.5-6.3 25.5 4.2 33.7s25.5 6.3 33.7-4.2L192 359.1l37.1 47.6c8.1 10.5 23.2 12.3 33.7 4.2s12.3-23.2 4.2-33.7L222.4 320l44.5-57.3c8.1-10.5 6.3-25.5-4.2-33.7s-25.5-6.3-33.7 4.2L192 280.9l-37.1-47.6z" />
-                                        </svg>
-                                    </button>
-                                    <!-- <div class="popup-fayle fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2 hidden flex items-center justify-center">
-                                            <div class="close-popup-fayle2 absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2"></div>
-                                            <div class="relative z-51 w-[80%] lg:w-200 bg-white rounded-md px-3 py-2">
-                                                <div class="w-full flex items-center justify-between border-b-1 border-(--border-dashbrd) pb-2">
-                                                    <div class="font-bold">مشاهده فیش واریزی</div>
-                                                    <div class="close-popup-fayle">
-                                                        <svg class="size-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                                                            <path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"></path>
-                                                        </svg>
-                                                    </div>
-                                                </div>
-                                                <div class="grid grid-cols-6 gap-5 mt-5">
-                                                    <div class="col-span-6 flex items-center border-1 border-(--border-dashbrd) rounded-lg divide-x-1 divide-(--border-dashbrd) px-1 md:px-2 py-2 md:py-3 gap-2">
-                                                        <div class="w-4/12 flex flex-col sm:flex-row">
-                                                            <span class="text-xs md:text-base text-(--text-secondary-dashbrd) ml-1">نام :</span>
-                                                            <span class="text-[10px] md:text-base font-bold">امید حسن نژاد</span>
-                                                        </div>
-                                                        <div class="w-4/12 flex flex-col sm:flex-row">
-                                                            <span class="text-xs md:text-base text-(--text-secondary-dashbrd) ml-1">شماره :</span>
-                                                            <span class="text-[10px] md:text-base font-bold">09123456789</span>
-                                                        </div>
-                                                        <div class="w-4/12 flex flex-col sm:flex-row">
-                                                            <span class="text-xs md:text-base text-(--text-secondary-dashbrd) ml-1">تاریخ ثبت :</span>
-                                                            <span class="text-[10px] md:text-base font-bold">1405/2/7</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
-                                                        <div class="w-full bg-white divide-x-1 divide-(--border-dashbrd) flex items-center gap-2 p-2 rounded-lg">
-                                                            <div class="w-6/12 flex flex-col sm:flex-row gap-2">
-                                                                <span class="text-xs md:text-base text-(--text-secondary-dashbrd) ml-1">شماره کارت :</span>
-                                                                <span class="text-[8px] sm:text-xs md:text-base font-bold">6037 9975 4568 2589</span>
+                            @foreach ($deals as $deal)
+                                @php
+                                    $counter++;
+                                @endphp
+                                <tr class="item_fayle text-xs lg:text-base">
+                                    <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center in-fa">
+                                        {{ $counter }}
+                                    </td>
+                                    <td class="p-1 md:px-3 md:py-2 flex items-center justify-around">
+                                        <div
+                                            class="w-18 px-2 py-1 {{ $deal->transaction->type == 'buy' ? 'bg-(--primary-dashbrd)/30 text-(--primary-dashbrd)' : 'bg-(--danger-dashbrd)/30 text-(--danger-dashbrd)' }} text-center">
+                                            {{ $deal->transaction->type == 'buy' ? 'خریدار' : 'فروشنده' }}
+                                        </div>
+                                        <div class="w-fit">
+                                            {{ $deal->user->name . ' ' . $deal->user->family }}
+                                        </div>
+                                    </td>
+                                    <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
+                                        شمش نقره
+                                    </td>
+                                    <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center in-fa">
+                                        {{ $deal->goldWeight }} گرم
+                                    </td>
+                                    <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center in-fa">
+                                        {{ number_format($deal->goldPrice) }}
+                                    </td>
+                                    <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center in-fa">
+                                        {{ $deal->buyPrice ? number_format($deal->buyPrice) : '-' }}
+                                    </td>
+                                    <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
+                                        <span
+                                            class="w-10 h-10 text-(--danger-dashbrd) rounded-md border-1 bordre-(--danger-dashbrd) p-1 cursor-pointer in-fa">
+                                            {{ '100' . $deal->id }}
+                                        </span>
+                                    </td>
+                                    <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
+                                        <span class="w-5/12 text-right in-fa">{{ $deal->time }}</span>
+                                        <span class="w-2/12 text-right mx-2">|</span>
+                                        <span class="w-5/12 text-left in-fa">{{ $deal->date }}</span>
+                                    </td>
+                                    <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
+                                        <span
+                                            class="w-10 h-10 bg-[{{ $deal->color }}]/20 text-[{{ $deal->color }}] rounded-md border-1 bordre-(--primary-dashbrd) p-1 cursor-default">
+                                            {{ $deal->state }}
+                                        </span>
+                                    </td>
+                                    <td class="relative p-1 md:px-3 md:py-2 flex items-center justify-center gap-3">
+                                        <button
+                                            class="open-popup-fayle w-fit text-(--primary-dashbrd) border-1 border-(--primary-dashbrd) rounded-md p-1 cursor-pointer text-center">
+                                            <svg class="size-5 fill-(--primary-dashbrd)"
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                                                <path
+                                                    d="M48 448V64c0-8.8 7.2-16 16-16H224v80c0 17.7 14.3 32 32 32h80V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16zM64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V154.5c0-17-6.7-33.3-18.7-45.3L274.7 18.7C262.7 6.7 246.5 0 229.5 0H64zm90.9 233.3c-8.1-10.5-23.2-12.3-33.7-4.2s-12.3 23.2-4.2 33.7L161.6 320l-44.5 57.3c-8.1 10.5-6.3 25.5 4.2 33.7s25.5 6.3 33.7-4.2L192 359.1l37.1 47.6c8.1 10.5 23.2 12.3 33.7 4.2s12.3-23.2 4.2-33.7L222.4 320l44.5-57.3c8.1-10.5 6.3-25.5-4.2-33.7s-25.5-6.3-33.7 4.2L192 280.9l-37.1-47.6z" />
+                                            </svg>
+                                        </button>
+                                        <!-- <div class="popup-fayle fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2 hidden flex items-center justify-center">
+                                                        <div class="close-popup-fayle2 absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2"></div>
+                                                        <div class="relative z-51 w-[80%] lg:w-200 bg-white rounded-md px-3 py-2">
+                                                            <div class="w-full flex items-center justify-between border-b-1 border-(--border-dashbrd) pb-2">
+                                                                <div class="font-bold">مشاهده فیش واریزی</div>
+                                                                <div class="close-popup-fayle">
+                                                                    <svg class="size-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                                                                        <path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"></path>
+                                                                    </svg>
+                                                                </div>
                                                             </div>
-                                                            <div class="w-6/12 flex flex-col sm:flex-row gap-2">
-                                                                <span class="text-xs md:text-base text-(--text-secondary-dashbrd) ml-1">شماره شبا :</span>
-                                                                <span class="text-[8px] sm:text-xs md:text-base font-bold">IR 584100000005478925784</span>
+                                                            <div class="grid grid-cols-6 gap-5 mt-5">
+                                                                <div class="col-span-6 flex items-center border-1 border-(--border-dashbrd) rounded-lg divide-x-1 divide-(--border-dashbrd) px-1 md:px-2 py-2 md:py-3 gap-2">
+                                                                    <div class="w-4/12 flex flex-col sm:flex-row">
+                                                                        <span class="text-xs md:text-base text-(--text-secondary-dashbrd) ml-1">نام :</span>
+                                                                        <span class="text-[10px] md:text-base font-bold">امید حسن نژاد</span>
+                                                                    </div>
+                                                                    <div class="w-4/12 flex flex-col sm:flex-row">
+                                                                        <span class="text-xs md:text-base text-(--text-secondary-dashbrd) ml-1">شماره :</span>
+                                                                        <span class="text-[10px] md:text-base font-bold">09123456789</span>
+                                                                    </div>
+                                                                    <div class="w-4/12 flex flex-col sm:flex-row">
+                                                                        <span class="text-xs md:text-base text-(--text-secondary-dashbrd) ml-1">تاریخ ثبت :</span>
+                                                                        <span class="text-[10px] md:text-base font-bold">1405/2/7</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
+                                                                    <div class="w-full bg-white divide-x-1 divide-(--border-dashbrd) flex items-center gap-2 p-2 rounded-lg">
+                                                                        <div class="w-6/12 flex flex-col sm:flex-row gap-2">
+                                                                            <span class="text-xs md:text-base text-(--text-secondary-dashbrd) ml-1">شماره کارت :</span>
+                                                                            <span class="text-[8px] sm:text-xs md:text-base font-bold">6037 9975 4568 2589</span>
+                                                                        </div>
+                                                                        <div class="w-6/12 flex flex-col sm:flex-row gap-2">
+                                                                            <span class="text-xs md:text-base text-(--text-secondary-dashbrd) ml-1">شماره شبا :</span>
+                                                                            <span class="text-[8px] sm:text-xs md:text-base font-bold">IR 584100000005478925784</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-span-6  border-1 border-(--border-dashbrd) rounded-lg p-2 flex items-center justify-center">
+                                                                    <img class="w-[90%] h-50 bg-zinc-300" src="" alt="">
+                                                                </div>
+                                                                <div class="col-span-3 bg-zinc-100 px-2 py-4 rounded-md  flex flex-col sm:flex-row">
+                                                                    <span class="text-xs md:text-base text-(--text-secondary-dashbrd)">تایید شده توسط :</span>
+                                                                    <span class="text-[10px] md:text-base font-bold">محمد رضا عولیا فام</span>
+                                                                </div>
+                                                                <div class="col-span-3 bg-zinc-100 px-1 md:px-2 py-2 md:py-4 rounded-md  flex flex-col sm:flex-row">
+                                                                    <span class="text-xs md:text-base text-(--text-secondary-dashbrd)">مبلغ :</span>
+                                                                    <span>
+                                                                        <span class="text-[10px] md:text-base font-bold">500.000.000</span>
+                                                                        <span class="text-xs md:text-base text-(--text-secondary-dashbrd)">ریال</span>
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-span-6  border-1 border-(--border-dashbrd) rounded-lg p-2 flex items-center justify-center">
-                                                        <img class="w-[90%] h-50 bg-zinc-300" src="" alt="">
-                                                    </div>
-                                                    <div class="col-span-3 bg-zinc-100 px-2 py-4 rounded-md  flex flex-col sm:flex-row">
-                                                        <span class="text-xs md:text-base text-(--text-secondary-dashbrd)">تایید شده توسط :</span>
-                                                        <span class="text-[10px] md:text-base font-bold">محمد رضا عولیا فام</span>
-                                                    </div>
-                                                    <div class="col-span-3 bg-zinc-100 px-1 md:px-2 py-2 md:py-4 rounded-md  flex flex-col sm:flex-row">
-                                                        <span class="text-xs md:text-base text-(--text-secondary-dashbrd)">مبلغ :</span>
-                                                        <span>
-                                                            <span class="text-[10px] md:text-base font-bold">500.000.000</span>
-                                                            <span class="text-xs md:text-base text-(--text-secondary-dashbrd)">ریال</span>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> -->
-                                </td>
-                            </tr>
+                                                    </div> -->
+                                    </td>
+                                </tr>
                             @endforeach
                             {{-- <tr class="item_fayle text-xs lg:text-base">
                                 <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
