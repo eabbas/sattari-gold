@@ -50,15 +50,16 @@ async function applyDealFilters() {
             'filters': dealFilters
         },
         success: function (data) {
-            console.log(data);
+            
 
             let counter = 0;
             let bodyTable = document.querySelector('tbody');
-            bodyTable.innerHTML = '';
+            bodyTable.innerHTML = ''
 
             data.forEach(row => {
+               
                 let parentRow = document.createElement('tr');
-                parentRow.classList = 'item_fayle text-xs lg:text-base';
+                parentRow.classList = 'item_fayle text-xs lg:text-base'
                 counter++
 
                 let html = `
@@ -96,20 +97,21 @@ async function applyDealFilters() {
                         </div>
                     </td>
                     <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
-                        <button onclick='showTransaction("open", ${row.json})' class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer">
+                        <button onclick="showTransaction('open', '${ row.wallet.user.name+' '+row.wallet.user.family }', '${ row.wallet.user.phoneNumber }', '${ row.time + ' | ' + row.date }', '${ row.stateColor }', '${ row.stateTitle }', '${ row.type }', '${ row.amount }', '${ row.isApproved }', '${ row.receipt }')" 
+                        class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer">
                             مشاهده
                         </button>
                     </td>
                 `
 
-                parentRow.innerHTML = html;
-                bodyTable.append(parentRow);
-            });
+                parentRow.innerHTML = html
+                bodyTable.append(parentRow)
+            })
         },
         error: function () {
-            console.log('error');
+            console.log('error')
         }
-    });
+    })
 }
 
 
@@ -133,7 +135,6 @@ function showTransaction(state, user, phoneNumber, dateTime, stateColor, stateTi
     transactionPopup.classList.remove('invisible', 'opacity-0') 
     document.getElementById('transactionControl').classList.remove('hidden')
     if (isApproved != 0) {
-        console.log(document.getElementById('transactionControl').classList)
         document.getElementById('transactionControl').classList.add('hidden')
     }
     document.getElementById('transactionPopupName').innerText = user

@@ -276,9 +276,6 @@ class SearchController extends Controller
         }
         $transactions = $transactions->orderBy('created_at', 'desc')->get();
         foreach ($transactions as $transaction) {
-            $transaction->wallet->user;
-            $transaction->deal;
-            $transaction->json = json_encode($transaction, true);
             $transaction->fullName = $transaction->wallet->user->name . ' ' . $transaction->wallet->user->family;
             $transaction->phoneNumber = $transaction->wallet->user->phoneNumber;
             switch ($transaction->type) {
