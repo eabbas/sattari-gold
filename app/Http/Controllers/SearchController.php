@@ -203,6 +203,72 @@ class SearchController extends Controller
                     break;
             }
         }
+        return response()->json($deals);
+    }
+    public function getTransactionFilter(Request $request)
+    {
+        return response()->json($request->all());
+        $filters = $request->input('filters');
+        $fromDate = $filters['fromDate'] ?? null;
+        $toDate = $filters['toDate'] ?? null;
+        $number = $filters['dealId'] ?? null;
+        $dealType = $filters['dealType'] ?? ['all'];
+        $fullName = $filters['fullName'] ?? null;
+        $price = $filters['price'] ?? null;
+        $weight = $filters['weight'] ?? null;
+        if ($number) {
+            $dealId = substr($number, 3);
+            $deals = deal::find($dealId);
+            return response()->json($deals);
+        }
+
+        if ($dealType == ['all']) {
+            $dealType = [];
+            $dealType[] = 'sell';
+            $dealType[] = 'buy';
+        }
+        $deals = deal::where(function ($query) use ($price, $weight, $fromDate, $toDate, $dealType) {
+            if ($price) {
+                $query->where('deals.buyPrice', $price);
+            }
+            if ($weight) {
+                $query->where('deals.goldWeight', $weight);
+            }
+            if ($fromDate && !$toDate) {
+                $query->where('deals.date', '>=', $fromDate);
+            }
+            if ($toDate && !$fromDate) {
+                $query->where('deals.date', '<=', $toDate);
+            }
+            if ($fromDate && $toDate) {
+                $query->whereBetween('deals.primary_price', [$fromDate, $toDate]);
+            }
+        })->whereHas('transaction', function ($query) use ($dealType) {
+                $query->whereIn('transactions.type', $dealType);
+            })->with(['transaction', 'user']);
+
+        if ($fullName) {
+            $deals->with(['user' => function ($query) use ($fullName) {
+                $query->where('name', 'like', '%' . $fullName . '%')->orWhere('family', 'like', '%' . $fullName . '%');
+            }]);
+        }
+        $deals = $deals->orderBy('date', 'desc')->orderBy('time', 'desc')->get();
+        foreach ($deals as $deal) {
+            switch ($deal->transaction->isApproved) {
+                case -1:
+                    $deal->state = 'رد شده';
+                    $deal->color = '#E85D5D';
+                    break;
+                case 0:
+                    $deal->state = 'در انتظار';
+                    $deal->color = '#F5A623';
+                    break;
+                case 1:
+                    $deal->state = 'تایید شده';
+                    $deal->color = '#18A878';
+                    break;
+            }
+        }
         return response()->json(['deals' => $deals, 'request' => $request->all()]);
     }
 }

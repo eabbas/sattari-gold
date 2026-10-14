@@ -1,6 +1,7 @@
 @extends('admin.app.dashboard')
 @section('title', 'ستاری گلد | واریز و برداشت ها')
 @section('content')
+
     <!-- واریز و برداشت -->
     <div class="w-full flex flex-col gap-3 justify-start items-center">
         <!-- واریز و برداشت / هدر -->
@@ -62,7 +63,7 @@
                         <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
                             نوع تراکنش
                         </legend>
-                        <select id="transactionType" name="transactionType[]" data-placeholder="انتخاب کنید" data-multi-select
+                        <select id="type" name="type[]" data-placeholder="انتخاب کنید" data-multi-select
                             data-select-all-default="true" multiple>
                             <option value="deposit">واریز</option>
                             <option value="withdraw">برداشت</option>
@@ -343,4 +344,5 @@
             }
         }
     </script>
+    <script src="{{ asset('assets/js/transaction.js') }}"></script>
 @endsection

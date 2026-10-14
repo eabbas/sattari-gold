@@ -15,15 +15,15 @@ let weight = document.getElementById('weight')
 let price = document.getElementById('price')
 let dealId = document.getElementById('dealId')
 
-function setDatas(){
-    dealFilters.fullName = fullName.value
-    dealFilters.fromDate = fromDate.value
-    dealFilters.toDate = toDate.value
-    dealFilters.weight = weight.value
-    dealFilters.price = price.value
-    dealFilters.dealId = dealId.value
-    applyDealFilters()
-}
+// function setDatas(){
+//     dealFilters.fullName = fullName.value
+//     dealFilters.fromDate = fromDate.value
+//     dealFilters.toDate = toDate.value
+//     dealFilters.weight = weight.value
+//     dealFilters.price = price.value
+//     dealFilters.dealId = dealId.value
+//     applyDealFilters()
+// }
 
 async function applyDealFilters() {
     await $.ajax({
@@ -34,11 +34,10 @@ async function applyDealFilters() {
             'filters': dealFilters
         },
         success: function (data) {
-            console.log(data)
             let counter = 0;
             let bodyTable = document.querySelector('tbody')
             bodyTable.innerHTML = ''
-            data.deals.forEach(row=>{
+            data.forEach(row=>{
                 let parentRow = document.createElement('tr')
                 parentRow.classList = 'item_fayle text-xs lg:text-base'
                 counter++
@@ -96,4 +95,33 @@ async function applyDealFilters() {
             console.log('error')
         }
     })
+}
+
+// مقداردهی اولیه بعد از لود شدن MultiSelect
+document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(function () {
+        const dealTypeSelect = document.getElementById('dealType');
+        const dealTypeMs = dealTypeSelect ? dealTypeSelect._multiSelect : null;
+        if (dealTypeMs) {
+            dealFilters.dealType = dealTypeMs.getFilterValues();
+        }
+    }, 100);
+});
+
+function setDatas() {
+    dealFilters.fullName = fullName.value;
+    dealFilters.fromDate = fromDate.value;
+    dealFilters.toDate = toDate.value;
+    dealFilters.weight = weight.value;
+    dealFilters.price = price.value;
+    dealFilters.dealId = dealId.value;
+
+    // استفاده از getFilterValues برای MultiSelect
+    const dealTypeSelect = document.getElementById('dealType');
+    const dealTypeMs = dealTypeSelect ? dealTypeSelect._multiSelect : null;
+    if (dealTypeMs) {
+        dealFilters.dealType = dealTypeMs.getFilterValues();
+    }
+
+    applyDealFilters();
 }
