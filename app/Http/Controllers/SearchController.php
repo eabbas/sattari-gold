@@ -217,13 +217,11 @@ class SearchController extends Controller
         $toDate = $filters['toDate'] ?? null;
         $price = $filters['price'] ?? null;
         $number = $filters['transactionId'] ?? null;
-      
         if ($number) {
             $transactionId = substr($number, 3);
-            $transactions = deal::find($transactionId);
+            $transactions = transaction::find($transactionId);
             return response()->json($transactions);
         }
-
         if ($type == ['all']) {
             $type = [];
             $type[] = 'sell';
@@ -254,18 +252,16 @@ class SearchController extends Controller
                 $query->whereIn('transactions.isApproved', $status);
             }
             if ($type) {
-                $query->whereIn('transactions.type', $status);
+                $query->whereIn('transactions.type', $type);
             }
-        })->whereHas('deal', function ($query) use ($type) {
-                $query->whereIn('deals.buyPrice', $type);
-            })->with(['deal', 'wallet']);
+        })->with(['wallet', 'deal']);
 
         if ($fullName) {
-            $transactions->with(['wallet' => function ($query) use ($fullName) {
-                $query->with(['user'=>function($query) use ($fullName){
+            $transactions->whereHas('wallet', function ($query) use ($fullName) {
+                $query->whereHas('user', function($query) use ($fullName){
                     $query->where('name', 'like', '%' . $fullName . '%')->orWhere('family', 'like', '%' . $fullName . '%');
-                }]);
-            }]);
+                });
+            });
         }
         $transactions = $transactions->orderBy('created_at', 'desc')->get();
         foreach ($transactions as $transaction) {
@@ -309,6 +305,6 @@ class SearchController extends Controller
                     break;
             }
         }
-        return response()->json(['transactions' => $transactions, 'request' => $request->all()]);
+        return response()->json($transactions);
     }
 }

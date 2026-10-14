@@ -5,7 +5,7 @@ let dealFilters = {
     'fromDate': null,
     'toDate': null,
     'price': null,
-    'transactoinId': null
+    'transactionId': null
 };
 
 let fullName = document.getElementById('fullName');
@@ -13,31 +13,15 @@ let fromDate = document.getElementById('fromDate');
 let toDate = document.getElementById('toDate');
 let status = document.getElementById('status');
 let price = document.getElementById('price');
-let transactoinId = document.getElementById('transactoinId');
+let transactionId = document.getElementById('transactionId');
 let type = document.getElementById('type');
-
-// مقداردهی اولیه بعد از لود شدن MultiSelect
-document.addEventListener('DOMContentLoaded', function () {
-    setTimeout(function () {
-        const typeMs = type ? type._multiSelect : null;
-        if (typeMs) {
-            dealFilters.type = typeMs.getFilterValues();
-        }
-
-        const statusMs = status ? status._multiSelect : null;
-        if (statusMs) {
-            dealFilters.status = statusMs.getFilterValues();
-        }
-
-    }, 100);
-});
 
 function setDatas() {
     dealFilters.fullName = fullName.value || null;
     dealFilters.fromDate = fromDate.value || null;
     dealFilters.toDate = toDate.value || null;
     dealFilters.price = price.value || null;
-    dealFilters.transactoinId = transactoinId.value || null;
+    dealFilters.transactionId = transactionId.value || null;
 
     // استفاده از getFilterValues برای MultiSelect
     const typeMs = type ? type._multiSelect : null;
@@ -130,3 +114,19 @@ async function applyDealFilters() {
         }
     });
 }
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(function () {
+        const typeMs = type ? type._multiSelect : null
+        if (typeMs) {
+            dealFilters.type = typeMs.getFilterValues()
+        }
+
+        const statusMs = status ? status._multiSelect : null
+        if (statusMs) {
+            dealFilters.status = statusMs.getFilterValues()
+        }
+
+    }, 100)
+})

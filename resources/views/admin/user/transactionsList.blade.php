@@ -111,9 +111,9 @@
                             شماره سند
                         </legend>
                         <input class="w-full outline-none text-xs  md:text-base in-fa" type="number" dir="ltr"
-                            name="" id="transactoinId" placeholder=" شماره سند">
+                            name="" id="transactionId" placeholder=" شماره سند">
                     </fieldset>
-                    <div class="w-1/2 lg:w-full">
+                    <div class="w-full lg:w-1/2">
                         <button
                             class="w-full md:w-fit font-bold text-xs md:text-base py-3 md:px-13 mt-2 col-span-1 md:text-right border-1 border-(--color-border) rounded-md text-center cursor-pointer"
                             onclick="setDatas()">اعمال</button>
