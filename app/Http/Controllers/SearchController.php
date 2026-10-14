@@ -242,12 +242,12 @@ class SearchController extends Controller
             if ($fromDate && !$toDate) {
                 $query->where('transactions.date', '>=', $fromDate);
             }
-            if ($toDate && !$fromDate) {
-                $query->where('transactions.date', '<=', $toDate);
-            }
-            if ($fromDate && $toDate) {
-                $query->whereBetween('transactions.primary_price', [$fromDate, $toDate]);
-            }
+            // if ($toDate && !$fromDate) {
+            //     $query->where('transactions.date', '<=', $toDate);
+            // }
+            // if ($fromDate && $toDate) {
+            //     $query->whereBetween('transactions.primary_price', [$fromDate, $toDate]);
+            // }
             if ($status) {
                 $query->whereIn('transactions.isApproved', $status);
             }
@@ -272,6 +272,8 @@ class SearchController extends Controller
             $time = $dateTime[1];
             $transaction->date = $date;
             $transaction->time = $time;
+            $transaction->fullName = $transaction->wallet->user->name.' '.$transaction->wallet->user->family;
+            $transaction->phoneNumber = $transaction->wallet->user->phoneNumber;
             switch($transaction->type){
                 case 'deposit':
                     $transaction->type = 'واریز';
