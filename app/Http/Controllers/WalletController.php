@@ -108,8 +108,48 @@ class WalletController extends Controller
     public function transactionsList()
     {
         $transactions = transaction::all();
-        // return $transactions;
         $logo = logo::first();
+        foreach($transactions as $transaction){
+            $dateTime = explode(' ', $transaction->created_at);
+            $dateJalali = verta($dateTime[0]);
+            $date = explode(' ', $dateJalali);
+            $date = implode('/', explode('-', $date[0]));
+            $time = $dateTime[1];
+            $transaction->date = $date;
+            $transaction->time = $time;
+            switch($transaction->type){
+                case 'deposit':
+                    $transaction->type = 'واریز';
+                    $transaction->typeColor = '#3aae3f';
+                    break;
+                case 'withdraw':
+                    $transaction->type = 'برداشت';
+                    $transaction->typeColor = '#d23334';
+                    break;
+                case 'buy':
+                    $transaction->type = 'خرید';
+                    $transaction->typeColor = '#0867d5';
+                    break;
+                case 'sell':
+                    $transaction->type = 'فروش';
+                    $transaction->typeColor = '#e57200';
+                    break;
+            }
+            switch($transaction->isApproved){
+                case -1:
+                    $transaction->stateTitle = 'رد شده';
+                    $transaction->stateColor = '#d23334';
+                    break;
+                case 0:
+                    $transaction->stateTitle = 'در انتظار';
+                    $transaction->stateColor = '#6a6a6a';
+                    break;
+                case 1:
+                    $transaction->stateTitle = 'تایید شده';
+                    $transaction->stateColor = '#3aae3f';
+                    break;
+            }
+        }
         return view('admin.user.transactionsList', ['logo' => $logo, 'transactions' => $transactions]);
     }
     public function transactionsListSingle(User $user)

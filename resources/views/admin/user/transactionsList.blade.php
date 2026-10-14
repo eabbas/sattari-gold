@@ -110,7 +110,7 @@
                             شماره سند
                         </legend>
                         <input class="w-full outline-none text-xs  md:text-base in-fa" type="number" dir="ltr"
-                            name="" id="dealId" placeholder=" شماره سند">
+                            name="" id="transactoinId" placeholder=" شماره سند">
                     </fieldset>
                     <div class="w-1/2 lg:w-full">
                         <button
@@ -144,10 +144,13 @@
                                     نوع تراکنش
                                 </th>
                                 <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
-                                    مبلغ/وزن
+                                    مبلغ
+                                </th>
+                                <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                                    وزن
                                 </th>
                                 <th class="min-w-33 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
-                                    تاریخ درخواست
+                                    زمان | تاریخ
                                 </th>
                                 <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     شماره سند
@@ -175,56 +178,28 @@
                                         {{ $transaction->wallet->user['phoneNumber'] }}
                                     </td>
                                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                                        @switch($transaction->type)
-                                            @case('deposit')
-                                                واریز
-                                            @break
-
-                                            @case('withdraw')
-                                                برداشت
-                                            @break
-
-                                            @case('buy')
-                                                خرید
-                                            @break
-
-                                            @case('sell')
-                                                فروش
-                                            @break
-                                        @endswitch
+                                        <div class="w-18 mx-auto px-2 py-1 rounded-lg border-2 border-[{{ $transaction->typeColor }}] text-[{{ $transaction->typeColor }}] text-center">
+                                           {{ $transaction->type }}
+                                        </div>
                                     </td>
                                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
                                         {{ number_format($transaction->amount) }}
                                     </td>
                                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
-                                        {{ verta($transaction->created_at) }}
+                                        {{ $transaction->deal ? $transaction->deal->goldWeight : '-' }}
+                                    </td>
+                                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
+                                        {{  $transaction->time . ' | ' . $transaction->date }}
                                     </td>
                                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                                        -
+                                        <span class="w-10 h-10 px-3 py-1 text-gray-600 rounded-md border-1 bordre-gray-600 p-1 cursor-pointer in-fa">
+                                            {{ '100'.$transaction->id }}
+                                        </span>
                                     </td>
                                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                                        @switch($transaction->isApproved)
-                                            @case(1)
-                                                <span
-                                                    class="w-10 h-10 bg-(--primary-dashboard)/20 text-(--primary-dashboard) rounded-md border-1 border-(--primary-dashboard) p-1 cursor-default">
-                                                    تایید شده
-                                                </span>
-                                            @break
-
-                                            @case(0)
-                                                <span
-                                                    class="w-10 h-10 bg-(--color-warning)/20 text-(--color-warning) rounded-md border-1 border-(--color-warning) p-1 cursor-default">
-                                                    در انتظار تایید
-                                                </span>
-                                            @break
-
-                                            @case(-1)
-                                                <span
-                                                    class="w-10 h-10 bg-(--primary-dashboard)/20 text-(--primary-dashboard) rounded-md border-1 border-(--primary-dashboard) p-1 cursor-default">
-                                                    رد شده
-                                                </span>
-                                            @break
-                                        @endswitch
+                                        <div class="mx-auto px-2 py-1 rounded-lg border-2 border-[{{ $transaction->stateColor }}] text-[{{ $transaction->stateColor }}] text-center">
+                                           {{ $transaction->stateTitle }}
+                                        </div>
                                     </td>
                                     <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
                                         <button onclick="showTransaction('open', {{ $transaction }})"
