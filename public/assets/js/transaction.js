@@ -129,9 +129,13 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 
-function showTransaction(state, user, phoneNumber, dateTime, stateColor, stateTitle, type, amount, receipt = null) {
-    transactionPopup.classList.remove('invisible', 'opacity-0')
-
+function showTransaction(state, user, phoneNumber, dateTime, stateColor, stateTitle, type, amount, isApproved, receipt = null) {
+    transactionPopup.classList.remove('invisible', 'opacity-0') 
+    document.getElementById('transactionControl').classList.remove('hidden')
+    if (isApproved != 0) {
+        console.log(document.getElementById('transactionControl').classList)
+        document.getElementById('transactionControl').classList.add('hidden')
+    }
     document.getElementById('transactionPopupName').innerText = user
     document.getElementById('transactionPopupPhoneNumber').innerText = phoneNumber
     document.getElementById('transactionPopupDate').innerText = dateTime
@@ -147,10 +151,6 @@ function showTransaction(state, user, phoneNumber, dateTime, stateColor, stateTi
     } else {
         transactionPopupReceipt.classList.add('hidden')
         transactionPopupReceipt.classList.remove('flex')
-    }
-    
-    if (stateTitle !== 'در انتظار') {
-        document.getElementById('transactionControl').classList.add('hidden')
     }
 }
 
