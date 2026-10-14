@@ -125,7 +125,7 @@ function setDatas() {
     const dealStateSelect = document.getElementById('dealState');
     const dealStateMs = dealStateSelect ? dealStateSelect._multiSelect : null;
     if (dealStateMs) {
-        dealFilters.dealType = dealStateMs.getFilterValues();
+        dealFilters.dealState = dealStateMs.getFilterValues();
     }
 
     applyDealFilters();
