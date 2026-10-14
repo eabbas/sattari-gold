@@ -1,6 +1,7 @@
 let dealFilters = {
     'fullName': null,
     'dealType': ['all'],
+    'dealState': ['all'],
     'fromDate': null,
     'toDate': null,
     'weight': null,
@@ -15,16 +16,6 @@ let weight = document.getElementById('weight')
 let price = document.getElementById('price')
 let dealId = document.getElementById('dealId')
 
-// function setDatas(){
-//     dealFilters.fullName = fullName.value
-//     dealFilters.fromDate = fromDate.value
-//     dealFilters.toDate = toDate.value
-//     dealFilters.weight = weight.value
-//     dealFilters.price = price.value
-//     dealFilters.dealId = dealId.value
-//     applyDealFilters()
-// }
-
 async function applyDealFilters() {
     await $.ajax({
         url: api + 'getDealFilter',
@@ -34,6 +25,7 @@ async function applyDealFilters() {
             'filters': dealFilters
         },
         success: function (data) {
+            console.log(data)
             let counter = 0;
             let bodyTable = document.querySelector('tbody')
             bodyTable.innerHTML = ''
@@ -46,7 +38,7 @@ async function applyDealFilters() {
                         ${ counter }
                     </td>
                     <td class="p-1 md:px-3 md:py-2 flex items-center justify-around">
-                        <div class="w-18 px-2 py-1 ${ row.transaction.type == 'sell' ? ' bg-(--color-danger)/30 text-(--color-danger) ' : ' bg-(--color-success)/30 text-(--color-success) ' } text-center">
+                        <div class="w-18 px-2 py-1 ${ row.transaction.type == 'sell' ? ' border-2 border-(--color-danger) text-(--color-danger) ' : ' border-2 border-(--color-success) text-(--color-success) ' } rounded-lg text-center">
                         ${ row.transaction.type == 'sell' ? 'فروشنده' : 'خریدار' }
                         </div>
                         <div class="w-fit">
@@ -66,7 +58,7 @@ async function applyDealFilters() {
                         ${ row.buyPrice ? row.buyPrice.toLocaleString('fa-IR') : '-' }
                     </td>
                     <td class="border-1border-(--color-border) p-1 md:px-3 md:py-2 text-center">
-                    <span class="w-10 h-10 text-(--color-warning) rounded-md border-1 bordre-(--color-warning) p-1 cursor-pointer in-fa">
+                    <span class="px-3 py-1.5 text-(--color-warning) rounded-md border-1 border-(--color-warning) p-1 cursor-pointer in-fa">
                             ${ '100'+row.id }
                         </span>
                     </td>
@@ -76,7 +68,7 @@ async function applyDealFilters() {
                         <span class="w-5/12 text-left in-fa">${ row.date }</span>
                     </td>
                     <td class="border-1border-(--color-border) p-1 md:px-3 md:py-2 text-center">
-                        <span class="w-10 h-10 bg-[${ row.color}]/20 text-[${ row.color }] rounded-md border-1 bordre-(--color-success) p-1 cursor-default">
+                        <span class="px-3 py-1.5 bg-[${ row.color}]/20 text-[${ row.color }] rounded-md border-1 border-[${ row.color }] p-1 cursor-default">
                         ${ row.state }
                         </span>
                     </td>
@@ -106,6 +98,13 @@ document.addEventListener('DOMContentLoaded', function () {
             dealFilters.dealType = dealTypeMs.getFilterValues();
         }
     }, 100);
+    setTimeout(function () {
+        const dealStateSelect = document.getElementById('dealState');
+        const dealStateMs = dealStateSelect ? dealStateSelect._multiSelect : null;
+        if (dealStateMs) {
+            dealFilters.dealState = dealStateMs.getFilterValues();
+        }
+    }, 100);
 });
 
 function setDatas() {
@@ -121,6 +120,12 @@ function setDatas() {
     const dealTypeMs = dealTypeSelect ? dealTypeSelect._multiSelect : null;
     if (dealTypeMs) {
         dealFilters.dealType = dealTypeMs.getFilterValues();
+    }
+    
+    const dealStateSelect = document.getElementById('dealState');
+    const dealStateMs = dealStateSelect ? dealStateSelect._multiSelect : null;
+    if (dealStateMs) {
+        dealFilters.dealType = dealStateMs.getFilterValues();
     }
 
     applyDealFilters();

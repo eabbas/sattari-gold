@@ -148,6 +148,7 @@ class SearchController extends Controller
         $toDate = $filters['toDate'] ?? null;
         $number = $filters['dealId'] ?? null;
         $dealType = $filters['dealType'] ?? ['all'];
+        $dealState = $filters['dealState'] ?? ['all'];
         $fullName = $filters['fullName'] ?? null;
         $price = $filters['price'] ?? null;
         $weight = $filters['weight'] ?? null;
@@ -161,9 +162,16 @@ class SearchController extends Controller
             $dealType = [];
             $dealType[] = 'sell';
             $dealType[] = 'buy';
-        }
-
-        $deals = deal::where(function ($query) use ($price, $weight, $fromDate, $toDate, $dealType) {
+            }
+            log::info($dealState);
+        if ($dealState == ['all']) {
+            $dealState = [];
+            $dealState[] = '-1';
+            $dealState[] = '0';
+            $dealState[] = '1';
+            }
+            
+        $deals = deal::where(function ($query) use ($price, $weight, $fromDate, $toDate, $dealState) {
             if ($price) {
                 $query->where('deals.buyPrice', $price);
             }
@@ -179,6 +187,10 @@ class SearchController extends Controller
             if ($fromDate && $toDate) {
                 $query->whereBetween('deals.date', [$fromDate, $toDate]);
             }
+            // Log::info($dealState);
+            // if ($dealState) {
+            //     $query->whereIn('deals.isApproved', $dealState);
+            // }
         })->whereHas('transaction', function ($query) use ($dealType) {
             $query->whereIn('transactions.type', $dealType);
         })->with(['transaction', 'user']);
@@ -205,6 +217,7 @@ class SearchController extends Controller
                     break;
             }
         }
+        // log::info($deals);
         return response()->json($deals);
     }
     public function getTransactionFilter(Request $request)
