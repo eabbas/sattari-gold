@@ -115,7 +115,7 @@
                     </fieldset>
                     <div class="w-full lg:w-1/2">
                         <button
-                            class="w-full md:w-fit font-bold text-xs md:text-base py-3 md:px-13 mt-2 col-span-1 md:text-right border-1 border-(--color-border) rounded-md text-center cursor-pointer"
+                            class="w-full flex items-center justify-center font-bold text-xs md:text-base py-3 md:px-13 mt-2 col-span-1 md:text-right border-1 border-(--color-border) rounded-md text-center cursor-pointer"
                             onclick="setDatas()">اعمال</button>
                     </div>
                 </div>

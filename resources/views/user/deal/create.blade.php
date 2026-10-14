@@ -108,7 +108,7 @@
 
                     <div class="flex-1 text-center">
                         <span class="block text-sm font-bold mb-1">طلای جهانی</span>
-                        <span class="block text-sm text-gray-600">۱,۰۶۹,۵۷۷,۶۱۵ ریال</span>
+                        <span class="block text-sm text-gray-600">۱,۰۶۹,۵۷۷,۶۱۵ تومان</span>
                     </div>
                 </div>
             </div>
@@ -118,7 +118,7 @@
                 <div class="grid grid-cols-2 gap-3">
                     <div class="bg-white rounded-xl border border-gray-200 p-4 flex items-center justify-between">
                         <div class="flex flex-col">
-                            <span class="text-xs text-gray-500 mb-1">موجودی ریال</span>
+                            <span class="text-xs text-gray-500 mb-1">موجودی تومان</span>
                             <span class="text-gray-400 tracking-widest in-fa">{{ number_format($asset) }}</span>
                         </div>
                         <span class="text-xl">💳</span>
@@ -204,7 +204,7 @@
 
     </div>
 
-    <div class="fixed w-full h-dvh top-0 right-0 bg-black/50 transition-all duration-300 invisible opacity-0"
+    <div class="fixed w-full h-dvh top-0 right-0 bg-black/50 transition-all duration-300 invisible opacity-0 z-999"
         id="dealBlock">
         <div class="w-full h-full relative">
 
@@ -234,18 +234,18 @@
                         class="border border-red-500 rounded-xl flex overflow-hidden divide-x divide-red-500 divide-x-reverse">
                         <div class="flex-1 p-3 flex justify-between items-center bg-red-50/30">
                             <span class="text-sm text-gray-500">مثقال:</span>
-                            <span class="font-bold text-sm">۱,۰۴۸,۹۰۰,۰۰۰ ریال</span>
+                            <span class="font-bold text-sm">۱,۰۴۸,۹۰۰,۰۰۰ تومان</span>
                         </div>
                         <div class="flex-1 p-3 flex justify-between items-center bg-red-50/30">
                             <span class="text-sm text-gray-500">گرم:</span>
-                            <span class="font-bold text-sm">۲۴۲,۱۳۹,۴۱۴ ریال</span>
+                            <span class="font-bold text-sm">۲۴۲,۱۳۹,۴۱۴ تومان</span>
                         </div>
                     </div>
 
                     <div class="flex bg-gray-100 p-1 rounded-xl">
                         <button id="btnByPrice" type="button"
                             class="flex-1 py-2 text-sm font-medium rounded-lg transition-all duration-300 bg-white text-brand-red shadow-sm in-fa">
-                            بر اساس مبلغ (ریال)
+                            بر اساس مبلغ (تومان)
                         </button>
                         <button id="btnByWeight" type="button"
                             class="flex-1 py-2 text-sm font-medium rounded-lg transition-all duration-300 text-gray-500 hover:text-gray-700 in-fa">
@@ -255,7 +255,7 @@
 
                     <div class="flex justify-between items-center text-xs text-gray-500 px-1 -mb-2">
                         <span>موجودی کیف پول شما:</span>
-                        <span class="font-bold text-gray-700 in-fa">{{ number_format($asset) }} ریال</span>
+                        <span class="font-bold text-gray-700 in-fa">{{ number_format($asset) }} تومان</span>
                     </div>
 
                     <div>
@@ -267,7 +267,7 @@
                                 dir="ltr">
                             <div id="inputUnit"
                                 class="bg-gray-100 px-4 py-3.5 border-r border-gray-300 text-gray-500 text-sm flex items-center justify-center in-fa">
-                                ریال
+                                تومان
                             </div>
                         </div>
                         <p id="inputError" class="text-xs text-brand-red mt-1 hidden">خطا در ورود اطلاعات</p>

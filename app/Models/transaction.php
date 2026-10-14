@@ -12,7 +12,9 @@ class transaction extends Model
         'type',
         'isApproved',
         'receipt',
-        'description'
+        'description',
+        'date',
+        'time'
     ];
     public function deal()
     {
