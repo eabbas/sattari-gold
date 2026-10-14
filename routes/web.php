@@ -1,21 +1,34 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DealController;
 use App\Http\Controllers\HeaderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LogoController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
-use App\Http\Controllers\SearchController;
-use App\Http\Controllers\DealController;
 use App\Http\Middleware\checkAdminMiddleware;
 use App\Http\Middleware\checkIsActive;
 use App\Http\Middleware\checklogin;
-use Illuminate\Support\Facades\Route;
+use App\Models\transaction;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+
+Route::get('/update-dates', function () {
+    $transactions = transaction::all();
+    foreach ($transactions as $tr) {
+        $dateTime = explode(' ', $tr->created_at);
+        $dateJalali = verta($dateTime[0]);
+        $date = explode(' ', $dateJalali);
+        $date = implode('/', explode('-', $date[0]));
+        $time = $dateTime[1];
+        $tr->update(['date' => $date, 'time' => $time]);
+    }
+});
 
 Route::get('/test', function () {
     // $dateTime = explode(' ', now());
@@ -25,6 +38,7 @@ Route::get('/test', function () {
     // $time = $dateTime[1];
     // dd($dateTime, $dateJalali, $date, $time);
     // Schema::table('transactions', function (Blueprint $table) {
+    //     $table->string('description')->nullable()->after('receipt');
     //     $table->string('date')->nullable()->after('description');
     //     $table->string('time')->nullable()->after('date');
     // });
