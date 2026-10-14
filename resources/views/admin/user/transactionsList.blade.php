@@ -198,8 +198,8 @@
                                         </div>
                                     </td>
                                     <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
-                                        <button onclick="showTransaction('open', {{ $transaction }})"
-                                            class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer">
+                                        <button onclick="showTransaction('open', '{{ $transaction->wallet->user->name.' '.$transaction->wallet->user->family }}', '{{ $transaction->wallet->user->phoneNumber }}', '{{ $transaction->time.' | '. $transaction->date }}', '{{ $transaction->stateColor }}', '{{ $transaction->stateTitle }}', '{{ $transaction->type }}', '{{ $transaction->amount }}', '{{ $transaction->receipt }}')"
+                                            class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer openPopup">
                                             مشاهده
                                         </button>
                                     </td>
@@ -213,13 +213,12 @@
     </div>
     <div id="transaction"
         class="fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2 invisible opacity-0 transition-all flex items-center justify-center">
-        <div class="absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2"
-            onclick="showTransaction('close')">
+        <div class="absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2">
         </div>
         <div class="relative z-51 w-[80%] lg:w-200 bg-white rounded-md px-3 py-2">
             <div class="w-full flex items-center justify-between border-b-1 border-(--border-dashboard) pb-2">
                 <div class="font-bold">جزئیات تراکنش</div>
-                <div class="cursor-pointer" onclick="showTransaction('close')">
+                <div class="cursor-pointer" id="closeBtn">
                     <svg class="size-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
                         <path
                             d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z">
@@ -238,12 +237,12 @@
                     <div class="w-full flex flex-col sm:flex-row">
                         <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره
                             :</span>
-                        <span id="transactionPopupPhoneNumber" class="text-[10px] md:text-base font-bold"></span>
+                        <span id="transactionPopupPhoneNumber" class="text-[10px] md:text-base font-bold in-fa"></span>
                     </div>
                     <div class="w-full flex flex-col sm:flex-row">
                         <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">تاریخ
                             ثبت :</span>
-                        <span id="transactionPopupDate" class="text-[10px] md:text-base font-bold"></span>
+                        <span id="transactionPopupDate" class="text-[10px] md:text-base font-bold in-fa"></span>
                     </div>
                     <div class="w-full flex flex-col sm:flex-row">
                         <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">وضعیت
@@ -257,19 +256,19 @@
                     </div>
                     <div class="w-full flex flex-col sm:flex-row">
                         <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1"> مبلغ :</span>
-                        <span id="transactionPopupFee" class="text-[10px] md:text-base font-bold"></span>
+                        <span id="transactionPopupFee" class="text-[10px] md:text-base font-bold in-fa"></span>
                     </div>
                 </div>
                 <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
                     <div
                         class="w-full bg-white divide-x-1 divide-(--border-dashboard) flex items-center gap-2 p-2 rounded-lg">
                         <div class="w-6/12 flex flex-col sm:flex-row gap-2">
-                            <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره
+                            <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1 in-fa">شماره
                                 کارت :</span>
                             <span class="text-[8px] sm:text-xs md:text-base font-bold"></span>
                         </div>
                         <div class="w-6/12 flex flex-col sm:flex-row gap-2">
-                            <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره
+                            <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1 in-fa">شماره
                                 شبا :</span>
                             <span class="text-[8px] sm:text-xs md:text-base font-bold"></span>
                         </div>
@@ -279,65 +278,19 @@
                     class="col-span-6 border-1 border-(--border-dashboard) rounded-lg p-2 items-center justify-center hidden">
                     <img class="w-[90%] h-50 bg-zinc-300" src="" alt="">
                 </div>
-                <div
-                    class="col-span-3 bg-green-50 text-green-500 border-2 border-green-400 font-bold px-2 py-4 rounded-md text-center cursor-pointer">
-                    تایید تراکنش
-                </div>
-                <div
-                    class="col-span-3 bg-red-50 text-red-500 border-2 border-red-400 font-bold px-2 py-4 rounded-md text-center cursor-pointer">
-                    رد تراکنش
+                <div id="transactionControl" class="w-full grid grid-cols-2 gap-3 col-span-6">
+                    <button
+                        class="bg-green-50 text-green-500 border-2 border-green-400 transition-all duration-300 hover:bg-green-500 hover:border-green-500 hover:text-white font-bold px-2 py-4 rounded-md text-center cursor-pointer">
+                        تایید تراکنش
+                    </butt>
+                    <button
+                        class="bg-red-50 text-red-500 border-2 border-red-400 transition-all duration-300 hover:bg-red-500 hover:border-red-500 hover:text-white font-bold px-2 py-4 rounded-md text-center cursor-pointer">
+                        رد تراکنش
+                    </button>
                 </div>
             </div>
         </div>
     </div>
     <!-- واریز و برداشت -->
-    <script>
-        function showTransaction(state, transaction) {
-            let transactionPopup = document.getElementById('transaction')
-            if (state == 'open') {
-                document.getElementById('transactionPopupName').innerText = transaction.wallet.user.name + " " + transaction
-                    .wallet.user.family
-                document.getElementById('transactionPopupPhoneNumber').innerText = transaction.wallet.user.phoneNumber
-                document.getElementById('transactionPopupDate').innerText = transaction.created_at
-                let status
-                switch (transaction.isApproved) {
-                    case 1:
-                        status = 'تایید شده'
-                        break;
-                    case 0:
-                        status = 'در انتظار تایید'
-                        break;
-                    case -1:
-                        status = 'رد شده'
-                        break;
-                }
-                let type
-                switch (transaction.type) {
-                    case 'deposit':
-                        type = 'واریز'
-                        break;
-                    case 'withdraw':
-                        type = 'برداشت'
-                        break;
-                }
-                document.getElementById('transactionPopupStatus').innerText = status
-                document.getElementById('transactionPopupType').innerText = type
-                document.getElementById('transactionPopupFee').innerText = transaction.amount
-                let transactionPopupReceipt = document.getElementById('transactionPopupReceipt')
-                if (transaction.type == 'deposit') {
-                    transactionPopupReceipt.classList.remove('hidden')
-                    transactionPopupReceipt.classList.add('flex')
-                    transactionPopupReceipt.children[0].src = `{{ asset('storage/') }}` + '/' + transaction.receipt
-                } else {
-                    transactionPopupReceipt.classList.add('hidden')
-                    transactionPopupReceipt.classList.remove('flex')
-                }
-                transactionPopup.classList.remove('invisible', 'opacity-0')
-            }
-            if (state == 'close') {
-                transactionPopup.classList.add('invisible', 'opacity-0')
-            }
-        }
-    </script>
     <script src="{{ asset('assets/js/transaction.js') }}"></script>
 @endsection
