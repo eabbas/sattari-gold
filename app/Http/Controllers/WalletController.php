@@ -50,6 +50,11 @@ class WalletController extends Controller
                 'receipt.max' => 'حجم فایل نباید بیشتر از 100 کیلوبایت باشد',
             ]
         );
+        $dateTime = explode(' ', now());
+        $dateJalali = verta($dateTime[0]);
+        $date = explode(' ', $dateJalali);
+        $date = implode('/', explode('-', $date[0]));
+        $time = $dateTime[1];
         if ($request['receipt']) {
             $receipt = $request->receipt->store('transactionImgs', 'public');
         } else {
@@ -68,6 +73,8 @@ class WalletController extends Controller
             'type' => 'deposit',
             'isApproved' => 0,
             'receipt' => $receipt,
+            'date' => $date,
+            'time' => $time,
             'description' => $request->description
         ]);
         return redirect()->back()->with('success',  ' مبلغ ' . $request->fee . ' پس از تایید به کیف پول شما افزوده خواهد شد.');
@@ -83,6 +90,11 @@ class WalletController extends Controller
                 'fee.min' => 'حداقل مبلغ قابل برداشت ده هزار تومان است.',
             ]
         );
+        $dateTime = explode(' ', now());
+        $dateJalali = verta($dateTime[0]);
+        $date = explode(' ', $dateJalali);
+        $date = implode('/', explode('-', $date[0]));
+        $time = $dateTime[1];
         $wallet = wallet::where('user_id', Auth::id())->first();
         $total = 0;
         if ($wallet) {
@@ -95,6 +107,8 @@ class WalletController extends Controller
             'wallet_id' => $wallet['id'],
             'amount' => $request->fee,
             'type' => 'withdraw',
+            'date' => $date,
+            'time' => $time,
             'isApproved' => 0
         ]);
         return redirect()->back()->with('failure',  ' مبلغ ' . $request->fee . ' پس از تایید از کیف پول شما کسر خواهد شد. ');
@@ -109,15 +123,8 @@ class WalletController extends Controller
     {
         $transactions = transaction::all();
         $logo = logo::first();
-        foreach($transactions as $transaction){
-            $dateTime = explode(' ', $transaction->created_at);
-            $dateJalali = verta($dateTime[0]);
-            $date = explode(' ', $dateJalali);
-            $date = implode('/', explode('-', $date[0]));
-            $time = $dateTime[1];
-            $transaction->date = $date;
-            $transaction->time = $time;
-            switch($transaction->type){
+        foreach ($transactions as $transaction) {
+            switch ($transaction->type) {
                 case 'deposit':
                     $transaction->type = 'واریز';
                     $transaction->typeColor = '#3aae3f';
@@ -135,7 +142,7 @@ class WalletController extends Controller
                     $transaction->typeColor = '#e57200';
                     break;
             }
-            switch($transaction->isApproved){
+            switch ($transaction->isApproved) {
                 case -1:
                     $transaction->stateTitle = 'رد شده';
                     $transaction->stateColor = '#d23334';

@@ -41,7 +41,7 @@ class DealController extends Controller
         $action = $request->action;
         $calcBy = $request->calcBy;
         $input = $request->userInput;
-        $output = $request->resultOutput;  
+        $output = $request->resultOutput;
         $description = $request->description;
         $goldPrice = $request->goldPrice;
 
@@ -51,22 +51,22 @@ class DealController extends Controller
             return redirect()->back()->with('failure', 'کیف پول یافت نشد.');
         }
 
-        $amount = 0;  
-        $weight = 0;  
-        $totalAsset = $wallet->asset; 
-        $totalGold = $wallet->goldWeight ?? 0; 
+        $amount = 0;
+        $weight = 0;
+        $totalAsset = $wallet->asset;
+        $totalGold = $wallet->goldWeight ?? 0;
 
         $cleanOutput = (float) str_replace(',', '', $output);
 
         if ($action == 'buy') {
             $buyPrice = 0;
             if ($calcBy == 'price') {
-                $amount = (float) $input;  
-                $weight = $cleanOutput;  
+                $amount = (float) $input;
+                $weight = $cleanOutput;
                 $buyPrice = $input;
             } elseif ($calcBy == 'weight') {
-                $weight = (float) $input; 
-                $amount = $cleanOutput;  
+                $weight = (float) $input;
+                $amount = $cleanOutput;
                 $buyPrice = $amount;
             }
             if ($wallet->asset < $amount) {
@@ -79,6 +79,8 @@ class DealController extends Controller
             $transaction = transaction::create([
                 'wallet_id' => $wallet->id,
                 'amount' => $amount,
+                'date' => $date,
+                'time' => $time,
                 'type' => 'buy',
                 'isApproved' => 0,
             ]);
@@ -98,17 +100,17 @@ class DealController extends Controller
                 'asset' => $totalAsset,
                 'goldWeight' => $totalGold
             ]);
-            
+
             return redirect()->back()->with('success', "$weight گرم طلا به سپرده شما افزوده شد");
         }
 
         if ($action == 'sell') {
             if ($calcBy == 'price') {
-                $amount = (float) $input; 
-                $weight = $cleanOutput; 
+                $amount = (float) $input;
+                $weight = $cleanOutput;
             } elseif ($calcBy == 'weight') {
-                $weight = (float) $input;  
-                $amount = $cleanOutput;  
+                $weight = (float) $input;
+                $amount = $cleanOutput;
             }
 
             if (($wallet->goldWeight ?? 0) < $weight) {
@@ -121,16 +123,19 @@ class DealController extends Controller
             $transaction = transaction::create([
                 'wallet_id' => $wallet->id,
                 'amount' => $amount,
+                'date' => $date,
+                'time' => $time,
                 'type' => 'sell',
                 'isApproved' => 0,
             ]);
-
+            $newPrice = explode(',', $output);
+            $newPrice = implode('', $newPrice);
             deal::create([
                 'user_id' => Auth::id(),
                 'transaction_id' => $transaction->id,
                 'goldWeight' => $weight,
                 'goldPrice' => $goldPrice,
-                'buyPrice' => $output,
+                'buyPrice' => $newPrice,
                 'date' => $date,
                 'time' => $time,
                 'description' => $description
@@ -156,8 +161,8 @@ class DealController extends Controller
     public function adminIndex()
     {
         $deals = deal::orderBy('date', 'desc')->orderBy('time', 'desc')->get();
-        foreach($deals as $deal){
-            switch($deal->transaction->isApproved){
+        foreach ($deals as $deal) {
+            switch ($deal->transaction->isApproved) {
                 case -1:
                     $deal->state = 'رد شده';
                     $deal->color = '#E85D5D';

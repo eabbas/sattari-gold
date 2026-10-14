@@ -14,6 +14,21 @@ use App\Http\Middleware\checkAdminMiddleware;
 use App\Http\Middleware\checkIsActive;
 use App\Http\Middleware\checklogin;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+Route::get('/test', function () {
+    // $dateTime = explode(' ', now());
+    // $dateJalali = verta($dateTime[0]);
+    // $date = explode(' ', $dateJalali);
+    // $date = implode('/', explode('-', $date[0]));
+    // $time = $dateTime[1];
+    // dd($dateTime, $dateJalali, $date, $time);
+    // Schema::table('transactions', function (Blueprint $table) {
+    //     $table->string('date')->nullable()->after('description');
+    //     $table->string('time')->nullable()->after('date');
+    // });
+});
 
 // home routes
 Route::get('/', [HomeController::class, 'index'])->name('home');

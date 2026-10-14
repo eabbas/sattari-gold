@@ -154,7 +154,7 @@ class SearchController extends Controller
         if ($number) {
             $dealId = substr($number, 3);
             $deals = deal::find($dealId);
-            return response()->json($deals);
+            return response()->json([$deals]);
         }
 
         if ($dealType == ['all']) {
@@ -162,6 +162,7 @@ class SearchController extends Controller
             $dealType[] = 'sell';
             $dealType[] = 'buy';
         }
+
         $deals = deal::where(function ($query) use ($price, $weight, $fromDate, $toDate, $dealType) {
             if ($price) {
                 $query->where('deals.buyPrice', $price);
@@ -176,11 +177,11 @@ class SearchController extends Controller
                 $query->where('deals.date', '<=', $toDate);
             }
             if ($fromDate && $toDate) {
-                $query->whereBetween('deals.primary_price', [$fromDate, $toDate]);
+                $query->whereBetween('deals.date', [$fromDate, $toDate]);
             }
         })->whereHas('transaction', function ($query) use ($dealType) {
-                $query->whereIn('transactions.type', $dealType);
-            })->with(['transaction', 'user']);
+            $query->whereIn('transactions.type', $dealType);
+        })->with(['transaction', 'user']);
 
         if ($fullName) {
             $deals->with(['user' => function ($query) use ($fullName) {
@@ -208,7 +209,7 @@ class SearchController extends Controller
     }
     public function getTransactionFilter(Request $request)
     {
-       
+
         $filters = $request->input('filters');
         $fromDate = $filters['fromDate'] ?? null;
         $fullName = $filters['fullName'] ?? null;
@@ -242,12 +243,12 @@ class SearchController extends Controller
             if ($fromDate && !$toDate) {
                 $query->where('transactions.date', '>=', $fromDate);
             }
-            // if ($toDate && !$fromDate) {
-            //     $query->where('transactions.date', '<=', $toDate);
-            // }
-            // if ($fromDate && $toDate) {
-            //     $query->whereBetween('transactions.primary_price', [$fromDate, $toDate]);
-            // }
+            if ($toDate && !$fromDate) {
+                $query->where('transactions.date', '<=', $toDate);
+            }
+            if ($fromDate && $toDate) {
+                $query->whereBetween('transactions.date', [$fromDate, $toDate]);
+            }
             if ($status) {
                 $query->whereIn('transactions.isApproved', $status);
             }
@@ -258,23 +259,16 @@ class SearchController extends Controller
 
         if ($fullName) {
             $transactions->whereHas('wallet', function ($query) use ($fullName) {
-                $query->whereHas('user', function($query) use ($fullName){
+                $query->whereHas('user', function ($query) use ($fullName) {
                     $query->where('name', 'like', '%' . $fullName . '%')->orWhere('family', 'like', '%' . $fullName . '%');
                 });
             });
         }
         $transactions = $transactions->orderBy('created_at', 'desc')->get();
         foreach ($transactions as $transaction) {
-            $dateTime = explode(' ', $transaction->created_at);
-            $dateJalali = verta($dateTime[0]);
-            $date = explode(' ', $dateJalali);
-            $date = implode('/', explode('-', $date[0]));
-            $time = $dateTime[1];
-            $transaction->date = $date;
-            $transaction->time = $time;
-            $transaction->fullName = $transaction->wallet->user->name.' '.$transaction->wallet->user->family;
+            $transaction->fullName = $transaction->wallet->user->name . ' ' . $transaction->wallet->user->family;
             $transaction->phoneNumber = $transaction->wallet->user->phoneNumber;
-            switch($transaction->type){
+            switch ($transaction->type) {
                 case 'deposit':
                     $transaction->type = 'واریز';
                     $transaction->typeColor = '#3aae3f';
@@ -292,7 +286,7 @@ class SearchController extends Controller
                     $transaction->typeColor = '#e57200';
                     break;
             }
-            switch($transaction->isApproved){
+            switch ($transaction->isApproved) {
                 case -1:
                     $transaction->stateTitle = 'رد شده';
                     $transaction->stateColor = '#d23334';
