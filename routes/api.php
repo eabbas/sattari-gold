@@ -9,3 +9,4 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/getFilters', [SearchController::class, 'getFilters']);
+Route::post('/getDealFilter', [SearchController::class, 'getDealFilter']);

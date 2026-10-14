@@ -1,10 +1,6 @@
 @extends('admin.app.dashboard')
 @section('title', 'ستاری گلد | لیست همه معاملات')
 @section('content')
-    <style>
-
-    </style>
-
     @if (session('success'))
         <div
             class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
@@ -664,6 +660,26 @@
         });
     </script>
 
+        openPopup_report.addEventListener("click", () => {
+            popup_report.classList.remove("invisible");
+            popup_report.classList.remove("opacity-0");
+            popup_report.classList.add("opacity-100");
+            popup_report.classList.add("visible");
+        });
+        closePopup_report.addEventListener("click", () => {
+            popup_report.classList.add("invisible");
+            popup_report.classList.add("opacity-0");
+            popup_report.classList.remove("opacity-100");
+            popup_report.classList.remove("visible");
+        });
+        closePopup_report2.addEventListener("click", () => {
+            popup_report.classList.add("invisible");
+            popup_report.classList.add("opacity-0");
+            popup_report.classList.remove("opacity-100");
+            popup_report.classList.remove("visible");
+        });
+    </script>
+    <script src="{{ asset('assets/js/adminDeal.js') }}"></script>
 
 
 @endsection
