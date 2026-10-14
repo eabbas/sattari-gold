@@ -18,17 +18,34 @@ class WalletController extends Controller
         $logo = logo::first();
         return view('user.user.wallet', ['user' => $user, 'logo' => $logo]);
     }
-    public function deposit(Request $request)
+    public function transactionRequest(Request $request)
     {
         $request->validate(
             [
-                'depositPrice' => ['required', 'numeric', 'min:1000000', 'max:1000000000'],
+                'transactionType' => ['required'],
+            ],
+            [
+                'transactionType.required' => 'ابتدا نوع تراکنش خود را مشخص کنید.',
+            ]
+        );
+        if ($request->transactionType == 'deposit') {
+            return $this->deposit($request);
+        }
+        if ($request->transactionType == 'withdraw') {
+            return $this->withdraw($request);
+        }
+    }
+    public function deposit($request)
+    {
+        $request->validate(
+            [
+                'fee' => ['required', 'numeric', 'min:1000000', 'max:1000000000'],
                 'receipt' => ['required', 'max:100']
             ],
             [
-                'depositPrice.required' => 'پر کردن این فیلد الزامی است.',
-                'depositPrice.min' => 'حداقل مبلغ واریزی یک میلیون تومان است.',
-                'depositPrice.max' => 'حداکثر مبلغ واریزی یک میلیارد تومان است.',
+                'fee.required' => 'پر کردن این فیلد الزامی است.',
+                'fee.min' => 'حداقل مبلغ واریزی یک میلیون تومان است.',
+                'fee.max' => 'حداکثر مبلغ واریزی یک میلیارد تومان است.',
                 'receipt.required' => 'پر کردن این فیلد الزامی است.',
                 'receipt.max' => 'حجم فایل نباید بیشتر از 100 کیلوبایت باشد',
             ]
@@ -47,56 +64,41 @@ class WalletController extends Controller
         }
         transaction::create([
             'wallet_id' => $wallet['id'],
-            'amount' => $request->depositPrice,
+            'amount' => $request->fee,
             'type' => 'deposit',
             'isApproved' => 0,
-            'receipt' => $receipt
+            'receipt' => $receipt,
+            'description' => $request->description
         ]);
-        return redirect()->back()->with('success',  ' مبلغ ' . $request->depositPrice . ' پس از تایید به کیف پول شما افزوده خواهد شد.');
+        return redirect()->back()->with('success',  ' مبلغ ' . $request->fee . ' پس از تایید به کیف پول شما افزوده خواهد شد.');
     }
-    // public function saveDeposit($request)
-    // {
-    //     $total = $request->amount;
-    //     $wallet = wallet::where('user_id', Auth::id())->first();
-    //     $total += $wallet['asset'];
-    //     $wallet->asset = $total;
-    //     $wallet->save();
-    // }
-    public function withdraw(Request $request)
+    public function withdraw($request)
     {
         $request->validate(
             [
-                'withdrawPrice' => ['required', 'numeric', 'min:10000']
+                'fee' => ['required', 'numeric', 'min:10000']
             ],
             [
-                'withdrawPrice.required' => 'پر کردن این فیلد الزامی است.',
-                'withdrawPrice.min' => 'حداقل مبلغ قابل برداشت ده هزار تومان است.',
+                'fee.required' => 'پر کردن این فیلد الزامی است.',
+                'fee.min' => 'حداقل مبلغ قابل برداشت ده هزار تومان است.',
             ]
         );
         $wallet = wallet::where('user_id', Auth::id())->first();
         $total = 0;
         if ($wallet) {
-            $total = $wallet['asset'] - $request['withdrawPrice'];
+            $total = $wallet['asset'] - $request['fee'];
         }
         if (!$wallet || $total < 0) {
             return redirect()->back()->with('failure',  'موجودی کیف پول شما کافی نیست.');
         }
         transaction::create([
             'wallet_id' => $wallet['id'],
-            'amount' => $request->withdrawPrice,
+            'amount' => $request->fee,
             'type' => 'withdraw',
             'isApproved' => 0
         ]);
-        return redirect()->back()->with('failure',  ' مبلغ ' . $request->withdrawPrice . ' پس از تایید از کیف پول شما کسر خواهد شد. ');
+        return redirect()->back()->with('failure',  ' مبلغ ' . $request->fee . ' پس از تایید از کیف پول شما کسر خواهد شد. ');
     }
-    // public function takeWithdraw($request)
-    // {
-    //     $wallet = wallet::where('user_id', Auth::id())->first();
-    //     $total = 0;
-    //     $total = $wallet['asset'] - $request['amount'];
-    //     $wallet->asset = $total;
-    //     $wallet->save();
-    // }
     public function transactions(Request $request)
     {
         $user = User::find($request['user_id']);
@@ -105,9 +107,10 @@ class WalletController extends Controller
     }
     public function transactionsList()
     {
-        $users = User::all();
+        $transactions = transaction::all();
+        // return $transactions;
         $logo = logo::first();
-        return view('admin.user.transactionsList', ['users' => $users, 'logo' => $logo]);
+        return view('admin.user.transactionsList', ['logo' => $logo, 'transactions' => $transactions]);
     }
     public function transactionsListSingle(User $user)
     {

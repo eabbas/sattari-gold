@@ -34,10 +34,10 @@
     <div class="w-full flex flex-col gap-3 justify-start items-center">
         <!-- لیست مشتریان / هدر -->
         <section
-            class="w-full mx-auto bg-(--secondary-dashbrd) flex items-center justify-between border-1 border-(--border-dashbrd) p-2 2 rounded-md">
+            class="w-full mx-auto bg-(--secondary-dashboard) flex items-center justify-between border-1 border-(--border-dashboard) p-2 2 rounded-md">
             <h2 class="text-base md:text-xl font-bold">لیست مشتریان</h2>
             <div onclick="createUser('open')"
-                class="w-fit bg-(--info-dashbrd) text-xs md:text-base text-(--color-surface-dashbrd) rounded-md px-3 py-2 cursor-pointer flex items-center justify-center">
+                class="w-fit bg-(--info-dashboard) text-xs md:text-base text-(--color-surface-dashboard) rounded-md px-3 py-2 cursor-pointer flex items-center justify-center">
                 <span class="">
                     <svg class="size-3 md:size-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 448 512">
@@ -53,7 +53,7 @@
                 <div onclick="createUser('close')"
                     class="absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2"></div>
                 <div class="relative z-51 w-[80%] lg:w-200 bg-white rounded-md px-3 py-2">
-                    <div class="w-full flex items-center justify-between border-b-1 border-(--border-dashbrd) pb-2">
+                    <div class="w-full flex items-center justify-between border-b-1 border-(--border-dashboard) pb-2">
                         <div class="font-bold"> مشتری جدید</div>
                         <div onclick="createUser('close')" class="cursor-pointer">
                             <svg class="size-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +70,7 @@
                         <label class="col-span-3 text-xs md:text-sm lg:text-base" for="name">
                             نام :
                             <input
-                                class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                 type="text" name="name" id="name" placeholder="مثال : علی"
                                 value="{{ old('name') }}">
                             @error('name')
@@ -80,7 +80,7 @@
                         <label class="col-span-3 text-xs md:text-sm lg:text-base" for="family">
                             نام خانوادگی :
                             <input
-                                class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                 type="text" name="family" id="family" placeholder="مثال : علیزاده"
                                 value="{{ old('family') }}">
                             @error('family')
@@ -90,7 +90,7 @@
                         <label class="col-span-3 text-xs md:text-sm lg:text-base" for="phoneNumber">
                             شماره تلفن :
                             <input
-                                class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                 type="number" name="phoneNumber" id="phoneNumber" placeholder="مثال : 09146424294"
                                 value="{{ old('phoneNumber') }}">
                             @error('phoneNumber')
@@ -100,7 +100,7 @@
                         <label class="col-span-3 text-xs md:text-sm lg:text-base" for="nationalCode">
                             کد ملی :
                             <input
-                                class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                 type="number" name="nationalCode" id="nationalCode" placeholder="مثال : 1680270710"
                                 value="{{ old('nationalCode') }}">
                             @error('nationalCode')
@@ -110,7 +110,7 @@
                         <label class="col-span-3 text-xs md:text-sm lg:text-base" for="password">
                             رمز عبور :
                             <input
-                                class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                 type="password" name="password" id="password" value="{{ old('password') }}">
                             @error('password')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
@@ -119,7 +119,7 @@
                         <label class="col-span-3 text-xs md:text-sm lg:text-base" for="roles">
                             تعیین نقش :
                             <select name="roles[]" id="roles" multiple size="1"
-                                class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)">
+                                class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)">
                                 @foreach ($roles as $role)
                                     <option value="{{ $role['id'] }}" @if (in_array($role->id, old('roles', []))) selected @endif>
                                         {{ $role['name'] }}</option>
@@ -131,10 +131,10 @@
                         </label>
 
                         <button type="submit"
-                            class="col-span-3 text-xs md:text-sm lg:text-base border-1 border-(--primary-dashbrd) text-(--primary-dashbrd) py-4 rounded-md cursor-pointer">ثبت
+                            class="col-span-3 text-xs md:text-sm lg:text-base border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md cursor-pointer">ثبت
                             مشتری</button>
                         <button type="reset"
-                            class="col-span-3 text-xs md:text-sm lg:text-base border-1 border-(--danger-dashbrd) text-(--danger-dashbrd) py-4 rounded-md cursor-pointer">
+                            class="col-span-3 text-xs md:text-sm lg:text-base border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md cursor-pointer">
                             بازنشانی اطلاعات</button>
                     </form>
                 </div>
@@ -142,7 +142,7 @@
         </section>
         <!-- لیست مشتریان / لسیت -->
         <section id="confirmed_pending"
-            class="w-full mx-auto rounded-md border-1 border-(--border-dashbrd) mt-5 pb-10 overflow-hidden">
+            class="w-full mx-auto rounded-md border-1 border-(--border-dashboard) mt-5 pb-10 overflow-hidden">
             <div class="w-full flex items-center bg-zinc-300">
                 <div onclick="conpen('confirmed', this)"
                     class="w-6/12 bg-white text-xs md:text-base flex items-center justify-center rounded-t-md py-1 md:py-3 cursor-pointer customers">
@@ -233,50 +233,50 @@
                     <div class="w-full flex items-center justify-start gap-2 px-2 py-3">
                         <div class="min-w-23 md:min-w-28  flex items-center justify-center gap-2">
                             <input
-                                class="appearance-none size-5 rounded-md border-1 border-(--border-dashbrd) checked:bg-(--primary-dark-dashbrd) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer"
+                                class="appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer"
                                 type="checkbox" name="" id="selectAll">
                             <label class="text-xs md:text-base" for="selectAll">
                                 انتخاب همه
                             </label>
                         </div>
                         <div
-                            class="w-full bg-zinc-100 rounded-md p-1 md:px-3 md:py-2 cursor-default text-xs md:text-sm text-(--text-secondary-dashbrd)  hidden md:flex flex-col md:flex-row">
+                            class="w-full bg-zinc-100 rounded-md p-1 md:px-3 md:py-2 cursor-default text-xs md:text-sm text-(--text-secondary-dashboard)  hidden md:flex flex-col md:flex-row">
                             <span class="">تعداد 55 مشتری در لیست مشتریان یافت شد .</span>
                             <span class="hidden md:flex">|</span>
                             <span class="">ظرفیت باقیمانده 445 نفر</span>
                         </div>
                     </div>
-                    <table class="w-full border-collapse border-1 border-(--border-dashbrd) text-sm">
+                    <table class="w-full border-collapse border-1 border-(--border-dashboard) text-sm">
                         <thead>
                             <tr class="bg-gray-100 text-xs lg:text-base">
-                                <th class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2">
+                                <th class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     ردیف
                                 </th>
-                                <th class="min-w-30 border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2">
+                                <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     نام و نام خانوادگی
                                 </th>
-                                <th class="min-w-30 border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2">
+                                <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     شماره موبایل
                                 </th>
-                                <th class="min-w-30 border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2">
+                                <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     آخرین بازدید
                                 </th>
-                                <th class="min-w-25 border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2">
+                                <th class="min-w-25 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     آخرین معامله
                                 </th>
-                                <th class="min-w-20 border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2">
+                                <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     کد ملی
                                 </th>
-                                <th class="min-w-20 border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2">
+                                <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     کد حسابداری
                                 </th>
-                                <th class="min-w-20 border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2">
+                                <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     وضعیت
                                 </th>
-                                <th class="min-w-20 border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2">
+                                <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     دسته‌بندی
                                 </th>
-                                <th class="min-w-45 border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2">
+                                <th class="min-w-45 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     ابزار
                                 </th>
                             </tr>
@@ -288,48 +288,48 @@
                                     <tr class="item_list text-xs lg:text-base">
                                         <td class="p-1 md:px-3 md:py-2 flex items-center justify-center gap-2 in-fa">
                                             <input type="checkbox" name=""
-                                                class="row-checkbox appearance-none size-5 rounded-md border-1 border-(--border-dashbrd) checked:bg-(--primary-dark-dashbrd) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
+                                                class="row-checkbox appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
                                             {{ $user->id }}
                                         </td>
-                                        <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
+                                        <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                                             {{ $user->name }} {{ $user->family }}
                                         </td>
                                         <td
-                                            class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center in-fa">
+                                            class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
                                             {{ $user->phoneNumber }}
                                         </td>
-                                        <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
+                                        <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                                             -
                                         </td>
-                                        <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
+                                        <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                                             -
                                         </td>
                                         <td
-                                            class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center in-fa">
+                                            class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
                                             {{ $user->nationalCode }}
                                         </td>
-                                        <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
+                                        <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                                             -
                                         </td>
-                                        <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
+                                        <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                                             @if ($user->isActive)
                                                 <span
-                                                    class="w-10 h-10 bg-(--primary-dashbrd)/20 text-(--primary-dashbrd) rounded-md border-1 bordre-(--primary-dashbrd) p-1 cursor-default">
+                                                    class="w-10 h-10 bg-(--primary-dashboard)/20 text-(--primary-dashboard) rounded-md border-1 border-(--primary-dashboard) p-1 cursor-default">
                                                     فعال
                                                 </span>
                                             @else
                                                 <span
-                                                    class="w-10 h-10 bg-(--color-danger)/20 text-(--color-danger) rounded-md border-1 bordre-(--color-danger) p-1 cursor-default">
+                                                    class="w-10 h-10 bg-(--color-danger)/20 text-(--color-danger) rounded-md border-1 border-(--color-danger) p-1 cursor-default">
                                                     فعال
                                                 </span>
                                             @endif
                                         </td>
-                                        <td class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center">
+                                        <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                                             قلک طلا
                                         </td>
                                         <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
                                             <button onclick="wallet('open', {{ $user->id }})"
-                                                class="w-3/6 text-(--primary-dashbrd) border-1 border-(--primary-dashbrd) rounded-md px-3 py-2 cursor-pointer">
+                                                class="w-3/6 text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer">
                                                 کیف پول
                                             </button>
                                             <div id="popup-wallet"
@@ -339,7 +339,7 @@
                                                 </div>
                                                 <div class="relative z-51 w-[80%] lg:w-200 bg-white rounded-md px-3 py-2">
                                                     <div
-                                                        class="w-full flex items-center justify-between border-b-1 border-(--border-dashbrd) pb-2">
+                                                        class="w-full flex items-center justify-between border-b-1 border-(--border-dashboard) pb-2">
                                                         <div class="font-bold">کیف پول</div>
                                                         <div onclick="wallet('close')" class="cursor-pointer">
                                                             <svg class="size-6" fill="currentColor"
@@ -352,27 +352,27 @@
                                                     </div>
                                                     <div class="grid grid-cols-6 gap-5 mt-5">
                                                         <div
-                                                            class="col-span-6 flex items-center border-1 border-(--border-dashbrd) rounded-lg divide-x-1 divide-(--border-dashbrd) px-1 md:px-2 py-2 md:py-3 gap-2">
+                                                            class="col-span-6 flex items-center border-1 border-(--border-dashboard) rounded-lg divide-x-1 divide-(--border-dashboard) px-1 md:px-2 py-2 md:py-3 gap-2">
                                                             <div class="w-6/12">
                                                                 <span
-                                                                    class="text-xs md:text-base text-(--text-secondary-dashbrd) ml-1">نام
+                                                                    class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">نام
                                                                     :</span>
                                                                 <span class="text-xs md:text-base font-bold"></span>
                                                             </div>
                                                             <div class="w-6/12">
                                                                 <span
-                                                                    class="text-xs md:text-base text-(--text-secondary-dashbrd) ml-1">شماره
+                                                                    class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره
                                                                     :</span>
                                                                 <span class="text-[10px] md:text-base font-bold"></span>
                                                             </div>
                                                         </div>
                                                         <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
                                                             <div
-                                                                class="w-full bg-white divide-y-1 divide-(--border-dashbrd) p-2 rounded-lg">
+                                                                class="w-full bg-white divide-y-1 divide-(--border-dashboard) p-2 rounded-lg">
                                                                 <div class="flex items-center justify-between">
                                                                     <div class="flex items-center gap-3 pb-2">
                                                                         <span class="">
-                                                                            <svg class="size-5 fill-(--primary-dashbrd)"
+                                                                            <svg class="size-5 fill-(--primary-dashboard)"
                                                                                 xmlns="http://www.w3.org/2000/svg"
                                                                                 viewBox="0 0 576 512">
                                                                                 <path
@@ -380,7 +380,7 @@
                                                                             </svg>
                                                                         </span>
                                                                         <span
-                                                                            class="text-xs md:text-base text-(--text-secondary-dashbrd) font-bold">
+                                                                            class="text-xs md:text-base text-(--text-secondary-dashboard) font-bold">
                                                                             موجودی ریال
                                                                         </span>
                                                                     </div>
@@ -389,7 +389,7 @@
                                                                 <div class="flex items-center justify-between">
                                                                     <div class="flex items-center gap-3 pt-2">
                                                                         <span
-                                                                            class="text-(--text-secondary-dashbrd) text-xs md:text-sm">
+                                                                            class="text-(--text-secondary-dashboard) text-xs md:text-sm">
                                                                             موجودی قابل برداشت
                                                                         </span>
                                                                     </div>
@@ -397,7 +397,7 @@
                                                                         <span class="">
                                                                         </span>
                                                                         <span
-                                                                            class="text-(--text-secondary-dashbrd) text-[6px] md:text-xs">
+                                                                            class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
                                                                             تومان
                                                                         </span>
                                                                     </div>
@@ -405,17 +405,19 @@
                                                             </div>
                                                         </div>
                                                         <div
-                                                            class="col-span-6 flex items-center border-1 border-(--border-dashbrd) rounded-lg divide-x-1 divide-(--border-dashbrd) px-2 py-3 gap-2">
+                                                            class="col-span-6 flex items-center border-1 border-(--border-dashboard) rounded-lg divide-x-1 divide-(--border-dashboard) px-2 py-3 gap-2">
                                                             <label for="plass"
                                                                 class="w-6/12 flex items-center gap-1 md:gap-3">
-                                                                <input class="accent-(--primary-dashbrd) size-4 md:size-5"
+                                                                <input
+                                                                    class="accent-(--primary-dashboard) size-4 md:size-5"
                                                                     type="radio" name="yes" id="plass">
                                                                 <span
                                                                     class="text-xs text-green-400 md:text-base font-bold">واریز</span>
                                                             </label>
                                                             <label for="maiez"
                                                                 class="w-6/12 flex items-center gap-1 md:gap-3">
-                                                                <input class="accent-(--primary-dashbrd) size-4 md:size-5"
+                                                                <input
+                                                                    class="accent-(--primary-dashboard) size-4 md:size-5"
                                                                     type="radio" name="yes" id="maiez">
                                                                 <span
                                                                     class="text-xs text-red-400 md:text-base font-bold">برداشت</span>
@@ -424,7 +426,7 @@
                                                         <label class="col-span-3" for="categoryName">
                                                             نوع تراکنش
                                                             <select
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                                                 name="" id="categoryName">
                                                                 <option value="">طلا</option>
                                                                 <option value="">نقره</option>
@@ -435,26 +437,26 @@
                                                         <label class="col-span-3" for="welcome">
                                                             مبلغ
                                                             <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                                                 type="text" name="" id=""
                                                                 placeholder="ریال">
                                                         </label>
                                                         <label class="col-span-6" for="text">
                                                             توضیحات
                                                             <textarea
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                                                 name="" id="text"></textarea>
                                                         </label>
                                                         <button
-                                                            class="col-span-3 border-1 border-(--primary-dashbrd) text-(--primary-dashbrd) py-4 rounded-md">ثبت</button>
+                                                            class="col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md">ثبت</button>
                                                         <button
-                                                            class="col-span-3 border-1 border-(--danger-dashbrd) text-(--danger-dashbrd) py-4 rounded-md">
+                                                            class="col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md">
                                                             لغو</button>
                                                     </div>
                                                 </div>
                                             </div>
                                             <button
-                                                class="open-popup-look w-2/6 text-(--primary-dashbrd) border-1 border-(--primary-dashbrd) rounded-md px-2 py-2 cursor-pointer">
+                                                class="open-popup-look w-2/6 text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-2 py-2 cursor-pointer">
                                                 بیشتر
                                             </button>
                                             <div
@@ -464,7 +466,7 @@
                                                 </div>
                                                 <div class="relative z-51 w-[80%] lg:w-200 bg-white rounded-md px-3 py-2">
                                                     <div
-                                                        class="w-full flex items-center justify-between border-b-1 border-(--border-dashbrd) pb-2">
+                                                        class="w-full flex items-center justify-between border-b-1 border-(--border-dashboard) pb-2">
                                                         <div class="font-bold text-sm md:text-xl">اطلاعات بیشتر</div>
                                                         <div class="close-popup-look">
                                                             <svg class="size-4 md:size-6" fill="currentColor"
@@ -479,13 +481,13 @@
                                                         <div class="col-span-6 flex items-center justify-between">
                                                             <div class="font-bold text-sm md:text-lg">مشخصات کاربر</div>
                                                             <div
-                                                                class="open-popup-look-edit w-fit text-(--primary-dashbrd) font-bold border-1 border-(--primary-dashbrd) rounded-md p-2 cursor-pointer">
+                                                                class="open-popup-look-edit w-fit text-(--primary-dashboard) font-bold border-1 border-(--primary-dashboard) rounded-md p-2 cursor-pointer">
                                                                 ویرایش</div>
                                                         </div>
                                                         <div
                                                             class="col-span-3 bg-zinc-100 px-1 py-2 md:px-2 md:py-3 rounded-lg flex items-center gap-1 md:gap-2">
                                                             <span
-                                                                class="text-xs md:text-base text-(--text-secondary-dashbrd)">نام
+                                                                class="text-xs md:text-base text-(--text-secondary-dashboard)">نام
                                                                 :</span>
                                                             <span class="text-xs md:text-base font-bold">حسین
                                                                 ستاره</span>
@@ -493,14 +495,14 @@
                                                         <div
                                                             class="col-span-3 bg-zinc-100 px-1 py-2 md:px-2 md:py-3 rounded-lg flex items-center gap-1 md:gap-2">
                                                             <span
-                                                                class="text-[10px] md:text-base text-(--text-secondary-dashbrd)">شماره
+                                                                class="text-[10px] md:text-base text-(--text-secondary-dashboard)">شماره
                                                                 موبایل :</span>
                                                             <span class="text-xs md:text-base font-bold">09123456789</span>
                                                         </div>
                                                         <div
                                                             class="col-span-3 md:col-span-2 bg-zinc-100 px-2 py-3 rounded-lg flex items-center gap-2">
                                                             <span
-                                                                class="text-[10px] md:text-base text-(--text-secondary-dashbrd)">معرف
+                                                                class="text-[10px] md:text-base text-(--text-secondary-dashboard)">معرف
                                                                 :</span>
                                                             <span class="text-xs md:text-base font-bold">محمد رضا
                                                                 عولیافان</span>
@@ -508,33 +510,33 @@
                                                         <div
                                                             class="col-span-3 md:col-span-2 bg-zinc-100 px-2 py-3 rounded-lg flex items-center gap-2">
                                                             <span
-                                                                class="text-[10px] md:text-base text-(--text-secondary-dashbrd)">کد
+                                                                class="text-[10px] md:text-base text-(--text-secondary-dashboard)">کد
                                                                 حساب داری :</span>
                                                             <span class="text-xs md:text-base font-bold">-</span>
                                                         </div>
                                                         <div
                                                             class="col-span-3 md:col-span-2 bg-zinc-100 px-2 py-3 rounded-lg flex items-center gap-2">
                                                             <span
-                                                                class="text-[10px] md:text-base text-(--text-secondary-dashbrd)">نام
+                                                                class="text-[10px] md:text-base text-(--text-secondary-dashboard)">نام
                                                                 دستع بندی :</span>
                                                             <span class="text-xs md:text-base font-bold">-</span>
                                                         </div>
                                                         <div
                                                             class="col-span-6 bg-zinc-100 p-3 rounded-lg flex items-center justify-between gap-2">
                                                             <span
-                                                                class="text-[10px] md:text-base text-(--text-secondary-dashbrd)">ارسال
+                                                                class="text-[10px] md:text-base text-(--text-secondary-dashboard)">ارسال
                                                                 اطلاعات ورود از طریق پیامک به مشتری</span>
                                                             <button
-                                                                class="bg-(--primary-dashbrd) text-sm md:text-base text-white font-bold rounded-lg px-5 md:px-10 py-1 md:py-3 cursor-pointer">ارسال</button>
+                                                                class="bg-(--primary-dashboard) text-sm md:text-base text-white font-bold rounded-lg px-5 md:px-10 py-1 md:py-3 cursor-pointer">ارسال</button>
                                                         </div>
                                                         <div class="col-span-6 text-sm  md:text-lg font-bold">کیف پول</div>
                                                         <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
                                                             <div
-                                                                class="w-full bg-white divide-y-1 divide-(--border-dashbrd) p-2 rounded-lg">
+                                                                class="w-full bg-white divide-y-1 divide-(--border-dashboard) p-2 rounded-lg">
                                                                 <div class="flex items-center justify-between">
                                                                     <div class="flex items-center gap-3 pb-2">
                                                                         <span class="">
-                                                                            <svg class="size-5 fill-(--primary-dashbrd)"
+                                                                            <svg class="size-5 fill-(--primary-dashboard)"
                                                                                 xmlns="http://www.w3.org/2000/svg"
                                                                                 viewBox="0 0 576 512">
                                                                                 <path
@@ -542,7 +544,7 @@
                                                                             </svg>
                                                                         </span>
                                                                         <span
-                                                                            class="text-xs md:text-base text-(--text-secondary-dashbrd) font-bold">
+                                                                            class="text-xs md:text-base text-(--text-secondary-dashboard) font-bold">
                                                                             موجودی ریال
                                                                         </span>
                                                                     </div>
@@ -551,7 +553,7 @@
                                                                 <div class="flex items-center justify-between">
                                                                     <div class="flex items-center gap-3 pt-2">
                                                                         <span
-                                                                            class="text-(--text-secondary-dashbrd) text-xs md:text-sm">
+                                                                            class="text-(--text-secondary-dashboard) text-xs md:text-sm">
                                                                             موجودی قابل برداشت
                                                                         </span>
                                                                     </div>
@@ -560,7 +562,7 @@
                                                                             95.478.555
                                                                         </span>
                                                                         <span
-                                                                            class="text-(--text-secondary-dashbrd) text-[6px] md:text-xs">
+                                                                            class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
                                                                             تومان
                                                                         </span>
                                                                     </div>
@@ -571,7 +573,7 @@
                                                 </div>
                                             </div>
                                             <button
-                                                class="open-popup-edited w-1/6 text-(--primary-dashbrd) border-1 border-(--primary-dashbrd) rounded-md px-1 py-2 cursor-pointer flex items-center justify-center">
+                                                class="open-popup-edited w-1/6 text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-1 py-2 cursor-pointer flex items-center justify-center">
                                                 <svg class="size-5" fill="currentColor"
                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                                     <path
@@ -585,7 +587,7 @@
                                                 </div>
                                                 <div class="relative z-51 w-[80%] lg:w-200 bg-white rounded-md px-3 py-2">
                                                     <div
-                                                        class="w-full flex items-center justify-between border-b-1 border-(--border-dashbrd) pb-2">
+                                                        class="w-full flex items-center justify-between border-b-1 border-(--border-dashboard) pb-2">
                                                         <div class="font-bold">ویرایش اطلاعات</div>
                                                         <div class="close-popup-edit">
                                                             <svg class="size-6" fill="currentColor"
@@ -601,14 +603,14 @@
                                                             for="name">
                                                             نام و نام خانوادگی
                                                             <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                                                 type="text" name="" id="name">
                                                         </label>
                                                         <label class="col-span-3 text-xs md:text-sm lg:text-base"
                                                             for="number">
                                                             شماره موبایل
                                                             <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                                                 type="text" name="" id="number">
                                                         </label>
                                                         <label
@@ -616,7 +618,7 @@
                                                             for="numberMeli">
                                                             کدملی
                                                             <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                                                 type="text" name="" id="numberMeli">
                                                         </label>
                                                         <label
@@ -624,7 +626,7 @@
                                                             for="dey">
                                                             تاریخ تولد
                                                             <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                                                 type="text" name="" id="dey">
                                                         </label>
                                                         <label
@@ -632,7 +634,7 @@
                                                             for="user">
                                                             معرف
                                                             <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                                                 type="text" name="" id="user">
                                                         </label>
                                                         <label
@@ -640,7 +642,7 @@
                                                             for="user">
                                                             کد حسابداری
                                                             <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                                                 type="text" name="" id="user">
                                                         </label>
                                                         <label
@@ -648,7 +650,7 @@
                                                             for="categoryName">
                                                             نام دسته‌بندی
                                                             <select
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                                                 name="" id="categoryName">
                                                                 <option value="">salam</option>
                                                                 <option value="">salam</option>
@@ -661,7 +663,7 @@
                                                             for="welcome">
                                                             تعداد ورودی همزنان
                                                             <select
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                                                 name="" id="welcome">
                                                                 <option value="">salam</option>
                                                                 <option value="">salam</option>
@@ -673,11 +675,11 @@
                                                             for="text">
                                                             یاداشت
                                                             <textarea
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                                                 name="" id="text"></textarea>
                                                         </label>
                                                         <label
-                                                            class="border-1 border-(--border-dashbrd) h-fit rounded-md hover:shadow-sm transition-all col-span-6 sm:col-span-3 text-xs md:text-sm lg:text-base flex items-center justify-between w-full py-4 px-4 cursor-pointer"
+                                                            class="border-1 border-(--border-dashboard) h-fit rounded-md hover:shadow-sm transition-all col-span-6 sm:col-span-3 text-xs md:text-sm lg:text-base flex items-center justify-between w-full py-4 px-4 cursor-pointer"
                                                             for="onlyAvailableDesktop">
                                                             <div class="text-zinc-700 text-sm">
                                                                 وضعیت مشتری (فعال)
@@ -686,12 +688,12 @@
                                                                 <input class="peer sr-only" id="onlyAvailableDesktop"
                                                                     type="checkbox">
                                                                 <div
-                                                                    class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:bg-(--primary-dashbrd) peer-checked:after:translate-x-full peer-focus:ring-(--primary-dashbrd-dark-dashbrd)">
+                                                                    class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:bg-(--primary-dashboard) peer-checked:after:translate-x-full peer-focus:ring-(--primary-dashboard-dark-dashboard)">
                                                                 </div>
                                                             </div>
                                                         </label>
                                                         <label
-                                                            class="border-1 border-(--border-dashbrd) h-fit rounded-md hover:shadow-sm transition-all col-span-6 sm:col-span-3 text-xs md:text-sm lg:text-base flex items-center justify-between w-full py-4 px-4 cursor-pointer"
+                                                            class="border-1 border-(--border-dashboard) h-fit rounded-md hover:shadow-sm transition-all col-span-6 sm:col-span-3 text-xs md:text-sm lg:text-base flex items-center justify-between w-full py-4 px-4 cursor-pointer"
                                                             for="password">
                                                             <div class="text-zinc-700 text-sm">
                                                                 ورود با رمز عبور
@@ -700,14 +702,14 @@
                                                                 <input class="peer sr-only" id="password"
                                                                     type="checkbox">
                                                                 <div
-                                                                    class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:bg-(--primary-dashbrd) peer-checked:after:translate-x-full peer-focus:ring-(--primary-dashbrd-dark-dashbrd)">
+                                                                    class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:bg-(--primary-dashboard) peer-checked:after:translate-x-full peer-focus:ring-(--primary-dashboard-dark-dashboard)">
                                                                 </div>
                                                             </div>
                                                         </label>
                                                         <button
-                                                            class="col-span-3 text-xs md:text-sm lg:text-base border-1 border-(--primary-dashbrd) text-(--primary-dashbrd) py-4 rounded-md">ویرایش</button>
+                                                            class="col-span-3 text-xs md:text-sm lg:text-base border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md">ویرایش</button>
                                                         <button
-                                                            class="col-span-3 text-xs md:text-sm lg:text-base border-1 border-(--danger-dashbrd) text-(--danger-dashbrd) py-4 rounded-md">
+                                                            class="col-span-3 text-xs md:text-sm lg:text-base border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md">
                                                             لغو</button>
                                                     </div>
                                                 </div>
@@ -723,25 +725,25 @@
             <div id="pending" class="w-full hidden">
                 <div class="w-full h-5 bg-zinc-200"></div>
                 <div class="w-full overflow-x-auto">
-                    <table class="w-full border-collapse border-1 border-(--border-dashbrd) text-sm mt-5">
+                    <table class="w-full border-collapse border-1 border-(--border-dashboard) text-sm mt-5">
                         <thead class="w-full">
                             <tr class="bg-gray-100 text-xs lg:text-base">
-                                <th class="min-w-20 border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2">
+                                <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     ردیف
                                 </th>
-                                <th class="min-w-30 border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2">
+                                <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     نام و نام خانوادگی
                                 </th>
-                                <th class="min-w-30 border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2">
+                                <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     شماره موبایل
                                 </th>
-                                <th class="min-w-20 border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2">
+                                <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     کد ملی
                                 </th>
-                                <th class="min-w-20 border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2">
+                                <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     زمان ثبت‌نام
                                 </th>
-                                <th class="min-w-20 border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2">
+                                <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     ابزار
                                 </th>
                             </tr>
@@ -751,29 +753,29 @@
                                 @if (!$user->isApproved)
                                     <tr class="item_2 text-xs lg:text-base">
                                         <td
-                                            class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center text-nowrap">
+                                            class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center text-nowrap">
                                             {{ $user->id }}
                                         </td>
                                         <td
-                                            class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center text-nowrap">
+                                            class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center text-nowrap">
                                             {{ $user->name }} {{ $user->family }}
                                         </td>
                                         <td
-                                            class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center text-nowrap in-fa">
+                                            class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center text-nowrap in-fa">
                                             {{ $user->phoneNumber }}
                                         </td>
                                         <td
-                                            class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center text-nowrap in-fa">
+                                            class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center text-nowrap in-fa">
                                             {{ $user->nationalCode }}
                                         </td>
                                         <td
-                                            class="border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center text-nowrap in-fa">
+                                            class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center text-nowrap in-fa">
                                             {{ verta($user->created_at) }}
                                         </td>
                                         <td
-                                            class="relative border-1 border-(--border-dashbrd) p-1 md:px-3 md:py-2 text-center flex items-center gap-3">
+                                            class="relative border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center flex items-center gap-3">
                                             <button
-                                                class="open-look-cont w-3/6 bg-(--primary-dashbrd) text-white rounded-md px-3 py-2 cursor-pointer text-nowrap">
+                                                class="open-look-cont w-3/6 bg-(--primary-dashboard) text-white rounded-md px-3 py-2 cursor-pointer text-nowrap">
                                                 تایید و بازبینی
                                             </button>
                                             <div
@@ -784,7 +786,7 @@
                                                 <form action=""
                                                     class="relative z-51 w-[80%] md:w-200 bg-white rounded-md px-3 py-2">
                                                     <div
-                                                        class="w-full flex items-center justify-between border-b-1 border-(--border-dashbrd) pb-2">
+                                                        class="w-full flex items-center justify-between border-b-1 border-(--border-dashboard) pb-2">
                                                         <div class="text-sm md:text-base font-bold text-nowrap">بازبینی
                                                             اطلاعات
                                                             مشتری و تایید</div>
@@ -801,31 +803,31 @@
                                                         <label class="col-span-1 md:col-span-2" for="">
                                                             کد ملی
                                                             <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                                                 type="text" name="" id="">
                                                         </label>
                                                         <label class="col-span-1 md:col-span-2" for="">
                                                             تاریخ تولد
                                                             <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                                                 type="text" name="" id="">
                                                         </label>
                                                         <label class="col-span-1 md:col-span-2" for="">
                                                             معرف
                                                             <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                                                 type="text" name="" id="">
                                                         </label>
                                                         <label class="col-span-1 md:col-span-2" for="">
                                                             کد حسابداری
                                                             <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                                                 type="text" name="" id="">
                                                         </label>
                                                         <label class="col-span-1 md:col-span-2" for="categoryNameS">
                                                             نام دسته‌بندی
                                                             <select
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                                                 name="" id="categoryNameS">
                                                                 <option value="">salam</option>
                                                                 <option value="">salam</option>
@@ -836,7 +838,7 @@
                                                         <label class="col-span-1 md:col-span-2" for="welcomS">
                                                             تعداد ورودهای همزنان
                                                             <select
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                                                 name="" id="welcomS">
                                                                 <option value="">salam</option>
                                                                 <option value="">salam</option>
@@ -847,11 +849,11 @@
                                                         <label class="col-span-2 md:col-span-6" for="text">
                                                             یادداشت
                                                             <textarea
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
                                                                 name="" id="text"></textarea>
                                                         </label>
                                                         <label
-                                                            class="border-1 border-(--border-dashbrd) h-fit rounded-md hover:shadow-sm transition-all col-span-2 md:col-span-3 flex items-center justify-between w-full py-4 px-4 cursor-pointer"
+                                                            class="border-1 border-(--border-dashboard) h-fit rounded-md hover:shadow-sm transition-all col-span-2 md:col-span-3 flex items-center justify-between w-full py-4 px-4 cursor-pointer"
                                                             for="passwordd">
                                                             <div class="text-zinc-700 text-sm">
                                                                 ورود با رمز عبور
@@ -860,26 +862,26 @@
                                                                 <input class="peer sr-only" id="passwordd"
                                                                     type="checkbox">
                                                                 <div
-                                                                    class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:bg-(--primary-dashbrd) peer-checked:after:translate-x-full peer-focus:ring-(--primary-dashbrd-dark-dashbrd)">
+                                                                    class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:bg-(--primary-dashboard) peer-checked:after:translate-x-full peer-focus:ring-(--primary-dashboard-dark-dashboard)">
                                                                 </div>
                                                             </div>
                                                         </label>
                                                         <label for="massege"
                                                             class="col-span-2 md:col-span-6 flex items-center justify-start gap-3 text-black">
                                                             <input id="massege" type="checkbox" name=""
-                                                                class="appearance-none size-5 rounded-md border-1 border-(--border-dashbrd) checked:bg-(--primary-dark-dashbrd) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
+                                                                class="appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
                                                             ارسال پیامک تایید ثبت نام در اپلیکیشن
                                                         </label>
                                                         <button
-                                                            class="col-span-1 md:col-span-3 border-1 border-(--primary-dashbrd) text-(--primary-dashbrd) py-4 rounded-md font-bold">ثبت</button>
+                                                            class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold">ثبت</button>
                                                         <button
-                                                            class="col-span-1 md:col-span-3 border-1 border-(--danger-dashbrd) text-(--danger-dashbrd) py-4 rounded-md font-bold">
+                                                            class="col-span-1 md:col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold">
                                                             لغو</button>
                                                     </div>
                                                 </form>
                                             </div>
                                             <button
-                                                class="w-3/6 bg-(--danger-dashbrd) text-white rounded-md px-2 py-2 cursor-pointer text-nowrap">
+                                                class="w-3/6 bg-(--danger-dashboard) text-white rounded-md px-2 py-2 cursor-pointer text-nowrap">
                                                 حذف درخواست
                                             </button>
                                         </td>

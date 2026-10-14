@@ -119,313 +119,336 @@
         </div> --}}
         {{--  --}}
         <div class="w-full bg-white rounded-md px-3 py-2">
-            <div class="grid grid-cols-6 gap-5 mt-5">
-                <div
-                    class="col-span-6 flex items-center border-1 border-(--border-dashbrd) rounded-lg divide-x-1 divide-(--border-dashbrd) px-1 md:px-2 py-2 md:py-3 gap-2">
-                    <div class="w-6/12">
-                        <span class="text-xs md:text-base text-(--text-secondary-dashbrd) ml-1">نام
-                            :</span>
-                        <span class="text-xs md:text-base font-bold">{{ Auth::user()['name'] }}
-                            {{ Auth::user()['family'] }}</span>
-                    </div>
-                    <div class="w-6/12">
-                        <span class="text-xs md:text-base text-(--text-secondary-dashbrd) ml-1">شماره
-                            :</span>
-                        <span class="text-[10px] md:text-base font-bold in-fa">{{ Auth::user()['phoneNumber'] }}</span>
-                    </div>
-                </div>
-                <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
-                    <div class="w-full bg-white divide-y-1 divide-(--border-dashbrd) p-2 rounded-lg">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-3 pb-2">
-                                <span class="">
-                                    <svg class="size-5 fill-(--primary-dashbrd)" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 576 512">
-                                        <path
-                                            d="M276.1 405.2l5.6-1.4 0 0c55.2-14.1 117.5-30 182.8-28.1c4.1-31.4 30.9-55.7 63.5-55.7V144c-35.3 0-63.9-28.6-64-63.9c-49.9-1.8-103.1 11.1-164.1 26.6l-5.6 1.4c-55.2 14.1-117.5 30-182.8 28.1C107.4 167.7 80.5 192 48 192V368c35.3 0 63.9 28.6 64 63.9c49.9 1.8 103.1-11.1 164.1-26.6zM0 60.3c16 8.2 32 14.3 48 18.7c80 22.1 160 1.7 240-18.7c96-24.5 192-48.9 288 0V398.9v52.8c-16-8.2-32-14.3-48-18.7c-80-22.1-160-1.7-240 18.7c-96 24.5-192 48.9-288 0V113.1 60.3zM384 256c0 61.9-43 112-96 112s-96-50.1-96-112s43-112 96-112s96 50.1 96 112zM256 192v32h16v64h-8H248v32h16 8 32 8 16V288H312h-8V208 192H288 272 256z" />
-                                    </svg>
-                                </span>
-                                <span class="text-xs md:text-base text-(--text-secondary-dashbrd) font-bold">
-                                    موجودی ریال
-                                </span>
-                            </div>
-                            <div class="font-bold pb-2">{{ $user->wallet['asset'] ?? 0 }}</div>
+            <form action="{{ route('wallet.transactionRequest') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="grid grid-cols-6 gap-5 mt-5">
+                    <div
+                        class="col-span-6 flex items-center border-1 border-(--border-dashboard) rounded-lg divide-x-1 divide-(--border-dashboard) px-1 md:px-2 py-2 md:py-3 gap-2">
+                        <div class="w-6/12">
+                            <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">نام
+                                :</span>
+                            <span class="text-xs md:text-base font-bold">{{ Auth::user()['name'] }}
+                                {{ Auth::user()['family'] }}</span>
                         </div>
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-3 pt-2">
-                                <span class="text-(--text-secondary-dashbrd) text-xs md:text-sm">
-                                    موجودی قابل برداشت
-                                </span>
-                            </div>
-                            <div class="font-bold pt-2">
-                                <span class="">{{ $user->wallet['asset'] ?? 0 }}</span>
-                                <span class="text-(--text-secondary-dashbrd) text-[6px] md:text-xs">
-                                    تومان
-                                </span>
-                            </div>
+                        <div class="w-6/12">
+                            <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره
+                                :</span>
+                            <span class="text-[10px] md:text-base font-bold in-fa">{{ Auth::user()['phoneNumber'] }}</span>
                         </div>
                     </div>
-                </div>
-                <div
-                    class="col-span-6 flex items-center border-1 border-(--border-dashbrd) rounded-lg divide-x-1 divide-(--border-dashbrd) px-2 py-3 gap-2">
-                    <label for="plass" class="w-6/12 flex items-center gap-1 md:gap-3">
-                        <input class="accent-(--primary-dashbrd) size-4 md:size-5" type="radio" name="yes"
-                            id="plass">
-                        <span class="text-xs text-green-400 md:text-base font-bold">واریز</span>
-                    </label>
-                    <label for="maiez" class="w-6/12 flex items-center gap-1 md:gap-3">
-                        <input class="accent-(--primary-dashbrd) size-4 md:size-5" type="radio" name="yes"
-                            id="maiez">
-                        <span class="text-xs text-red-400 md:text-base font-bold">برداشت</span>
-                    </label>
-                </div>
-                <label class="col-span-3" for="categoryName">
+                    <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
+                        <div class="w-full bg-white divide-y-1 divide-(--border-dashboard) p-2 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3 pb-2">
+                                    <span class="">
+                                        <svg class="size-5 fill-(--primary-dashboard)" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 576 512">
+                                            <path
+                                                d="M276.1 405.2l5.6-1.4 0 0c55.2-14.1 117.5-30 182.8-28.1c4.1-31.4 30.9-55.7 63.5-55.7V144c-35.3 0-63.9-28.6-64-63.9c-49.9-1.8-103.1 11.1-164.1 26.6l-5.6 1.4c-55.2 14.1-117.5 30-182.8 28.1C107.4 167.7 80.5 192 48 192V368c35.3 0 63.9 28.6 64 63.9c49.9 1.8 103.1-11.1 164.1-26.6zM0 60.3c16 8.2 32 14.3 48 18.7c80 22.1 160 1.7 240-18.7c96-24.5 192-48.9 288 0V398.9v52.8c-16-8.2-32-14.3-48-18.7c-80-22.1-160-1.7-240 18.7c-96 24.5-192 48.9-288 0V113.1 60.3zM384 256c0 61.9-43 112-96 112s-96-50.1-96-112s43-112 96-112s96 50.1 96 112zM256 192v32h16v64h-8H248v32h16 8 32 8 16V288H312h-8V208 192H288 272 256z" />
+                                        </svg>
+                                    </span>
+                                    <span class="text-xs md:text-base text-(--text-secondary-dashboard) font-bold">
+                                        موجودی ریال
+                                    </span>
+                                </div>
+                                <div class="font-bold pb-2 in-fa">{{ number_format($user->wallet['asset'] ?? 0) }}</div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3 pt-2">
+                                    <span class="text-(--text-secondary-dashboard) text-xs md:text-sm">
+                                        موجودی قابل برداشت
+                                    </span>
+                                </div>
+                                <div class="font-bold pt-2">
+                                    <span class="in-fa">{{ number_format($user->wallet['asset'] ?? 0) }}</span>
+                                    <span class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
+                                        تومان
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-span-6">
+                        <div
+                            class="flex items-center border-1 border-(--border-dashboard) rounded-lg divide-x-1 divide-(--border-dashboard) px-2 py-3 gap-2">
+                            <label for="deposit" class="w-6/12 flex items-center gap-1 md:gap-3">
+                                <input class="accent-(--primary-dashboard) size-4 md:size-5" type="radio"
+                                    name="transactionType" value="deposit" id="deposit" onchange="sendReceipt('deposit')">
+                                <span class="text-xs text-green-400 md:text-base font-bold">واریز</span>
+                            </label>
+                            <label for="withdraw" class="w-6/12 flex items-center gap-1 md:gap-3">
+                                <input class="accent-(--primary-dashboard) size-4 md:size-5" type="radio"
+                                    name="transactionType" value="withdraw" id="withdraw"
+                                    onchange="sendReceipt('withdraw')">
+                                <span class="text-xs text-red-400 md:text-base font-bold">برداشت</span>
+                            </label>
+                        </div>
+                        @error('transactionType')
+                            <span class="text-xs text-red-400">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    {{-- <label class="col-span-3" for="categoryName">
                     نوع تراکنش
-                    <select
-                        class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
-                        name="" id="categoryName">
-                        <option value="">طلا</option>
-                        <option value="">نقره</option>
-                        <option value="" selected>ریال</option>
-                        <option value="">شمش</option>
-                    </select>
-                </label>
-                <label class="col-span-3" for="welcome">
-                    مبلغ
-                    <input
-                        class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
-                        type="text" name="" id="" placeholder="ریال">
-                </label>
-                <div class="w-full flex flex-col gap-4 col-span-3">
-                    <label for="receipt">تصویر رسید تراکنش : </label>
-                    <input type="file" name="receipt" id="receipt"
-                        class="w-full text-center shadow-md py-2 px-2 border border-gray-400 rounded-xl"></input>
-                    @error('receipt')
-                        <span class="text-xs text-red-400">{{ $message }}</span>
-                    @enderror
+                        <select
+                            class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
+                            name="" id="categoryName">
+                            <option value="">طلا</option>
+                            <option value="">نقره</option>
+                            <option value="" selected>ریال</option>
+                            <option value="">شمش</option>
+                        </select>
+                    </label> --}}
+                    <label class="col-span-3" for="fee">
+                        مبلغ
+                        <input
+                            class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa"
+                            type="number" name="fee" id="fee" placeholder="ریال" value="{{ old('fee') }}">
+                        @error('fee')
+                            <span class="text-xs text-red-400">{{ $message }}</span>
+                        @enderror
+                    </label>
+                    <label class="col-span-3 @if (!$errors->hasAny(['receipt'])) hidden @endif" for="receipt">
+                        تصویر فیش واریزی
+                        <input
+                            class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
+                            type="file" name="receipt" id="receipt">
+                        @error('receipt')
+                            <span class="text-xs text-red-400">{{ $message }}</span>
+                        @enderror
+                    </label>
+                    <label class="col-span-6" for="description">
+                        توضیحات
+                        <textarea
+                            class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
+                            name="description" id="description"></textarea>
+                    </label>
+                    <button type="submit"
+                        class="col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold cursor-pointer">ثبت</button>
+                    <button type="reset"
+                        class="col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold cursor-pointer">
+                        لغو</button>
                 </div>
-                <label class="col-span-6" for="text">
-                    توضیحات
-                    <textarea
-                        class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashbrd) rounded-md p-2 outline-(--border-dashbrd)"
-                        name="" id="text"></textarea>
-                </label>
-                <button
-                    class="col-span-3 border-1 border-(--primary-dashbrd) text-(--primary-dashbrd) py-4 rounded-md">ثبت</button>
-                <button class="col-span-3 border-1 border-(--danger-dashbrd) text-(--danger-dashbrd) py-4 rounded-md">
-                    لغو</button>
-            </div>
+            </form>
         </div>
         {{--  --}}
     </div>
     <script>
-        let asset = document.getElementById('asset')
-        let price = asset.innerText
-
-        function showHideAsset(el, state) {
-            if (state == 'hide') {
-                el.innerHTML = `
-               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="*:*:fill-icon-neutral-tertiary"><g id="Outline/Hide"><path id="vector (Stroke)" fill-rule="evenodd" clip-rule="evenodd" d="M2.21975 2.21967C2.51265 1.92678 2.98752 1.92678 3.28041 2.21967L21.7804 20.7197C22.0733 21.0126 22.0733 21.4874 21.7804 21.7803C21.4875 22.0732 21.0126 22.0732 20.7198 21.7803L17.3708 18.4313C14.8476 19.9862 12.0017 20.3926 9.29542 19.6173C6.40554 18.7894 3.74776 16.6368 1.81978 13.2543C1.37764 12.4786 1.37569 11.5249 1.81865 10.7475C2.83111 8.97073 4.0441 7.53359 5.38803 6.44861L2.21975 3.28033C1.92686 2.98744 1.92686 2.51256 2.21975 2.21967ZM6.45554 7.51611C5.22422 8.48095 4.08443 9.801 3.12192 11.4901C2.94222 11.8055 2.9423 12.1946 3.12295 12.5115C4.89352 15.6178 7.26078 17.4741 9.70852 18.1753C11.8818 18.7979 14.1761 18.528 16.276 17.3365L14.2482 15.3088C13.6077 15.7447 12.8333 16 12.0001 16C9.79095 16 8.00008 14.2091 8.00008 12C8.00008 11.1668 8.2554 10.3924 8.69129 9.75186L6.45554 7.51611ZM9.7829 10.8435C9.60208 11.1893 9.50008 11.5825 9.50008 12C9.50008 13.3807 10.6194 14.5 12.0001 14.5C12.4176 14.5 12.8108 14.398 13.1566 14.2172L9.7829 10.8435ZM20.8775 11.489C17.994 6.42962 13.5395 4.67067 9.59781 5.85706C9.20117 5.97645 8.78285 5.75169 8.66347 5.35505C8.54409 4.95841 8.76885 4.5401 9.16548 4.42071C13.9175 2.99041 19.0296 5.21732 22.1807 10.7462C22.623 11.5222 22.6243 12.4754 22.1815 13.2524C21.6044 14.2652 20.9623 15.1674 20.2678 15.9571C19.9943 16.2682 19.5204 16.2986 19.2093 16.0251C18.8983 15.7515 18.8679 15.2776 19.1414 14.9666C19.7645 14.258 20.3483 13.4398 20.8782 12.5098C21.0581 12.1942 21.058 11.8057 20.8775 11.489Z" fill="url(#paint0_linear_4794_12220)"></path></g><defs><linearGradient id="paint0_linear_4794_12220" x1="12.0002" y1="2" x2="12.0002" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#039982"></stop><stop offset="1" stop-color="#027368"></stop></linearGradient></defs></svg>
-               `
-                asset.innerText = "******"
-                el.setAttribute('onclick', "showHideAsset(this, 'show')")
+        function sendReceipt(state) {
+            let receipt = document.getElementById('receipt').parentElement
+            if (state == 'deposit') {
+                receipt.classList.remove('hidden')
             }
-            if (state == 'show') {
-                el.innerHTML = `
-                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                        class="*:*:fill-icon-neutral-tertiary">
-                        <g id="Outline/Eye">
-                            <path id="vector (Stroke)" fill-rule="evenodd" clip-rule="evenodd"
-                                d="M11.9995 5.5C8.76836 5.49998 5.43684 7.42677 3.12146 11.49C2.94129 11.8062 2.94129 12.1936 3.12146 12.5098C5.43684 16.5731 8.76837 18.4999 11.9996 18.4999C15.2307 18.4999 18.5623 16.5732 20.8776 12.5099C21.0578 12.1937 21.0578 11.8063 20.8776 11.4901C18.5623 7.42687 15.2307 5.50002 11.9995 5.5ZM22.1809 10.7475L21.5293 11.1188L22.1809 10.7475C22.6234 11.524 22.6234 12.476 22.1809 13.2526C19.6574 17.681 15.8787 20 11.9995 19.9999C8.12044 19.9999 4.34167 17.6809 1.8182 13.2524C1.3757 12.4759 1.3757 11.5239 1.8182 10.7474C4.34167 6.31895 8.12044 3.99997 11.9996 4C15.8787 4.00003 19.6574 6.31907 22.1809 10.7475ZM11.9995 9.5C10.6188 9.5 9.49955 10.6193 9.49955 12C9.49955 13.3807 10.6188 14.5 11.9995 14.5C13.3803 14.5 14.4995 13.3807 14.4995 12C14.4995 10.6193 13.3803 9.5 11.9995 9.5ZM7.99955 12C7.99955 9.79086 9.79041 8 11.9995 8C14.2087 8 15.9995 9.79086 15.9995 12C15.9995 14.2091 14.2087 16 11.9995 16C9.79041 16 7.99955 14.2091 7.99955 12Z"
-                                fill="url(#paint0_linear_4793_10908)"></path>
-                        </g>
-                        <defs>
-                            <linearGradient id="paint0_linear_4793_10908" x1="11.9995" y1="4" x2="11.9995"
-                                y2="19.9999" gradientUnits="userSpaceOnUse">
-                                <stop stop-color="#039982"></stop>
-                                <stop offset="1" stop-color="#027368"></stop>
-                            </linearGradient>
-                        </defs>
-                    </svg>
-               `
-                asset.innerText = price
-                el.setAttribute('onclick', "showHideAsset(this, 'hide')")
+            if (state == 'withdraw') {
+                receipt.classList.add('hidden')
             }
         }
+        // let asset = document.getElementById('asset')
+        // let price = asset.innerText
 
-        function changeTabContent(tabName, user_id) {
-            let tabContent = document.getElementById('tabContent')
-            if (tabName == 'deposit') {
-                tabContent.innerHTML = `
-                <form action="{{ route('wallet.deposit') }}" method="POST" enctype="multipart/form-data"
-                    class="w-full flex flex-col gap-10">
-                    @csrf
-                    <div class="w-full flex flex-col gap-4">
-                        <div class="w-full flex items-center justify-between">
-                            <label for="depositPrice">مبلغ واریزی</label>
-                            <span class="text-[11px] cursor-pointer" onclick="minDepositable()">حداقل مبلغ قابل واریز</span>
-                        </div>
-                        <div class="w-full flex items-center shadow-md py-2 px-2 border border-gray-400 rounded-xl">
-                            <div class="w-full">
-                                <input type="number" name="depositPrice" id="depositPrice" class="outline-none p-2 w-full"
-                                    value="{{ old('depositPrice') }}">
-                                @error('depositPrice')
-                                    <span class="text-xs text-red-400">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <span>تومان</span>
-                        </div>
-                    </div>
-                    <div class="w-full flex flex-col gap-4">
-                        <span>شماره کارت مبدا</span>
-                        <p class="text-center shadow-md py-2 px-2 border border-gray-400 rounded-xl">
-                            6037-9915-4277-6038
-                        </p>
-                    </div>
-                    <div class="w-full flex flex-col gap-4">
-                        <label for="receipt">تصویر رسید تراکنش : </label>
-                        <input type="file" name="receipt" id="receipt"
-                            class="text-center shadow-md py-2 px-2 border border-gray-400 rounded-xl"></input>
-                    </div>
-                    <div class="w-full ">
-                        <button type="submit"
-                            class="bg-green-100 text-green-600 w-full py-2 rounded-xl cursor-pointer">واریز</button>
-                    </div>
-                </form>
-               `
-            }
-            if (tabName == 'withdraw') {
-                tabContent.innerHTML = `
-                <form action="{{ route('wallet.withdraw') }}" method="POST" class="w-full flex flex-col gap-10">
-                    @csrf
-                    <div class="w-full flex flex-col gap-4">
-                        <div class="w-full flex items-center justify-between">
-                            <label for="withdrawPrice">مبلغ برداشتی</label>
-                            <span class="text-[11px] cursor-pointer" onclick="maxWithdrawable()">حداکثر مبلغ قابل
-                                برداشت</span>
-                        </div>
-                        <div class="w-full flex items-center shadow-md py-2 px-2 border border-gray-400 rounded-xl">
-                            <div class="w-full">
-                                <input type="number" name="withdrawPrice" id="withdrawPrice"
-                                    class="outline-none p-2 w-full" value="{{ old('withdrawPrice') }}">
-                                @error('withdrawPrice')
-                                    <span class="text-xs text-red-400">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <span>تومان</span>
-                        </div>
-                    </div>
-                    <div class="w-full flex flex-col gap-4">
-                        <span>شماره کارت مقصد</span>
-                        <p class="text-center shadow-md py-2 px-2 border border-gray-400 rounded-xl">
-                            6037-9915-4277-6038
-                        </p>
-                    </div>
-                    <div class="w-full ">
-                        <button type="submit"
-                            class="bg-red-100 text-red-600 w-full py-2 rounded-xl cursor-pointer">برداشت</button>
-                    </div>
-                </form>
-               `
-            }
-            if (tabName == 'history') {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                    }
-                })
-                $.ajax({
-                    url: "{{ route('wallet.transactions') }}",
-                    type: "POST",
-                    dataType: "json",
-                    data: {
-                        'user_id': user_id,
-                    },
-                    success: function(data) {
-                        let isApproved
-                        let imgLink = "{{ asset('storage/') }}"
-                        element = `
-                            <table class="w-full">
-                                <thead class="w-full">
-                                    <tr class="w-full mb-10 px-4 grid grid-cols-4">
-                                        <th>نوع / زمان</th>
-                                        <th>وضعیت</th>
-                                        <th>فیش واریزی</th>
-                                        <th>مبلغ تراکنش</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="w-full">
-                            `
-                        data.wallet_transactions.forEach(transaction => {
-                            switch (transaction.isApproved) {
-                                case 1:
-                                    isApproved = 'تایید شده'
-                                    break;
-                                case -1:
-                                    isApproved = 'رد شده'
-                                    break;
-                                case 0:
-                                    isApproved = 'در انتظار تایید'
-                                    break;
-                            }
-                            if (transaction.type == 'deposit') {
-                                element +=
-                                    `
-                                    <tr class="w-full mb-10 px-4 grid grid-cols-4">
-                                        <td class="flex flex-col items-center gap-2">
-                                            <span class="text-green-500">واریز</span>
-                                            <span class="text-xs text-gray-400">${transaction.created_at}</span>
-                                        </td>
-                                        <td class="flex flex-col items-center gap-2">
-                                            <span class="text-gray-500">${isApproved}</span>
-                                        </td>
-                                        <td class="flex justify-center items-center">
-                                            <img src="${imgLink}/${transaction.receipt}" class="size-15">
-                                        </td>
-                                        <td class="flex flex-col items-center gap-2">
-                                            <span>${transaction.amount}</span>
-                                            <span class="text-xs text-gray-400">تومان</span>
-                                        </td>
-                                    </tr>
-                                `
-                            }
-                            if (transaction.type == 'withdraw') {
-                                element +=
-                                    `
-                                    <tr class="w-full mb-10 px-4 grid grid-cols-4">
-                                        <td class="flex flex-col items-center gap-2">
-                                            <span class="text-red-500">برداشت</span>
-                                            <span class="text-xs text-gray-400">${transaction.created_at}</span>
-                                        </td>
-                                        <td class="flex flex-col items-center gap-2">
-                                            <span class="text-gray-500">${isApproved}</span>
-                                        </td>
-                                        <td></td>
-                                        <td class="flex flex-col items-center gap-2">
-                                            <span>${transaction.amount}</span>
-                                            <span class="text-xs text-gray-400">تومان</span>
-                                        </td>
-                                    </tr>
-                                `
-                            }
-                        });
-                        element += `</tbody></table>`
-                        tabContent.innerHTML = element
-                    },
-                    error: function() {
-                        alert('error')
-                    }
-                })
-            }
-        }
+        // function showHideAsset(el, state) {
+        //     if (state == 'hide') {
+        //         el.innerHTML = `
+    //        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="*:*:fill-icon-neutral-tertiary"><g id="Outline/Hide"><path id="vector (Stroke)" fill-rule="evenodd" clip-rule="evenodd" d="M2.21975 2.21967C2.51265 1.92678 2.98752 1.92678 3.28041 2.21967L21.7804 20.7197C22.0733 21.0126 22.0733 21.4874 21.7804 21.7803C21.4875 22.0732 21.0126 22.0732 20.7198 21.7803L17.3708 18.4313C14.8476 19.9862 12.0017 20.3926 9.29542 19.6173C6.40554 18.7894 3.74776 16.6368 1.81978 13.2543C1.37764 12.4786 1.37569 11.5249 1.81865 10.7475C2.83111 8.97073 4.0441 7.53359 5.38803 6.44861L2.21975 3.28033C1.92686 2.98744 1.92686 2.51256 2.21975 2.21967ZM6.45554 7.51611C5.22422 8.48095 4.08443 9.801 3.12192 11.4901C2.94222 11.8055 2.9423 12.1946 3.12295 12.5115C4.89352 15.6178 7.26078 17.4741 9.70852 18.1753C11.8818 18.7979 14.1761 18.528 16.276 17.3365L14.2482 15.3088C13.6077 15.7447 12.8333 16 12.0001 16C9.79095 16 8.00008 14.2091 8.00008 12C8.00008 11.1668 8.2554 10.3924 8.69129 9.75186L6.45554 7.51611ZM9.7829 10.8435C9.60208 11.1893 9.50008 11.5825 9.50008 12C9.50008 13.3807 10.6194 14.5 12.0001 14.5C12.4176 14.5 12.8108 14.398 13.1566 14.2172L9.7829 10.8435ZM20.8775 11.489C17.994 6.42962 13.5395 4.67067 9.59781 5.85706C9.20117 5.97645 8.78285 5.75169 8.66347 5.35505C8.54409 4.95841 8.76885 4.5401 9.16548 4.42071C13.9175 2.99041 19.0296 5.21732 22.1807 10.7462C22.623 11.5222 22.6243 12.4754 22.1815 13.2524C21.6044 14.2652 20.9623 15.1674 20.2678 15.9571C19.9943 16.2682 19.5204 16.2986 19.2093 16.0251C18.8983 15.7515 18.8679 15.2776 19.1414 14.9666C19.7645 14.258 20.3483 13.4398 20.8782 12.5098C21.0581 12.1942 21.058 11.8057 20.8775 11.489Z" fill="url(#paint0_linear_4794_12220)"></path></g><defs><linearGradient id="paint0_linear_4794_12220" x1="12.0002" y1="2" x2="12.0002" y2="22" gradientUnits="userSpaceOnUse"><stop stop-color="#039982"></stop><stop offset="1" stop-color="#027368"></stop></linearGradient></defs></svg>
+    //        `
+        //         asset.innerText = "******"
+        //         el.setAttribute('onclick', "showHideAsset(this, 'show')")
+        //     }
+        //     if (state == 'show') {
+        //         el.innerHTML = `
+    //              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+    //                 class="*:*:fill-icon-neutral-tertiary">
+    //                 <g id="Outline/Eye">
+    //                     <path id="vector (Stroke)" fill-rule="evenodd" clip-rule="evenodd"
+    //                         d="M11.9995 5.5C8.76836 5.49998 5.43684 7.42677 3.12146 11.49C2.94129 11.8062 2.94129 12.1936 3.12146 12.5098C5.43684 16.5731 8.76837 18.4999 11.9996 18.4999C15.2307 18.4999 18.5623 16.5732 20.8776 12.5099C21.0578 12.1937 21.0578 11.8063 20.8776 11.4901C18.5623 7.42687 15.2307 5.50002 11.9995 5.5ZM22.1809 10.7475L21.5293 11.1188L22.1809 10.7475C22.6234 11.524 22.6234 12.476 22.1809 13.2526C19.6574 17.681 15.8787 20 11.9995 19.9999C8.12044 19.9999 4.34167 17.6809 1.8182 13.2524C1.3757 12.4759 1.3757 11.5239 1.8182 10.7474C4.34167 6.31895 8.12044 3.99997 11.9996 4C15.8787 4.00003 19.6574 6.31907 22.1809 10.7475ZM11.9995 9.5C10.6188 9.5 9.49955 10.6193 9.49955 12C9.49955 13.3807 10.6188 14.5 11.9995 14.5C13.3803 14.5 14.4995 13.3807 14.4995 12C14.4995 10.6193 13.3803 9.5 11.9995 9.5ZM7.99955 12C7.99955 9.79086 9.79041 8 11.9995 8C14.2087 8 15.9995 9.79086 15.9995 12C15.9995 14.2091 14.2087 16 11.9995 16C9.79041 16 7.99955 14.2091 7.99955 12Z"
+    //                         fill="url(#paint0_linear_4793_10908)"></path>
+    //                 </g>
+    //                 <defs>
+    //                     <linearGradient id="paint0_linear_4793_10908" x1="11.9995" y1="4" x2="11.9995"
+    //                         y2="19.9999" gradientUnits="userSpaceOnUse">
+    //                         <stop stop-color="#039982"></stop>
+    //                         <stop offset="1" stop-color="#027368"></stop>
+    //                     </linearGradient>
+    //                 </defs>
+    //             </svg>
+    //        `
+        //         asset.innerText = price
+        //         el.setAttribute('onclick', "showHideAsset(this, 'hide')")
+        //     }
+        // }
 
-        function maxWithdrawable() {
-            document.getElementById('withdrawPrice').value = asset.innerText
-        }
+        // function changeTabContent(tabName, user_id) {
+        //     let tabContent = document.getElementById('tabContent')
+        //     if (tabName == 'deposit') {
+        //         tabContent.innerHTML = `
+    //         <form action="" method="POST" enctype="multipart/form-data"
+    //             class="w-full flex flex-col gap-10">
+    //             @csrf
+    //             <div class="w-full flex flex-col gap-4">
+    //                 <div class="w-full flex items-center justify-between">
+    //                     <label for="depositPrice">مبلغ واریزی</label>
+    //                     <span class="text-[11px] cursor-pointer" onclick="minDepositable()">حداقل مبلغ قابل واریز</span>
+    //                 </div>
+    //                 <div class="w-full flex items-center shadow-md py-2 px-2 border border-gray-400 rounded-xl">
+    //                     <div class="w-full">
+    //                         <input type="number" name="depositPrice" id="depositPrice" class="outline-none p-2 w-full"
+    //                             value="{{ old('depositPrice') }}">
+    //                         @error('depositPrice')
+    //                             <span class="text-xs text-red-400">{{ $message }}</span>
+    //                         @enderror
+    //                     </div>
+    //                     <span>تومان</span>
+    //                 </div>
+    //             </div>
+    //             <div class="w-full flex flex-col gap-4">
+    //                 <span>شماره کارت مبدا</span>
+    //                 <p class="text-center shadow-md py-2 px-2 border border-gray-400 rounded-xl">
+    //                     6037-9915-4277-6038
+    //                 </p>
+    //             </div>
+    //             <div class="w-full flex flex-col gap-4">
+    //                 <label for="receipt">تصویر رسید تراکنش : </label>
+    //                 <input type="file" name="receipt" id="receipt"
+    //                     class="text-center shadow-md py-2 px-2 border border-gray-400 rounded-xl"></input>
+    //             </div>
+    //             <div class="w-full ">
+    //                 <button type="submit"
+    //                     class="bg-green-100 text-green-600 w-full py-2 rounded-xl cursor-pointer">واریز</button>
+    //             </div>
+    //         </form>
+    //        `
+        //     }
+        //     if (tabName == 'withdraw') {
+        //         tabContent.innerHTML = `
+    //         <form action="" method="POST" class="w-full flex flex-col gap-10">
+    //             @csrf
+    //             <div class="w-full flex flex-col gap-4">
+    //                 <div class="w-full flex items-center justify-between">
+    //                     <label for="withdrawPrice">مبلغ برداشتی</label>
+    //                     <span class="text-[11px] cursor-pointer" onclick="maxWithdrawable()">حداکثر مبلغ قابل
+    //                         برداشت</span>
+    //                 </div>
+    //                 <div class="w-full flex items-center shadow-md py-2 px-2 border border-gray-400 rounded-xl">
+    //                     <div class="w-full">
+    //                         <input type="number" name="withdrawPrice" id="withdrawPrice"
+    //                             class="outline-none p-2 w-full" value="{{ old('withdrawPrice') }}">
+    //                         @error('withdrawPrice')
+    //                             <span class="text-xs text-red-400">{{ $message }}</span>
+    //                         @enderror
+    //                     </div>
+    //                     <span>تومان</span>
+    //                 </div>
+    //             </div>
+    //             <div class="w-full flex flex-col gap-4">
+    //                 <span>شماره کارت مقصد</span>
+    //                 <p class="text-center shadow-md py-2 px-2 border border-gray-400 rounded-xl">
+    //                     6037-9915-4277-6038
+    //                 </p>
+    //             </div>
+    //             <div class="w-full ">
+    //                 <button type="submit"
+    //                     class="bg-red-100 text-red-600 w-full py-2 rounded-xl cursor-pointer">برداشت</button>
+    //             </div>
+    //         </form>
+    //        `
+        //     }
+        //     if (tabName == 'history') {
+        //         $.ajaxSetup({
+        //             headers: {
+        //                 'X-CSRF-TOKEN': "{{ csrf_token() }}"
+        //             }
+        //         })
+        //         $.ajax({
+        //             url: "",
+        //             type: "POST",
+        //             dataType: "json",
+        //             data: {
+        //                 'user_id': user_id,
+        //             },
+        //             success: function(data) {
+        //                 let isApproved
+        //                 let imgLink = "{{ asset('storage/') }}"
+        //                 element = `
+    //                     <table class="w-full">
+    //                         <thead class="w-full">
+    //                             <tr class="w-full mb-10 px-4 grid grid-cols-4">
+    //                                 <th>نوع / زمان</th>
+    //                                 <th>وضعیت</th>
+    //                                 <th>فیش واریزی</th>
+    //                                 <th>مبلغ تراکنش</th>
+    //                             </tr>
+    //                         </thead>
+    //                         <tbody class="w-full">
+    //                     `
+        //                 data.wallet_transactions.forEach(transaction => {
+        //                     switch (transaction.isApproved) {
+        //                         case 1:
+        //                             isApproved = 'تایید شده'
+        //                             break;
+        //                         case -1:
+        //                             isApproved = 'رد شده'
+        //                             break;
+        //                         case 0:
+        //                             isApproved = 'در انتظار تایید'
+        //                             break;
+        //                     }
+        //                     if (transaction.type == 'deposit') {
+        //                         element +=
+        //                             `
+    //                             <tr class="w-full mb-10 px-4 grid grid-cols-4">
+    //                                 <td class="flex flex-col items-center gap-2">
+    //                                     <span class="text-green-500">واریز</span>
+    //                                     <span class="text-xs text-gray-400">${transaction.created_at}</span>
+    //                                 </td>
+    //                                 <td class="flex flex-col items-center gap-2">
+    //                                     <span class="text-gray-500">${isApproved}</span>
+    //                                 </td>
+    //                                 <td class="flex justify-center items-center">
+    //                                     <img src="${imgLink}/${transaction.receipt}" class="size-15">
+    //                                 </td>
+    //                                 <td class="flex flex-col items-center gap-2">
+    //                                     <span>${transaction.amount}</span>
+    //                                     <span class="text-xs text-gray-400">تومان</span>
+    //                                 </td>
+    //                             </tr>
+    //                         `
+        //                     }
+        //                     if (transaction.type == 'withdraw') {
+        //                         element +=
+        //                             `
+    //                             <tr class="w-full mb-10 px-4 grid grid-cols-4">
+    //                                 <td class="flex flex-col items-center gap-2">
+    //                                     <span class="text-red-500">برداشت</span>
+    //                                     <span class="text-xs text-gray-400">${transaction.created_at}</span>
+    //                                 </td>
+    //                                 <td class="flex flex-col items-center gap-2">
+    //                                     <span class="text-gray-500">${isApproved}</span>
+    //                                 </td>
+    //                                 <td></td>
+    //                                 <td class="flex flex-col items-center gap-2">
+    //                                     <span>${transaction.amount}</span>
+    //                                     <span class="text-xs text-gray-400">تومان</span>
+    //                                 </td>
+    //                             </tr>
+    //                         `
+        //                     }
+        //                 });
+        //                 element += `</tbody></table>`
+        //                 tabContent.innerHTML = element
+        //             },
+        //             error: function() {
+        //                 alert('error')
+        //             }
+        //         })
+        //     }
+        // }
 
-        function minDepositable() {
-            document.getElementById('depositPrice').value = 1000000
-        }
+        // function maxWithdrawable() {
+        //     document.getElementById('withdrawPrice').value = asset.innerText
+        // }
+
+        // function minDepositable() {
+        //     document.getElementById('depositPrice').value = 1000000
+        // }
 
         //   let tabs = document.querySelectorAll('.tab')
         //   tabs.forEach(tab => {
