@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('type');
             $table->tinyInteger('isApproved')->default(0);
             $table->string('receipt')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

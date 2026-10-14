@@ -11,12 +11,19 @@ class transaction extends Model
         'amount',
         'type',
         'isApproved',
-        'receipt'
+        'receipt',
+        'description'
     ];
-    public function deal(){
+    public function deal()
+    {
         return $this->hasOne(deal::class);
     }
-    public function wallet(){
+    public function wallet()
+    {
         return $this->belongsTo(wallet::class);
     }
+    // public function user()
+    // {
+    //     return $this->hasOneThrough(wallet::class, User::class);
+    // }
 }

@@ -147,8 +147,7 @@ Route::group([
     Route::get('/user/{user}', 'wallet')->missing(function () {
         return to_route('missing');
     })->middleware(checklogin::class)->name('wallet');
-    Route::post('/deposit', 'deposit')->middleware(checkIsActive::class)->name('deposit');
-    Route::post('/withdraw', 'withdraw')->middleware(checkIsActive::class)->name('withdraw');
+    Route::post('/transaction/request', 'transactionRequest')->middleware(checkIsActive::class)->name('transactionRequest');
     Route::post('/transactions', 'transactions')->name('transactions');
     Route::get('/transactions/list', 'transactionsList')->middleware(checkAdminMiddleware::class)->name('transactionsList');
     Route::get('/transactions/user/{user}', 'transactionsListSingle')->missing(function () {

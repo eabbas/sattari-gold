@@ -103,37 +103,48 @@
                 <!-- item_dashboard -->
                 <div class="w-full flex flex-col gap-2 justify-start items-center">
                     <a href="{{ route('user.profile') }}"
-                        class="px-2 py-2 @if (Route::is('user.profile')) bg-green-300 @endif rounded-xl flex gap-3 justify-start items-center">
+                        class="px-2 py-2 @if (Route::is('user.profile')) bg-green-300 @endif rounded-xl flex gap-3 justify-start items-center"
+                        title="پروفایل">
                         <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="xl:size-4 size-5">
-                                <path
-                                    d="M272.5 5.7c9-7.6 22.1-7.6 31.1 0l264 224c10.1 8.6 11.4 23.7 2.8 33.8s-23.7 11.3-33.8 2.8L512 245.5V432c0 44.2-35.8 80-80 80H144c-44.2 0-80-35.8-80-80V245.5L39.5 266.3c-10.1 8.6-25.3 7.3-33.8-2.8s-7.3-25.3 2.8-33.8l264-224zM288 55.5L112 204.8V432c0 17.7 14.3 32 32 32h48V312c0-22.1 17.9-40 40-40H344c22.1 0 40 17.9 40 40V464h48c17.7 0 32-14.3 32-32V204.8L288 55.5zM240 464h96V320H240V464z">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="xl:size-5 size-5">
+                                <path stroke-width="2"
+                                    d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z">
                                 </path>
                             </svg>
                         </div>
                     </a>
-                    <a href="{{ route('user.index') }}"
-                        class="px-2 py-2 rounded-xl @if (Route::is('user.index')) bg-green-300 @endif flex gap-3 justify-start items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="xl:size-4 size-5">
-                            <path
-                                d="M144 160A80 80 0 1 0 144 0a80 80 0 1 0 0 160zm368 0A80 80 0 1 0 512 0a80 80 0 1 0 0 160zM0 298.7C0 310.4 9.6 320 21.3 320H234.7c.2 0 .4 0 .7 0c-26.6-23.5-43.3-57.8-43.3-96c0-7.6 .7-15 1.9-22.3c-13.6-6.3-28.7-9.7-44.6-9.7H106.7C47.8 192 0 239.8 0 298.7zM405.3 320H618.7c11.8 0 21.3-9.6 21.3-21.3C640 239.8 592.2 192 533.3 192H490.7c-15.9 0-31 3.5-44.6 9.7c1.3 7.2 1.9 14.7 1.9 22.3c0 38.2-16.8 72.5-43.3 96c.2 0 .4 0 .7 0zM320 176a48 48 0 1 1 0 96 48 48 0 1 1 0-96zm0 144a96 96 0 1 0 0-192 96 96 0 1 0 0 192zm-58.7 80H378.7c39.8 0 73.2 27.2 82.6 64H178.7c9.5-36.8 42.9-64 82.6-64zm0-48C187.7 352 128 411.7 128 485.3c0 14.7 11.9 26.7 26.7 26.7H485.3c14.7 0 26.7-11.9 26.7-26.7C512 411.7 452.3 352 378.7 352H261.3z" />
-                        </svg>
-                    </a>
                     <a href="{{ route('wallet.wallet', [Auth::user()]) }}"
-                        class="px-2 py-2 rounded-xl @if (Route::is('wallet.wallet')) bg-green-300 @endif flex gap-3 justify-start items-center">
+                        class="px-2 py-2 rounded-xl @if (Route::is('wallet.wallet')) bg-green-300 @endif flex gap-3 justify-start items-center"
+                        title="کیف پول">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="xl:size-4 size-5">
                             <path
                                 d="M88 32C39.4 32 0 71.4 0 120V392c0 48.6 39.4 88 88 88H424c48.6 0 88-39.4 88-88V216c0-48.6-39.4-88-88-88H120c-13.3 0-24 10.7-24 24s10.7 24 24 24H424c22.1 0 40 17.9 40 40V392c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V120c0-22.1 17.9-40 40-40H456c13.3 0 24-10.7 24-24s-10.7-24-24-24H88zM384 336a32 32 0 1 0 0-64 32 32 0 1 0 0 64z" />
                         </svg>
                     </a>
+                    <a href="{{ route('wallet.transactionsList') }}"
+                        class="px-2 py-2 rounded-xl @if (Route::is('wallet.transactionsList')) bg-green-300 @endif flex gap-3 justify-start items-center"
+                        title="واریز و برداشت">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="xl:size-4 size-5">
+                            <path
+                                d="M216 32c0-13.3-10.7-24-24-24s-24 10.7-24 24V152H48c-13.3 0-24 10.7-24 24s10.7 24 24 24H168V320c0 13.3 10.7 24 24 24s24-10.7 24-24V200H336c13.3 0 24-10.7 24-24s-10.7-24-24-24H216V32zM8 488c0 13.3 10.7 24 24 24H352c13.3 0 24-10.7 24-24s-10.7-24-24-24H32c-13.3 0-24 10.7-24 24z" />
+                        </svg>
+                    </a>
                     <a href="{{ route('deal.adminIndex') }}"
-                        class="px-2 py-2 rounded-xl @if (Route::is('deal.adminIndex')) bg-green-300 @endif flex gap-3 justify-start items-center ">
+                        class="px-2 py-2 rounded-xl @if (Route::is('deal.adminIndex')) bg-green-300 @endif flex gap-3 justify-start items-center"
+                        title="معاملات">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
                             class="xl:size-4 size-5 rotate-90">
                             <path
                                 d="M182.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L128 141.3V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.3l41.4 41.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-96-96zm352 333.3c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L448 370.7V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V370.7l-41.4-41.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c12.5 12.5 32.8 12.5 45.3 0l96-96z" />
                         </svg>
-                        <!-- <span class="xl:text-lg text-white font-bold">داشبورد</span> -->
+                    </a>
+                    <a href="{{ route('user.index') }}"
+                        class="px-2 py-2 rounded-xl @if (Route::is('user.index')) bg-green-300 @endif flex gap-3 justify-start items-center"
+                        title="لیست کاربران">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="xl:size-4 size-5">
+                            <path
+                                d="M144 160A80 80 0 1 0 144 0a80 80 0 1 0 0 160zm368 0A80 80 0 1 0 512 0a80 80 0 1 0 0 160zM0 298.7C0 310.4 9.6 320 21.3 320H234.7c.2 0 .4 0 .7 0c-26.6-23.5-43.3-57.8-43.3-96c0-7.6 .7-15 1.9-22.3c-13.6-6.3-28.7-9.7-44.6-9.7H106.7C47.8 192 0 239.8 0 298.7zM405.3 320H618.7c11.8 0 21.3-9.6 21.3-21.3C640 239.8 592.2 192 533.3 192H490.7c-15.9 0-31 3.5-44.6 9.7c1.3 7.2 1.9 14.7 1.9 22.3c0 38.2-16.8 72.5-43.3 96c.2 0 .4 0 .7 0zM320 176a48 48 0 1 1 0 96 48 48 0 1 1 0-96zm0 144a96 96 0 1 0 0-192 96 96 0 1 0 0 192zm-58.7 80H378.7c39.8 0 73.2 27.2 82.6 64H178.7c9.5-36.8 42.9-64 82.6-64zm0-48C187.7 352 128 411.7 128 485.3c0 14.7 11.9 26.7 26.7 26.7H485.3c14.7 0 26.7-11.9 26.7-26.7C512 411.7 452.3 352 378.7 352H261.3z" />
+                        </svg>
                     </a>
                     <div class="px-2 py-2 rounded-xl flex gap-3 justify-start items-center">
                         <div>
@@ -193,33 +204,16 @@
                         class="@if (Route::is('user.profile')) text-(--active) @endif flex justify-center flex-col items-center cursor-pointer py-1 group transition_normal">
                         <a href="{{ route('user.profile') }}" class="flex gap-2 justify-start items-center px-2">
                             <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                     class="xl:size-5 size-5 @if (Route::is('user.profile')) fill-green-700 @endif">
-                                    <path
-                                        d="M272.5 5.7c9-7.6 22.1-7.6 31.1 0l264 224c10.1 8.6 11.4 23.7 2.8 33.8s-23.7 11.3-33.8 2.8L512 245.5V432c0 44.2-35.8 80-80 80H144c-44.2 0-80-35.8-80-80V245.5L39.5 266.3c-10.1 8.6-25.3 7.3-33.8-2.8s-7.3-25.3 2.8-33.8l264-224zM288 55.5L112 204.8V432c0 17.7 14.3 32 32 32h48V312c0-22.1 17.9-40 40-40H344c22.1 0 40 17.9 40 40V464h48c17.7 0 32-14.3 32-32V204.8L288 55.5zM240 464h96V320H240V464z">
+                                    <path stroke-width="2"
+                                        d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z">
                                     </path>
                                 </svg>
                             </div>
-                            <span>خانه</span>
+                            <span>پروفایل</span>
                         </a>
                         @if (Route::is('user.profile'))
-                            <div class="rounded-md w-full bg-(--active) h-[2px] transition_normal"></div>
-                        @endif
-                    </li>
-                    <li
-                        class="@if (Route::is('user.index')) text-(--active) @endif flex justify-center flex-col items-center group cursor-pointer py-1 transition_normal">
-                        <a href="{{ route('user.index') }}" class="flex gap-2 justify-start items-center px-2">
-                            <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"
-                                    class="xl:size-4 size-5 @if (Route::is('user.index')) fill-green-700 @endif">
-                                    <path
-                                        d="M144 160A80 80 0 1 0 144 0a80 80 0 1 0 0 160zm368 0A80 80 0 1 0 512 0a80 80 0 1 0 0 160zM0 298.7C0 310.4 9.6 320 21.3 320H234.7c.2 0 .4 0 .7 0c-26.6-23.5-43.3-57.8-43.3-96c0-7.6 .7-15 1.9-22.3c-13.6-6.3-28.7-9.7-44.6-9.7H106.7C47.8 192 0 239.8 0 298.7zM405.3 320H618.7c11.8 0 21.3-9.6 21.3-21.3C640 239.8 592.2 192 533.3 192H490.7c-15.9 0-31 3.5-44.6 9.7c1.3 7.2 1.9 14.7 1.9 22.3c0 38.2-16.8 72.5-43.3 96c.2 0 .4 0 .7 0zM320 176a48 48 0 1 1 0 96 48 48 0 1 1 0-96zm0 144a96 96 0 1 0 0-192 96 96 0 1 0 0 192zm-58.7 80H378.7c39.8 0 73.2 27.2 82.6 64H178.7c9.5-36.8 42.9-64 82.6-64zm0-48C187.7 352 128 411.7 128 485.3c0 14.7 11.9 26.7 26.7 26.7H485.3c14.7 0 26.7-11.9 26.7-26.7C512 411.7 452.3 352 378.7 352H261.3z" />
-                                </svg>
-
-                            </div>
-                            <span>کاربران</span>
-                        </a>
-                        @if (Route::is('user.index'))
                             <div class="rounded-md w-full bg-(--active) h-[2px] transition_normal"></div>
                         @endif
                     </li>
@@ -241,6 +235,23 @@
                         @endif
                     </li>
                     <li
+                        class="@if (Route::is('wallet.transactionsList')) text-(--active) @endif flex justify-center flex-col items-center group cursor-pointer py-1 transition_normal">
+                        <a href="{{ route('wallet.transactionsList') }}"
+                            class="flex gap-2 justify-start items-center px-2">
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"
+                                    class="xl:size-4 size-5 @if (Route::is('wallet.transactionsList')) fill-green-700 @endif">
+                                    <path
+                                        d="M216 32c0-13.3-10.7-24-24-24s-24 10.7-24 24V152H48c-13.3 0-24 10.7-24 24s10.7 24 24 24H168V320c0 13.3 10.7 24 24 24s24-10.7 24-24V200H336c13.3 0 24-10.7 24-24s-10.7-24-24-24H216V32zM8 488c0 13.3 10.7 24 24 24H352c13.3 0 24-10.7 24-24s-10.7-24-24-24H32c-13.3 0-24 10.7-24 24z" />
+                                </svg>
+                            </div>
+                            <span>واریز و برداشت</span>
+                        </a>
+                        @if (Route::is('wallet.transactionsList'))
+                            <div class="rounded-md w-full bg-(--active) h-[2px] transition_normal"></div>
+                        @endif
+                    </li>
+                    <li
                         class="@if (Route::is('deal.adminIndex')) text-(--active) @endif flex justify-center flex-col items-center group cursor-pointer py-1 transition_normal">
                         <a href="{{ route('deal.adminIndex') }}" class="flex gap-2 justify-start items-center px-2">
                             <div>
@@ -254,6 +265,23 @@
                             <span>معاملات</span>
                         </a>
                         @if (Route::is('deal.adminIndex'))
+                            <div class="rounded-md w-full bg-(--active) h-[2px] transition_normal"></div>
+                        @endif
+                    </li>
+                    <li
+                        class="@if (Route::is('user.index')) text-(--active) @endif flex justify-center flex-col items-center group cursor-pointer py-1 transition_normal">
+                        <a href="{{ route('user.index') }}" class="flex gap-2 justify-start items-center px-2">
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"
+                                    class="xl:size-4 size-5 @if (Route::is('user.index')) fill-green-700 @endif">
+                                    <path
+                                        d="M144 160A80 80 0 1 0 144 0a80 80 0 1 0 0 160zm368 0A80 80 0 1 0 512 0a80 80 0 1 0 0 160zM0 298.7C0 310.4 9.6 320 21.3 320H234.7c.2 0 .4 0 .7 0c-26.6-23.5-43.3-57.8-43.3-96c0-7.6 .7-15 1.9-22.3c-13.6-6.3-28.7-9.7-44.6-9.7H106.7C47.8 192 0 239.8 0 298.7zM405.3 320H618.7c11.8 0 21.3-9.6 21.3-21.3C640 239.8 592.2 192 533.3 192H490.7c-15.9 0-31 3.5-44.6 9.7c1.3 7.2 1.9 14.7 1.9 22.3c0 38.2-16.8 72.5-43.3 96c.2 0 .4 0 .7 0zM320 176a48 48 0 1 1 0 96 48 48 0 1 1 0-96zm0 144a96 96 0 1 0 0-192 96 96 0 1 0 0 192zm-58.7 80H378.7c39.8 0 73.2 27.2 82.6 64H178.7c9.5-36.8 42.9-64 82.6-64zm0-48C187.7 352 128 411.7 128 485.3c0 14.7 11.9 26.7 26.7 26.7H485.3c14.7 0 26.7-11.9 26.7-26.7C512 411.7 452.3 352 378.7 352H261.3z" />
+                                </svg>
+
+                            </div>
+                            <span>کاربران</span>
+                        </a>
+                        @if (Route::is('user.index'))
                             <div class="rounded-md w-full bg-(--active) h-[2px] transition_normal"></div>
                         @endif
                     </li>
@@ -306,23 +334,6 @@
                             </div>
                             <span>مدیریت کالا ها</span>
                         </div>
-                        <div class="rounded-md group-hover:w-full w-[0px] bg-(--active) h-[2px] transition_normal">
-                        </div>
-                    </li>
-                    <li
-                        class="hover:text-(--active) flex justify-center flex-col items-center group cursor-pointer py-1 transition_normal">
-                        <a href="{{ route('wallet.transactionsList') }}"
-                            class="flex gap-2 justify-start items-center px-2 @if (Route::is('wallet.transactionsList')) text-[#FF0000] @endif">
-                            <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"
-                                    class="xl:size-4 size-5">
-                                    <path
-                                        d="M320 464c8.8 0 16-7.2 16-16V160H256c-17.7 0-32-14.3-32-32V48H64c-8.8 0-16 7.2-16 16V448c0 8.8 7.2 16 16 16H320zM0 64C0 28.7 28.7 0 64 0H229.5c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <span>واریز و برداشت</span>
-                        </a>
                         <div class="rounded-md group-hover:w-full w-[0px] bg-(--active) h-[2px] transition_normal">
                         </div>
                     </li>
