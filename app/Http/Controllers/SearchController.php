@@ -6,6 +6,7 @@ use App\Models\category;
 use App\Models\deal;
 use App\Models\logo;
 use App\Models\product;
+use App\Models\transaction;
 use Illuminate\Http\Request;
 use Log;
 
@@ -203,6 +204,109 @@ class SearchController extends Controller
                     break;
             }
         }
-        return response()->json(['deals' => $deals, 'request' => $request->all()]);
+        return response()->json($deals);
+    }
+    public function getTransactionFilter(Request $request)
+    {
+       
+        $filters = $request->input('filters');
+        $fromDate = $filters['fromDate'] ?? null;
+        $fullName = $filters['fullName'] ?? null;
+        $status = $filters['status'] ?? ['all'];
+        $type = $filters['type'] ?? ['all'];
+        $toDate = $filters['toDate'] ?? null;
+        $price = $filters['price'] ?? null;
+        $number = $filters['transactionId'] ?? null;
+        if ($number) {
+            $transactionId = substr($number, 3);
+            $transactions = transaction::find($transactionId);
+            return response()->json($transactions);
+        }
+        if ($type == ['all']) {
+            $type = [];
+            $type[] = 'sell';
+            $type[] = 'buy';
+            $type[] = 'deposit';
+            $type[] = 'withdraw';
+        }
+        if ($status == ['all']) {
+            $status = [];
+            $status[] = '-1';
+            $status[] = '0';
+            $status[] = '1';
+        }
+        $transactions = transaction::where(function ($query) use ($price, $fromDate, $toDate, $type, $status) {
+            if ($price) {
+                $query->where('transactions.amount', $price);
+            }
+            if ($fromDate && !$toDate) {
+                $query->where('transactions.date', '>=', $fromDate);
+            }
+            // if ($toDate && !$fromDate) {
+            //     $query->where('transactions.date', '<=', $toDate);
+            // }
+            // if ($fromDate && $toDate) {
+            //     $query->whereBetween('transactions.primary_price', [$fromDate, $toDate]);
+            // }
+            if ($status) {
+                $query->whereIn('transactions.isApproved', $status);
+            }
+            if ($type) {
+                $query->whereIn('transactions.type', $type);
+            }
+        })->with(['wallet', 'deal']);
+
+        if ($fullName) {
+            $transactions->whereHas('wallet', function ($query) use ($fullName) {
+                $query->whereHas('user', function($query) use ($fullName){
+                    $query->where('name', 'like', '%' . $fullName . '%')->orWhere('family', 'like', '%' . $fullName . '%');
+                });
+            });
+        }
+        $transactions = $transactions->orderBy('created_at', 'desc')->get();
+        foreach ($transactions as $transaction) {
+            $dateTime = explode(' ', $transaction->created_at);
+            $dateJalali = verta($dateTime[0]);
+            $date = explode(' ', $dateJalali);
+            $date = implode('/', explode('-', $date[0]));
+            $time = $dateTime[1];
+            $transaction->date = $date;
+            $transaction->time = $time;
+            $transaction->fullName = $transaction->wallet->user->name.' '.$transaction->wallet->user->family;
+            $transaction->phoneNumber = $transaction->wallet->user->phoneNumber;
+            switch($transaction->type){
+                case 'deposit':
+                    $transaction->type = 'واریز';
+                    $transaction->typeColor = '#3aae3f';
+                    break;
+                case 'withdraw':
+                    $transaction->type = 'برداشت';
+                    $transaction->typeColor = '#d23334';
+                    break;
+                case 'buy':
+                    $transaction->type = 'خرید';
+                    $transaction->typeColor = '#0867d5';
+                    break;
+                case 'sell':
+                    $transaction->type = 'فروش';
+                    $transaction->typeColor = '#e57200';
+                    break;
+            }
+            switch($transaction->isApproved){
+                case -1:
+                    $transaction->stateTitle = 'رد شده';
+                    $transaction->stateColor = '#d23334';
+                    break;
+                case 0:
+                    $transaction->stateTitle = 'در انتظار';
+                    $transaction->stateColor = '#6a6a6a';
+                    break;
+                case 1:
+                    $transaction->stateTitle = 'تایید شده';
+                    $transaction->stateColor = '#3aae3f';
+                    break;
+            }
+        }
+        return response()->json($transactions);
     }
 }

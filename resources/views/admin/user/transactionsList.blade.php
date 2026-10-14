@@ -1,6 +1,7 @@
 @extends('admin.app.dashboard')
 @section('title', 'ستاری گلد | واریز و برداشت ها')
 @section('content')
+
     <!-- واریز و برداشت -->
     <div class="w-full flex flex-col gap-3 justify-start items-center">
         <!-- واریز و برداشت / هدر -->
@@ -40,64 +41,84 @@
         <!-- واریز و برداشت / لسیت -->
         <section class="w-full mx-auto rounded-md border-1 border-(--border-dashboard) mt-5 pb-10 overflow-hidden">
             <div class="w-full">
-                <form action=""
-                    class="w-full bg-white grid grid-cols-2 md:grid-cols-4 justify-items-end gap-2 py-5 px-2">
-                    <fieldset class="w-full border-1 border-(--border-dashboard) rounded-md p-2">
-                        <legend class="px-2 text-(--text-secondary-dashboard) text-xs md:text-sm">
+                <div class="w-full bg-white grid grid-cols-2 md:grid-cols-4 justify-items-end gap-2 py-5 px-2">
+                    <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
+                        <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
                             نام و نام خانوادگی
                         </legend>
-                        <input class="w-full outline-none text-xs md:text-base" type="text" name="" id=""
-                            placeholder=" نام و نام خانوادگی" value="همه">
+                        <input class="w-full outline-none text-[10px] md:text-base" type="text" name="fullName"
+                            id="fullName" placeholder=" نام و نام خانوادگی">
                     </fieldset>
-                    <fieldset class="w-full border-1 border-(--border-dashboard) rounded-md p-2">
-                        <legend class="px-2 text-(--text-secondary-dashboard) text-xs md:text-sm">
-                            تراکنش
+                    {{-- <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
+                        <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
+                            نوع کالا
                         </legend>
-                        <input class="w-full outline-none text-xs md:text-base" type="text" list="transction"
-                            name="" id="" placeholder="تراکنش" value="همه">
-                        <datalist id="transction">
-                            <option value="همه"></option>
-                            <option value="تهران"></option>
-                            <option value="تهران"></option>
-                            <option value="تهران"></option>
-                        </datalist>
-                    </fieldset>
-                    <fieldset class="w-full border-1 border-(--border-dashboard) rounded-md p-2">
-                        <legend class="px-2 text-(--text-secondary-dashboard) text-xs md:text-sm">
+                       <select id="product" class="w-10/12 lg:w-8/12" name="product[]" data-placeholder="" multiple data-multi-select>
+                            @foreach ($filter['language'] as $language)
+                                <option value="{{ $language['key'] }}" @if ($language['key'] == 'all') selected @endif>{{ $language['value'] }}</option>
+                            @endforeach
+                        </select>
+                    </fieldset> --}}
+                    <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
+                        <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
                             نوع تراکنش
                         </legend>
-                        <input class="w-full outline-none text-xs md:text-base" type="text" list="transctionTyoe"
-                            name="" id="" placeholder="نوع تراکنش" value="همه">
-                        <datalist id="transctionTyoe">
-                            <option value="همه"></option>
-                            <option value="تهران"></option>
-                            <option value="تهران"></option>
-                            <option value="تهران"></option>
-                        </datalist>
+                        <select id="type" name="type[]" data-placeholder="انتخاب کنید" data-multi-select
+                            data-select-all-default="true" multiple>
+                            <option value="deposit">واریز</option>
+                            <option value="withdraw">برداشت</option>
+                            <option value="buy">خرید</option>
+                            <option value="sell">فروش</option>
+                        </select>
                     </fieldset>
-                    <fieldset class="w-full border-1 border-(--border-dashboard) rounded-md p-2">
-                        <legend class="px-2 text-(--text-secondary-dashboard) text-xs md:text-sm">
-                            تاریخ
+                   
+                    <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
+                        <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
+                           وضعیت
                         </legend>
-                        <input class="w-full outline-none text-xs md:text-base" type="text" name="" id=""
-                            placeholder="تاریخ">
+                        <select id="status" name="status[]" data-placeholder="انتخاب کنید" data-multi-select
+                            data-select-all-default="true" multiple>
+                            <option value="0">در انتظار</option>
+                            <option value="1">تایید شده</option>
+                            <option value="-1">رد شده</option>
+                        </select>
                     </fieldset>
-                    <fieldset class="w-full border-1 border-(--border-dashboard) rounded-md p-2">
-                        <legend class="px-2 text-(--text-secondary-dashboard) text-xs md:text-sm">
-                            وضعیت
+                   
+                    <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
+                        <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
+                            از تاریخ
                         </legend>
-                        <input class="w-full outline-none text-xs md:text-base" type="text" list="status" name=""
-                            id="" placeholder="وضعیت" value="همه">
-                        <datalist id="status">
-                            <option value="همه"></option>
-                            <option value="تهران"></option>
-                            <option value="تهران"></option>
-                            <option value="تهران"></option>
-                        </datalist>
+                        <input class="w-full outline-none text-xs md:text-base in-fa" dir="ltr" type="text"
+                            name="fromDate" id="fromDate" placeholder="از تاریخ">
                     </fieldset>
-                    <button
-                        class="w-full md:w-fit py-3 md:px-13 mt-2 col-span-2 md:col-span-3 md:text-right border-1 border-(--border-dashboard) rounded-md text-center">اعمال</button>
-                </form>
+                    <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
+                        <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
+                            تا تاریخ
+                        </legend>
+                        <input class="w-full outline-none text-xs md:text-base in-fa" dir="ltr" type="text"
+                            name="toDate" id="toDate" placeholder="تا تاریخ">
+                    </fieldset>
+                    
+                    <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
+                        <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
+                            مبلغ
+                        </legend>
+                        <input class="w-full outline-none text-xs  md:text-base in-fa" type="number" dir="ltr"
+                            name="" id="price" placeholder="مبلغ">
+                    </fieldset>
+                    <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
+                        <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
+                            شماره سند
+                        </legend>
+                        <input class="w-full outline-none text-xs  md:text-base in-fa" type="number" dir="ltr"
+                            name="" id="transactionId" placeholder=" شماره سند">
+                    </fieldset>
+                    <div class="w-full lg:w-1/2">
+                        <button
+                            class="w-full md:w-fit font-bold text-xs md:text-base py-3 md:px-13 mt-2 col-span-1 md:text-right border-1 border-(--color-border) rounded-md text-center cursor-pointer"
+                            onclick="setDatas()">اعمال</button>
+                    </div>
+                </div>
                 <div class="w-full h-5 bg-zinc-200"></div>
                 <div class="w-full overflow-x-auto">
                     <div class="w-full flex items-center justify-start gap-2 px-2 py-3">
@@ -124,10 +145,13 @@
                                     نوع تراکنش
                                 </th>
                                 <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
-                                    مبلغ/وزن
+                                    مبلغ
+                                </th>
+                                <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                                    وزن
                                 </th>
                                 <th class="min-w-33 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
-                                    تاریخ درخواست
+                                    زمان | تاریخ
                                 </th>
                                 <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     شماره سند
@@ -155,56 +179,28 @@
                                         {{ $transaction->wallet->user['phoneNumber'] }}
                                     </td>
                                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                                        @switch($transaction->type)
-                                            @case('deposit')
-                                                واریز
-                                            @break
-
-                                            @case('withdraw')
-                                                برداشت
-                                            @break
-
-                                            @case('buy')
-                                                خرید
-                                            @break
-
-                                            @case('sell')
-                                                فروش
-                                            @break
-                                        @endswitch
+                                        <div class="w-18 mx-auto px-2 py-1 rounded-lg border-2 border-[{{ $transaction->typeColor }}] text-[{{ $transaction->typeColor }}] text-center">
+                                           {{ $transaction->type }}
+                                        </div>
                                     </td>
                                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
                                         {{ number_format($transaction->amount) }}
                                     </td>
                                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
-                                        {{ verta($transaction->created_at) }}
+                                        {{ $transaction->deal ? $transaction->deal->goldWeight : '-' }}
+                                    </td>
+                                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
+                                        {{  $transaction->time . ' | ' . $transaction->date }}
                                     </td>
                                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                                        -
+                                        <span class="w-10 h-10 px-3 py-1 text-gray-600 rounded-md border-1 bordre-gray-600 p-1 cursor-pointer in-fa">
+                                            {{ '100'.$transaction->id }}
+                                        </span>
                                     </td>
                                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                                        @switch($transaction->isApproved)
-                                            @case(1)
-                                                <span
-                                                    class="w-10 h-10 bg-(--primary-dashboard)/20 text-(--primary-dashboard) rounded-md border-1 border-(--primary-dashboard) p-1 cursor-default">
-                                                    تایید شده
-                                                </span>
-                                            @break
-
-                                            @case(0)
-                                                <span
-                                                    class="w-10 h-10 bg-(--color-warning)/20 text-(--color-warning) rounded-md border-1 border-(--color-warning) p-1 cursor-default">
-                                                    در انتظار تایید
-                                                </span>
-                                            @break
-
-                                            @case(-1)
-                                                <span
-                                                    class="w-10 h-10 bg-(--primary-dashboard)/20 text-(--primary-dashboard) rounded-md border-1 border-(--primary-dashboard) p-1 cursor-default">
-                                                    رد شده
-                                                </span>
-                                            @break
-                                        @endswitch
+                                        <div class="mx-auto px-2 py-1 rounded-lg border-2 border-[{{ $transaction->stateColor }}] text-[{{ $transaction->stateColor }}] text-center">
+                                           {{ $transaction->stateTitle }}
+                                        </div>
                                     </td>
                                     <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
                                         <button onclick="showTransaction('open', {{ $transaction }})"
@@ -348,4 +344,5 @@
             }
         }
     </script>
+    <script src="{{ asset('assets/js/transaction.js') }}"></script>
 @endsection
