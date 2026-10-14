@@ -13,30 +13,58 @@ use App\Http\Controllers\WalletController;
 use App\Http\Middleware\checkAdminMiddleware;
 use App\Http\Middleware\checkIsActive;
 use App\Http\Middleware\checklogin;
+use App\Models\logo;
 use App\Models\transaction;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 
-Route::get('/update-dates', function () {
-    $transactions = transaction::all();
-    foreach ($transactions as $tr) {
-        $dateTime = explode(' ', $tr->created_at);
-        $dateJalali = verta($dateTime[0]);
-        $date = explode(' ', $dateJalali);
-        $date = implode('/', explode('-', $date[0]));
-        $time = $dateTime[1];
-        $tr->update(['date' => $date, 'time' => $time]);
-    }
+Route::get('/x', function () {
+    return view('admin.app.x');
 });
 
-Route::get('/test', function () {
+Route::get('/z', function () {
+    return view('dashboard_home_new');
+});
+
+Route::get('/y', function () {
+    $logo = logo::first();
+    return view('setting_new', ['logo' => $logo]);
+});
+
+Route::get('/s', function () {
+    $logo = logo::first();
+    return view('admin.deal.index_previos', ['logo' => $logo]);
+});
+
+Route::get('/p', function () {
+    $logo = logo::first();
+    return view('admin.product.managing_product', ['logo' => $logo]);
+});
+
+Route::get('/u', function () {
+    $logo = logo::first();
+    return view('admin.user.category_user', ['logo' => $logo]);
+});
+
+Route::get('/i', function () {
+    $logo = logo::first();
+    return view('admin.user.index_previos', ['logo' => $logo]);
+});
+
+Route::get('/t', function () {
+    $logo = logo::first();
+    return view('admin.user.transactionsList_previos', ['logo' => $logo]);
+});
+
+Route::get('/xyz', function () {
     // $dateTime = explode(' ', now());
     // $dateJalali = verta($dateTime[0]);
     // $date = explode(' ', $dateJalali);
     // $date = implode('/', explode('-', $date[0]));
     // $time = $dateTime[1];
     // dd($dateTime, $dateJalali, $date, $time);
+    // --------------------------------------------------------------------
     // Schema::table('transactions', function (Blueprint $table) {
     //     $table->string('description')->nullable()->after('receipt');
     //     $table->string('date')->nullable()->after('description');

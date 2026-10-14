@@ -5,7 +5,7 @@
 
     <!-- setting_start -->
 
-    <div class="w-98/100 flex flex-col gap-3 justify-start items-center hidden">
+    <div class="w-98/100 flex flex-col gap-3 justify-start items-center ">
         <div class="w-full py-3 bg-white rounded-xl flex justify-start items-center px-4">
             <h4 class="text-xl font-bold">تنظیمات</h4>
         </div>
