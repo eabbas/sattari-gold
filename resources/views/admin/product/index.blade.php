@@ -9,6 +9,17 @@
     @endif
     <div class="w-full flex flex-col pb-4">
         <div class="bg-white rounded-lg">
+            <a href="{{ route('product.create') }}"
+                class="w-fit bg-(--info-dashboard) text-xs md:text-base text-(--color-surface-dashboard) rounded-md px-3 py-2 cursor-pointer flex items-center justify-center">
+                <span class="">
+                    <svg class="size-3 md:size-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                        <path
+                            d="M248 72c0-13.3-10.7-24-24-24s-24 10.7-24 24V232H40c-13.3 0-24 10.7-24 24s10.7 24 24 24H200V440c0 13.3 10.7 24 24 24s24-10.7 24-24V280H408c13.3 0 24-10.7 24-24s-10.7-24-24-24H248V72z">
+                        </path>
+                    </svg>
+                </span>
+                <div class="">محصول جدید</div>
+            </a>
             <h2 class="text-lg font-bold text-gray-800 p-4 text-center">لیست محصولات</h2>
             <form class="flex flex-col gap-5" action="{{ route('product.deleteAll') }}" method="post">
                 @csrf
