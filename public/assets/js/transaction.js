@@ -92,7 +92,7 @@ async function applyDealFilters() {
                         </div>
                     </td>
                     <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
-                        <button onclick="showTransaction('open', ${row})" class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer">
+                        <button onclick="showTransaction('open', ${ JSON.stringify(row) })" class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer">
                             مشاهده
                         </button>
                     </td>
