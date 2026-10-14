@@ -6,6 +6,7 @@ use App\Models\category;
 use App\Models\deal;
 use App\Models\logo;
 use App\Models\product;
+use App\Models\transaction;
 use Illuminate\Http\Request;
 use Log;
 
@@ -207,68 +208,107 @@ class SearchController extends Controller
     }
     public function getTransactionFilter(Request $request)
     {
-        return response()->json($request->all());
+       
         $filters = $request->input('filters');
         $fromDate = $filters['fromDate'] ?? null;
-        $toDate = $filters['toDate'] ?? null;
-        $number = $filters['dealId'] ?? null;
-        $dealType = $filters['dealType'] ?? ['all'];
         $fullName = $filters['fullName'] ?? null;
+        $status = $filters['status'] ?? ['all'];
+        $type = $filters['type'] ?? ['all'];
+        $toDate = $filters['toDate'] ?? null;
         $price = $filters['price'] ?? null;
-        $weight = $filters['weight'] ?? null;
+        $number = $filters['transactionId'] ?? null;
+      
         if ($number) {
-            $dealId = substr($number, 3);
-            $deals = deal::find($dealId);
-            return response()->json($deals);
+            $transactionId = substr($number, 3);
+            $transactions = deal::find($transactionId);
+            return response()->json($transactions);
         }
 
-        if ($dealType == ['all']) {
-            $dealType = [];
-            $dealType[] = 'sell';
-            $dealType[] = 'buy';
+        if ($type == ['all']) {
+            $type = [];
+            $type[] = 'sell';
+            $type[] = 'buy';
+            $type[] = 'deposit';
+            $type[] = 'withdraw';
         }
-        $deals = deal::where(function ($query) use ($price, $weight, $fromDate, $toDate, $dealType) {
+        if ($status == ['all']) {
+            $status = [];
+            $status[] = '-1';
+            $status[] = '0';
+            $status[] = '1';
+        }
+        $transactions = transaction::where(function ($query) use ($price, $fromDate, $toDate, $type, $status) {
             if ($price) {
-                $query->where('deals.buyPrice', $price);
-            }
-            if ($weight) {
-                $query->where('deals.goldWeight', $weight);
+                $query->where('transactions.amount', $price);
             }
             if ($fromDate && !$toDate) {
-                $query->where('deals.date', '>=', $fromDate);
+                $query->where('transactions.date', '>=', $fromDate);
             }
             if ($toDate && !$fromDate) {
-                $query->where('deals.date', '<=', $toDate);
+                $query->where('transactions.date', '<=', $toDate);
             }
             if ($fromDate && $toDate) {
-                $query->whereBetween('deals.primary_price', [$fromDate, $toDate]);
+                $query->whereBetween('transactions.primary_price', [$fromDate, $toDate]);
             }
-        })->whereHas('transaction', function ($query) use ($dealType) {
-                $query->whereIn('transactions.type', $dealType);
-            })->with(['transaction', 'user']);
+            if ($status) {
+                $query->whereIn('transactions.isApproved', $status);
+            }
+            if ($type) {
+                $query->whereIn('transactions.type', $status);
+            }
+        })->whereHas('deal', function ($query) use ($type) {
+                $query->whereIn('deals.buyPrice', $type);
+            })->with(['deal', 'wallet']);
 
         if ($fullName) {
-            $deals->with(['user' => function ($query) use ($fullName) {
-                $query->where('name', 'like', '%' . $fullName . '%')->orWhere('family', 'like', '%' . $fullName . '%');
+            $transactions->with(['wallet' => function ($query) use ($fullName) {
+                $query->with(['user'=>function($query) use ($fullName){
+                    $query->where('name', 'like', '%' . $fullName . '%')->orWhere('family', 'like', '%' . $fullName . '%');
+                }]);
             }]);
         }
-        $deals = $deals->orderBy('date', 'desc')->orderBy('time', 'desc')->get();
-        foreach ($deals as $deal) {
-            switch ($deal->transaction->isApproved) {
+        $transactions = $transactions->orderBy('created_at', 'desc')->get();
+        foreach ($transactions as $transaction) {
+            $dateTime = explode(' ', $transaction->created_at);
+            $dateJalali = verta($dateTime[0]);
+            $date = explode(' ', $dateJalali);
+            $date = implode('/', explode('-', $date[0]));
+            $time = $dateTime[1];
+            $transaction->date = $date;
+            $transaction->time = $time;
+            switch($transaction->type){
+                case 'deposit':
+                    $transaction->type = 'واریز';
+                    $transaction->typeColor = '#3aae3f';
+                    break;
+                case 'withdraw':
+                    $transaction->type = 'برداشت';
+                    $transaction->typeColor = '#d23334';
+                    break;
+                case 'buy':
+                    $transaction->type = 'خرید';
+                    $transaction->typeColor = '#0867d5';
+                    break;
+                case 'sell':
+                    $transaction->type = 'فروش';
+                    $transaction->typeColor = '#e57200';
+                    break;
+            }
+            switch($transaction->isApproved){
                 case -1:
-                    $deal->state = 'رد شده';
-                    $deal->color = '#E85D5D';
+                    $transaction->stateTitle = 'رد شده';
+                    $transaction->stateColor = '#d23334';
                     break;
                 case 0:
-                    $deal->state = 'در انتظار';
-                    $deal->color = '#F5A623';
+                    $transaction->stateTitle = 'در انتظار';
+                    $transaction->stateColor = '#6a6a6a';
                     break;
                 case 1:
-                    $deal->state = 'تایید شده';
-                    $deal->color = '#18A878';
+                    $transaction->stateTitle = 'تایید شده';
+                    $transaction->stateColor = '#3aae3f';
                     break;
             }
         }
-        return response()->json(['deals' => $deals, 'request' => $request->all()]);
+        return response()->json(['transactions' => $transactions, 'request' => $request->all()]);
     }
 }
