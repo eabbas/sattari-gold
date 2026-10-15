@@ -44,14 +44,14 @@
                 <div class="w-full bg-white py-5 px-2 mb-2">
                     <div class="w-full grid grid-cols-2 md:grid-cols-4 justify-items-end gap-2">
                         <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
-                            <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
+                            <legend class="px-2 text-(--text-secondary-dashboard) text-[10px] md:text-sm">
                                 نام و نام خانوادگی
                             </legend>
                             <input class="w-full outline-none text-[10px] md:text-base" type="text" name="fullName"
                                 id="fullName" placeholder=" نام و نام خانوادگی">
                         </fieldset>
                         <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
-                            <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
+                            <legend class="px-2 text-(--text-secondary-dashboard) text-[10px] md:text-sm">
                                 نوع تراکنش
                             </legend>
                             <select id="type" name="type[]" data-placeholder="انتخاب کنید" data-multi-select
@@ -64,7 +64,7 @@
                         </fieldset>
 
                         <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
-                            <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
+                            <legend class="px-2 text-(--text-secondary-dashboard) text-[10px] md:text-sm">
                                 وضعیت
                             </legend>
                             <select id="status" name="status[]" data-placeholder="انتخاب کنید" data-multi-select
@@ -76,14 +76,14 @@
                         </fieldset>
 
                         <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
-                            <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
+                            <legend class="px-2 text-(--text-secondary-dashboard) text-[10px] md:text-sm">
                                 از تاریخ
                             </legend>
                             <input class="w-full outline-none text-xs md:text-base in-fa" dir="ltr" type="text"
                                 name="fromDate" id="fromDate" placeholder="از تاریخ">
                         </fieldset>
                         <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
-                            <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
+                            <legend class="px-2 text-(--text-secondary-dashboard) text-[10px] md:text-sm">
                                 تا تاریخ
                             </legend>
                             <input class="w-full outline-none text-xs md:text-base in-fa" dir="ltr" type="text"
@@ -91,14 +91,14 @@
                         </fieldset>
 
                         <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
-                            <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
+                            <legend class="px-2 text-(--text-secondary-dashboard) text-[10px] md:text-sm">
                                 مبلغ
                             </legend>
                             <input class="w-full outline-none text-xs  md:text-base in-fa" type="number" dir="ltr"
                                 name="" id="price" placeholder="مبلغ">
                         </fieldset>
                         <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
-                            <legend class="px-2 text-(--text-secondary-dashbrd) text-[10px] md:text-sm">
+                            <legend class="px-2 text-(--text-secondary-dashboard) text-[10px] md:text-sm">
                                 شماره سند
                             </legend>
                             <input class="w-full outline-none text-xs  md:text-base in-fa" type="number" dir="ltr"
@@ -187,7 +187,7 @@
                                     </td>
                                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                                         <span
-                                            class="w-10 h-10 px-3 py-1 text-gray-600 rounded-md border-1 bordre-gray-600 p-1 cursor-pointer in-fa">
+                                            class="w-10 h-10 px-3 py-1 text-gray-600 rounded-md border-1 border-gray-600 p-1 cursor-pointer in-fa">
                                             {{ '100' . $transaction->id }}
                                         </span>
                                     </td>
@@ -198,7 +198,8 @@
                                         </div>
                                     </td>
                                     <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
-                                        <button onclick="showTransaction('open', '{{ $transaction->wallet->user->name.' '.$transaction->wallet->user->family }}', '{{ $transaction->wallet->user->phoneNumber }}', '{{ $transaction->time.' | '. $transaction->date }}', '{{ $transaction->stateColor }}', '{{ $transaction->stateTitle }}', '{{ $transaction->type }}', '{{ $transaction->amount }}', '{{ $transaction->isApproved }}', '{{ $transaction->receipt }}')"
+                                        <button
+                                            onclick="showTransaction('open', '{{ $transaction->wallet->user->name . ' ' . $transaction->wallet->user->family }}', '{{ $transaction->wallet->user->phoneNumber }}', '{{ $transaction->time . ' | ' . $transaction->date }}', '{{ $transaction->stateColor }}', '{{ $transaction->stateTitle }}', '{{ $transaction->type }}', '{{ $transaction->amount }}', '{{ $transaction->isApproved }}', '{{ $transaction->receipt }}')"
                                             class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer openPopup">
                                             مشاهده
                                         </button>
@@ -282,11 +283,11 @@
                     <button
                         class="bg-green-50 text-green-500 border-2 border-green-400 transition-all duration-300 hover:bg-green-500 hover:border-green-500 hover:text-white font-bold px-2 py-4 rounded-md text-center cursor-pointer">
                         تایید تراکنش
-                    </butt>
-                    <button
-                        class="bg-red-50 text-red-500 border-2 border-red-400 transition-all duration-300 hover:bg-red-500 hover:border-red-500 hover:text-white font-bold px-2 py-4 rounded-md text-center cursor-pointer">
-                        رد تراکنش
-                    </button>
+                        </butt>
+                        <button
+                            class="bg-red-50 text-red-500 border-2 border-red-400 transition-all duration-300 hover:bg-red-500 hover:border-red-500 hover:text-white font-bold px-2 py-4 rounded-md text-center cursor-pointer">
+                            رد تراکنش
+                        </button>
                 </div>
             </div>
         </div>

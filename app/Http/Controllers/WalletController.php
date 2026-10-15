@@ -158,12 +158,12 @@ class WalletController extends Controller
                     break;
             }
         }
-        return view('admin.user.transactionsList', ['logo' => $logo, 'transactions' => $transactions]);
+        return view('admin.transaction.transactionsList', ['logo' => $logo, 'transactions' => $transactions]);
     }
     public function transactionsListSingle(User $user)
     {
         $logo = logo::first();
-        return view('admin.user.transactionsListSingle', ['user' => $user, 'logo' => $logo]);
+        return view('admin.transaction.transactionsListSingle', ['user' => $user, 'logo' => $logo]);
     }
     public function submitChanges(Request $request)
     {

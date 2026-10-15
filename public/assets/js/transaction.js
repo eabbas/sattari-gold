@@ -87,7 +87,7 @@ async function applyDealFilters() {
                         ${row.time + ' | ' + row.date}
                     </td>
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                        <span class="w-10 h-10 px-3 py-1 text-gray-600 rounded-md border-1 bordre-gray-600 p-1 cursor-pointer in-fa">
+                        <span class="w-10 h-10 px-3 py-1 text-gray-600 rounded-md border-1 border-gray-600 p-1 cursor-pointer in-fa">
                             ${'100' + row.id}
                         </span>
                     </td>
