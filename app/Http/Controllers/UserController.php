@@ -376,16 +376,10 @@ class UserController extends Controller
             }
         }
         $user['persianRoles'] = $roles;
-        // $products = product::all();
-        // $cats = category::all();
         $logo = logo::first();
-        // $services = service::all();
         return view('user.user.profile', [
-            // 'products' => $products,
             'user' => $user,
-            // 'categories' => $cats,
             'logo' => $logo,
-            // 'services' => $services,
         ]);
     }
     public function profileEdit(Request $request)
@@ -451,19 +445,19 @@ class UserController extends Controller
         $roles = role::all();
         $logo = logo::first();
         if ($request->activity == 'all' && $request->approve == 'all') {
-            $users = User::where('name', 'like', '%' . $request['name'] . '%')->where('family', 'like', '%' . $request['family'] . '%')->where('phoneNumber', 'like', '%' . $request['phoneNumber'] . '%')->where('nationalCode', 'like', '%' . $request['nationalCode'] . '%')->paginate(10);
+            $users = User::where('name', 'like', '%' . $request['name'] . '%')->where('family', 'like', '%' . $request['family'] . '%')->where('phoneNumber', 'like', '%' . $request['phoneNumber'] . '%')->where('nationalCode', 'like', '%' . $request['nationalCode'] . '%')->get();
             return view('admin.user.index', ['users' => $users, 'roles' => $roles, 'logo' => $logo]);
         }
         if ($request->activity != 'all' && $request->approve != 'all') {
-            $users = User::where('name', 'like', '%' . $request['name'] . '%')->where('family', 'like', '%' . $request['family'] . '%')->where('phoneNumber', 'like', '%' . $request['phoneNumber'] . '%')->where('nationalCode', 'like', '%' . $request['nationalCode'] . '%')->where('isActive', $request['activity'])->where('isApproved', $request['approve'])->paginate(10);
+            $users = User::where('name', 'like', '%' . $request['name'] . '%')->where('family', 'like', '%' . $request['family'] . '%')->where('phoneNumber', 'like', '%' . $request['phoneNumber'] . '%')->where('nationalCode', 'like', '%' . $request['nationalCode'] . '%')->where('isActive', $request['activity'])->where('isApproved', $request['approve'])->get();
             return view('admin.user.index', ['users' => $users, 'roles' => $roles, 'logo' => $logo]);
         }
         if ($request->activity != 'all') {
-            $users = User::where('name', 'like', '%' . $request['name'] . '%')->where('family', 'like', '%' . $request['family'] . '%')->where('phoneNumber', 'like', '%' . $request['phoneNumber'] . '%')->where('nationalCode', 'like', '%' . $request['nationalCode'] . '%')->where('isActive', $request['activity'])->paginate(10);
+            $users = User::where('name', 'like', '%' . $request['name'] . '%')->where('family', 'like', '%' . $request['family'] . '%')->where('phoneNumber', 'like', '%' . $request['phoneNumber'] . '%')->where('nationalCode', 'like', '%' . $request['nationalCode'] . '%')->where('isActive', $request['activity'])->get();
             return view('admin.user.index', ['users' => $users, 'roles' => $roles, 'logo' => $logo]);
         }
         if ($request->approve != 'all') {
-            $users = User::where('name', 'like', '%' . $request['name'] . '%')->where('family', 'like', '%' . $request['family'] . '%')->where('phoneNumber', 'like', '%' . $request['phoneNumber'] . '%')->where('nationalCode', 'like', '%' . $request['nationalCode'] . '%')->where('isApproved', $request['approve'])->paginate(10);
+            $users = User::where('name', 'like', '%' . $request['name'] . '%')->where('family', 'like', '%' . $request['family'] . '%')->where('phoneNumber', 'like', '%' . $request['phoneNumber'] . '%')->where('nationalCode', 'like', '%' . $request['nationalCode'] . '%')->where('isApproved', $request['approve'])->get();
             return view('admin.user.index', ['users' => $users, 'roles' => $roles, 'logo' => $logo]);
         }
     }
