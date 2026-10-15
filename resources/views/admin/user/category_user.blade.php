@@ -309,16 +309,16 @@
                                             <!-- تائید خودکار -->
                                             <div class="w-full flex justify-start gap-2 items-center hidden">
                                                 <!-- <div class="w-1/2 flex flex-col justify-start items-start gap-2 relative">
-                                                                                                    <div class="w-full flex justify-between items-center">
-                                                                                                        <label for="" class="text-xs font-bold text-[#8B929D]">حداقل وزن</label>
-                                                                                                        <span class="md:text-xs text-[10px] text-[#9BA4AA] px-2 py-1 rounded-full bg-zinc-100">غیر فعال</span>
-                                                                                                    </div>
-                                                                                                    <div class="w-full border-2 border-(--border) py-2 px-3 bg-white flex justify-between items-center rounded-xl">
-                                                                                                        <input type="text" class="w-10/12 outline-none font-bold rounded-xl max-lg:text-sm">
-                                                                                                        <span class="font-bold max-md:text-sm max-sm:text-xs text-zinc-400">گرم</span>
-                                                                                                    </div>
-                        
-                                                                                                </div> -->
+                                                                                                        <div class="w-full flex justify-between items-center">
+                                                                                                            <label for="" class="text-xs font-bold text-[#8B929D]">حداقل وزن</label>
+                                                                                                            <span class="md:text-xs text-[10px] text-[#9BA4AA] px-2 py-1 rounded-full bg-zinc-100">غیر فعال</span>
+                                                                                                        </div>
+                                                                                                        <div class="w-full border-2 border-(--border) py-2 px-3 bg-white flex justify-between items-center rounded-xl">
+                                                                                                            <input type="text" class="w-10/12 outline-none font-bold rounded-xl max-lg:text-sm">
+                                                                                                            <span class="font-bold max-md:text-sm max-sm:text-xs text-zinc-400">گرم</span>
+                                                                                                        </div>
+                            
+                                                                                                    </div> -->
                                                 <div class="w-1/2 flex flex-col justify-start items-start gap-2">
                                                     <div class="w-full flex justify-between items-center">
                                                         <label for=""
@@ -870,13 +870,13 @@
                                             <div
                                                 class="md:w-40/100 w-full h-full p-3 flex flex-col gap-2 justify-start items-start  bg-white border-2 border-(--border)">
                                                 <!-- <div class="flex gap-2 justify-start items-center border border-(--border) px-4 py-2 rounded-xl">
-                                                                                <span class="font-bold">عنوان دسته :</span>
-                                                                                <span class="font-bold text-(--text-secondary-dashboard)">ویژه</span>
-                                                                            </div>
-                                                                            <div class="flex gap-2 justify-start items-center border border-(--border) px-4 py-2 rounded-xl">
-                                                                                <span class="font-bold">تعداد مشتریان دسته :</span>
-                                                                                <span class="font-bold text-(--text-secondary-dashboard)">5</span>
-                                                                            </div> -->
+                                                                                    <span class="font-bold">عنوان دسته :</span>
+                                                                                    <span class="font-bold text-(--text-secondary-dashboard)">ویژه</span>
+                                                                                </div>
+                                                                                <div class="flex gap-2 justify-start items-center border border-(--border) px-4 py-2 rounded-xl">
+                                                                                    <span class="font-bold">تعداد مشتریان دسته :</span>
+                                                                                    <span class="font-bold text-(--text-secondary-dashboard)">5</span>
+                                                                                </div> -->
                                                 <div class="w-full flex justify-start sm:items-center">
                                                     <div
                                                         class="w-5/12 h-full bg-(--border) flex justify-start items-center py-2 sm:px-2 px-4 text-sm max-lg:text-xs max-sm:text-[10px] max-sm:text-nowrap sm:rounded-tr-md sm:rounded-br-xs max-sm:rounded-r-md">
@@ -1442,16 +1442,16 @@
                                                                 <div
                                                                     class="w-full flex justify-start gap-2 items-center hidden">
                                                                     <!-- <div class="w-1/2 flex flex-col justify-start items-start gap-2 relative">
-                                                                                                    <div class="w-full flex justify-between items-center">
-                                                                                                        <label for="" class="text-xs font-bold text-[#8B929D]">حداقل وزن</label>
-                                                                                                        <span class="md:text-xs text-[10px] text-[#9BA4AA] px-2 py-1 rounded-full bg-zinc-100">غیر فعال</span>
-                                                                                                    </div>
-                                                                                                    <div class="w-full border-2 border-(--border) py-2 px-3 bg-white flex justify-between items-center rounded-xl">
-                                                                                                        <input type="text" class="w-10/12 outline-none font-bold rounded-xl max-lg:text-sm">
-                                                                                                        <span class="font-bold max-md:text-sm max-sm:text-xs text-zinc-400">گرم</span>
-                                                                                                    </div>
-                        
-                                                                                                </div> -->
+                                                                                                        <div class="w-full flex justify-between items-center">
+                                                                                                            <label for="" class="text-xs font-bold text-[#8B929D]">حداقل وزن</label>
+                                                                                                            <span class="md:text-xs text-[10px] text-[#9BA4AA] px-2 py-1 rounded-full bg-zinc-100">غیر فعال</span>
+                                                                                                        </div>
+                                                                                                        <div class="w-full border-2 border-(--border) py-2 px-3 bg-white flex justify-between items-center rounded-xl">
+                                                                                                            <input type="text" class="w-10/12 outline-none font-bold rounded-xl max-lg:text-sm">
+                                                                                                            <span class="font-bold max-md:text-sm max-sm:text-xs text-zinc-400">گرم</span>
+                                                                                                        </div>
+                            
+                                                                                                    </div> -->
                                                                     <div
                                                                         class="w-1/2 flex flex-col justify-start items-start gap-2">
                                                                         <div

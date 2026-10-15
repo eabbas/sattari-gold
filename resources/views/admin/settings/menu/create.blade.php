@@ -10,7 +10,7 @@
     <div class="w-full h-full pb-10">
         <h2 class="text-3xl text-center font-bold py-10 text-[#425A8B]">فرم ایجاد منو</h2>
         <div class="lg:w-2/3 w-full mx-auto border border-[#D5DFE4] rounded-[10px] text-[#425A8B] p-5 bg-white">
-            <form action="{{ route('settings.menu.store') }}" method="post" class="space-y-10">
+            <form action="{{ route('menu.store') }}" method="post" class="space-y-10">
                 @csrf
                 <div class="w-full flex flex-col">
                     <label for="title" class="mb-2 flex flex-row items-center">
@@ -72,8 +72,7 @@
     <div class="w-full flex flex-col pb-4">
         <div class="bg-white rounded-lg">
             <h2 class="text-lg font-bold text-gray-800 p-4 text-center">لیست آیتم های منو</h2>
-            <form class="flex flex-col gap-5 w-10/12 mx-auto" action="{{ route('settings.menu.deleteAll') }}"
-                method="post">
+            <form class="flex flex-col gap-5 w-10/12 mx-auto" action="{{ route('menu.deleteAll') }}" method="post">
                 @csrf
                 <div class="w-full flex flex-row justify-between items-center mb-5">
                     <div class="flex flex-row items-center gap-3">
@@ -249,7 +248,7 @@
                     </button>
                 </div>
                 <div id="popupContent" class="max-h-130 overflow-auto">
-                    <form action="{{ route('settings.menu.update') }}" method="post" class="space-y-10">
+                    <form action="{{ route('menu.update') }}" method="post" class="space-y-10">
                         @csrf
                         <input type="hidden" name="menu_id" id="menu_id">
                         <div class="w-full flex flex-col">
@@ -339,7 +338,7 @@
                     }
                 })
                 $.ajax({
-                    url: "{{ route('settings.menu.edit') }}",
+                    url: "{{ route('menu.edit') }}",
                     type: "POST",
                     dataType: "json",
                     data: {
@@ -394,7 +393,7 @@
                     }
                 })
                 $.ajax({
-                    url: "{{ route('settings.menu.show') }}",
+                    url: "{{ route('menu.show') }}",
                     type: "POST",
                     dataType: "json",
                     data: {

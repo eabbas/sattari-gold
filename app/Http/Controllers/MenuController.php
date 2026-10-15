@@ -41,7 +41,7 @@ class MenuController extends Controller
         return $result;
         $array = explode('/', $result);
         menu::whereIn('id', $array)->delete();
-        return to_route('settings.menu.create')->with('message', 'منوی انتخاب شده به همراه زیر منوهایش حذف شدند.');
+        return to_route('menu.create')->with('message', 'منوی انتخاب شده به همراه زیر منوهایش حذف شدند.');
     }
     public function getChildrenIds($id)
     {

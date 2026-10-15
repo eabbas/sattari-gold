@@ -13,18 +13,14 @@ use App\Http\Controllers\WalletController;
 use App\Http\Middleware\checkAdminMiddleware;
 use App\Http\Middleware\checkIsActive;
 use App\Http\Middleware\checklogin;
-use App\Models\deal;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\transaction;
 use App\Models\logo;
-use App\Models\role;
-use App\Models\User;
 
 Route::get('/z', function () {
     $logo = logo::first();
-    return view('dashboard_home_new', ['logo' => $logo]);
+    return view('user.user.account', ['logo' => $logo]);
 });
 
 Route::get('/y', function () {
@@ -40,18 +36,6 @@ Route::get('/p', function () {
 Route::get('/u', function () {
     $logo = logo::first();
     return view('admin.user.category_user', ['logo' => $logo]);
-});
-
-Route::get('/i', function () {
-    $logo = logo::first();
-    $users = User::paginate(10);
-    $roles = role::all();
-    return view('admin.user.index_previos', ['logo' => $logo, 'users' => $users, 'roles' => $roles]);
-});
-
-Route::get('/t', function () {
-    $logo = logo::first();
-    return view('admin.user.transactionsList_previos', ['logo' => $logo]);
 });
 
 Route::get('/xyz', function () {
@@ -108,41 +92,42 @@ Route::group([
     })->name('profile');
 });
 
-// settings routes
+// header routes
 Route::group([
-    'prefix' => 'settings',
-    'as' => 'settings.',
+    'prefix' => 'header',
+    'controller' => HeaderController::class,
+    'as' => 'header.',
     'middleware' => checkAdminMiddleware::class
 ], function () {
-    Route::group([
-        'prefix' => 'header',
-        'controller' => HeaderController::class,
-        'as' => 'header.'
-    ], function () {
-        Route::get('/create', 'create')->name('create');
-        Route::post('/store', 'store')->name('store');
-    });
-    Route::group([
-        'prefix' => 'logo',
-        'controller' => LogoController::class,
-        'as' => 'logo.'
-    ], function () {
-        Route::get('/create', 'create')->name('create');
-        Route::post('/store', 'store')->name('store');
-    });
-    Route::group([
-        'prefix' => 'menu',
-        'controller' => MenuController::class,
-        'as' => 'menu.'
-    ], function () {
-        Route::get('/create', 'create')->name('create');
-        Route::post('/store', 'store')->name('store');
-        Route::get('/delete/{id}', 'delete')->name('delete');
-        Route::post('/deleteAll', 'deleteAll')->name('deleteAll');
-        Route::post('/edit', 'edit')->name('edit');
-        Route::post('/update', 'update')->name('update');
-        Route::post('/show', 'show')->name('show');
-    });
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+});
+
+// logo routes
+Route::group([
+    'prefix' => 'logo',
+    'controller' => LogoController::class,
+    'as' => 'logo.',
+    'middleware' => checkAdminMiddleware::class
+], function () {
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+});
+
+// menu menu
+Route::group([
+    'prefix' => 'menu',
+    'controller' => MenuController::class,
+    'as' => 'menu.',
+    'middleware' => checkAdminMiddleware::class
+], function () {
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+    Route::get('/delete/{id}', 'delete')->name('delete');
+    Route::post('/deleteAll', 'deleteAll')->name('deleteAll');
+    Route::post('/edit', 'edit')->name('edit');
+    Route::post('/update', 'update')->name('update');
+    Route::post('/show', 'show')->name('show');
 });
 
 // category routes

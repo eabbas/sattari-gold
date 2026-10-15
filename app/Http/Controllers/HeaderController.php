@@ -58,7 +58,7 @@ class HeaderController extends Controller
                     'btnLink' => $request->btnLink,
                 ]
             );
-            return to_route('settings.header.create')->with('message', 'هدر جدید برای سایت ایجاد شد.');
+            return to_route('header.create')->with('message', 'هدر جدید برای سایت ایجاد شد.');
         }
     }
 }
