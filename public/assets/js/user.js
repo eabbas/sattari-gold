@@ -243,17 +243,17 @@ items_2.forEach((item_2) => {
                 roles.push(child.value)
             }
         }
-        console.log(roles)
         $.ajax({
             url: api+'updateUser',
             type: "POST",
             dataType: "json",
             data: {
+                'user_id': item_2.dataset.userId,
                 'popupName': item_2.querySelector('.name').value,
-                'family': item_2.querySelector('.family').value,
-                'phoneNumber': item_2.querySelector('.phoneNumber').value,
-                'nationalCode': item_2.querySelector('.nationalCode').value,
-                'isApproved': item_2.querySelector('.isApproved').value,
+                'popupFamily': item_2.querySelector('.family').value,
+                'popupPhoneNumber': item_2.querySelector('.phoneNumber').value,
+                'popupNationalCode': item_2.querySelector('.nationalCode').value,
+                'approvingStatus': item_2.querySelector('.isApproved').value,
                 'isActive': item_2.querySelector('#isActive'+item_2.dataset.userId).checked ? 1 : 0,
                 'roles': roles,
             },
@@ -264,6 +264,7 @@ items_2.forEach((item_2) => {
                 document.querySelectorAll('.detailBox').forEach(box => {
                     box.classList.add('invisible', 'opacity-0')
                 })
+                item_2.remove()
             },
             error: function(){
                 console.log('failed to load data')

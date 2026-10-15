@@ -338,25 +338,24 @@ class UserController extends Controller
     }
     public function update(Request $request)
     {
-        return response()->json($request->all());
-        $validated = $request->validate(
-            [
-                'popupName' => ['required'],
-                'popupFamily' => ['required'],
-                'popupPhoneNumber' => ['required', 'min:11', 'max:11'],
-                'popupNationalCode' => ['required', 'min:10', 'max:10'],
-            ],
-            [
-                'popupName.required' => 'پر کردن این فیلد الزامی است.',
-                'popupFamily.required' => 'پر کردن این فیلد الزامی است.',
-                'popupPhoneNumber.required' => 'پر کردن این فیلد الزامی است.',
-                'popupPhoneNumber.max' => 'شماره تلفن باید 11 رقمی باشد.',
-                'popupPhoneNumber.min' => 'شماره تلفن باید 11 رقمی باشد.',
-                'popupNationalCode.max' => 'کد ملی باید 10 رقمی باشد.',
-                'popupNationalCode.min' => 'کد ملی باید 10 رقمی باشد.',
-                'popupNationalCode.required' => 'پر کردن این فیلد الزامی است.',
-            ]
-        );
+        // $validated = $request->validate(
+        //     [
+        //         'popupName' => ['required'],
+        //         'popupFamily' => ['required'],
+        //         'popupPhoneNumber' => ['required', 'min:11', 'max:11'],
+        //         'popupNationalCode' => ['required', 'min:10', 'max:10'],
+        //     ],
+        //     [
+        //         'popupName.required' => 'پر کردن این فیلد الزامی است.',
+        //         'popupFamily.required' => 'پر کردن این فیلد الزامی است.',
+        //         'popupPhoneNumber.required' => 'پر کردن این فیلد الزامی است.',
+        //         'popupPhoneNumber.max' => 'شماره تلفن باید 11 رقمی باشد.',
+        //         'popupPhoneNumber.min' => 'شماره تلفن باید 11 رقمی باشد.',
+        //         'popupNationalCode.max' => 'کد ملی باید 10 رقمی باشد.',
+        //         'popupNationalCode.min' => 'کد ملی باید 10 رقمی باشد.',
+        //         'popupNationalCode.required' => 'پر کردن این فیلد الزامی است.',
+        //     ]
+        // );
         // dd($request->all());
         $user = User::find($request->user_id);
         $name = $user->name;
@@ -376,7 +375,8 @@ class UserController extends Controller
             }
         }
         $user->save();
-        return to_route('user.index')->with('message',  $name . ' به روزرسانی شد .');
+        return response()->json($user);
+        // return to_route('user.index')->with('message',  $name . ' به روزرسانی شد .');
     }
     public function profile($user = null)
     {
