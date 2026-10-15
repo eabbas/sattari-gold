@@ -16,8 +16,8 @@ let weight = document.getElementById('weight')
 let price = document.getElementById('price')
 let dealId = document.getElementById('dealId')
 
-async function applyDealFilters() {
-    await $.ajax({
+function applyDealFilters() {
+    $.ajax({
         url: api + 'getDealFilter',
         type: "POST",
         dataType: "json",

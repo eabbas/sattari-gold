@@ -6,15 +6,16 @@ let dealFilters = {
     'toDate': null,
     'price': null,
     'transactionId': null
-};
+}
 
-let fullName = document.getElementById('fullName');
-let fromDate = document.getElementById('fromDate');
-let toDate = document.getElementById('toDate');
-let status = document.getElementById('status');
-let price = document.getElementById('price');
-let transactionId = document.getElementById('transactionId');
-let type = document.getElementById('type');
+let fullName = document.getElementById('fullName')
+let fromDate = document.getElementById('fromDate')
+let toDate = document.getElementById('toDate')
+let status = document.getElementById('status')
+let price = document.getElementById('price')
+let transactionId = document.getElementById('transactionId')
+let type = document.getElementById('type')
+let transactionControl = document.getElementById('transactionControl')
 
 let transactionPopup = document.getElementById('transaction')
 let closeBtn = document.getElementById('closeBtn')
@@ -41,8 +42,8 @@ function setDatas() {
     applyDealFilters();
 }
 
-async function applyDealFilters() {
-    await $.ajax({
+function applyDealFilters() {
+    $.ajax({
         url: api + 'getTransactionFilter',
         type: "POST",
         dataType: "json",
@@ -50,18 +51,14 @@ async function applyDealFilters() {
             'filters': dealFilters
         },
         success: function (data) {
-            
-
             let counter = 0;
             let bodyTable = document.querySelector('tbody');
             bodyTable.innerHTML = ''
-
             data.forEach(row => {
-               
                 let parentRow = document.createElement('tr');
+                parentRow.dataset.transactionId = row.id
                 parentRow.classList = 'item_fayle text-xs lg:text-base'
                 counter++
-
                 let html = `
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                         ${counter}
@@ -97,13 +94,11 @@ async function applyDealFilters() {
                         </div>
                     </td>
                     <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
-                        <button onclick="showTransaction('open', '${ row.wallet.user.name+' '+row.wallet.user.family }', '${ row.wallet.user.phoneNumber }', '${ row.time + ' | ' + row.date }', '${ row.stateColor }', '${ row.stateTitle }', '${ row.type }', '${ row.amount }', '${ row.isApproved }', '${ row.receipt }')" 
+                        <button onclick="showTransaction('${ row.wallet.user.name + ' ' + row.wallet.user.family}', '${row.wallet.user.phoneNumber}', '${row.time + ' | ' + row.date}', '${row.stateColor}', '${row.stateTitle}', '${row.type}', '${row.amount}', '${row.isApproved}', '${row.id }', '${ row.receipt }')" 
                         class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer">
                             مشاهده
                         </button>
-                    </td>
-                `
-
+                    </td>`
                 parentRow.innerHTML = html
                 bodyTable.append(parentRow)
             })
@@ -113,7 +108,6 @@ async function applyDealFilters() {
         }
     })
 }
-
 
 document.addEventListener('DOMContentLoaded', function () {
     setTimeout(function () {
@@ -130,12 +124,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 100)
 })
 
-
-function showTransaction(state, user, phoneNumber, dateTime, stateColor, stateTitle, type, amount, isApproved, receipt = null) {
+function showTransaction(user, phoneNumber, dateTime, stateColor, stateTitle, type, amount, isApproved, transactionId, receipt = null) {
     transactionPopup.classList.remove('invisible', 'opacity-0') 
-    document.getElementById('transactionControl').classList.remove('hidden')
+    transactionControl.classList.remove('hidden')
+    transactionControl.dataset.transactionId = transactionId
     if (isApproved != 0) {
-        document.getElementById('transactionControl').classList.add('hidden')
+        transactionControl.classList.add('hidden')
     }
     document.getElementById('transactionPopupName').innerText = user
     document.getElementById('transactionPopupPhoneNumber').innerText = phoneNumber
@@ -171,3 +165,30 @@ document.addEventListener('click', (e) => {
         transactionPopup.classList.add('invisible', 'opacity-0')
     }
 })
+
+function transactionAct(el, isApproved){
+    let transactionId = transactionControl.dataset.transactionId
+
+
+
+
+    let rows = document.querySelector('tbody').querySelectorAll('tr')
+    console.log(rows)
+
+    $.ajax({
+        url: api +'submitChanges',
+        type: "POST",
+        dataType: "json",
+        data: {
+            'transactionId': transactionId,
+            'isApproved': isApproved
+        },
+        success: function(response){
+            console.log(response)
+
+        },
+        error: function(){
+            console.log('failed to load data')
+        }
+    })
+}

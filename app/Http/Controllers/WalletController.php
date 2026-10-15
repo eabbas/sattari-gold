@@ -167,56 +167,61 @@ class WalletController extends Controller
     }
     public function submitChanges(Request $request)
     {
-        foreach ($request->data as $item) {
-            $transaction = transaction::find($item['transaction_id']);
-            $transaction->isApproved = $item['isApproved'];
-            $transaction->save();
-            if ($transaction['isApproved'] == 1) {
-                if ($transaction['type'] == 'deposit') {
-                    $total = $transaction->amount;
-                    $wallet = wallet::find($transaction['wallet_id']);
-                    $total += $wallet['asset'];
-                    $wallet->asset = $total;
-                    $wallet->save();
-                }
-                if ($transaction['type'] == 'withdraw') {
-                    $wallet = wallet::find($transaction['wallet_id']);
-                    $total = 0;
-                    $total = $wallet['asset'] - $transaction['amount'];
-                    $wallet->asset = $total;
-                    $wallet->save();
-                }
-                if ($transaction['type'] == 'buy') {
-                    $transaction->deal->update(['isApproved' => $item['isApproved']]);
-                }
-                if ($transaction['type'] == 'sell') {
-                    $transaction->deal->update(['isApproved' => $item['isApproved']]);
-                }
+        $transactionId = $request->input('transactionId');
+        $isApproved = $request->input('isApproved');
+
+        $transaction = transaction::find($transactionId);
+        $transaction->wallet->user;
+        $transaction->isApproved = $isApproved;
+        // $transaction->save();
+        if ($transaction['isApproved'] == 1) {
+            if ($transaction['type'] == 'deposit') {
+                $total = $transaction->amount;
+                $wallet = wallet::find($transaction['wallet_id']);
+                $total += $wallet['asset'];
+                $wallet->asset = $total;
+                // $wallet->save();
             }
-            if ($transaction->isApproved == -1) {
-                if ($transaction->type == 'buy') {
-                    $total = $transaction->amount;
-                    $wallet = wallet::find($transaction['wallet_id']);
-                    $weight = $transaction->deal->goldWeight;
-                    $total += $wallet['asset'];
-                    $weight -= $wallet->goldWeight;
-                    $wallet->asset = $total;
-                    $wallet->goldWeight = $weight;
-                    $wallet->save();
-                }
-                if ($transaction->type == 'sell') {
-                    $total = $transaction->amount;
-                    $wallet = wallet::find($transaction['wallet_id']);
-                    $weight = $transaction->deal->goldWeight;
-                    $total -= $wallet['asset'];
-                    $weight += $wallet->goldWeight;
-                    $wallet->asset = $total;
-                    $wallet->goldWeight = $weight;
-                    $wallet->save();
-                }
+            if ($transaction['type'] == 'withdraw') {
+                $wallet = wallet::find($transaction['wallet_id']);
+                $total = 0;
+                $total = $wallet['asset'] - $transaction['amount'];
+                $wallet->asset = $total;
+                // $wallet->save();
+            }
+            if ($transaction['type'] == 'buy') {
+                $transaction->deal->update(['isApproved' => $isApproved]);
+            }
+            if ($transaction['type'] == 'sell') {
+                $transaction->deal->update(['isApproved' => $isApproved]);
             }
         }
-        return response()->json();
+        if ($transaction->isApproved == -1) {
+            if ($transaction->type == 'buy') {
+                $transaction->deal;
+                $total = $transaction->amount;
+                $wallet = wallet::find($transaction['wallet_id']);
+                $weight = $transaction->deal->goldWeight;
+                $total += $wallet['asset'];
+                $weight -= $wallet->goldWeight;
+                $wallet->asset = $total;
+                $wallet->goldWeight = $weight;
+                // $wallet->save();
+            }
+            if ($transaction->type == 'sell') {
+                $transaction->deal;
+                $total = $transaction->amount;
+                $wallet = wallet::find($transaction['wallet_id']);
+                $weight = $transaction->deal->goldWeight;
+                $total -= $wallet['asset'];
+                $weight += $wallet->goldWeight;
+                $wallet->asset = $total;
+                $wallet->goldWeight = $weight;
+                // $wallet->save();
+            }
+        }
+     
+        return response()->json($transaction);
     }
     public function popupWalletData(Request $request)
     {
