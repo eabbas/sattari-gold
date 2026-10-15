@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\deal;
 use App\Models\logo;
 use App\Models\transaction;
 use App\Models\User;
 use App\Models\wallet;
-use App\Models\deal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Log;
@@ -18,6 +18,7 @@ class WalletController extends Controller
         $logo = logo::first();
         return view('user.user.wallet', ['user' => $user, 'logo' => $logo]);
     }
+
     public function transactionRequest(Request $request)
     {
         $request->validate(
@@ -35,6 +36,7 @@ class WalletController extends Controller
             return $this->withdraw($request);
         }
     }
+
     public function deposit($request)
     {
         $request->validate(
@@ -77,8 +79,9 @@ class WalletController extends Controller
             'time' => $time,
             'description' => $request->description
         ]);
-        return redirect()->back()->with('success',  ' مبلغ ' . $request->fee . ' پس از تایید به کیف پول شما افزوده خواهد شد.');
+        return redirect()->back()->with('success', ' مبلغ ' . $request->fee . ' پس از تایید به کیف پول شما افزوده خواهد شد.');
     }
+
     public function withdraw($request)
     {
         $request->validate(
@@ -101,7 +104,7 @@ class WalletController extends Controller
             $total = $wallet['asset'] - $request['fee'];
         }
         if (!$wallet || $total < 0) {
-            return redirect()->back()->with('failure',  'موجودی کیف پول شما کافی نیست.');
+            return redirect()->back()->with('failure', 'موجودی کیف پول شما کافی نیست.');
         }
         transaction::create([
             'wallet_id' => $wallet['id'],
@@ -111,14 +114,16 @@ class WalletController extends Controller
             'time' => $time,
             'isApproved' => 0
         ]);
-        return redirect()->back()->with('failure',  ' مبلغ ' . $request->fee . ' پس از تایید از کیف پول شما کسر خواهد شد. ');
+        return redirect()->back()->with('failure', ' مبلغ ' . $request->fee . ' پس از تایید از کیف پول شما کسر خواهد شد. ');
     }
+
     public function transactions(Request $request)
     {
         $user = User::find($request['user_id']);
         $user->walletTransactions;
         return response()->json($user);
     }
+
     public function transactionsList()
     {
         // $transactions = transaction::all();
@@ -160,11 +165,13 @@ class WalletController extends Controller
         }
         return view('admin.transaction.transactionsList', ['logo' => $logo, 'transactions' => $transactions]);
     }
+
     public function transactionsListSingle(User $user)
     {
         $logo = logo::first();
         return view('admin.transaction.transactionsListSingle', ['user' => $user, 'logo' => $logo]);
     }
+
     public function submitChanges(Request $request)
     {
         $transactionId = $request->input('transactionId');
@@ -173,21 +180,21 @@ class WalletController extends Controller
         $transaction = transaction::find($transactionId);
         $transaction->wallet->user;
         $transaction->isApproved = $isApproved;
-        // $transaction->save();
+        $transaction->save();
         if ($transaction['isApproved'] == 1) {
             if ($transaction['type'] == 'deposit') {
                 $total = $transaction->amount;
                 $wallet = wallet::find($transaction['wallet_id']);
                 $total += $wallet['asset'];
                 $wallet->asset = $total;
-                // $wallet->save();
+                $wallet->save();
             }
             if ($transaction['type'] == 'withdraw') {
                 $wallet = wallet::find($transaction['wallet_id']);
                 $total = 0;
                 $total = $wallet['asset'] - $transaction['amount'];
                 $wallet->asset = $total;
-                // $wallet->save();
+                $wallet->save();
             }
             if ($transaction['type'] == 'buy') {
                 $transaction->deal->update(['isApproved' => $isApproved]);
@@ -206,7 +213,7 @@ class WalletController extends Controller
                 $weight -= $wallet->goldWeight;
                 $wallet->asset = $total;
                 $wallet->goldWeight = $weight;
-                // $wallet->save();
+                $wallet->save();
             }
             if ($transaction->type == 'sell') {
                 $transaction->deal;
@@ -217,12 +224,47 @@ class WalletController extends Controller
                 $weight += $wallet->goldWeight;
                 $wallet->asset = $total;
                 $wallet->goldWeight = $weight;
-                // $wallet->save();
+                $wallet->save();
             }
         }
-     
+        $transaction->fullName = $transaction->wallet->user->name . ' ' . $transaction->wallet->user->family;
+        $transaction->phoneNumber = $transaction->wallet->user->phoneNumber;
+        switch ($transaction->type) {
+            case 'deposit':
+                $transaction->type = 'واریز';
+                $transaction->typeColor = '#3aae3f';
+                break;
+            case 'withdraw':
+                $transaction->type = 'برداشت';
+                $transaction->typeColor = '#d23334';
+                break;
+            case 'buy':
+                $transaction->type = 'خرید';
+                $transaction->typeColor = '#0867d5';
+                break;
+            case 'sell':
+                $transaction->type = 'فروش';
+                $transaction->typeColor = '#e57200';
+                break;
+        }
+        switch ($transaction->isApproved) {
+            case -1:
+                $transaction->stateTitle = 'رد شده';
+                $transaction->stateColor = '#d23334';
+                break;
+            case 0:
+                $transaction->stateTitle = 'در انتظار';
+                $transaction->stateColor = '#6a6a6a';
+                break;
+            case 1:
+                $transaction->stateTitle = 'تایید شده';
+                $transaction->stateColor = '#3aae3f';
+                break;
+        }
+
         return response()->json($transaction);
     }
+
     public function popupWalletData(Request $request)
     {
         $user = User::find($request->userId)->load('wallet');

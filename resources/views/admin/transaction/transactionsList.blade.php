@@ -280,11 +280,11 @@
                     <img class="w-[90%] h-50 bg-zinc-300" src="" alt="">
                 </div>
                 <div id="transactionControl" class="w-full grid grid-cols-2 gap-3 col-span-6" data-transaction-id="">
-                    <button onclick="transactionAct(this, '1')"
+                    <button onclick="transactionAct('1')"
                         class="bg-green-50 text-green-500 border-2 border-green-400 transition-all duration-300 hover:bg-green-500 hover:border-green-500 hover:text-white font-bold px-2 py-4 rounded-md text-center cursor-pointer">
                         تایید تراکنش
                     </button>
-                    <button onclick="transactionAct(this, '-1')"
+                    <button onclick="transactionAct('-1')"
                         class="bg-red-50 text-red-500 border-2 border-red-400 transition-all duration-300 hover:bg-red-500 hover:border-red-500 hover:text-white font-bold px-2 py-4 rounded-md text-center cursor-pointer">
                         رد تراکنش
                     </button>
