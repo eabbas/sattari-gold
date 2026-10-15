@@ -298,6 +298,24 @@ class UserController extends Controller
         $users = User::paginate(10);
         $logo = logo::first();
         $roles = role::all();
+        foreach($users as $user){
+            $roleIds = [];
+            foreach($user->roles as $role){
+                $roleIds []= $role->id;
+            }
+            $user->roleIds = $roleIds;
+            // dd($roleIds, $user);
+        }
+        foreach($roles as $role){
+            switch($role->name){
+                case 'admin':
+                    $role->faTitle = 'ادمین';
+                    break;
+                case 'general_user':
+                    $role->faTitle = 'کاربر عادی';
+                    break;
+            }
+        }
         return view('admin.user.index', [
             'users' => $users,
             'logo' => $logo,
