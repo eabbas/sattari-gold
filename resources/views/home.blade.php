@@ -41,7 +41,7 @@
             </div>
         @endif
         <!-- value bar -->
-        <div class="w-11/12 mx-auto bg-white p-3 rounded-xl  mt-4">
+        <div class="w-11/12 mx-auto bg-white p-2 rounded-xl  mt-4">
             <div class="bg-[#faf5f0] p-2.5 rounded-lg grid grid-cols-1 lg:grid-cols-3">
 
                 <div
@@ -100,11 +100,11 @@
     <!-- why us? -->
     <section class="2xl:container mx-auto w-full bg-[#fbf7f3] py-5 lg:py-10 relative overflow-hidden">
         <div class="w-11/12 mx-auto">
-            <img src="{{ asset('assets/img/why-us.png') }}" class="absolute w-1/4 h-full left-0 top-0 hidden lg:block"
+            <img src="{{ asset('assets/img/why-us.png') }}" class="absolute xl:w-3/12 lg:w-2/12 h-full left-0 top-0 hidden lg:block"
                 alt="">
             <h2 class="text-md lg:text-2xl font-bold text-gray-800 mb-2">چرا ستاری گلد؟</h2>
-            <span class="block text-sm lg:text-base text-gray-500">انتخاب هوشمندانه برای سرمایه گذاری</span>
-            <div class="w-full lg:w-3/4 mt-5 grid gap-3 grid-cols-3 lg:grid-cols-6">
+            <span class="block max-xl:text-sm max-sm:text-xs text-gray-500">انتخاب هوشمندانه برای سرمایه گذاری</span>
+            <div class="w-full xl:w-9/12 lg:w-10/12 mt-5 grid sm:gap-3 gap-2 sm:grid-cols-3 grid-cols-2 lg:grid-cols-6">
 
                 <!-- items -->
 
@@ -120,8 +120,8 @@
                         </svg>
                     </div>
                     <div class="flex flex-col items-center gap-2">
-                        <h3 class="text-sm lg:text-base font-bold text-gray-800">پشتیبانی تخصصی</h3>
-                        <span class="text-xs lg:text-sm font-bold text-gray-500">با کارشناسان مجرب</span>
+                        <h3 class="max-xl:text-sm max-sm:text-xs font-bold text-gray-800">پشتیبانی تخصصی</h3>
+                        <span class="sm:text-xs text-[10px] xl:text-sm font-bold text-gray-500">با کارشناسان مجرب</span>
                     </div>
                 </div>
                 <div class="w-full flex flex-col items-center justify-center gap-4">
@@ -134,8 +134,8 @@
                         </svg>
                     </div>
                     <div class="flex flex-col items-center gap-2">
-                        <h3 class="text-sm lg:text-base font-bold text-gray-800">سرمایه‌گذاری مطمئن</h3>
-                        <span class="text-xs lg:text-sm font-bold text-gray-500">با روش‌های معتبر</span>
+                        <h3 class="max-xl:text-sm max-sm:text-xs font-bold text-gray-800">سرمایه‌گذاری مطمئن</h3>
+                        <span class="sm:text-xs text-[10px] xl:text-sm font-bold text-gray-500">با روش‌های معتبر</span>
                     </div>
                 </div>
                 <div class="w-full flex flex-col items-center justify-center gap-4">
@@ -148,8 +148,8 @@
                         </svg>
                     </div>
                     <div class="flex flex-col items-center gap-2">
-                        <h3 class="text-sm lg:text-base font-bold text-gray-800">کارمزد پایین</h3>
-                        <span class="text-xs lg:text-sm font-bold text-gray-500">بازدهی حداکثر </span>
+                        <h3 class="max-xl:text-sm max-sm:text-xs font-bold text-gray-800">کارمزد پایین</h3>
+                        <span class="sm:text-xs text-[10px] xl:text-sm font-bold text-gray-500">بازدهی حداکثر </span>
                     </div>
                 </div>
                 <div class="w-full flex flex-col items-center justify-center gap-4">
@@ -187,8 +187,8 @@
                         </svg>
                     </div>
                     <div class="flex flex-col items-center gap-2">
-                        <h3 class="text-sm lg:text-base font-bold text-gray-800">خرید و فروش آنلاین</h3>
-                        <span class="text-xs lg:text-sm font-bold text-gray-500">در هر ساعت از شبانه‌روز</span>
+                        <h3 class="max-xl:text-sm max-sm:text-xs font-bold text-gray-800">خرید و فروش آنلاین</h3>
+                        <span class="sm:text-xs text-[10px] xl:text-sm font-bold text-gray-500">در هر ساعت از شبانه‌روز</span>
                     </div>
                 </div>
                 <div class="w-full flex flex-col items-center justify-center gap-4">
@@ -202,8 +202,8 @@
                         </svg>
                     </div>
                     <div class="flex flex-col items-center gap-2">
-                        <h3 class="text-sm lg:text-base font-bold text-gray-800">قیمت‌های لحظه‌ای</h3>
-                        <span class="text-xs lg:text-sm font-bold text-gray-500">به‌صورت آنی</span>
+                        <h3 class="max-xl:text-sm max-sm:text-xs font-bold text-gray-800">قیمت‌های لحظه‌ای</h3>
+                        <span class="sm:text-xs text-[10px] xl:text-sm font-bold text-gray-500">به‌صورت آنی</span>
                     </div>
                 </div>
                 <div class="w-full flex flex-col items-center justify-center gap-4">
@@ -215,8 +215,8 @@
                         </svg>
                     </div>
                     <div class="flex flex-col items-center gap-2">
-                        <h3 class="text-sm lg:text-base font-bold text-gray-800">امنیت بالا</h3>
-                        <span class="text-xs lg:text-sm font-bold text-gray-500"> با بالاترین استانداردها</span>
+                        <h3 class="max-xl:text-sm max-sm:text-xs font-bold text-gray-800">امنیت بالا</h3>
+                        <span class="sm:text-xs text-[10px] xl:text-sm font-bold text-gray-500"> با بالاترین استانداردها</span>
                     </div>
                 </div>
 
@@ -235,12 +235,12 @@
             <div class="w-full flex flex-row items-end justify-between">
                 <div class="flex flex-col gap-3">
                     <h2 class="text-md lg:text-2xl font-bold text-gray-800">محصولات ما</h2>
-                    <span class="text-sm lg:text-base text-gray-500 font-bold">با اطمینان سرمایه گذاری کنید </span>
+                    <span class="max-xl:text-sm max-sm:text-xs text-gray-500 font-bold">با اطمینان سرمایه گذاری کنید </span>
                 </div>
                 <div>
                     <a href="{{ route('product.index') }}" class="flex justify-end items-center gap-2 group">
                         <span
-                            class="text-xs lg:text-sm font-bold text-gray-500 group-hover:text-[#e1a84f] transition-all duration-300">مشاهده
+                            class="sm:text-xs text-[10px] xl:text-sm font-bold text-gray-500 group-hover:text-[#e1a84f] transition-all duration-300">مشاهده
                             بیشتر</span>
                         <svg class="w-[31px] h-[31px] text-[#e1a84f] transition-all duration-300 group-hover:-translate-x-[10px]"
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -253,7 +253,7 @@
             </div>
             <!-- title -->
 
-            <div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8 mt-8">
+            <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-8 mt-8">
                 <!-- items -->
                 @foreach ($products as $product)
                     <div class="w-full rounded-xl flex flex-col relative"
@@ -269,7 +269,7 @@
                         </a>
                         <div class="w-full flex flex-col gap-2 p-3">
                             <a href="{{ route('product.show', [$product]) }}" class="block">
-                                <h3 class="text-gray-800 font-bold text-sm lg:text-base">{{ $product['title'] }}</h3>
+                                <h3 class="text-gray-800 font-bold max-xl:text-sm max-sm:text-xs">{{ $product['title'] }}</h3>
                             </a>
                             {{-- @foreach ($product->categories as $category)
                                 <span class="text-gray-500 text-xs font-bold">{{ $category->title }}</span>
@@ -324,7 +324,7 @@
                         </a>
                         <div class="w-full flex flex-col gap-2 p-3">
                             <a href="{{ route('product.show', [$product]) }}" class="block">
-                                <h3 class="text-gray-800 font-bold text-sm lg:text-base">{{ $product['title'] }}</h3>
+                                <h3 class="text-gray-800 font-bold max-xl:text-sm max-sm:text-xs">{{ $product['title'] }}</h3>
                             </a>
                             {{-- @foreach ($product->categories as $category)
                                 <span class="text-gray-500 text-xs font-bold">{{ $category->title }}</span>
@@ -379,7 +379,7 @@
                         </a>
                         <div class="w-full flex flex-col gap-2 p-3">
                             <a href="{{ route('product.show', [$product]) }}" class="block">
-                                <h3 class="text-gray-800 font-bold text-sm lg:text-base">{{ $product['title'] }}</h3>
+                                <h3 class="text-gray-800 font-bold max-xl:text-sm max-sm:text-xs">{{ $product['title'] }}</h3>
                             </a>
                             {{-- @foreach ($product->categories as $category)
                                 <span class="text-gray-500 text-xs font-bold">{{ $category->title }}</span>
@@ -430,13 +430,13 @@
 
     <!-- app -->
     <section class="2xl:container mx-auto w-full py-4 lg:py-10">
-        <div class="w-11/12 mx-auto flex flex-col lg:flex-row gap-4 lg:gap-6">
-            <div class="w-full lg:w-[30%] relative h-80 rounded-xl overflow-hidden"
+        <div class="w-11/12 mx-auto grid lg:grid-cols-10 sm:grid-cols-2 grid-cols-1 gap-4 ">
+            <div class="w-full relative xl:h-80 h-70 rounded-xl overflow-hidden lg:col-span-3"
                 style="box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);">
                 <div class="w-full flex flex-col gap-3 p-5">
-                    <h3 class="text-sm lg:text-xl text-gray-800 font-bold">اپلیکیشن ستاری گلد</h3>
-                    <span class="text-xs lg:text-sm font-bold text-gray-500">همیشه و همه جا</span>
-                    <span class="text-xs lg:text-sm font-bold text-gray-500">کنار شما هستیم</span>
+                    <h3 class="text-sm xl:text-xl lg:text-lg text-gray-800 font-bold">اپلیکیشن ستاری گلد</h3>
+                    <span class="sm:text-xs text-[10px] xl:text-sm font-bold text-gray-500">همیشه و همه جا</span>
+                    <span class="sm:text-xs text-[10px] xl:text-sm font-bold text-gray-500">کنار شما هستیم</span>
                 </div>
                 <div class="absolute size-56 bg-[#ffd28aaf] rounded-full backdrop-blur-xs -left-16 -bottom-20"
                     style="box-shadow: 0px 0px 20px 20px #ffd28aaf;"></div>
@@ -444,18 +444,18 @@
                     style="box-shadow: 0px 0px 15px 15px #e1a84f;"></div>
                 <img src="{{ asset('assets/img/mobile.png') }}" class="absolute w-30 left-0 -bottom-6 rotate-[15deg]"
                     alt="">
-                <div class="absolute flex flex-row items-center gap-2 bottom-14 right-4">
-                    <a href="#" class="flex flex-row items-center bg-[#f4f0ea] gap-1 py-1.5 px-2 rounded-md">
+                <div class="absolute flex max-xl:flex-col max-lg:flex-row items-center gap-2 bottom-14 right-4">
+                    <a href="#" class="max-xl:w-full max-lg:w-auto flex flex-row items-center bg-[#f4f0ea] gap-1 py-1.5 px-2 rounded-md">
                         <span class="text-xs text-gray-700">Play Store</span>
                         <img src="{{ asset('assets/img/play-store.png') }}" class="size-4" alt="">
                     </a>
-                    <a href="#" class="flex flex-row items-center bg-[#f4f0ea] gap-1 py-1.5 px-2 rounded-md">
+                    <a href="#" class="max-xl:w-full max-lg:w-auto flex flex-row items-center bg-[#f4f0ea] gap-1 py-1.5 px-2 rounded-md">
                         <span class="text-xs text-gray-700">Apple Store</span>
                         <img src="{{ asset('assets/img/apple-store.png') }}" class="size-4" alt="">
                     </a>
                 </div>
             </div>
-            <div class="w-full lg:w-[24%] relative h-80 rounded-xl overflow-hidden"
+            <div class="w-full relative xl:h-80 h-70 rounded-xl overflow-hidden lg:col-span-3"
                 style="box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);">
                 <img src="{{ asset('assets/img/educate.webp') }}" class="absolute size-full object-cover top-0 right-0"
                     alt="">
@@ -464,12 +464,12 @@
                     background: radial-gradient(circle, rgba(36, 28, 0, 0.1) 0%, rgba(0, 0, 0, 1) 70%);">
                     <div class="relative w-full h-full">
                         <div class="absolute bottom-4 right-0 px-5 backdrop-blur-xs pt-3 w-full">
-                            <h3 class="lg:text-lg font-bold text-white">
+                            <h3 class="xl:text-lg font-bold text-white">
                                 آموزش سرمایه گذاری در بازار طلا
                             </h3>
                             <div class="flex flex-col gap-1 mt-2">
-                                <span class="text-xs lg:text-sm text-gray-200">آموزش های مفید</span>
-                                <span class="text-xs lg:text-sm text-gray-200">آموزش های کامل و جامع</span>
+                                <span class="text-xs xl:text-sm text-gray-200">آموزش های مفید</span>
+                                <span class="text-xs xl:text-sm text-gray-200">آموزش های کامل و جامع</span>
                             </div>
                         </div>
                     </div>
@@ -482,11 +482,11 @@
                     </svg>
                 </div>
             </div>
-            <div class="w-full lg:w-[44%] relative h-80 rounded-xl overflow-hidden">
+            <div class="w-full relative xl:h-80 h-70 rounded-xl overflow-hidden lg:col-span-4 sm:col-span-2">
                 <img src="{{ asset('assets/img/gold-chart.jpg') }}" class="size-full object-cover" alt="">
                 <div class="absolute w-full h-full top-0 right-0 bg-black/40"></div>
                 <div class="absolute top-1/2 right-[6%] -translate-y-1/2">
-                    <h3 class="lg:text-xl font-bold text-white">تحلیل بازار طلا</h3>
+                    <h3 class="xl:text-xl lg:text-lg font-bold text-white">تحلیل بازار طلا</h3>
                     <p class="text-sm text-white font-bold w-2/3 mt-3 leading-[2]">
                         با جدید ترین تحلیل های بازار طلا سرمایه گذاری خود را شروع کنید
                     </p>
@@ -518,10 +518,10 @@
                 <h2 class="lg:text-xl text-gray-800 font-bold mb-3">نظرات کاربران</h2>
                 <span class="text-gray-500 font-bold text-sm">اعتماد شما بزرگترین سرمایه ماست</span>
             </div>
-            <div class="w-full flex items-center gap-3 lg:gap-5 overflow-x-auto px-3"
+            <div class="w-full  flex gap-3 lg:gap-5 overflow-x-auto px-3"
                 style="scrollbar-color: #e1a84f #e5e7eb00; scrollbar-width: thin;">
-                <div class="pb-3">
-                    <div class="w-[200px] lg:w-[360px] bg-white rounded-lg p-4">
+                <div class="lg:min-w-32/100 lg:max-w-32/100 sm:min-w-49/100 sm:max-w-49/100 min-w-full min-h-full max-w-full pb-3">
+                    <div class="w-full h-full bg-white rounded-lg p-4">
                         <div class="flex items-center gap-4">
                             <img src="{{ asset('assets/img/mrolyafam.png') }}" class="size-12 rounded-full object-cover"
                                 alt="">
@@ -556,8 +556,8 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="text-sm text-gray-700 leading-[1.5] mt-6">
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک
+                        <p class="lg:text-sm text-xs text-gray-700 leading-[1.5] mt-6 max-h-20 overflow-y-auto">
+                            لورم ایپسوم م متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گر م متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گر  متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک
                             است، چاپگرها و متون بلکه
 
                         </p>
@@ -567,8 +567,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="pb-3">
-                    <div class="w-[200px] lg:w-[360px] bg-white rounded-lg p-4">
+                <div class="lg:min-w-32/100 lg:max-w-32/100 sm:min-w-49/100 sm:max-w-49/100 min-w-full min-h-full max-w-full pb-3">
+                    <div class="w-full h-full bg-white rounded-lg p-4">
                         <div class="flex items-center gap-4">
                             <img src="{{ asset('assets/img/mrolyafam.png') }}" class="size-12 rounded-full object-cover"
                                 alt="">
@@ -603,8 +603,8 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="text-sm text-gray-700 leading-[1.5] mt-6">
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک
+                        <p class="lg:text-sm text-xs text-gray-700 leading-[1.5] mt-6 max-h-20 overflow-y-auto">
+                            لورم ایپسوم م متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گر م متن ساختگی  از طراحان گرافیک
                             است، چاپگرها و متون بلکه
 
                         </p>
@@ -614,8 +614,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="pb-3">
-                    <div class="w-[200px] lg:w-[360px] bg-white rounded-lg p-4">
+                <div class="lg:min-w-32/100 lg:max-w-32/100 sm:min-w-49/100 sm:max-w-49/100 min-w-full min-h-full max-w-full pb-3">
+                    <div class="w-full h-full bg-white rounded-lg p-4">
                         <div class="flex items-center gap-4">
                             <img src="{{ asset('assets/img/mrolyafam.png') }}" class="size-12 rounded-full object-cover"
                                 alt="">
@@ -650,8 +650,8 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="text-sm text-gray-700 leading-[1.5] mt-6">
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک
+                        <p class="lg:text-sm text-xs text-gray-700 leading-[1.5] mt-6 max-h-20 overflow-y-auto">
+                            لورم ایپسوم م متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گر م متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گر  متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک
                             است، چاپگرها و متون بلکه
 
                         </p>
@@ -661,8 +661,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="pb-3">
-                    <div class="w-[200px] lg:w-[360px] bg-white rounded-lg p-4">
+                <div class="lg:min-w-32/100 lg:max-w-32/100 sm:min-w-49/100 sm:max-w-49/100 min-w-full min-h-full max-w-full pb-3">
+                    <div class="w-full h-full bg-white rounded-lg p-4">
                         <div class="flex items-center gap-4">
                             <img src="{{ asset('assets/img/mrolyafam.png') }}" class="size-12 rounded-full object-cover"
                                 alt="">
@@ -697,8 +697,8 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="text-sm text-gray-700 leading-[1.5] mt-6">
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک
+                        <p class="lg:text-sm text-xs text-gray-700 leading-[1.5] mt-6 max-h-20 overflow-y-auto">
+                            لورم ایپسوم م متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گر م متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گر  متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک
                             است، چاپگرها و متون بلکه
 
                         </p>
@@ -708,6 +708,104 @@
                         </div>
                     </div>
                 </div>
+                <div class="lg:min-w-32/100 lg:max-w-32/100 sm:min-w-49/100 sm:max-w-49/100 min-w-full min-h-full max-w-full pb-3">
+                    <div class="w-full h-full bg-white rounded-lg p-4">
+                        <div class="flex items-center gap-4">
+                            <img src="{{ asset('assets/img/mrolyafam.png') }}" class="size-12 rounded-full object-cover"
+                                alt="">
+                            <div class="flex flex-col gap-2">
+                                <span class="text-sm text-gray-700 font-bold">محمدرضا علیافام</span>
+                                <div class="flex flex-row items-center gap-0.5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-yellow-500 w-3"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-yellow-500 w-3"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-yellow-500 w-3"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-yellow-500 w-3"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-yellow-500 w-3"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="lg:text-sm text-xs text-gray-700 leading-[1.5] mt-6 max-h-20 overflow-y-auto">
+                            لورم ایپسوم م متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گر م مفاده از طراحان گرافیک
+                            است، چاپگرها و متون بلکه
+
+                        </p>
+                        <div class="w-full flex justify-between items-center mt-4">
+                            <span class="text-xs text-gray-400 in-fa">14:22:53</span>
+                            <span class="text-xs text-gray-400 in-fa">1404/05/21</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:min-w-32/100 lg:max-w-32/100 sm:min-w-49/100 sm:max-w-49/100 min-w-full min-h-full max-w-full pb-3">
+                    <div class="w-full h-full bg-white rounded-lg p-4">
+                        <div class="flex items-center gap-4">
+                            <img src="{{ asset('assets/img/mrolyafam.png') }}" class="size-12 rounded-full object-cover"
+                                alt="">
+                            <div class="flex flex-col gap-2">
+                                <span class="text-sm text-gray-700 font-bold">محمدرضا علیافام</span>
+                                <div class="flex flex-row items-center gap-0.5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-yellow-500 w-3"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-yellow-500 w-3"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-yellow-500 w-3"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-yellow-500 w-3"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-yellow-500 w-3"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="lg:text-sm text-xs text-gray-700 leading-[1.5] mt-6 max-h-20 overflow-y-auto">
+                            لورم ایپسوم م متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گر م متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گر  متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک
+                            است، چاپگرها و متون بلکه
+
+                        </p>
+                        <div class="w-full flex justify-between items-center mt-4">
+                            <span class="text-xs text-gray-400 in-fa">14:22:53</span>
+                            <span class="text-xs text-gray-400 in-fa">1404/05/21</span>
+                        </div>
+                    </div>
+                </div>
+                
+             
+               
+               
             </div>
         </div>
     </section>
@@ -770,32 +868,34 @@
 
     <!-- app -->
     <section class="2xl:container mx-auto w-full py-4 lg:py-10">
-        <div class="w-11/12 mx-auto flex flex-col lg:flex-row gap-4 lg:gap-6">
-            <div class="w-full lg:w-[34%] relative h-40 lg:h-44 rounded-xl overflow-hidden"
+        <div class="w-11/12 mx-auto grid lg:grid-cols-10 sm:grid-cols-2 grid-cols-1 gap-4">
+            <div class="w-full relative h-40 lg:h-44 rounded-xl lg:col-span-3"
                 style="box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);">
                 <div class="w-full flex flex-col gap-3 p-5">
                     <h3 class="text-sm lg:text-xl text-gray-800 font-bold">خبرنامه ستاری گلد</h3>
-                    <span class="text-xs lg:text-sm font-bold text-gray-500">جدید ترین اخبار طلای آبشده و سپرده</span>
+                    <span class="sm:text-xs text-[10px] xl:text-sm font-bold text-gray-500">جدید ترین اخبار طلای آبشده و سپرده</span>
                 </div>
-                <div class="flex items-center gap-4 px-5">
-                    <a href="#" class="block bg-[#fbf7f3] px-3 py-1 text-xs text-gray-500">
-                        اخبار ایران درمورد بازار ارز
-                    </a>
-                    <a href="#" class="block bg-[#fbf7f3] px-3 py-1 text-xs text-gray-500">
-                        اخبار جهان انس جهانی طلا
-                    </a>
-                </div>
-                <div class="w-full flex justify-end p-2">
-                    <a href="#"
-                        class="group flex justify-center items-center w-1/3 gap-2 lg:gap-3 py-1.5 lg:py-2 rounded-full"
-                        style="background: #A56920;
-                                background: linear-gradient(0deg, rgba(165, 105, 32, 1) 0%, rgba(227, 171, 90, 1) 100%);">
-
-                        <span class="text-xs lg:text-sm font-bold text-white">عضویت</span>
-                    </a>
+                <div class="w-full flex justify-between items-center px-4">
+                    <div class="flex flex-col items-start gap-2  text-nowrap">
+                        <a href="#" class="block bg-[#fbf7f3] px-3 py-1 text-xs text-gray-500">
+                            اخبار ایران درمورد بازار ارز
+                        </a>
+                        <a href="#" class="block bg-[#fbf7f3] px-3 py-1 text-xs text-gray-500">
+                            اخبار جهان انس جهانی طلا
+                        </a>
+                    </div>
+                    <div class="flex justify-end">
+                        <a href="#"
+                            class="group flex justify-center items-center gap-2 lg:gap-3 py-1.5 lg:py-2 rounded-full px-4"
+                            style="background: #A56920;
+                                    background: linear-gradient(0deg, rgba(165, 105, 32, 1) 0%, rgba(227, 171, 90, 1) 100%);">
+    
+                            <span class="text-xs lg:text-sm font-bold text-white">عضویت</span>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="w-full lg:w-[24%] relative h-40 lg:h-44 rounded-xl flex flex-col justify-between p-3"
+            <div class="w-full relative h-40 lg:h-44 rounded-xl flex flex-col justify-between p-3 lg:col-span-3"
                 style="box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);">
                 <div class="flex flex-col justify-between items-end">
                     <div class="flex flex-row-reverse items-center gap-1">
@@ -835,7 +935,7 @@
                     </div>
                 </div>
             </div>
-            <div class="w-full lg:w-[40%] relative h-40 lg:h-44 rounded-xl overflow-hidden bg-[linear-gradient(90deg,#d8c3a5_0%,#f5efe6_30%,#ffffff_100%)]"
+            <div class="w-full relative h-40 lg:h-44 rounded-xl overflow-hidden bg-[linear-gradient(90deg,#d8c3a5_0%,#f5efe6_30%,#ffffff_100%)] lg:col-span-4 sm:col-span-2"
                 style="box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);">
                 <img src="{{ asset('assets/img/gold-bar.webp') }}" class="absolute -bottom-5 -left-5 w-1/3 object-cover"
                     alt="">
