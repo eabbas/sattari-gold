@@ -304,7 +304,6 @@ class UserController extends Controller
                 $roleIds []= $role->id;
             }
             $user->roleIds = $roleIds;
-            // dd($roleIds, $user);
         }
         foreach($roles as $role){
             switch($role->name){
@@ -486,5 +485,8 @@ class UserController extends Controller
             $row->delete();
         }
         return response()->json($row);
+    }
+    public function userDetail(User $user){
+        return response()->json($user);
     }
 }

@@ -118,7 +118,6 @@ const item_list = document.querySelectorAll(".item_list")
 item_list.forEach((item_list) => {
 
     const openBtn_edited = item_list.querySelector(".open-popup-edited")
-    console.log(openBtn_edited)
     const openBtn_look_edit = item_list.querySelector(".open-popup-look-edit")
     const popup_edit = item_list.querySelector(".popup-edit")
     const closeBtn_edit = item_list.querySelector(".close-popup-edit")
@@ -186,7 +185,7 @@ item_list.forEach((item_list) => {
 
 
 // لیست مشتری / تایید و بازبینی
-const items_2 = document.querySelectorAll(".item_2");
+const items_2 = document.querySelectorAll(".item_2")
 
 items_2.forEach((item_2) => {
 
@@ -196,11 +195,33 @@ items_2.forEach((item_2) => {
     const closeBtn_look_cont = item_2.querySelector(".close-popup-look-cont")
     const closeBtn_look_cont2 = item_2.querySelector(".close-popup-look-cont2")
 
+    let closeBtn = item_2.querySelector(".closeBtn")
+    closeBtn.addEventListener('click', () => {
+        popup_look_cont.classList.add("invisible")
+        popup_look_cont.classList.add("opacity-0")
+        popup_look_cont.classList.remove("opacity-100")
+        popup_look_cont.classList.remove("visible")
+    })
+
     openBtn_look_cont.addEventListener("click", () => {
         popup_look_cont.classList.remove("invisible")
         popup_look_cont.classList.remove("opacity-0")
-        popup_look_cont.classList.add("opacity-100")
-        popup_look_cont.classList.add("visible")
+        loader('open')
+        $.ajax({
+            url: api+'userDetail/'+item_2.dataset.userId,
+            type: "GET",
+            success: function(data){
+                console.log(data)
+                loader('close')
+            },
+            error: function(){
+                console.log('error')
+            }
+        })
+
+
+
+
     })
     closeBtn_look_cont.addEventListener("click", () => {
         popup_look_cont.classList.add("invisible")
@@ -215,3 +236,13 @@ items_2.forEach((item_2) => {
         popup_look_cont.classList.remove("visible")
     })
 })
+
+function loader(state) {
+    let loader = document.getElementById('loader')
+    if (state == 'open') {
+        loader.classList.remove('invisible', 'opacity-0')
+    }
+    if (state == 'close') {
+        loader.classList.add('invisible', 'opacity-0')
+    }
+}

@@ -15,7 +15,7 @@ function checkAll(){
 
 let rows = document.querySelectorAll('.check')
 let all = document.getElementById('all')
-let flag = true
+flag = true
 rows.forEach((row)=>{
     row.addEventListener('click', ()=>{
         if (!row.checked) {
