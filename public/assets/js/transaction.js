@@ -180,8 +180,7 @@ function transactionAct(isApproved) {
         success: function (response) {
             rows.forEach(row => {
                 if (response.id == row.dataset.transactionId) {
-                    console.log(response)
-                    console.log(row)
+      
                     let counter = row.children[0].innerText
                     row.innerHTML = `
                         <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
@@ -224,7 +223,7 @@ function transactionAct(isApproved) {
                             </button>
                         </td>
                         `
-                    console.log(response.stateColor);
+                    transactionPopup.classList.add('invisible', 'opacity-0')
                         
                 }
             })
