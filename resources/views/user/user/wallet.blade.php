@@ -168,6 +168,56 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
+                        <div class="w-full bg-white divide-y-1 divide-(--border-dashboard) p-2 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2 pb-2">
+                                    <span class="">
+                                     
+                                        <svg height="30px" width="30px" version="1.1" id="Layer_1"
+                                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            viewBox="0 0 511.882 511.882" xml:space="preserve">
+                                            <polygon style="fill:#F6BB42;"
+                                                points="350.216,176.572 278.374,158.615 37.038,264.123 0,338.207 125.753,374.324 386.13,258.531 " />
+                                            <polygon style="fill:#FFCE54;"
+                                                points="350.216,176.572 107.756,284.345 125.753,374.324 386.13,258.531 " />
+                                            <polygon style="fill:#E8AA3D;"
+                                                points="107.756,284.345 37.038,264.123 0.015,338.207 125.753,374.324 " />
+                                            <polygon style="fill:#F6BB42;"
+                                                points="475.969,212.682 404.127,194.717 162.791,300.232 125.753,374.324 251.504,410.41 511.882,294.625 " />
+                                            <polygon style="fill:#FFCE54;"
+                                                points="475.969,212.682 233.508,320.431 251.504,410.41 511.882,294.625 " />
+                                            <polygon style="fill:#E8AA3D;"
+                                                points="233.508,320.431 162.791,300.232 125.753,374.324 251.504,410.41 " />
+                                            <polygon style="fill:#F6BB42;"
+                                                points="396.316,119.429 324.488,101.473 103.867,198.435 66.843,272.519 192.596,308.621 432.245,201.379 " />
+                                            <polygon style="fill:#FFCE54;"
+                                                points="396.316,119.429 174.6,218.641 192.596,308.621 432.245,201.379 " />
+                                            <polygon style="fill:#E8AA3D;"
+                                                points="174.6,218.641 103.867,198.435 66.843,272.519 192.596,308.621 " />
+                                        </svg>
+                                    </span>
+                                    <span class="text-xs md:text-base text-(--text-secondary-dashboard) font-bold">
+                                        موجودی طلا
+                                    </span>
+                                </div>
+                                <div class="font-bold pb-2 in-fa">{{ $user->wallet->goldWeight }} گرم</div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3 pt-2">
+                                    <span class="text-(--text-secondary-dashboard) text-xs md:text-sm">
+                                        موجودی قابل برداشت
+                                    </span>
+                                </div>
+                                <div class="font-bold pt-2">
+                                    <span class="in-fa">{{ $user->wallet->goldWeight }}</span>
+                                    <span class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
+                                        گرم
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-span-6">
                         <div
                             class="flex items-center border-1 border-(--border-dashboard) rounded-lg divide-x-1 divide-(--border-dashboard) px-2 py-3 gap-2">

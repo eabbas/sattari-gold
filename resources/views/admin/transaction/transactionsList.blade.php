@@ -159,7 +159,7 @@
 
                         <tbody>
                             @foreach ($transactions as $transaction)
-                                <tr class="text-xs lg:text-base">
+                                <tr class="text-xs lg:text-base" data-transaction-id="{{ $transaction->id }}">
                                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                                         {{ $transaction->id }}
                                     </td>
@@ -199,7 +199,7 @@
                                     </td>
                                     <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
                                         <button
-                                            onclick="showTransaction('open', '{{ $transaction->wallet->user->name . ' ' . $transaction->wallet->user->family }}', '{{ $transaction->wallet->user->phoneNumber }}', '{{ $transaction->time . ' | ' . $transaction->date }}', '{{ $transaction->stateColor }}', '{{ $transaction->stateTitle }}', '{{ $transaction->type }}', '{{ $transaction->amount }}', '{{ $transaction->isApproved }}', '{{ $transaction->receipt }}')"
+                                            onclick="showTransaction('{{ $transaction->wallet->user->name . ' ' . $transaction->wallet->user->family }}', '{{ $transaction->wallet->user->phoneNumber }}', '{{ $transaction->time . ' | ' . $transaction->date }}', '{{ $transaction->stateColor }}', '{{ $transaction->stateTitle }}', '{{ $transaction->type }}', '{{ $transaction->amount }}', '{{ $transaction->isApproved }}', '{{ $transaction->id }}', '{{ $transaction->receipt }}')"
                                             class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer openPopup">
                                             مشاهده
                                         </button>
@@ -279,15 +279,15 @@
                     class="col-span-6 border-1 border-(--border-dashboard) rounded-lg p-2 items-center justify-center hidden">
                     <img class="w-[90%] h-50 bg-zinc-300" src="" alt="">
                 </div>
-                <div id="transactionControl" class="w-full grid grid-cols-2 gap-3 col-span-6">
-                    <button
+                <div id="transactionControl" class="w-full grid grid-cols-2 gap-3 col-span-6" data-transaction-id="">
+                    <button onclick="transactionAct('1')"
                         class="bg-green-50 text-green-500 border-2 border-green-400 transition-all duration-300 hover:bg-green-500 hover:border-green-500 hover:text-white font-bold px-2 py-4 rounded-md text-center cursor-pointer">
                         تایید تراکنش
-                        </butt>
-                        <button
-                            class="bg-red-50 text-red-500 border-2 border-red-400 transition-all duration-300 hover:bg-red-500 hover:border-red-500 hover:text-white font-bold px-2 py-4 rounded-md text-center cursor-pointer">
-                            رد تراکنش
-                        </button>
+                    </button>
+                    <button onclick="transactionAct('-1')"
+                        class="bg-red-50 text-red-500 border-2 border-red-400 transition-all duration-300 hover:bg-red-500 hover:border-red-500 hover:text-white font-bold px-2 py-4 rounded-md text-center cursor-pointer">
+                        رد تراکنش
+                    </button>
                 </div>
             </div>
         </div>
