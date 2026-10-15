@@ -518,10 +518,10 @@
                 <h2 class="lg:text-xl text-gray-800 font-bold mb-3">نظرات کاربران</h2>
                 <span class="text-gray-500 font-bold text-sm">اعتماد شما بزرگترین سرمایه ماست</span>
             </div>
-            <div class="w-full flex items-center gap-3 lg:gap-5 overflow-x-auto px-3"
+            <div class="w-full  flex gap-3 lg:gap-5 overflow-x-auto px-3"
                 style="scrollbar-color: #e1a84f #e5e7eb00; scrollbar-width: thin;">
-                <div class="lg:min-w-32/100 lg:max-w-32/100 sm:min-w-49/100 sm:max-w-49/100 min-w-full max-w-full pb-3">
-                    <div class="w-full bg-white rounded-lg p-4">
+                <div class="lg:min-w-32/100 lg:max-w-32/100 sm:min-w-49/100 sm:max-w-49/100 min-w-full min-h-full max-w-full pb-3">
+                    <div class="w-full h-full bg-white rounded-lg p-4">
                         <div class="flex items-center gap-4">
                             <img src="{{ asset('assets/img/mrolyafam.png') }}" class="size-12 rounded-full object-cover"
                                 alt="">
@@ -556,8 +556,8 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="lg:text-sm text-xs text-gray-700 leading-[1.5] mt-6">
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک
+                        <p class="lg:text-sm text-xs text-gray-700 leading-[1.5] mt-6 max-h-20 overflow-y-auto">
+                            لورم ایپسوم م متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گر م متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گر  متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک
                             است، چاپگرها و متون بلکه
 
                         </p>
@@ -567,8 +567,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="lg:min-w-32/100 lg:max-w-32/100 sm:min-w-49/100 sm:max-w-49/100 min-w-full max-w-full pb-3">
-                    <div class="w-full bg-white rounded-lg p-4">
+                <div class="lg:min-w-32/100 lg:max-w-32/100 sm:min-w-49/100 sm:max-w-49/100 min-w-full min-h-full max-w-full pb-3">
+                    <div class="w-full h-full bg-white rounded-lg p-4">
                         <div class="flex items-center gap-4">
                             <img src="{{ asset('assets/img/mrolyafam.png') }}" class="size-12 rounded-full object-cover"
                                 alt="">
@@ -603,8 +603,8 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="lg:text-sm text-xs text-gray-700 leading-[1.5] mt-6">
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک
+                        <p class="lg:text-sm text-xs text-gray-700 leading-[1.5] mt-6 max-h-20 overflow-y-auto">
+                            لورم ایپسوم م متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گر م متن ساختگی  از طراحان گرافیک
                             است، چاپگرها و متون بلکه
 
                         </p>
@@ -614,8 +614,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="lg:min-w-32/100 lg:max-w-32/100 sm:min-w-49/100 sm:max-w-49/100 min-w-full max-w-full pb-3">
-                    <div class="w-full bg-white rounded-lg p-4">
+                <div class="lg:min-w-32/100 lg:max-w-32/100 sm:min-w-49/100 sm:max-w-49/100 min-w-full min-h-full max-w-full pb-3">
+                    <div class="w-full h-full bg-white rounded-lg p-4">
                         <div class="flex items-center gap-4">
                             <img src="{{ asset('assets/img/mrolyafam.png') }}" class="size-12 rounded-full object-cover"
                                 alt="">
@@ -650,8 +650,8 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="lg:text-sm text-xs text-gray-700 leading-[1.5] mt-6">
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک
+                        <p class="lg:text-sm text-xs text-gray-700 leading-[1.5] mt-6 max-h-20 overflow-y-auto">
+                            لورم ایپسوم م متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گر م متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گر  متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک
                             است، چاپگرها و متون بلکه
 
                         </p>
@@ -661,8 +661,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="lg:min-w-32/100 lg:max-w-32/100 sm:min-w-49/100 sm:max-w-49/100 min-w-full max-w-full pb-3">
-                    <div class="w-full bg-white rounded-lg p-4">
+                <div class="lg:min-w-32/100 lg:max-w-32/100 sm:min-w-49/100 sm:max-w-49/100 min-w-full min-h-full max-w-full pb-3">
+                    <div class="w-full h-full bg-white rounded-lg p-4">
                         <div class="flex items-center gap-4">
                             <img src="{{ asset('assets/img/mrolyafam.png') }}" class="size-12 rounded-full object-cover"
                                 alt="">
@@ -697,8 +697,8 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="lg:text-sm text-xs text-gray-700 leading-[1.5] mt-6">
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک
+                        <p class="lg:text-sm text-xs text-gray-700 leading-[1.5] mt-6 max-h-20 overflow-y-auto">
+                            لورم ایپسوم م متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گر م متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گر  متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک
                             است، چاپگرها و متون بلکه
 
                         </p>
@@ -708,6 +708,103 @@
                         </div>
                     </div>
                 </div>
+                <div class="lg:min-w-32/100 lg:max-w-32/100 sm:min-w-49/100 sm:max-w-49/100 min-w-full min-h-full max-w-full pb-3">
+                    <div class="w-full h-full bg-white rounded-lg p-4">
+                        <div class="flex items-center gap-4">
+                            <img src="{{ asset('assets/img/mrolyafam.png') }}" class="size-12 rounded-full object-cover"
+                                alt="">
+                            <div class="flex flex-col gap-2">
+                                <span class="text-sm text-gray-700 font-bold">محمدرضا علیافام</span>
+                                <div class="flex flex-row items-center gap-0.5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-yellow-500 w-3"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-yellow-500 w-3"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-yellow-500 w-3"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-yellow-500 w-3"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-yellow-500 w-3"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="lg:text-sm text-xs text-gray-700 leading-[1.5] mt-6 max-h-20 overflow-y-auto">
+                            لورم ایپسوم م متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گر م مفاده از طراحان گرافیک
+                            است، چاپگرها و متون بلکه
+
+                        </p>
+                        <div class="w-full flex justify-between items-center mt-4">
+                            <span class="text-xs text-gray-400 in-fa">14:22:53</span>
+                            <span class="text-xs text-gray-400 in-fa">1404/05/21</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:min-w-32/100 lg:max-w-32/100 sm:min-w-49/100 sm:max-w-49/100 min-w-full min-h-full max-w-full pb-3">
+                    <div class="w-full h-full bg-white rounded-lg p-4">
+                        <div class="flex items-center gap-4">
+                            <img src="{{ asset('assets/img/mrolyafam.png') }}" class="size-12 rounded-full object-cover"
+                                alt="">
+                            <div class="flex flex-col gap-2">
+                                <span class="text-sm text-gray-700 font-bold">محمدرضا علیافام</span>
+                                <div class="flex flex-row items-center gap-0.5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-yellow-500 w-3"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-yellow-500 w-3"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-yellow-500 w-3"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-yellow-500 w-3"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="fill-yellow-500 w-3"
+                                        viewBox="0 0 576 512">
+                                        <path
+                                            d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="lg:text-sm text-xs text-gray-700 leading-[1.5] mt-6 max-h-20 overflow-y-auto">
+                            لورم ایپسوم م متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گر م متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گر  متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک
+                            است، چاپگرها و متون بلکه
+
+                        </p>
+                        <div class="w-full flex justify-between items-center mt-4">
+                            <span class="text-xs text-gray-400 in-fa">14:22:53</span>
+                            <span class="text-xs text-gray-400 in-fa">1404/05/21</span>
+                        </div>
+                    </div>
+                </div>
+                
+             
+               
                
             </div>
         </div>

@@ -95,8 +95,8 @@
                             ما</a>
                     </li>
                 </ul>
-                <div class="lg:w-1/4 flex justify-end items-center">
-                    <div class="flex items-center gap-4">
+                <div class="lg:w-1/4 flex gap-4 justify-end items-center">
+                    <div class="flex items-center gap-4 p-1.5 bg-white rounded-full border-2 border-gray-200">
                         @if (!Auth::check())
                         <a href="{{ route('user.login') }}" class="flex items-center gap-3 rounded-full px-4 py-2"
                             style="background:#94570E; background: linear-gradient(0deg, rgba(148, 87, 14, 1) 0%, rgba(219, 167, 96, 1) 100%);">
@@ -107,16 +107,16 @@
                             </div>
                         </a>
                         @endif
-                        @if (Auth::check())
-                        <a href="{{ route('user.profile') }}" class="cursor-pointer p-2 rounded-full bg-white max-lg:hidden">
-                            
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="size-6 text-gray-800"><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
-                        </a>
-                        @endif
-                        <button id="openSearchSectionBtn" class="cursor-pointer p-2 rounded-full bg-white">
+                        <button id="openSearchSectionBtn" class="cursor-pointer rounded-full bg-white">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="size-6 text-gray-800"><path d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"/></svg>
                         </button>
                     </div>
+                    @if (Auth::check())
+                    <a href="{{ route('user.profile') }}" class="cursor-pointer p-2 rounded-full bg-white max-lg:hidden">
+                        
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="size-6 text-gray-800"><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
+                    </a>
+                    @endif
                 </div>
             </div>
         </div>

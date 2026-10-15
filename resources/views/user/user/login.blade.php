@@ -42,7 +42,7 @@
         <section class="w-11/12 mx-auto flex items-center justify-between">
             <!-- بازگشت -->
             <a href="{{ route('home') }}"
-                class="text-(--color-primary) px-4 py-2 border-1 border-(--color-border-gold) flex items-center justify-center mt-10 rounded-full">
+                class="text-(--color-primary) px-4 py-2 border-1 border-(--color-border-gold) flex items-center justify-center mt-5 rounded-full">
                 <svg fill="currentColor" class="group-hover:-translate-x-1 transition size-5 rotate-180"
                     viewBox="0 0 256 256">
                     <path
@@ -55,10 +55,10 @@
         </section>
         <section class="w-11/12 mx-auto flex items-start justify-between gap-10 mt-10">
             <div id="login"
-                class="w-full md:w-6/12 xl:w-4/12 bg-(--color-primary-soft)/50 relative z-2 rounded-2xl mx-auto border-1 border-(--color-border-gold) h-auto py-5 px-4">
+                class="w-full md:w-7/12 xl:w-4/12 bg-(--color-primary-soft)/80 relative z-2 rounded-2xl mx-auto border-1 border-(--color-border-gold) h-auto py-5 px-4">
                 <div class="w-12/12 flex items-center justify-center gap-5 ml-5">
                     <div
-                        class="w-3/10 flex items-center justify-center text-xl font-bold text-(--color-primary) p-3 border-b-2 border-(--color-border-gold) cursor-pointer">
+                        class="w-3/10 flex items-center justify-center lg:text-xl text-lg font-bold text-(--color-primary) p-3 border-b-2 border-(--color-border-gold) cursor-pointer">
                         ورود</div>
                 </div>
                 <form action="{{ route('user.checkUser') }}" method="POST"
@@ -66,65 +66,65 @@
                     @csrf
                     <div class="w-full flex flex-col gap-y-3">
                         <div class="w-full flex flex-col gap-2">
-                            <label for="phoneNumber" class="text-(--color-primary)">شماره تلفن</label>
+                            <label for="phoneNumber" class="text-(--color-primary) max-sm:text-sm font-bold">شماره تلفن</label>
                             <input id="phoneNumber" type="number" placeholder="شماره تلفن" name="phoneNumber"
                                 value="{{ old('phoneNumber') }}"
-                                class="placeholder:text-right placeholder-(--color-zinc-400) text-sm block w-full rounded-md border-3 border-(--color-border-strong) px-3 py-3 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
+                                class="placeholder:text-right placeholder-(--color-zinc-400) max-md:text-sm block w-full rounded-md sm:border-3 border-2 border-(--color-border-strong) px-3 sm:py-3 py-2 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
                             @error('phoneNumber')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="w-full flex flex-col gap-2">
-                            <label for="nationalCode" class="text-(--color-primary)">کد ملی</label>
+                            <label for="nationalCode" class="text-(--color-primary) max-sm:text-sm font-bold">کد ملی</label>
                             <input id="nationalCode" type="number" placeholder="کد ملی" name="nationalCode"
                                 value="{{ old('nationalCode') }}"
-                                class="placeholder:text-right placeholder-(--color-zinc-400) text-sm block w-full rounded-md border-3 border-(--color-border-strong) px-3 py-3 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
+                                class="placeholder:text-right placeholder-(--color-zinc-400) max-md:text-sm block w-full rounded-md sm:border-3 border-2 border-(--color-border-strong) px-3 sm:py-3 py-2 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
                             @error('nationalCode')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="w-full flex flex-col gap-2">
-                            <label for="password" class="text-(--color-primary)">رمز عبور</label>
+                            <label for="password" class="text-(--color-primary) max-sm:text-sm font-bold">رمز عبور</label>
                             <input id="password" type="password" placeholder="رمز عبور" name="password"
-                                class="placeholder:text-right placeholder-(--color-zinc-400) text-sm block w-full rounded-md border-3 border-(--color-border-strong) px-3 py-3 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
+                                class="placeholder:text-right placeholder-(--color-zinc-400) max-md:text-sm block w-full rounded-md sm:border-3 border-2 border-(--color-border-strong) px-3 sm:py-3 py-2 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
                             @error('password')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="w-full flex flex-row justify-between items-center gap-2">
                             <div for="accept"
-                                class="text-sm flex flex-row justify-start items-center gap-2 text-gray-400">
+                                class="text-sm max-md:text-xs flex flex-row justify-start items-center gap-2 text-gray-700">
                                 رمز عبور خود را
                                 <a href="{{ route('user.forgetPassword') }}" class="text-gray-800 font-bold">فراموش
                                     کردم</a>
                             </div>
                             <a href="{{ route('user.loginWithCode') }}"
-                                class="text-sm flex flex-row justify-start items-center gap-2 text-gray-400">ورود با
+                                class="text-sm max-md:text-xs flex flex-row justify-start items-center gap-2 text-gray-700">ورود با
                                 کد
                                 تایید</a>
                         </div>
                         <button onclick="checkAuth(event)"
-                            class="cursor-pointer w-full flex items-center justify-center gap-x-1 text-md font-bold mt-5 py-3 rounded-lg text-white bg-[image:var(--gradient-gold)] hover:opacity-85 transition">
+                            class="cursor-pointer w-full flex items-center justify-center gap-x-1 text-sm max-md:text-xs font-bold mt-5 py-3 rounded-lg text-white bg-[image:var(--gradient-gold)] hover:opacity-85 transition">
                             ورود
                         </button>
                         <div class="flex items-center justify-center gap-x-2 mt-3">
-                            <span class="text-lg text-(--color-zinc-800)">حساب کاربری ندارید؟</span>
+                            <span class="max-sm:text-sm text-(--color-zinc-800)">حساب کاربری ندارید؟</span>
                             <a href="{{ route('user.signup') }}"
-                                class="text-lg text-(--color-primary) font-bold cursor-pointer underline">ثبت نام کنید!
+                                class="max-sm:text-sm text-(--color-primary) font-bold cursor-pointer underline">ثبت نام کنید!
                             </a>
                         </div>
                     </div>
                 </form>
             </div>
-            <div class="w-fit lg:w-8/12 h-full hidden md:flex flex-col items-start justify-start mt-5">
-                <div class="relative px-5 py-3 flex flex-col gap-5">
+            <div class="w-5/12 lg:w-8/12 h-full hidden md:flex flex-col items-start justify-start mt-5">
+                <div class="relative py-3 flex flex-col gap-5 ">
                     <div class="absolute inset-0 bg-white/5 backdrop-blur-sm rounded-lg"></div>
-                    <div class="relative z-10 text-5xl font-bold flex flex-col gap-5 bg-inherit">
+                    <div class="relative z-10 xl:text-5xl lg:text-4xl text-3xl font-bold flex flex-col gap-5 bg-inherit px-4">
                         <span class="">به دنیای ارزشمند طلا</span>
                         <span class="text-(--color-primary)">خوش آمدید</span>
                     </div>
-                    <div class="relative z-10 w-90 line-clamp-2">
-                        <span class="text-(--color-text-secondary)">با ثبت نام در ستاری گلد، به جدید ترین قیمت ها،
+                    <div class="relative z-10 px-4">
+                        <span class="text-(--color-text-secondary) max-lg:text-sm">با ثبت نام در ستاری گلد، به جدید ترین قیمت ها،
                             محصولات متنوع و امکانات ویژه دسترسی پیدا کنید</span>
                     </div>
                 </div>
