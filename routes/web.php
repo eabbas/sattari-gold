@@ -13,28 +13,23 @@ use App\Http\Controllers\WalletController;
 use App\Http\Middleware\checkAdminMiddleware;
 use App\Http\Middleware\checkIsActive;
 use App\Http\Middleware\checklogin;
-use App\Models\logo;
-use App\Models\transaction;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\deal;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
-Route::get('/x', function () {
-    return view('admin.app.x');
-});
+use App\Models\transaction;
+use App\Models\logo;
+use App\Models\role;
+use App\Models\User;
 
 Route::get('/z', function () {
-    return view('dashboard_home_new');
+    $logo = logo::first();
+    return view('dashboard_home_new', ['logo' => $logo]);
 });
 
 Route::get('/y', function () {
     $logo = logo::first();
     return view('setting_new', ['logo' => $logo]);
-});
-
-Route::get('/s', function () {
-    $logo = logo::first();
-    return view('admin.deal.index_previos', ['logo' => $logo]);
 });
 
 Route::get('/p', function () {
@@ -49,7 +44,9 @@ Route::get('/u', function () {
 
 Route::get('/i', function () {
     $logo = logo::first();
-    return view('admin.user.index_previos', ['logo' => $logo]);
+    $users = User::paginate(10);
+    $roles = role::all();
+    return view('admin.user.index_previos', ['logo' => $logo, 'users' => $users, 'roles' => $roles]);
 });
 
 Route::get('/t', function () {
@@ -96,7 +93,6 @@ Route::group([
     Route::post('/store', 'store')->name('store');
     Route::post('/adminStore', 'adminStore')->name('adminStore');
     Route::get('/logout', 'logout')->name('logout');
-    Route::get('/signupUser', 'adminSignup')->middleware(checkAdminMiddleware::class)->name('admin_create_user');
     Route::get('/index', 'index')->middleware(checkAdminMiddleware::class)->name('index');
     Route::post('/edit', 'edit')->name('edit');
     Route::post('/profileEdit', 'profileEdit')->name('profileEdit');
@@ -110,7 +106,6 @@ Route::group([
     Route::get('/profile/{user?}', 'profile')->middleware(checklogin::class)->missing(function () {
         return to_route('missing');
     })->name('profile');
-    // Route::post('/deleteAll', 'deleteAll')->name('deleteAll');
 });
 
 // settings routes
