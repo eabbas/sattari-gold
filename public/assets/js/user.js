@@ -211,9 +211,23 @@ items_2.forEach((item_2) => {
             url: api+'userDetail/'+item_2.dataset.userId,
             type: "GET",
             success: function(data){
-                console.log(data)
                 loader('close')
                 item_2.querySelector('.detailBox').classList.remove('invisible', 'opacity-0')
+                item_2.querySelector('.name').value = data.name 
+                item_2.querySelector('.family').value = data.family
+                item_2.querySelector('.phoneNumber').value = data.phoneNumber 
+                item_2.querySelector('.nationalCode').value = data.nationalCode 
+                let isApprovedOptions = item_2.querySelector('.isApproved').children
+                for(let option of isApprovedOptions){
+                    if(option.value == data.isApproved){
+                        option.selected = true
+                    }
+                }
+                if(data.isActive == 1){
+                    item_2.querySelector('#isActive' + data.id).checked = true
+                } else {
+                    item_2.querySelector('#isActive' + data.id).checked = false
+                }
             },
             error: function(){
                 console.log('error')

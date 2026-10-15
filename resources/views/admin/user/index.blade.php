@@ -804,32 +804,32 @@
                                                         <div class="col-span-1 md:col-span-3 text-start">
                                                             نام
                                                             <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
-                                                                type="text" name="" id="name">
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) name"
+                                                                type="text" name="" id="">
                                                         </div>
                                                         <div class="col-span-1 md:col-span-3 text-start">
                                                             نام خانوادگی
                                                             <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
-                                                                type="text" name="" id="family">
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) family"
+                                                                type="text" name="" id="">
                                                         </div>
                                                         <div class="col-span-1 md:col-span-3 text-start">
                                                             کد ملی
                                                             <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
-                                                                type="text" name="" id="nationalCode">
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa nationalCode"
+                                                                type="text" name="" dir="ltr" id="">
                                                         </div>
                                                         <div class="col-span-1 md:col-span-3 text-start">
                                                             شماره تلفن
                                                             <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
-                                                                type="text" name="" id="phoneNumber">
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa phoneNumber"
+                                                                type="text" name="" dir="ltr" id="">
                                                         </div>
                                                         <div class="col-span-1 md:col-span-2 text-start">
                                                             وضعیت تایید
                                                             <select
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
-                                                                name="" id="isApproved">
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) isApproved"
+                                                                name="" id="">
                                                                 <option value="0">در انتظار</option>
                                                                 <option value="1">تایید</option>
                                                                 <option value="-1">رد</option>
@@ -838,8 +838,8 @@
                                                         <div class="col-span-1 md:col-span-2 text-start">
                                                             نقش
                                                             <select
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
-                                                                name="" id="roles" multiple size="1">
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) roles"
+                                                                name="" id="" multiple size="1">
                                                                 @foreach ($roles as $role)
                                                                     <option value="{{ $role->id }}"
                                                                         @if (in_array($role->id, $user->roleIds)) selected @endif>
@@ -847,28 +847,17 @@
                                                                 @endforeach
                                                             </select>
                                                         </div>
-                                                        {{-- <div class="flex items-center gap-4">
-                                                            <label for="isActive">فعال : </label>
-                                                            <label for="isActive"
-                                                                class="w-[50px] h-[28px] flex rounded-full cursor-pointer relative">
-                                                                <input type="checkbox" name="isActive" value="1"
-                                                                    id="isActive" hidden class="peer">
-                                                                <span
-                                                                    class="size-full bg-gray-300 shadow-inner rounded-full peer-checked:bg-[#1B84FF] transition-all duration-300"></span>
-                                                                <span
-                                                                    class="size-[20px] rounded-full bg-white absolute top-1 left-1 peer-checked:translate-x-[22px] transition-all duration-300 shadow-md"></span>
-                                                            </label>
-                                                        </div> --}}
+                                      
                                                         <div
                                                             class="border-1 border-(--border-dashboard) h-fit rounded-md hover:shadow-sm transition-all col-span-2 md:col-span-2 flex items-center justify-between w-full py-2 px-4 mt-[30px]">
                                                             <div class="w-full flex justify-between items-center">
-                                                                <label for="isActive"
+                                                                <label for="isActive{{ $user->id }}"
                                                                     class="w-[calc(100%-50px)] text-start cursor-pointer">فعال
                                                                     : </label>
-                                                                <label for="isActive"
+                                                                <label for="isActive{{ $user->id }}"
                                                                     class="w-[50px] h-[28px] flex rounded-full cursor-pointer relative">
                                                                     <input type="checkbox" name="isActive" value="1"
-                                                                        id="isActive" hidden class="peer cursor-pointer">
+                                                                        id="isActive{{ $user->id }}" hidden class="peer cursor-pointer">
                                                                     <span
                                                                         class="size-full bg-gray-300 shadow-inner rounded-full peer-checked:bg-[#1B84FF] transition-all duration-300"></span>
                                                                     <span
@@ -876,14 +865,9 @@
                                                                 </label>
                                                             </div>
                                                         </div>
-                                                        {{-- <div
-                                                            class="col-span-2 md:col-span-6 flex items-center justify-start gap-3 text-black">
-                                                            <input id="massege" type="checkbox" name=""
-                                                                class="appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
-                                                            ارسال پیامک تایید ثبت نام در اپلیکیشن
-                                                        </div> --}}
+                                           
                                                         <button
-                                                            class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold">ثبت</button>
+                                                            class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold submitBtn">ثبت</button>
                                                         <button
                                                             class="col-span-1 md:col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold closeBtn">
                                                             لغو</button>
