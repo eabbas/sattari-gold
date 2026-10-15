@@ -17,3 +17,4 @@ Route::post('/getTransactionFilter', [SearchController::class, 'getTransactionFi
 Route::post('/submitChanges', [WalletController::class, 'submitChanges']);
 
 Route::get('/userDetail/{user}', [UserController::class, 'userDetail']);
+Route::post('/updateUser', [UserController::class, 'update']);

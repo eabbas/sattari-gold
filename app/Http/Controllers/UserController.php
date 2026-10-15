@@ -338,7 +338,7 @@ class UserController extends Controller
     }
     public function update(Request $request)
     {
-        // dd($request->all());
+        return response()->json($request->all());
         $validated = $request->validate(
             [
                 'popupName' => ['required'],

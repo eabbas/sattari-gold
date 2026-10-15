@@ -30,7 +30,6 @@
         </div>
     @endif
 
-    <!-- list_users_start -->
     <div class="w-full flex flex-col gap-3 justify-start items-center">
         <!-- لیست مشتریان / هدر -->
         <section
@@ -867,10 +866,9 @@
                                                         </div>
                                            
                                                         <button
-                                                            class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold submitBtn">ثبت</button>
+                                                            class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold submitBtn cursor-pointer transition-all duration-300 hover:bg-(--primary-dashboard) hover:text-white">ثبت</button>
                                                         <button
-                                                            class="col-span-1 md:col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold closeBtn">
-                                                            لغو</button>
+                                                            class="col-span-1 md:col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold closeBtn cursor-pointer transition-all duration-300 hover:bg-(--danger-dashboard) hover:text-white">لغو</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -900,7 +898,6 @@
     </div>
     {{-- loader --}}
 
-    <!-- list_users_start -->
     <script src="{{ asset('assets/js/user.js') }}"></script>
     <script src="{{ asset('assets/js/checkAll.js') }}"></script>
 @endsection
