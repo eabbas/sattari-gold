@@ -213,27 +213,27 @@ items_2.forEach((item_2) => {
             success: function(data){
                 console.log(data)
                 loader('close')
+                item_2.querySelector('.detailBox').classList.remove('invisible', 'opacity-0')
             },
             error: function(){
                 console.log('error')
             }
         })
 
-
-
-
     })
     closeBtn_look_cont.addEventListener("click", () => {
         popup_look_cont.classList.add("invisible")
         popup_look_cont.classList.add("opacity-0")
-        popup_look_cont.classList.remove("opacity-100")
-        popup_look_cont.classList.remove("visible")
+        document.querySelectorAll('.detailBox').forEach(box=>{
+            box.classList.add('invisible', 'opacity-0')
+        })
     })
     closeBtn_look_cont2.addEventListener("click", () => {
         popup_look_cont.classList.add("invisible")
         popup_look_cont.classList.add("opacity-0")
-        popup_look_cont.classList.remove("opacity-100")
-        popup_look_cont.classList.remove("visible")
+        document.querySelectorAll('.detailBox').forEach(box => {
+            box.classList.add('invisible', 'opacity-0')
+        })
     })
 })
 

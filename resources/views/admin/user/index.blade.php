@@ -782,17 +782,17 @@
                                                 class="popup-look-cont fixed z-50 w-full h-dvh top-0 left-1/2 -translate-x-1/2  invisible opacity-0 transition-all flex items-center justify-center">
 
                                                 <div
-                                                    class="close-popup-look-cont2 absolute z-49 w-full h-dvh bg-black/30 left-1/2 -translate-x-1/2">
+                                                    class="close-popup-look-cont2 absolute z-49 w-full h-dvh bg-black/50 left-1/2 -translate-x-1/2">
                                                 </div>
                                                 <div
-                                                    class="relative z-51 w-[80%] md:w-200 bg-white rounded-md px-3 py-2 hidden detailBox">
+                                                    class="relative z-51 w-[80%] md:w-200 bg-white rounded-md px-3 py-2 invisible opacity-0 transition-all duration-300 detailBox">
                                                     <div
                                                         class="w-full flex items-center justify-between border-b-1 border-(--border-dashboard) pb-2">
                                                         <div class="text-sm md:text-base font-bold text-nowrap">بازبینی
                                                             اطلاعات
                                                             مشتری و تایید</div>
                                                         <div class="close-popup-look-cont">
-                                                            <svg class="size-6" fill="currentColor"
+                                                            <svg class="size-6 cursor-pointer" fill="currentColor"
                                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
                                                                 <path
                                                                     d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z">
@@ -889,23 +889,6 @@
                                                             لغو</button>
                                                     </div>
                                                 </div>
-
-
-                                                {{-- loader --}}
-
-                                                <div id="loader"
-                                                    class="w-full h-full bg-black/50 fixed top-0 right-0 z-999 flex items-center justify-center transition-all duration-300 invisible opacity-0">
-                                                    <div
-                                                        class="p-10 bg-white shadow-xl rounded-lg flex flex-col items-center gap-10">
-                                                        <span
-                                                            class="w-20 h-20 animate-spin rounded-full border-4 border-yellow-100 border-t-yellow-600"></span>
-                                                        <p class="text-gray-600 font-bold text-xl">در حال بارگذاری لطفا
-                                                            شکیبا باشید....</p>
-                                                    </div>
-                                                </div>
-
-                                                {{-- loader --}}
-
                                             </div>
                                             <button
                                                 class="w-3/6 bg-(--danger-dashboard) text-white rounded-md px-2 py-2 cursor-pointer text-nowrap">
@@ -921,6 +904,18 @@
             </div>
         </section>
     </div>
+
+    {{-- loader --}}
+    <div id="loader"
+        class="w-full h-full fixed top-0 right-0 z-999 flex items-center justify-center transition-all duration-300 invisible opacity-0">
+        <div class="p-10 bg-white shadow-xl rounded-lg flex flex-col items-center gap-10">
+            <span class="w-20 h-20 animate-spin rounded-full border-4 border-yellow-100 border-t-yellow-600"></span>
+            <p class="text-gray-600 font-bold text-xl">در حال بارگذاری لطفا
+                شکیبا باشید....</p>
+        </div>
+    </div>
+    {{-- loader --}}
+
     <!-- list_users_start -->
     <script src="{{ asset('assets/js/user.js') }}"></script>
     <script src="{{ asset('assets/js/checkAll.js') }}"></script>
