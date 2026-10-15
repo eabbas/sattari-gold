@@ -19,10 +19,11 @@ document.addEventListener('click', (e) => {
 window.addEventListener('scroll', () => {
    const header = document.getElementById('mainHeader')
    if (window.scrollY > 80) {
-      header.classList.add('backdrop-blur-sm')
+      header.classList.add('bg-white')
       header.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)'
    } else {
       header.style.boxShadow = 'none'
+      header.classList.remove('bg-white')
       header.classList.remove('backdrop-blur-sm')
    }
 })
