@@ -39,7 +39,7 @@ class LogoController extends Controller
                     'link' => $request->link
                 ]
             );
-            return to_route('settings.logo.create')->with('message', 'لوگوی جدید برای سایت ایجاد شد.');
+            return to_route('logo.create')->with('message', 'لوگوی جدید برای سایت ایجاد شد.');
         }
     }
 }
