@@ -110,9 +110,6 @@ document.querySelectorAll('.approvedUsers').forEach(row=>{
     })
 })
 
-
-
-
 // لیست مشتری / لیست مشتری - مشتریان در انتظار تایید
 let confirmed = document.getElementById("confirmed");
 let pending = document.getElementById("pending");
@@ -137,7 +134,6 @@ function conpen(state, el) {
     }
 }
 
-
 // لیست مشتری / انتخاب همه
 const selectAll = document.querySelector("#selectAll")
 const rowCheckboxes = document.querySelectorAll(".row-checkbox")
@@ -148,7 +144,6 @@ selectAll.addEventListener("change", () => {
         checkbox.checked = selectAll.checked
     })
 })
-
 
 // بررسی انتخاب دستی ردیف‌ها
 rowCheckboxes.forEach((checkbox) => {
@@ -163,23 +158,13 @@ const item_list = document.querySelectorAll(".item_list")
 
 // console.log(items)
 item_list.forEach((item_list) => {
-
-    const openBtn_edited = item_list.querySelector(".open-popup-edited")
     const openBtn_look_edit = item_list.querySelector(".open-popup-look-edit")
     const popup_edit = item_list.querySelector(".popup-edit")
-    // const closeBtn_edit = item_list.querySelector(".close-popup-edit")
     const closeBtn_edit2 = item_list.querySelector(".close-popup-edit2")
     const openBtn_look = item_list.querySelector(".open-popup-look")
     const popup_look = item_list.querySelector(".popup-look")
     const closeBtn_look = item_list.querySelector(".close-popup-look")
     const closeBtn_look2 = item_list.querySelector(".close-popup-look2")
-    
-    // closeBtn_edit.addEventListener("click", () => {
-    //     popup_edit.classList.add("invisible")
-    //     popup_edit.classList.add("opacity-0")
-    //     popup_edit.classList.remove("opacity-100")
-    //     popup_edit.classList.remove("visible")
-    // })
     closeBtn_edit2.addEventListener("click", () => {
         popup_edit.classList.add("invisible")
         popup_edit.classList.add("opacity-0")
@@ -204,7 +189,6 @@ item_list.forEach((item_list) => {
     })
 })
 
-
 // لیست مشتری / تایید و بازبینی
 const items_2 = document.querySelectorAll(".item_2")
 
@@ -214,7 +198,6 @@ items_2.forEach((item_2) => {
     const closeBtn_look_cont = item_2.querySelector(".close-popup-look-cont")
     const closeBtn_look_cont2 = item_2.querySelector(".close-popup-look-cont2")
     let closeBtn = item_2.querySelector(".closeBtn")
-
     closeBtn.addEventListener('click', () => {
         popup_look_cont.classList.add("invisible")
         popup_look_cont.classList.add("opacity-0")
