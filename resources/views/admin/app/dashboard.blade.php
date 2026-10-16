@@ -93,7 +93,8 @@
 
     </section>
     {{-- header --}}
-    <section class="w-full max-h-[91vh] h-[92vh] flex lg:justify-start justify-center items-start">
+    <section
+        class="w-full max-h-[91vh] h-[92vh] flex lg:justify-start justify-center items-start max-lg:pb-23 max-sm:pb-18">
         <!-- dashboard_start -->
         <div class="w-full h-dvh bg-black/50 fixed top-0 right-0 invisible opacity-0 transition_normal lg:hidden z-3"
             onclick="hamburger_menu_dashboard('close')" id="hamburger_menu_dashboard_item_close"></div>
@@ -393,6 +394,7 @@
             </div>
         </div>
     </section>
+    @include('app.bottomMenu')
     <script src="{{ asset('assets/js/app.js') }}" defer></script>
     <script src="{{ asset('assets/js/MultiSelect.js') }}" defer></script>
 </body>

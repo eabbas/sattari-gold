@@ -123,14 +123,14 @@
                 @csrf
                 <div class="grid grid-cols-6 gap-5 mt-5">
                     <div
-                        class="col-span-6 flex items-center border-1 border-(--border-dashboard) rounded-lg divide-x-1 divide-(--border-dashboard) px-1 md:px-2 py-2 md:py-3 gap-2">
-                        <div class="w-6/12">
+                        class="col-span-6 flex flex-col md:flex-row items-center border-1 border-(--border-dashboard) rounded-lg md:divide-x-1 divide-(--border-dashboard) px-1 md:px-2 py-2 md:py-3 gap-2">
+                        <div class="w-full md:w-6/12">
                             <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">نام
                                 :</span>
                             <span class="text-xs md:text-base font-bold">{{ Auth::user()['name'] }}
                                 {{ Auth::user()['family'] }}</span>
                         </div>
-                        <div class="w-6/12">
+                        <div class="w-full md:w-6/12">
                             <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره
                                 :</span>
                             <span class="text-[10px] md:text-base font-bold in-fa">{{ Auth::user()['phoneNumber'] }}</span>
@@ -173,7 +173,7 @@
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-2 pb-2">
                                     <span class="">
-                                     
+
                                         <svg height="30px" width="30px" version="1.1" id="Layer_1"
                                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                             viewBox="0 0 511.882 511.882" xml:space="preserve">
@@ -248,7 +248,7 @@
                             <option value="">شمش</option>
                         </select>
                     </label> --}}
-                    <label class="col-span-3" for="fee">
+                    <label class="col-span-6 md:col-span-3" for="fee">
                         مبلغ
                         <input
                             class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa"
@@ -257,7 +257,8 @@
                             <span class="text-xs text-red-400">{{ $message }}</span>
                         @enderror
                     </label>
-                    <label class="col-span-3 @if (!$errors->hasAny(['receipt'])) hidden @endif" for="receipt">
+                    <label class="col-span-6 md:col-span-3 @if (!$errors->hasAny(['receipt'])) hidden @endif"
+                        for="receipt">
                         تصویر فیش واریزی
                         <input
                             class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
