@@ -127,15 +127,30 @@
                         class="px-2 py-2 @if (Route::is('user.profile')) bg-green-300 @endif rounded-xl flex gap-3 justify-start items-center"
                         title="پروفایل">
                         <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="xl:size-5 size-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="xl:size-5 size-4">
                                 <path stroke-width="2"
-                                    d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z">
-                                </path>
+                                    d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z" />
                             </svg>
                         </div>
                     </a>
                     <a href="{{ route('wallet.wallet', [Auth::user()]) }}"
                         class="px-2 py-2 rounded-xl @if (Route::is('wallet.wallet')) bg-green-300 @endif flex gap-3 justify-start items-center"
+                        title="کیف پول">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="xl:size-4 size-5">
+                            <path
+                                d="M88 32C39.4 32 0 71.4 0 120V392c0 48.6 39.4 88 88 88H424c48.6 0 88-39.4 88-88V216c0-48.6-39.4-88-88-88H120c-13.3 0-24 10.7-24 24s10.7 24 24 24H424c22.1 0 40 17.9 40 40V392c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V120c0-22.1 17.9-40 40-40H456c13.3 0 24-10.7 24-24s-10.7-24-24-24H88zM384 336a32 32 0 1 0 0-64 32 32 0 1 0 0 64z" />
+                        </svg>
+                    </a>
+                    <a href="{{ route('deal.create') }}"
+                        class="px-2 py-2 rounded-xl @if (Route::is('deal.create')) bg-green-300 @endif flex gap-3 justify-start items-center"
+                        title="کیف پول">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="xl:size-4 size-5">
+                            <path
+                                d="M88 32C39.4 32 0 71.4 0 120V392c0 48.6 39.4 88 88 88H424c48.6 0 88-39.4 88-88V216c0-48.6-39.4-88-88-88H120c-13.3 0-24 10.7-24 24s10.7 24 24 24H424c22.1 0 40 17.9 40 40V392c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V120c0-22.1 17.9-40 40-40H456c13.3 0 24-10.7 24-24s-10.7-24-24-24H88zM384 336a32 32 0 1 0 0-64 32 32 0 1 0 0 64z" />
+                        </svg>
+                    </a>
+                    <a href="{{ route('deal.list') }}"
+                        class="px-2 py-2 rounded-xl @if (Route::is('deal.list')) bg-green-300 @endif flex gap-3 justify-start items-center"
                         title="کیف پول">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="xl:size-4 size-5">
                             <path
@@ -279,11 +294,10 @@
                         class="@if (Route::is('user.profile')) text-(--active) @endif flex justify-center flex-col items-center cursor-pointer py-1 group transition_normal">
                         <a href="{{ route('user.profile') }}" class="flex gap-2 justify-start items-center px-2">
                             <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
                                     class="xl:size-5 size-5 @if (Route::is('user.profile')) fill-green-700 @endif">
-                                    <path stroke-width="2"
-                                        d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z">
-                                    </path>
+                                    <path
+                                        d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z" />
                                 </svg>
                             </div>
                             <span>پروفایل</span>
@@ -306,6 +320,38 @@
                             <span>کیف پول</span>
                         </a>
                         @if (Route::is('wallet.wallet'))
+                            <div class="rounded-md w-full bg-(--active) h-[2px] transition_normal"></div>
+                        @endif
+                    </li>
+                    <li
+                        class="@if (Route::is('deal.create')) text-(--active) @endif flex justify-center flex-col items-center group cursor-pointer py-1 transition_normal">
+                        <a href="{{ route('deal.create') }}" class="flex gap-2 justify-start items-center px-2">
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                    class="xl:size-4 size-5 @if (Route::is('deal.create')) fill-green-700 @endif">
+                                    <path
+                                        d="M88 32C39.4 32 0 71.4 0 120V392c0 48.6 39.4 88 88 88H424c48.6 0 88-39.4 88-88V216c0-48.6-39.4-88-88-88H120c-13.3 0-24 10.7-24 24s10.7 24 24 24H424c22.1 0 40 17.9 40 40V392c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V120c0-22.1 17.9-40 40-40H456c13.3 0 24-10.7 24-24s-10.7-24-24-24H88zM384 336a32 32 0 1 0 0-64 32 32 0 1 0 0 64z" />
+                                </svg>
+                            </div>
+                            <span>شروع معامله</span>
+                        </a>
+                        @if (Route::is('deal.create'))
+                            <div class="rounded-md w-full bg-(--active) h-[2px] transition_normal"></div>
+                        @endif
+                    </li>
+                    <li
+                        class="@if (Route::is('deal.list')) text-(--active) @endif flex justify-center flex-col items-center group cursor-pointer py-1 transition_normal">
+                        <a href="{{ route('deal.list') }}" class="flex gap-2 justify-start items-center px-2">
+                            <div>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                    class="xl:size-4 size-5 @if (Route::is('deal.list')) fill-green-700 @endif">
+                                    <path
+                                        d="M88 32C39.4 32 0 71.4 0 120V392c0 48.6 39.4 88 88 88H424c48.6 0 88-39.4 88-88V216c0-48.6-39.4-88-88-88H120c-13.3 0-24 10.7-24 24s10.7 24 24 24H424c22.1 0 40 17.9 40 40V392c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V120c0-22.1 17.9-40 40-40H456c13.3 0 24-10.7 24-24s-10.7-24-24-24H88zM384 336a32 32 0 1 0 0-64 32 32 0 1 0 0 64z" />
+                                </svg>
+                            </div>
+                            <span>معاملات من</span>
+                        </a>
+                        @if (Route::is('deal.list'))
                             <div class="rounded-md w-full bg-(--active) h-[2px] transition_normal"></div>
                         @endif
                     </li>
