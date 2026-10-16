@@ -27,23 +27,28 @@ function createUser(state) {
     }
 }
 
-function wallet(state, userId) {
-    let wallet = document.getElementById('popup-wallet')
+function wallet(el, state, userId) {
+    let wallet = el.closest('td').querySelector('.popup-wallet')
     if (state == 'open') {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            }
-        })
+        loader('open')
+  
         $.ajax({
-            url: api +"popupWalletData",
+            url: api + "popupWalletData",
             type: "POST",
             dataType: "json",
             data: {
                 'userId': userId,
             },
             success: function (data) {
-                console.log(data);
+                console.log(data)
+                loader('close')
+                wallet.classList.remove('invisible', 'opacity-0')
+                wallet.querySelector('.fullName').textContent = data.name+' '+data.family
+                wallet.querySelector('.phoneNumber').textContent = data.phoneNumber
+                wallet.querySelector('.moneyAsset').textContent = data.wallet.asset
+                wallet.querySelector('.takebleMoneyAsset').textContent = data.wallet.asset
+                wallet.querySelector('.goldAsset').textContent = data.wallet.goldWeight
+                wallet.querySelector('.takebleGoldAsset').textContent = data.wallet.goldWeight
             },
             error: function () {
                 showMessage('open')
@@ -57,16 +62,167 @@ function wallet(state, userId) {
                 }, 2500)
             }
         })
-        wallet.classList.remove('invisible', 'opacity-0')
+        
     }
     if (state == 'close') {
         wallet.classList.add('invisible', 'opacity-0')
     }
 }
 
+document.querySelectorAll('.approvedUsers').forEach(row => {
+    let openBtn_edited = row.querySelector(".open-popup-edited")
+    let popup_edit = row.querySelector(".popup-edit")
+    let closeBtn = row.querySelector(".closeBtn")
+    let submitBtn = row.querySelector(".submitBtn")
+    let xBtn = row.querySelector(".close-popup-look-cont")
+
+    row.querySelector('.submitWallet').addEventListener('click', (e)=>{
+
+        let el = e.target
+        let deposit = el.closest('.popup-wallet').querySelector('.deposit')
+        let withdraw = el.closest('.popup-wallet').querySelector('.withdraw')
+        let receipt = el.closest('.popup-wallet').querySelector('.receipt')
+        let fee = el.closest('.popup-wallet').querySelector('.fee')
+        let description = el.closest('.popup-wallet').querySelector('.description')
+
+        
+        let transactionType
+        if(deposit.checked){
+            transactionType = 'deposit'
+        } else if(withdraw.checked){
+            transactionType = 'withdraw'
+        }
+
+        let formData = new FormData()
+
+        formData.append('transactionType', transactionType)
+        if(receipt.value != ''){
+            formData.append('receipt', receipt.files[0])
+        }
+        formData.append('description', description.value)
+        formData.append('fee', fee.value)
+
+        loader('open')
+
+        $.ajax({
+            url: api +'transactionRequestApi',
+            type: "POST",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function(data){
+                console.log(data)
+                loader('close')
+                el.classList.add('invisible', 'opacity-0')
+            },
+            error: function(){
+                console.log('error')
+            }
+        })
+        
+        
+    })
+
+    row.querySelectorAll('.closeWalletBtn').forEach(btn=>{
+        btn.addEventListener('click', () => {
+            row.querySelector('.popup-wallet').classList.add('invisible', 'opacity-0')
+        })
+    })
+    openBtn_edited.addEventListener("click", () => {
+        loader('open')
+        $.ajax({
+            url: api + 'userDetail/' + row.dataset.userId,
+            type: "GET",
+            success: function (data) {
+                console.log(data)
+                loader('close')
+                
+                popup_edit.classList.remove("invisible")
+                popup_edit.classList.remove("opacity-0")
+                row.querySelector('.detailBox').classList.remove("invisible", 'opacity-0')
 
 
-// لیست مشتری / لیست مشتری - مشتریان در انتظار تایید
+                row.querySelector('.name').value = data.name
+                row.querySelector('.family').value = data.family
+                row.querySelector('.phoneNumber').value = data.phoneNumber
+                row.querySelector('.nationalCode').value = data.nationalCode
+                let isApprovedOptions = row.querySelector('.isApproved').children
+                for (let option of isApprovedOptions) {
+                    if (option.value == data.isApproved) {
+                        option.selected = true
+                    }
+                }
+                if (data.isActive == 1) {
+                    row.querySelector('#AisActive' + data.id).checked = true
+                } else {
+                    row.querySelector('#AisActive' + data.id).checked = false
+                }
+            },
+            error: function () {
+                console.log('failed to load data')
+            }
+        })
+    })
+    closeBtn.addEventListener('click', () => {
+        popup_edit.classList.add("invisible")
+        popup_edit.classList.add("opacity-0")
+        row.querySelector('.detailBox').classList.add("invisible", 'opacity-0')
+    })
+    xBtn.addEventListener('click', () => {
+        popup_edit.classList.add("invisible")
+        popup_edit.classList.add("opacity-0")
+        row.querySelector('.detailBox').classList.add("invisible", 'opacity-0')
+    })
+    submitBtn.addEventListener('click', () => {
+
+        let children = row.querySelector('.roles').children
+        let roles = []
+        for (let child of children) {
+            if (child.selected) {
+                roles.push(child.value)
+            }
+        }
+        $.ajax({
+            url: api + 'updateUser',
+            type: "POST",
+            dataType: "json",
+            data: {
+                'user_id': row.dataset.userId,
+                'popupName': row.querySelector('.name').value,
+                'popupFamily': row.querySelector('.family').value,
+                'popupPhoneNumber': row.querySelector('.phoneNumber').value,
+                'popupNationalCode': row.querySelector('.nationalCode').value,
+                'approvingStatus': row.querySelector('.isApproved').value,
+                'isActive': row.querySelector('#AisActive' + row.dataset.userId).checked ? 1 : 0,
+                'roles': roles,
+                'flag': true,
+            },
+            success: function (data) {
+                console.log(data)
+                popup_edit.classList.add("invisible")
+                popup_edit.classList.add("opacity-0")
+                row.querySelector('.detailBox').classList.remove("invisible", 'opacity-0')
+           
+                document.querySelectorAll('.approvedUsers').forEach(el => {
+                    if (el.dataset.userId == data.user.id) {
+                        row.querySelector('.fullNameList').textContent = data.user.name + ' ' + data.user.family
+                        row.querySelector('.phoneNumberList').textContent = data.user.phoneNumber
+                        row.querySelector('.nationalCodeList').textContent = data.user.nationalCode
+                        row.querySelector('.isActiveList').querySelector('span').classList = `px-3 py-1.5 border-1 ` + (data.user.isActive == 1 ? ` bg-(--primary-dashboard)/20 text-(--primary-dashboard) border-(--primary-dashboard)` : `bg-(--danger-dashboard)/20 text-(--danger-dashboard) border-(--danger-dashboard)`) + ` rounded-md p-1 cursor-default`
+                        row.querySelector('.isActiveList').querySelector('span').textContent = data.user.isActive == 1 ? 'فعال' : 'غیرفعال'
+                    }
+                })
+
+            },
+            error: function () {
+                console.log('failed to load data')
+            }
+        })
+
+    })
+})
+
 let confirmed = document.getElementById("confirmed");
 let pending = document.getElementById("pending");
 let confirmed_pending = document.getElementById("confirmed_pending");
@@ -90,20 +246,15 @@ function conpen(state, el) {
     }
 }
 
-
-// لیست مشتری / انتخاب همه
 const selectAll = document.querySelector("#selectAll")
 const rowCheckboxes = document.querySelectorAll(".row-checkbox")
 
-// انتخاب یا لغو انتخاب همه
 selectAll.addEventListener("change", () => {
     rowCheckboxes.forEach((checkbox) => {
         checkbox.checked = selectAll.checked
     })
 })
 
-
-// بررسی انتخاب دستی ردیف‌ها
 rowCheckboxes.forEach((checkbox) => {
     checkbox.addEventListener("change", () => {
         const allSelected = [...rowCheckboxes].every((checkbox) => checkbox.checked)
@@ -111,71 +262,40 @@ rowCheckboxes.forEach((checkbox) => {
     })
 })
 
-// لیست مشتریان / کیف پوا - بیشتر - ادیت
 const item_list = document.querySelectorAll(".item_list")
 
-// console.log(items)
 item_list.forEach((item_list) => {
-
-    const openBtn_edited = item_list.querySelector(".open-popup-edited")
     const openBtn_look_edit = item_list.querySelector(".open-popup-look-edit")
     const popup_edit = item_list.querySelector(".popup-edit")
-    const closeBtn_edit = item_list.querySelector(".close-popup-edit")
     const closeBtn_edit2 = item_list.querySelector(".close-popup-edit2")
     const openBtn_look = item_list.querySelector(".open-popup-look")
     const popup_look = item_list.querySelector(".popup-look")
     const closeBtn_look = item_list.querySelector(".close-popup-look")
     const closeBtn_look2 = item_list.querySelector(".close-popup-look2")
-    openBtn_edited.addEventListener("click", () => {
-        popup_edit.classList.remove("invisible")
-        popup_edit.classList.remove("opacity-0")
-        popup_edit.classList.add("opacity-100")
-        popup_edit.classList.add("visible")
-    })
-    closeBtn_edit.addEventListener("click", () => {
-        popup_edit.classList.add("invisible")
-        popup_edit.classList.add("opacity-0")
-        popup_edit.classList.remove("opacity-100")
-        popup_edit.classList.remove("visible")
-    })
     closeBtn_edit2.addEventListener("click", () => {
         popup_edit.classList.add("invisible")
         popup_edit.classList.add("opacity-0")
-        popup_edit.classList.remove("opacity-100")
-        popup_edit.classList.remove("visible")
     })
     openBtn_look_edit.addEventListener("click", () => {
         popup_edit.classList.remove("invisible")
         popup_edit.classList.remove("opacity-0")
-        popup_edit.classList.add("visible")
-        popup_edit.classList.add("opacity-100")
-        popup_look.classList.remove("visible")
-        popup_look.classList.remove("opacity-100")
         popup_look.classList.add("invisible")
         popup_look.classList.add("opacity-0")
     })
     openBtn_look.addEventListener("click", () => {
         popup_look.classList.remove("invisible")
         popup_look.classList.remove("opacity-0")
-        popup_look.classList.add("opacity-100")
-        popup_look.classList.add("visible")
     })
     closeBtn_look.addEventListener("click", () => {
         popup_look.classList.add("invisible")
         popup_look.classList.add("opacity-0")
-        popup_look.classList.remove("opacity-100")
-        popup_look.classList.remove("visible")
     })
     closeBtn_look2.addEventListener("click", () => {
         popup_look.classList.add("invisible")
         popup_look.classList.add("opacity-0")
-        popup_look.classList.remove("opacity-100")
-        popup_look.classList.remove("visible")
     })
 })
 
-
-// لیست مشتری / تایید و بازبینی
 const items_2 = document.querySelectorAll(".item_2")
 
 items_2.forEach((item_2) => {
@@ -193,30 +313,30 @@ items_2.forEach((item_2) => {
     openBtn_look_cont.addEventListener("click", () => {
         loader('open')
         $.ajax({
-            url: api+'userDetail/'+item_2.dataset.userId,
+            url: api + 'userDetail/' + item_2.dataset.userId,
             type: "GET",
-            success: function(data){
+            success: function (data) {
                 popup_look_cont.classList.remove("invisible")
                 popup_look_cont.classList.remove("opacity-0")
                 loader('close')
                 item_2.querySelector('.detailBox').classList.remove('invisible', 'opacity-0')
-                item_2.querySelector('.name').value = data.name 
+                item_2.querySelector('.name').value = data.name
                 item_2.querySelector('.family').value = data.family
-                item_2.querySelector('.phoneNumber').value = data.phoneNumber 
-                item_2.querySelector('.nationalCode').value = data.nationalCode 
+                item_2.querySelector('.phoneNumber').value = data.phoneNumber
+                item_2.querySelector('.nationalCode').value = data.nationalCode
                 let isApprovedOptions = item_2.querySelector('.isApproved').children
-                for(let option of isApprovedOptions){
-                    if(option.value == data.isApproved){
+                for (let option of isApprovedOptions) {
+                    if (option.value == data.isApproved) {
                         option.selected = true
                     }
                 }
-                if(data.isActive == 1){
+                if (data.isActive == 1) {
                     item_2.querySelector('#isActive' + data.id).checked = true
                 } else {
                     item_2.querySelector('#isActive' + data.id).checked = false
                 }
             },
-            error: function(){
+            error: function () {
                 console.log('error')
             }
         })
@@ -224,7 +344,7 @@ items_2.forEach((item_2) => {
     closeBtn_look_cont.addEventListener("click", () => {
         popup_look_cont.classList.add("invisible")
         popup_look_cont.classList.add("opacity-0")
-        document.querySelectorAll('.detailBox').forEach(box=>{
+        document.querySelectorAll('.detailBox').forEach(box => {
             box.classList.add('invisible', 'opacity-0')
         })
     })
@@ -235,19 +355,16 @@ items_2.forEach((item_2) => {
             box.classList.add('invisible', 'opacity-0')
         })
     })
-
-
-
-    item_2.querySelector('.submitBtn').addEventListener('click', ()=>{
+    item_2.querySelector('.submitBtn').addEventListener('click', () => {
         let children = item_2.querySelector('.roles').children
         let roles = []
-        for(let child of children){
-            if(child.selected){
+        for (let child of children) {
+            if (child.selected) {
                 roles.push(child.value)
             }
         }
         $.ajax({
-            url: api+'updateUser',
+            url: api + 'updateUser',
             type: "POST",
             dataType: "json",
             data: {
@@ -257,10 +374,11 @@ items_2.forEach((item_2) => {
                 'popupPhoneNumber': item_2.querySelector('.phoneNumber').value,
                 'popupNationalCode': item_2.querySelector('.nationalCode').value,
                 'approvingStatus': item_2.querySelector('.isApproved').value,
-                'isActive': item_2.querySelector('#isActive'+item_2.dataset.userId).checked ? 1 : 0,
+                'isActive': item_2.querySelector('#isActive' + item_2.dataset.userId).checked ? 1 : 0,
                 'roles': roles,
+                'flag': false,
             },
-            success: function(data){
+            success: function (data) {
                 console.log(data)
                 popup_look_cont.classList.add("invisible")
                 popup_look_cont.classList.add("opacity-0")
@@ -270,14 +388,17 @@ items_2.forEach((item_2) => {
                 item_2.remove()
                 let parentTable = document.querySelector('#confirmed').querySelector('tbody')
                 let rowTable = document.createElement('tr')
-                rowTable.classList = 'item_list text-xs lg:text-base'
+                rowTable.classList = 'item_list text-xs lg:text-base approvedUsers'
                 let inner = `
                     <td class="p-1 md:px-3 md:py-2 flex items-center justify-center gap-2 in-fa">
                         <input type="checkbox" name="" class="row-checkbox appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
                         ${data.id}
                     </td>
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                        ${ data.name+' '+data.family }
+                        ${data.name + ' ' + data.family}
+                    </td>
+                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
+                        ${data.phoneNumber}
                     </td>
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                         -
@@ -286,30 +407,30 @@ items_2.forEach((item_2) => {
                         -
                     </td>
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
-                        ${ data.nationalCode }
+                        ${data.nationalCode}
                     </td>
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                         -
                     </td>
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                        <span class="w-10 h-10 ${ data.isActive ? 'border-1 bg-(--primary-dashboard)/20 border-(--primary-dashboard) text-(--primary-dashboard)' : 'border-1 bg-(--danger-dashboard)/20 border-(--danger-dashboard) text-(--danger-dashboard)' } rounded-md p-1 cursor-default">
-                            ${ data.isActive == 1 ? 'فعال' : 'غیرفعال' }
+                        <span class="px-3 py-1.5 border-1 ${data.isActive == 1 ? 'border-(--primary-dashboard) bg-(--primary-dashboard)/20 text-(--primary-dashboard)' : 'border-(--danger-dashboard) bg-(--danger-dashboard)/20 text-(--danger-dashboard)'} rounded-md p-1 cursor-default">
+                               ${data.isActive == 1 ? 'فعال' : 'غیرفعال'}
                         </span>
                     </td>
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                         قلک طلا
                     </td>
                     <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
-                        <button onclick="wallet('open', 1)" class="w-3/6 text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer">
+                        <button onclick="wallet(this, 'open', 1)" class="w-3/6 text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer walletBtn">
                             کیف پول
                         </button>
-                        <div id="popup-wallet" class="fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2 invisible opacity-0 transition-all flex items-center justify-center">
-                            <div onclick="wallet('close')" class="absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2 cursour-pointer">
+                        <div id="" class="fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2 invisible opacity-0 transition-all flex items-center justify-center popup-wallet">
+                            <div onclick="wallet(this, 'close')" class="absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2 cursour-pointer">
                             </div>
                             <div class="relative z-51 w-[80%] lg:w-200 bg-white rounded-md px-3 py-2">
                                 <div class="w-full flex items-center justify-between border-b-1 border-(--border-dashboard) pb-2">
                                     <div class="font-bold">کیف پول</div>
-                                    <div onclick="wallet('close')" class="cursor-pointer">
+                                    <div onclick="wallet(this, 'close')" class="cursor-pointer">
                                         <svg class="size-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
                                             <path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z">
                                             </path>
@@ -321,12 +442,12 @@ items_2.forEach((item_2) => {
                                         <div class="w-6/12">
                                             <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">نام
                                                 :</span>
-                                            <span class="text-xs md:text-base font-bold"></span>
+                                            <span class="text-xs md:text-base font-bold">${data.name + ' ' + data.family}</span>
                                         </div>
-                                        <div class="w-6/12">
+                                        <div class="w-6/12 flex justify-between items-center">
                                             <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره
                                                 :</span>
-                                            <span class="text-[10px] md:text-base font-bold"></span>
+                                            <span class="text-[10px] md:text-base font-bold in-fa">${data.phoneNumber}</span>
                                         </div>
                                     </div>
                                     <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
@@ -342,7 +463,7 @@ items_2.forEach((item_2) => {
                                                         موجودی ریال
                                                     </span>
                                                 </div>
-                                                <div class="font-bold pb-2"></div>
+                                                <div class="font-bold pb-2">0</div>
                                             </div>
                                             <div class="flex items-center justify-between">
                                                 <div class="flex items-center gap-3 pt-2">
@@ -352,6 +473,7 @@ items_2.forEach((item_2) => {
                                                 </div>
                                                 <div class="font-bold pt-2">
                                                     <span class="">
+                                                        0
                                                     </span>
                                                     <span class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
                                                         تومان
@@ -574,25 +696,27 @@ items_2.forEach((item_2) => {
                                 </div>
                             </div>
                         </div>
-                    </td>
-                `
+                    </td>`
+                rowTable.innerHTML = inner
+                parentTable.prepend(rowTable)
+
             },
-            error: function(){
+            error: function () {
                 console.log('failed to load data')
             }
         })
     })
-    item_2.querySelector('.deleteUser').addEventListener('click', ()=>{
+    item_2.querySelector('.deleteUser').addEventListener('click', () => {
         loader('open')
         $.ajax({
-            url: api+'deleteUser/'+item_2.dataset.userId,
+            url: api + 'deleteUser/' + item_2.dataset.userId,
             type: "GET",
-            success: function(response){
+            success: function (response) {
                 console.log(response)
                 loader('close')
                 item_2.remove()
             },
-            error: function(){
+            error: function () {
                 console.log('failed to load data')
             }
         })
@@ -606,5 +730,15 @@ function loader(state) {
     }
     if (state == 'close') {
         loader.classList.add('invisible', 'opacity-0')
+    }
+}
+
+function sendReceipt(el, state, userId) {
+    let receipt = el.closest('.popup-wallet').querySelector('#receipt'+userId)
+    if (state == 'deposit') {
+        receipt.classList.remove('hidden')
+    }
+    if (state == 'withdraw') {
+        receipt.classList.add('hidden')
     }
 }
