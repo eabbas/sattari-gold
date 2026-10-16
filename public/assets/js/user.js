@@ -64,6 +64,51 @@ function wallet(el, state, userId) {
     }
 }
 
+document.querySelectorAll('.approvedUsers').forEach(row=>{
+    let openBtn_edited = row.querySelector(".open-popup-edited")
+    let popup_edit = row.querySelector(".popup-edit")
+    let closeBtn = row.querySelector(".closeBtn")
+    let xBtn = row.querySelector(".close-popup-look-cont")
+    openBtn_edited.addEventListener("click", () => {
+        loader('open')
+        $.ajax({
+            url: api + 'userDetail/' + row.dataset.userId,
+            type: "GET",
+            success: function (data) {
+                console.log(data)
+                loader('close')
+                popup_edit.classList.remove("invisible")
+                popup_edit.classList.remove("opacity-0")
+                row.querySelector('.name').value = data.name
+                row.querySelector('.family').value = data.family
+                row.querySelector('.phoneNumber').value = data.phoneNumber
+                row.querySelector('.nationalCode').value = data.nationalCode
+                let isApprovedOptions = row.querySelector('.isApproved').children
+                for (let option of isApprovedOptions) {
+                    if (option.value == data.isApproved) {
+                        option.selected = true
+                    }
+                }
+                if (data.isActive == 1) {
+                    row.querySelector('#AisActive' + data.id).checked = true
+                } else {
+                    row.querySelector('#AisActive' + data.id).checked = false
+                }
+            },
+            error: function () {
+                console.log('failed to load data')
+            }
+        })
+    })
+    closeBtn.addEventListener('click', ()=>{
+        popup_edit.classList.add("invisible")
+        popup_edit.classList.add("opacity-0")
+    })
+    xBtn.addEventListener('click', ()=>{
+        popup_edit.classList.add("invisible")
+        popup_edit.classList.add("opacity-0")
+    })
+})
 
 
 
@@ -122,57 +167,40 @@ item_list.forEach((item_list) => {
     const openBtn_edited = item_list.querySelector(".open-popup-edited")
     const openBtn_look_edit = item_list.querySelector(".open-popup-look-edit")
     const popup_edit = item_list.querySelector(".popup-edit")
-    const closeBtn_edit = item_list.querySelector(".close-popup-edit")
+    // const closeBtn_edit = item_list.querySelector(".close-popup-edit")
     const closeBtn_edit2 = item_list.querySelector(".close-popup-edit2")
     const openBtn_look = item_list.querySelector(".open-popup-look")
     const popup_look = item_list.querySelector(".popup-look")
     const closeBtn_look = item_list.querySelector(".close-popup-look")
     const closeBtn_look2 = item_list.querySelector(".close-popup-look2")
-    openBtn_edited.addEventListener("click", () => {
-        popup_edit.classList.remove("invisible")
-        popup_edit.classList.remove("opacity-0")
-        popup_edit.classList.add("opacity-100")
-        popup_edit.classList.add("visible")
-    })
-    closeBtn_edit.addEventListener("click", () => {
-        popup_edit.classList.add("invisible")
-        popup_edit.classList.add("opacity-0")
-        popup_edit.classList.remove("opacity-100")
-        popup_edit.classList.remove("visible")
-    })
+    
+    // closeBtn_edit.addEventListener("click", () => {
+    //     popup_edit.classList.add("invisible")
+    //     popup_edit.classList.add("opacity-0")
+    //     popup_edit.classList.remove("opacity-100")
+    //     popup_edit.classList.remove("visible")
+    // })
     closeBtn_edit2.addEventListener("click", () => {
         popup_edit.classList.add("invisible")
         popup_edit.classList.add("opacity-0")
-        popup_edit.classList.remove("opacity-100")
-        popup_edit.classList.remove("visible")
     })
     openBtn_look_edit.addEventListener("click", () => {
         popup_edit.classList.remove("invisible")
         popup_edit.classList.remove("opacity-0")
-        popup_edit.classList.add("visible")
-        popup_edit.classList.add("opacity-100")
-        popup_look.classList.remove("visible")
-        popup_look.classList.remove("opacity-100")
         popup_look.classList.add("invisible")
         popup_look.classList.add("opacity-0")
     })
     openBtn_look.addEventListener("click", () => {
         popup_look.classList.remove("invisible")
         popup_look.classList.remove("opacity-0")
-        popup_look.classList.add("opacity-100")
-        popup_look.classList.add("visible")
     })
     closeBtn_look.addEventListener("click", () => {
         popup_look.classList.add("invisible")
         popup_look.classList.add("opacity-0")
-        popup_look.classList.remove("opacity-100")
-        popup_look.classList.remove("visible")
     })
     closeBtn_look2.addEventListener("click", () => {
         popup_look.classList.add("invisible")
         popup_look.classList.add("opacity-0")
-        popup_look.classList.remove("opacity-100")
-        popup_look.classList.remove("visible")
     })
 })
 
@@ -270,7 +298,7 @@ items_2.forEach((item_2) => {
                 item_2.remove()
                 let parentTable = document.querySelector('#confirmed').querySelector('tbody')
                 let rowTable = document.createElement('tr')
-                rowTable.classList = 'item_list text-xs lg:text-base'
+                rowTable.classList = 'item_list text-xs lg:text-base approvedUsers'
                 let inner = `
                     <td class="p-1 md:px-3 md:py-2 flex items-center justify-center gap-2 in-fa">
                         <input type="checkbox" name="" class="row-checkbox appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">

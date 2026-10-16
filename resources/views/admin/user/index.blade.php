@@ -284,7 +284,7 @@
                         <tbody>
                             @foreach ($users as $user)
                                 @if ($user->isApproved)
-                                    <tr class="item_list text-xs lg:text-base">
+                                    <tr class="item_list text-xs lg:text-base approvedUsers" data-user-id="{{ $user->id }}">
                                         <td class="p-1 md:px-3 md:py-2 flex items-center justify-center gap-2 in-fa">
                                             <input type="checkbox" name=""
                                                 class="row-checkbox appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
@@ -356,13 +356,15 @@
                                                                 <span
                                                                     class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">نام
                                                                     :</span>
-                                                                <span class="text-xs md:text-base font-bold">{{ $user->name.' '.$user->family }}</span>
+                                                                <span
+                                                                    class="text-xs md:text-base font-bold">{{ $user->name . ' ' . $user->family }}</span>
                                                             </div>
                                                             <div class="w-6/12 flex justify-between items-center">
                                                                 <span
                                                                     class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره
                                                                     :</span>
-                                                                <span class="text-[10px] md:text-base font-bold in-fa">{{ $user->phoneNumber }}</span>
+                                                                <span
+                                                                    class="text-[10px] md:text-base font-bold in-fa">{{ $user->phoneNumber }}</span>
                                                             </div>
                                                         </div>
                                                         <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
@@ -383,7 +385,8 @@
                                                                             موجودی ریال
                                                                         </span>
                                                                     </div>
-                                                                    <div class="font-bold pb-2">{{ $user->wallet->asset }}</div>
+                                                                    <div class="font-bold pb-2">{{ $user->wallet->asset }}
+                                                                    </div>
                                                                 </div>
                                                                 <div class="flex items-center justify-between">
                                                                     <div class="flex items-center gap-3 pt-2">
@@ -583,9 +586,9 @@
                                             <div
                                                 class="popup-edit fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2  invisible opacity-0 transition-all flex items-center justify-center">
                                                 <div
-                                                    class="close-popup-edit2 absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2">
+                                                    class="close-popup-edit2 absolute z-49 w-full h-[100dvh] left-1/2 -translate-x-1/2">
                                                 </div>
-                                                <div class="relative z-51 w-[80%] lg:w-200 bg-white rounded-md px-3 py-2">
+                                                {{-- <div class="relative z-51 w-[80%] lg:w-200 bg-white rounded-md px-3 py-2">
                                                     <div
                                                         class="w-full flex items-center justify-between border-b-1 border-(--border-dashboard) pb-2">
                                                         <div class="font-bold">ویرایش اطلاعات</div>
@@ -712,6 +715,94 @@
                                                             class="col-span-3 text-xs md:text-sm lg:text-base border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md">
                                                             لغو</button>
                                                     </div>
+                                                </div> --}}
+                                                <div
+                                                    class="relative z-51 w-[80%] md:w-200 bg-white rounded-md px-3 py-2 transition-all duration-300 detailBox">
+                                                    <div
+                                                        class="w-full flex items-center justify-between border-b-1 border-(--border-dashboard) pb-2">
+                                                        <div class="text-sm md:text-base font-bold text-nowrap">ویرایش اطلاعات مشتری</div>
+                                                            <svg class="size-6 cursor-pointer close-popup-look-cont" fill="currentColor"
+                                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                                                                <path
+                                                                    d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z">
+                                                                </path>
+                                                            </svg>
+                                                    </div>
+                                                    <div class="grid grid-cols-2 md:grid-cols-6 gap-5 mt-5">
+                                                        <div class="col-span-1 md:col-span-3 text-start">
+                                                            نام
+                                                            <input
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) name"
+                                                                type="text" name="" id="">
+                                                        </div>
+                                                        <div class="col-span-1 md:col-span-3 text-start">
+                                                            نام خانوادگی
+                                                            <input
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) family"
+                                                                type="text" style="font-family: 'IRANSansX';"
+                                                                name="" id="">
+                                                        </div>
+                                                        <div class="col-span-1 md:col-span-3 text-start">
+                                                            کد ملی
+                                                            <input
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa nationalCode"
+                                                                type="text" name="" dir="ltr"
+                                                                id="">
+                                                        </div>
+                                                        <div class="col-span-1 md:col-span-3 text-start">
+                                                            شماره تلفن
+                                                            <input
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa phoneNumber"
+                                                                type="text" name="" dir="ltr"
+                                                                id="">
+                                                        </div>
+                                                        <div class="col-span-1 md:col-span-2 text-start">
+                                                            وضعیت تایید
+                                                            <select
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) isApproved"
+                                                                name="" id="">
+                                                                <option value="0">در انتظار</option>
+                                                                <option value="1">تایید</option>
+                                                                <option value="-1">رد</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-span-1 md:col-span-2 text-start">
+                                                            نقش
+                                                            <select
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) roles"
+                                                                name="" id="" multiple size="1">
+                                                                @foreach ($roles as $role)
+                                                                    <option value="{{ $role->id }}"
+                                                                        @if (in_array($role->id, $user->roleIds)) selected @endif>
+                                                                        {{ $role->faTitle }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+
+                                                        <div
+                                                            class="border-1 border-(--border-dashboard) h-fit rounded-md hover:shadow-sm transition-all col-span-2 md:col-span-2 flex items-center justify-between w-full py-2 px-4 mt-[30px]">
+                                                            <div class="w-full flex justify-between items-center">
+                                                                <label for="AisActive{{ $user->id }}"
+                                                                    class="w-[calc(100%-50px)] text-start cursor-pointer">فعال
+                                                                    : </label>
+                                                                <label for="AisActive{{ $user->id }}"
+                                                                    class="w-[50px] h-[28px] flex rounded-full cursor-pointer relative">
+                                                                    <input type="checkbox" name="isActive" value="1"
+                                                                        id="AisActive{{ $user->id }}" hidden=""
+                                                                        class="peer cursor-pointer">
+                                                                    <span
+                                                                        class="size-full bg-gray-300 shadow-inner rounded-full peer-checked:bg-[#1B84FF] transition-all duration-300"></span>
+                                                                    <span
+                                                                        class="size-[20px] rounded-full bg-white absolute top-1 left-1 peer-checked:translate-x-[22px] transition-all duration-300 shadow-md"></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
+
+                                                        <button
+                                                            class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold submitBtn cursor-pointer transition-all duration-300 hover:bg-(--primary-dashboard) hover:text-white">ثبت</button>
+                                                        <button
+                                                            class="col-span-1 md:col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold closeBtn cursor-pointer transition-all duration-300 hover:bg-(--danger-dashboard) hover:text-white">لغو</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </td>
@@ -811,19 +902,22 @@
                                                             نام خانوادگی
                                                             <input
                                                                 class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) family"
-                                                                type="text" style="font-family: 'IRANSansX';" name="" id="">
+                                                                type="text" style="font-family: 'IRANSansX';"
+                                                                name="" id="">
                                                         </div>
                                                         <div class="col-span-1 md:col-span-3 text-start">
                                                             کد ملی
                                                             <input
                                                                 class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa nationalCode"
-                                                                type="text" name="" dir="ltr" id="">
+                                                                type="text" name="" dir="ltr"
+                                                                id="">
                                                         </div>
                                                         <div class="col-span-1 md:col-span-3 text-start">
                                                             شماره تلفن
                                                             <input
                                                                 class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa phoneNumber"
-                                                                type="text" name="" dir="ltr" id="">
+                                                                type="text" name="" dir="ltr"
+                                                                id="">
                                                         </div>
                                                         <div class="col-span-1 md:col-span-2 text-start">
                                                             وضعیت تایید
@@ -847,7 +941,7 @@
                                                                 @endforeach
                                                             </select>
                                                         </div>
-                                      
+
                                                         <div
                                                             class="border-1 border-(--border-dashboard) h-fit rounded-md hover:shadow-sm transition-all col-span-2 md:col-span-2 flex items-center justify-between w-full py-2 px-4 mt-[30px]">
                                                             <div class="w-full flex justify-between items-center">
@@ -857,7 +951,8 @@
                                                                 <label for="isActive{{ $user->id }}"
                                                                     class="w-[50px] h-[28px] flex rounded-full cursor-pointer relative">
                                                                     <input type="checkbox" name="isActive" value="1"
-                                                                        id="isActive{{ $user->id }}" hidden class="peer cursor-pointer">
+                                                                        id="isActive{{ $user->id }}" hidden
+                                                                        class="peer cursor-pointer">
                                                                     <span
                                                                         class="size-full bg-gray-300 shadow-inner rounded-full peer-checked:bg-[#1B84FF] transition-all duration-300"></span>
                                                                     <span
@@ -865,7 +960,7 @@
                                                                 </label>
                                                             </div>
                                                         </div>
-                                           
+
                                                         <button
                                                             class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold submitBtn cursor-pointer transition-all duration-300 hover:bg-(--primary-dashboard) hover:text-white">ثبت</button>
                                                         <button
