@@ -30,11 +30,8 @@ function createUser(state) {
 function wallet(el, state, userId) {
     let wallet = el.closest('td').querySelector('.popup-wallet')
     if (state == 'open') {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            }
-        })
+        loader('open')
+  
         $.ajax({
             url: api + "popupWalletData",
             type: "POST",
@@ -43,7 +40,15 @@ function wallet(el, state, userId) {
                 'userId': userId,
             },
             success: function (data) {
-                console.log(data);
+                console.log(data)
+                loader('close')
+                wallet.classList.remove('invisible', 'opacity-0')
+                wallet.querySelector('.fullName').textContent = data.name+' '+data.family
+                wallet.querySelector('.phoneNumber').textContent = data.phoneNumber
+                wallet.querySelector('.moneyAsset').textContent = data.wallet.asset
+                wallet.querySelector('.takebleMoneyAsset').textContent = data.wallet.asset
+                wallet.querySelector('.goldAsset').textContent = data.wallet.goldWeight
+                wallet.querySelector('.takebleGoldAsset').textContent = data.wallet.goldWeight
             },
             error: function () {
                 showMessage('open')
@@ -57,7 +62,7 @@ function wallet(el, state, userId) {
                 }, 2500)
             }
         })
-        wallet.classList.remove('invisible', 'opacity-0')
+        
     }
     if (state == 'close') {
         wallet.classList.add('invisible', 'opacity-0')
@@ -70,6 +75,60 @@ document.querySelectorAll('.approvedUsers').forEach(row => {
     let closeBtn = row.querySelector(".closeBtn")
     let submitBtn = row.querySelector(".submitBtn")
     let xBtn = row.querySelector(".close-popup-look-cont")
+
+    row.querySelector('.submitWallet').addEventListener('click', (e)=>{
+
+        let el = e.target
+        let deposit = el.closest('.popup-wallet').querySelector('.deposit')
+        let withdraw = el.closest('.popup-wallet').querySelector('.withdraw')
+        let receipt = el.closest('.popup-wallet').querySelector('.receipt')
+        let fee = el.closest('.popup-wallet').querySelector('.fee')
+        let description = el.closest('.popup-wallet').querySelector('.description')
+
+        
+        let transactionType
+        if(deposit.checked){
+            transactionType = 'deposit'
+        } else if(withdraw.checked){
+            transactionType = 'withdraw'
+        }
+
+        let formData = new FormData()
+
+        formData.append('transactionType', transactionType)
+        if(receipt.value != ''){
+            formData.append('receipt', receipt.files[0])
+        }
+        formData.append('description', description.value)
+        formData.append('fee', fee.value)
+
+        loader('open')
+
+        $.ajax({
+            url: api +'transactionRequestApi',
+            type: "POST",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function(data){
+                console.log(data)
+                loader('close')
+                el.classList.add('invisible', 'opacity-0')
+            },
+            error: function(){
+                console.log('error')
+            }
+        })
+        
+        
+    })
+
+    row.querySelectorAll('.closeWalletBtn').forEach(btn=>{
+        btn.addEventListener('click', () => {
+            row.querySelector('.popup-wallet').classList.add('invisible', 'opacity-0')
+        })
+    })
     openBtn_edited.addEventListener("click", () => {
         loader('open')
         $.ajax({
@@ -115,7 +174,6 @@ document.querySelectorAll('.approvedUsers').forEach(row => {
         popup_edit.classList.add("opacity-0")
         row.querySelector('.detailBox').classList.add("invisible", 'opacity-0')
     })
-
     submitBtn.addEventListener('click', () => {
 
         let children = row.querySelector('.roles').children
@@ -165,7 +223,6 @@ document.querySelectorAll('.approvedUsers').forEach(row => {
     })
 })
 
-// لیست مشتری / لیست مشتری - مشتریان در انتظار تایید
 let confirmed = document.getElementById("confirmed");
 let pending = document.getElementById("pending");
 let confirmed_pending = document.getElementById("confirmed_pending");
@@ -189,18 +246,15 @@ function conpen(state, el) {
     }
 }
 
-// لیست مشتری / انتخاب همه
 const selectAll = document.querySelector("#selectAll")
 const rowCheckboxes = document.querySelectorAll(".row-checkbox")
 
-// انتخاب یا لغو انتخاب همه
 selectAll.addEventListener("change", () => {
     rowCheckboxes.forEach((checkbox) => {
         checkbox.checked = selectAll.checked
     })
 })
 
-// بررسی انتخاب دستی ردیف‌ها
 rowCheckboxes.forEach((checkbox) => {
     checkbox.addEventListener("change", () => {
         const allSelected = [...rowCheckboxes].every((checkbox) => checkbox.checked)
@@ -208,10 +262,8 @@ rowCheckboxes.forEach((checkbox) => {
     })
 })
 
-// لیست مشتریان / کیف پوا - بیشتر - ادیت
 const item_list = document.querySelectorAll(".item_list")
 
-// console.log(items)
 item_list.forEach((item_list) => {
     const openBtn_look_edit = item_list.querySelector(".open-popup-look-edit")
     const popup_edit = item_list.querySelector(".popup-edit")
@@ -244,7 +296,6 @@ item_list.forEach((item_list) => {
     })
 })
 
-// لیست مشتری / تایید و بازبینی
 const items_2 = document.querySelectorAll(".item_2")
 
 items_2.forEach((item_2) => {
@@ -679,5 +730,15 @@ function loader(state) {
     }
     if (state == 'close') {
         loader.classList.add('invisible', 'opacity-0')
+    }
+}
+
+function sendReceipt(el, state, userId) {
+    let receipt = el.closest('.popup-wallet').querySelector('#receipt'+userId)
+    if (state == 'deposit') {
+        receipt.classList.remove('hidden')
+    }
+    if (state == 'withdraw') {
+        receipt.classList.add('hidden')
     }
 }
