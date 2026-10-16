@@ -9,3 +9,4 @@
     </script>
 @endif
 @include('app.footer')
+@include('app.bottomMenu')
