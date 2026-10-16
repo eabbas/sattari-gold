@@ -145,7 +145,7 @@
                     </p>
                 </div>
 
-                <button class="w-full bg-(--purple-btn) text-white font-bold py-3 px-4 rounded-lg transition duration-200 shadow-md cursor-pointer">
+                <button class="w-full bg-[image:var(--gradient-gold)] text-white font-bold py-3 px-4 rounded-lg transition duration-200 shadow-md cursor-pointer">
                     پرداخت با زرین‌پال
                 </button>
             </div>
@@ -153,5 +153,5 @@
 
     </form>
 
-    <script src="{{ asset('js/checkout.js') }}"></script>
+    <script src="{{ asset('assets/js/checkout.js') }}"></script>
 @endsection

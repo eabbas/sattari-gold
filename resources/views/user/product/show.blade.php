@@ -515,9 +515,13 @@
             var input = document.getElementById("numberInput");
             input.value = parseInt(input.value) - 1;
         }
+        
+    </script>
+
+     <script>
         let proId = "{{ $product->id }}"
         let productId = "{{ $product->id }}"
     </script>
     <script src="{{ asset('assets/js/singleProduct.js') }}"></script>
-    <script src="{{ asset('assets/js/cart.js') }}"></script>
+    
 @endsection

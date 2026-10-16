@@ -26,10 +26,10 @@ if (localStorage.getItem('products')) {
                 </div>
                 <div class="flex-1 min-w-0">
                     <h3 class="font-semibold text-gray-800 text-sm sm:text-base truncate">${cart.title}</h3>
-                    <p class="text-xs text-gray-500 mt-0.5 mb-5">${cart.summary}</p>
-                    <div class="w-full lg:w-1/4 p-2 flex gap-2 justify-center items-center rounded-xl addToCartBtns" data-product-id="${cart.id}">
+                    <p class="text-xs text-gray-500 mt-0.5 mb-5">${cart.summary ? cart.summary : ''}</p>
+                    <div class="w-full lg:w-1/4 p-2 flex gap-2 justify-center items-center bg-[image:var(--gradient-gold)] rounded-xl addToCartBtns" data-product-id="${cart.id}">
                         <button onclick="setCount(this)" class="w-1/3 text-lg font-bold text-white flex justify-center items-center cursor-pointer" data-state="+">+</button>
-                        <input type="number" class="w-1/3 text-sm text-center outline-none text-white" readonly value="${cart.quantity}">
+                        <input type="number" class="w-1/3 text-sm text-center outline-none text-white in-fa" readonly value="${cart.quantity}">
                         <button onclick="setCount(this)" class="w-1/3 text-lg font-bold text-white flex justify-center items-center cursor-pointer" data-state="-">-</button>
                     </div>
                 </div>

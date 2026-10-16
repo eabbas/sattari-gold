@@ -2,12 +2,7 @@
 @section('title', 'سبد خرید')
 @section('content')
         <!-- Header -->
-        <header class="bg-white border-b border-gray-100">
-            <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-                <a href="{{ route('home') }}" class="text-lg font-bold text-gray-800">طبابوک</a>
-                {{-- <a href="#" class="text-sm text-gray-500 hover:text-gray-800 transition">ادامه خرید</a> --}}
-            </div>
-        </header>
+        
 
         <!-- Main -->
         <main class="max-w-5xl mx-auto px-4 py-4 lg:py-8">
@@ -111,5 +106,5 @@
 
             </div>
         </main>
-<script src="{{ asset('js/cartPage.js') }}"></script>
+<script src="{{ asset('assets/js/cartPage.js') }}"></script>
 @endsection

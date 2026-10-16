@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\classes\homeSetting;
+use App\Models\logo;
 use App\Models\carts;
 use App\Models\category;
 use App\Models\pack;
@@ -108,8 +109,8 @@ class CartsController extends Controller
     public function list()
     {
         $categories = category::all();
-        
-        return view('user.cart.cart', ['categories' => $categories]);
+        $logo = logo::first();
+        return view('user.cart.cart', ['categories' => $categories, 'logo'=>$logo]);
     }
 
     public function packStore(Request $request)
@@ -161,7 +162,8 @@ class CartsController extends Controller
         $categories = category::all();
         $provinces = province_cities::where('parent', 0)->get();
         $cities = province_cities::where('parent', 1)->get();
-        return view('user.cart.checkout', ['categories' => $categories, 'provinces'=>$provinces, 'cities'=>$cities]);
+        $logo = logo::first();
+        return view('user.cart.checkout', ['categories' => $categories, 'provinces'=>$provinces, 'cities'=>$cities, 'logo'=>$logo]);
     }
 
     public function showCities(Request $request){
