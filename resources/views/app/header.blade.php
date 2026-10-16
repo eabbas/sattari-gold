@@ -60,8 +60,9 @@
                     <li class="relative drop_down">
                         <div class="flex items-center">
                             <span
-                                class="py-2 px-2 xl:text-lg font-bold after:absolute after:content-[''] after:min-w-0 after:transition-all after:duration-300 after:h-0.75 after:rounded-full after:bg-[#c3924d] after:bottom-0 after:right-0 hover:after:min-w-full transition-all duration-300 hover:text-[#C3924D] cursor-pointer">دسته
-                                بندی</span>
+                                class="py-2 px-2 xl:text-lg font-bold after:absolute after:content-[''] after:min-w-0 after:transition-all after:duration-300 after:h-0.75 after:rounded-full after:bg-[#c3924d] after:bottom-0 after:right-0 hover:after:min-w-full transition-all duration-300 hover:text-[#C3924D] cursor-pointer">
+                                دسته بندی محصولات
+                            </span>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
                                 class="size-4 fill-[#c3924d] transition-all duration-300">
                                 <path
