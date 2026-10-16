@@ -327,20 +327,20 @@
                                             قلک طلا
                                         </td>
                                         <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
-                                            <button onclick="wallet('open', {{ $user->id }})"
-                                                class="w-3/6 text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer">
+                                            <button onclick="wallet(this, 'open', {{ $user->id }})"
+                                                class="w-3/6 text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer walletBtn">
                                                 کیف پول
                                             </button>
-                                            <div id="popup-wallet"
-                                                class="fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2 invisible opacity-0 transition-all flex items-center justify-center">
-                                                <div onclick="wallet('close')"
+                                            <div id=""
+                                                class="fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2 invisible opacity-0 transition-all flex items-center justify-center popup-wallet">
+                                                <div onclick="wallet(this, 'close')"
                                                     class="absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2 cursour-pointer">
                                                 </div>
                                                 <div class="relative z-51 w-[80%] lg:w-200 bg-white rounded-md px-3 py-2">
                                                     <div
                                                         class="w-full flex items-center justify-between border-b-1 border-(--border-dashboard) pb-2">
                                                         <div class="font-bold">کیف پول</div>
-                                                        <div onclick="wallet('close')" class="cursor-pointer">
+                                                        <div onclick="wallet(this, 'close')" class="cursor-pointer">
                                                             <svg class="size-6" fill="currentColor"
                                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
                                                                 <path
@@ -356,13 +356,13 @@
                                                                 <span
                                                                     class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">نام
                                                                     :</span>
-                                                                <span class="text-xs md:text-base font-bold"></span>
+                                                                <span class="text-xs md:text-base font-bold">{{ $user->name.' '.$user->family }}</span>
                                                             </div>
-                                                            <div class="w-6/12">
+                                                            <div class="w-6/12 flex justify-between items-center">
                                                                 <span
                                                                     class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره
                                                                     :</span>
-                                                                <span class="text-[10px] md:text-base font-bold"></span>
+                                                                <span class="text-[10px] md:text-base font-bold in-fa">{{ $user->phoneNumber }}</span>
                                                             </div>
                                                         </div>
                                                         <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
@@ -383,7 +383,7 @@
                                                                             موجودی ریال
                                                                         </span>
                                                                     </div>
-                                                                    <div class="font-bold pb-2"></div>
+                                                                    <div class="font-bold pb-2">{{ $user->wallet->asset }}</div>
                                                                 </div>
                                                                 <div class="flex items-center justify-between">
                                                                     <div class="flex items-center gap-3 pt-2">
@@ -394,6 +394,7 @@
                                                                     </div>
                                                                     <div class="font-bold pt-2">
                                                                         <span class="">
+                                                                            {{ $user->wallet->asset }}
                                                                         </span>
                                                                         <span
                                                                             class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">

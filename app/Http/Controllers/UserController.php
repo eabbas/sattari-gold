@@ -360,7 +360,6 @@ class UserController extends Controller
         // dd($request->all());
         $user = User::find($request->user_id);
         // $name = $user->name;
-        return response()->json($user);
         $user->name = $request->popupName;
         $user->family = $request->popupFamily;
         $user->phoneNumber = $request->popupPhoneNumber;

@@ -27,8 +27,8 @@ function createUser(state) {
     }
 }
 
-function wallet(state, userId) {
-    let wallet = document.getElementById('popup-wallet')
+function wallet(el, state, userId) {
+    let wallet = el.closest('td').querySelector('.popup-wallet')
     if (state == 'open') {
         $.ajaxSetup({
             headers: {
@@ -63,6 +63,8 @@ function wallet(state, userId) {
         wallet.classList.add('invisible', 'opacity-0')
     }
 }
+
+
 
 
 
@@ -184,6 +186,7 @@ items_2.forEach((item_2) => {
     const closeBtn_look_cont = item_2.querySelector(".close-popup-look-cont")
     const closeBtn_look_cont2 = item_2.querySelector(".close-popup-look-cont2")
     let closeBtn = item_2.querySelector(".closeBtn")
+
     closeBtn.addEventListener('click', () => {
         popup_look_cont.classList.add("invisible")
         popup_look_cont.classList.add("opacity-0")
@@ -235,9 +238,6 @@ items_2.forEach((item_2) => {
             box.classList.add('invisible', 'opacity-0')
         })
     })
-
-
-
     item_2.querySelector('.submitBtn').addEventListener('click', ()=>{
         let children = item_2.querySelector('.roles').children
         let roles = []
@@ -274,10 +274,13 @@ items_2.forEach((item_2) => {
                 let inner = `
                     <td class="p-1 md:px-3 md:py-2 flex items-center justify-center gap-2 in-fa">
                         <input type="checkbox" name="" class="row-checkbox appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
-                        ${data.id}
+                        ${ data.id }
                     </td>
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                         ${ data.name+' '+data.family }
+                    </td>
+                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
+                        ${ data.phoneNumber }
                     </td>
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                         -
@@ -292,24 +295,24 @@ items_2.forEach((item_2) => {
                         -
                     </td>
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                        <span class="w-10 h-10 ${ data.isActive ? 'border-1 bg-(--primary-dashboard)/20 border-(--primary-dashboard) text-(--primary-dashboard)' : 'border-1 bg-(--danger-dashboard)/20 border-(--danger-dashboard) text-(--danger-dashboard)' } rounded-md p-1 cursor-default">
-                            ${ data.isActive == 1 ? 'فعال' : 'غیرفعال' }
+                        <span class="px-3 py-1.5 border-1 ${ data.isActive == 1 ? 'border-(--primary-dashboard) bg-(--primary-dashboard)/20 text-(--primary-dashboard)' : 'border-(--danger-dashboard) bg-(--danger-dashboard)/20 text-(--danger-dashboard)' } rounded-md p-1 cursor-default">
+                               ${ data.isActive == 1 ? 'فعال' : 'غیرفعال' }
                         </span>
                     </td>
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                         قلک طلا
                     </td>
                     <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
-                        <button onclick="wallet('open', 1)" class="w-3/6 text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer">
+                        <button onclick="wallet(this, 'open', 1)" class="w-3/6 text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer walletBtn">
                             کیف پول
                         </button>
-                        <div id="popup-wallet" class="fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2 invisible opacity-0 transition-all flex items-center justify-center">
-                            <div onclick="wallet('close')" class="absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2 cursour-pointer">
+                        <div id="" class="fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2 invisible opacity-0 transition-all flex items-center justify-center popup-wallet">
+                            <div onclick="wallet(this, 'close')" class="absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2 cursour-pointer">
                             </div>
                             <div class="relative z-51 w-[80%] lg:w-200 bg-white rounded-md px-3 py-2">
                                 <div class="w-full flex items-center justify-between border-b-1 border-(--border-dashboard) pb-2">
                                     <div class="font-bold">کیف پول</div>
-                                    <div onclick="wallet('close')" class="cursor-pointer">
+                                    <div onclick="wallet(this, 'close')" class="cursor-pointer">
                                         <svg class="size-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
                                             <path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z">
                                             </path>
@@ -321,12 +324,12 @@ items_2.forEach((item_2) => {
                                         <div class="w-6/12">
                                             <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">نام
                                                 :</span>
-                                            <span class="text-xs md:text-base font-bold"></span>
+                                            <span class="text-xs md:text-base font-bold">${ data.name+' '+data.family }</span>
                                         </div>
-                                        <div class="w-6/12">
+                                        <div class="w-6/12 flex justify-between items-center">
                                             <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره
                                                 :</span>
-                                            <span class="text-[10px] md:text-base font-bold"></span>
+                                            <span class="text-[10px] md:text-base font-bold in-fa">${ data.phoneNumber }</span>
                                         </div>
                                     </div>
                                     <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
@@ -342,7 +345,7 @@ items_2.forEach((item_2) => {
                                                         موجودی ریال
                                                     </span>
                                                 </div>
-                                                <div class="font-bold pb-2"></div>
+                                                <div class="font-bold pb-2">0</div>
                                             </div>
                                             <div class="flex items-center justify-between">
                                                 <div class="flex items-center gap-3 pt-2">
@@ -352,6 +355,7 @@ items_2.forEach((item_2) => {
                                                 </div>
                                                 <div class="font-bold pt-2">
                                                     <span class="">
+                                                        0
                                                     </span>
                                                     <span class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
                                                         تومان
@@ -574,8 +578,10 @@ items_2.forEach((item_2) => {
                                 </div>
                             </div>
                         </div>
-                    </td>
-                `
+                    </td>`
+                rowTable.innerHTML = inner
+                parentTable.prepend(rowTable)
+
             },
             error: function(){
                 console.log('failed to load data')
