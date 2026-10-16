@@ -211,7 +211,7 @@
                 </div>
             </div>
         </section>
-        {{ $transactions->links() }}
+        {{-- {{ $transactions->links() }} --}}
     </div>
     <div id="transaction"
         class="fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2 invisible opacity-0 transition-all flex items-center justify-center">

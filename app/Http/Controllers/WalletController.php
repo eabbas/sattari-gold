@@ -127,7 +127,8 @@ class WalletController extends Controller
     public function transactionsList()
     {
         // $transactions = transaction::all();
-        $transactions = transaction::orderBy('date', 'desc')->orderBy('time', 'desc')->paginate(5);
+        // $transactions = transaction::orderBy('date', 'desc')->orderBy('time', 'desc')->paginate(5);
+        $transactions = transaction::orderBy('date', 'desc')->orderBy('time', 'desc')->get();
         $logo = logo::first();
         foreach ($transactions as $transaction) {
             switch ($transaction->type) {
