@@ -30,7 +30,6 @@
         </div>
     @endif
 
-    <!-- list_users_start -->
     <div class="w-full flex flex-col gap-3 justify-start items-center">
         <!-- لیست مشتریان / هدر -->
         <section
@@ -751,7 +750,7 @@
                         <tbody>
                             @foreach ($users as $user)
                                 @if (!$user->isApproved)
-                                    <tr class="item_2 text-xs lg:text-base">
+                                    <tr class="item_2 text-xs lg:text-base" data-user-id="{{ $user->id }}">
                                         <td
                                             class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center text-nowrap">
                                             {{ $user->id }}
@@ -779,19 +778,20 @@
                                                 تایید و بازبینی
                                             </button>
                                             <div
-                                                class="popup-look-cont fixed z-50 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2  invisible opacity-0 transition-all flex items-center justify-center">
+                                                class="popup-look-cont fixed z-50 w-full h-dvh top-0 left-1/2 -translate-x-1/2  invisible opacity-0 transition-all flex items-center justify-center">
+
                                                 <div
-                                                    class="close-popup-look-cont2 absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2">
+                                                    class="close-popup-look-cont2 absolute z-49 w-full h-dvh bg-black/50 left-1/2 -translate-x-1/2">
                                                 </div>
-                                                <form action=""
-                                                    class="relative z-51 w-[80%] md:w-200 bg-white rounded-md px-3 py-2">
+                                                <div
+                                                    class="relative z-51 w-[80%] md:w-200 bg-white rounded-md px-3 py-2 invisible opacity-0 transition-all duration-300 detailBox">
                                                     <div
                                                         class="w-full flex items-center justify-between border-b-1 border-(--border-dashboard) pb-2">
                                                         <div class="text-sm md:text-base font-bold text-nowrap">بازبینی
                                                             اطلاعات
                                                             مشتری و تایید</div>
                                                         <div class="close-popup-look-cont">
-                                                            <svg class="size-6" fill="currentColor"
+                                                            <svg class="size-6 cursor-pointer" fill="currentColor"
                                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
                                                                 <path
                                                                     d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z">
@@ -800,88 +800,80 @@
                                                         </div>
                                                     </div>
                                                     <div class="grid grid-cols-2 md:grid-cols-6 gap-5 mt-5">
-                                                        <label class="col-span-1 md:col-span-2" for="">
+                                                        <div class="col-span-1 md:col-span-3 text-start">
+                                                            نام
+                                                            <input
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) name"
+                                                                type="text" name="" id="">
+                                                        </div>
+                                                        <div class="col-span-1 md:col-span-3 text-start">
+                                                            نام خانوادگی
+                                                            <input
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) family"
+                                                                type="text" style="font-family: 'IRANSansX';" name="" id="">
+                                                        </div>
+                                                        <div class="col-span-1 md:col-span-3 text-start">
                                                             کد ملی
                                                             <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
-                                                                type="text" name="" id="">
-                                                        </label>
-                                                        <label class="col-span-1 md:col-span-2" for="">
-                                                            تاریخ تولد
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa nationalCode"
+                                                                type="text" name="" dir="ltr" id="">
+                                                        </div>
+                                                        <div class="col-span-1 md:col-span-3 text-start">
+                                                            شماره تلفن
                                                             <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
-                                                                type="text" name="" id="">
-                                                        </label>
-                                                        <label class="col-span-1 md:col-span-2" for="">
-                                                            معرف
-                                                            <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
-                                                                type="text" name="" id="">
-                                                        </label>
-                                                        <label class="col-span-1 md:col-span-2" for="">
-                                                            کد حسابداری
-                                                            <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
-                                                                type="text" name="" id="">
-                                                        </label>
-                                                        <label class="col-span-1 md:col-span-2" for="categoryNameS">
-                                                            نام دسته‌بندی
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa phoneNumber"
+                                                                type="text" name="" dir="ltr" id="">
+                                                        </div>
+                                                        <div class="col-span-1 md:col-span-2 text-start">
+                                                            وضعیت تایید
                                                             <select
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
-                                                                name="" id="categoryNameS">
-                                                                <option value="">salam</option>
-                                                                <option value="">salam</option>
-                                                                <option value="" selected>boy</option>
-                                                                <option value="">salam</option>
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) isApproved"
+                                                                name="" id="">
+                                                                <option value="0">در انتظار</option>
+                                                                <option value="1">تایید</option>
+                                                                <option value="-1">رد</option>
                                                             </select>
-                                                        </label>
-                                                        <label class="col-span-1 md:col-span-2" for="welcomS">
-                                                            تعداد ورودهای همزنان
+                                                        </div>
+                                                        <div class="col-span-1 md:col-span-2 text-start">
+                                                            نقش
                                                             <select
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
-                                                                name="" id="welcomS">
-                                                                <option value="">salam</option>
-                                                                <option value="">salam</option>
-                                                                <option value="" selected>boy</option>
-                                                                <option value="">salam</option>
+                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) roles"
+                                                                name="" id="" multiple size="1">
+                                                                @foreach ($roles as $role)
+                                                                    <option value="{{ $role->id }}"
+                                                                        @if (in_array($role->id, $user->roleIds)) selected @endif>
+                                                                        {{ $role->faTitle }}</option>
+                                                                @endforeach
                                                             </select>
-                                                        </label>
-                                                        <label class="col-span-2 md:col-span-6" for="text">
-                                                            یادداشت
-                                                            <textarea
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
-                                                                name="" id="text"></textarea>
-                                                        </label>
-                                                        <label
-                                                            class="border-1 border-(--border-dashboard) h-fit rounded-md hover:shadow-sm transition-all col-span-2 md:col-span-3 flex items-center justify-between w-full py-4 px-4 cursor-pointer"
-                                                            for="passwordd">
-                                                            <div class="text-zinc-700 text-sm">
-                                                                ورود با رمز عبور
+                                                        </div>
+                                      
+                                                        <div
+                                                            class="border-1 border-(--border-dashboard) h-fit rounded-md hover:shadow-sm transition-all col-span-2 md:col-span-2 flex items-center justify-between w-full py-2 px-4 mt-[30px]">
+                                                            <div class="w-full flex justify-between items-center">
+                                                                <label for="isActive{{ $user->id }}"
+                                                                    class="w-[calc(100%-50px)] text-start cursor-pointer">فعال
+                                                                    : </label>
+                                                                <label for="isActive{{ $user->id }}"
+                                                                    class="w-[50px] h-[28px] flex rounded-full cursor-pointer relative">
+                                                                    <input type="checkbox" name="isActive" value="1"
+                                                                        id="isActive{{ $user->id }}" hidden class="peer cursor-pointer">
+                                                                    <span
+                                                                        class="size-full bg-gray-300 shadow-inner rounded-full peer-checked:bg-[#1B84FF] transition-all duration-300"></span>
+                                                                    <span
+                                                                        class="size-[20px] rounded-full bg-white absolute top-1 left-1 peer-checked:translate-x-[22px] transition-all duration-300 shadow-md"></span>
+                                                                </label>
                                                             </div>
-                                                            <div class="relative inline-flex cursor-pointer items-center">
-                                                                <input class="peer sr-only" id="passwordd"
-                                                                    type="checkbox">
-                                                                <div
-                                                                    class="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:bg-white after:transition-all after:content-[''] peer-checked:bg-(--primary-dashboard) peer-checked:after:translate-x-full peer-focus:ring-(--primary-dashboard-dark-dashboard)">
-                                                                </div>
-                                                            </div>
-                                                        </label>
-                                                        <label for="massege"
-                                                            class="col-span-2 md:col-span-6 flex items-center justify-start gap-3 text-black">
-                                                            <input id="massege" type="checkbox" name=""
-                                                                class="appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
-                                                            ارسال پیامک تایید ثبت نام در اپلیکیشن
-                                                        </label>
+                                                        </div>
+                                           
                                                         <button
-                                                            class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold">ثبت</button>
+                                                            class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold submitBtn cursor-pointer transition-all duration-300 hover:bg-(--primary-dashboard) hover:text-white">ثبت</button>
                                                         <button
-                                                            class="col-span-1 md:col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold">
-                                                            لغو</button>
+                                                            class="col-span-1 md:col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold closeBtn cursor-pointer transition-all duration-300 hover:bg-(--danger-dashboard) hover:text-white">لغو</button>
                                                     </div>
-                                                </form>
+                                                </div>
                                             </div>
                                             <button
-                                                class="w-3/6 bg-(--danger-dashboard) text-white rounded-md px-2 py-2 cursor-pointer text-nowrap">
+                                                class="w-3/6 bg-(--danger-dashboard) text-white rounded-md px-2 py-2 cursor-pointer text-nowrap deleteUser">
                                                 حذف درخواست
                                             </button>
                                         </td>
@@ -894,233 +886,18 @@
             </div>
         </section>
     </div>
-    <!-- list_users_start -->
-    <script>
-        let message = document.getElementById('message')
-        let element = document.createElement('div')
-        element.classList = "text-sm font-bold flex flex-row items-center justify-center py-3 gap-2 lg:gap-3"
 
-        function showMessage(state) {
-            if (state == 'open') {
-                message.classList.remove('top-0')
-                message.classList.remove('opacity-0')
-                message.classList.remove('invisible')
-                message.classList.add('top-2/10')
-            }
-            if (state == 'close') {
-                message.classList.remove('top-2/10')
-                message.classList.add('top-0')
-                message.classList.add('opacity-0')
-                message.classList.add('invisible')
-            }
-        }
+    {{-- loader --}}
+    <div id="loader"
+        class="w-full h-full fixed top-0 right-0 z-999 flex items-center justify-center transition-all bg-black/50 duration-300 invisible opacity-0">
+        <div class="p-10 bg-white shadow-xl rounded-lg flex flex-col items-center gap-10">
+            <span class="w-20 h-20 animate-spin rounded-full border-4 border-yellow-100 border-t-yellow-600"></span>
+            <p class="text-gray-600 font-bold text-xl">در حال بارگذاری لطفا
+                شکیبا باشید....</p>
+        </div>
+    </div>
+    {{-- loader --}}
 
-        function createUser(state) {
-            let userCreatePopup = document.getElementById('userCreatePopup')
-            if (state == 'open') {
-                userCreatePopup.classList.remove('invisible', 'opacity-0')
-            }
-            if (state == 'close') {
-                userCreatePopup.classList.add('invisible', 'opacity-0')
-            }
-        }
-
-        function wallet(state, userId) {
-            let wallet = document.getElementById('popup-wallet')
-            if (state == 'open') {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                    }
-                })
-                $.ajax({
-                    url: "{{ route('wallet.popupWalletData') }}",
-                    type: "POST",
-                    dataType: "json",
-                    data: {
-                        'userId': userId,
-                    },
-                    success: function(data) {
-                        console.log(data);
-                    },
-                    error: function() {
-                        showMessage('open')
-                        element.innerHTML = `
-                            <span>❌</span>
-                            <span class="text-shadow-lg">خطا در دریافت اطلاعات!</span>
-                        `
-                        message.children[0].appendChild(element)
-                        setTimeout(() => {
-                            showMessage('close')
-                        }, 2500)
-                    }
-                })
-                wallet.classList.remove('invisible', 'opacity-0')
-            }
-            if (state == 'close') {
-                wallet.classList.add('invisible', 'opacity-0')
-            }
-        }
-
-
-
-        // لیست مشتری / لیست مشتری - مشتریان در انتظار تایید
-        let confirmed = document.getElementById("confirmed");
-        let pending = document.getElementById("pending");
-        let confirmed_pending = document.getElementById("confirmed_pending");
-
-        function conpen(state, el) {
-            document.querySelectorAll('.customers').forEach(customer => {
-                customer.classList.remove('bg-white')
-                customer.classList.add('bg-zinc-200')
-            })
-            if (state == 'pending') {
-                el.classList.add('bg-white')
-                el.classList.remove('bg-zinc-200')
-                confirmed.classList.add("hidden")
-                pending.classList.remove("hidden")
-            }
-            if (state == 'confirmed') {
-                el.classList.add('bg-white')
-                el.classList.remove('bg-zinc-200')
-                confirmed.classList.remove("hidden")
-                pending.classList.add("hidden")
-            }
-        }
-
-
-        // لیست مشتری / انتخواب همه
-        const selectAll = document.querySelector("#selectAll");
-        const rowCheckboxes = document.querySelectorAll(".row-checkbox");
-
-        // انتخاب یا لغو انتخاب همه
-        selectAll.addEventListener("change", () => {
-
-            rowCheckboxes.forEach((checkbox) => {
-                checkbox.checked = selectAll.checked;
-            });
-
-        });
-
-
-        // بررسی انتخاب دستی ردیف‌ها
-        rowCheckboxes.forEach((checkbox) => {
-
-            checkbox.addEventListener("change", () => {
-
-                const allSelected = [...rowCheckboxes]
-                    .every((checkbox) => checkbox.checked);
-
-                selectAll.checked = allSelected;
-
-            });
-
-        });
-
-        // لیست مشتریان / کیف پوا - بیشتر - ادیت
-        const item_list = document.querySelectorAll(".item_list");
-
-        // console.log(items)
-        item_list.forEach((item_list) => {
-
-            const openBtn_edited = item_list.querySelector(".open-popup-edited");
-            console.log(openBtn_edited)
-            const openBtn_look_edit = item_list.querySelector(".open-popup-look-edit");
-            const popup_edit = item_list.querySelector(".popup-edit");
-            const closeBtn_edit = item_list.querySelector(".close-popup-edit");
-            const closeBtn_edit2 = item_list.querySelector(".close-popup-edit2");
-            const openBtn_look = item_list.querySelector(".open-popup-look");
-            const popup_look = item_list.querySelector(".popup-look");
-            const closeBtn_look = item_list.querySelector(".close-popup-look");
-            const closeBtn_look2 = item_list.querySelector(".close-popup-look2");
-
-            openBtn_edited.addEventListener("click", () => {
-                popup_edit.classList.remove("invisible");
-                popup_edit.classList.remove("opacity-0");
-                popup_edit.classList.add("opacity-100");
-                popup_edit.classList.add("visible");
-            });
-
-            closeBtn_edit.addEventListener("click", () => {
-                popup_edit.classList.add("invisible");
-                popup_edit.classList.add("opacity-0");
-                popup_edit.classList.remove("opacity-100");
-                popup_edit.classList.remove("visible");
-            });
-            closeBtn_edit2.addEventListener("click", () => {
-                popup_edit.classList.add("invisible");
-                popup_edit.classList.add("opacity-0");
-                popup_edit.classList.remove("opacity-100");
-                popup_edit.classList.remove("visible");
-            });
-
-
-            openBtn_look_edit.addEventListener("click", () => {
-                popup_edit.classList.remove("invisible");
-                popup_edit.classList.remove("opacity-0");
-                popup_edit.classList.add("visible");
-                popup_edit.classList.add("opacity-100");
-                popup_look.classList.remove("visible");
-                popup_look.classList.remove("opacity-100");
-                popup_look.classList.add("invisible");
-                popup_look.classList.add("opacity-0");
-            });
-
-
-            openBtn_look.addEventListener("click", () => {
-                popup_look.classList.remove("invisible");
-                popup_look.classList.remove("opacity-0");
-                popup_look.classList.add("opacity-100");
-                popup_look.classList.add("visible");
-            });
-            closeBtn_look.addEventListener("click", () => {
-                popup_look.classList.add("invisible");
-                popup_look.classList.add("opacity-0");
-                popup_look.classList.remove("opacity-100");
-                popup_look.classList.remove("visible");
-            });
-            closeBtn_look2.addEventListener("click", () => {
-                popup_look.classList.add("invisible");
-                popup_look.classList.add("opacity-0");
-                popup_look.classList.remove("opacity-100");
-                popup_look.classList.remove("visible");
-            });
-
-
-
-        });
-
-
-        // لیست مشتری / تایید و بازبینی
-        const items_2 = document.querySelectorAll(".item_2");
-
-        items_2.forEach((item_2) => {
-
-
-            const openBtn_look_cont = item_2.querySelector(".open-look-cont");
-            const popup_look_cont = item_2.querySelector(".popup-look-cont");
-            const closeBtn_look_cont = item_2.querySelector(".close-popup-look-cont");
-            const closeBtn_look_cont2 = item_2.querySelector(".close-popup-look-cont2");
-
-            openBtn_look_cont.addEventListener("click", () => {
-                popup_look_cont.classList.remove("invisible");
-                popup_look_cont.classList.remove("opacity-0");
-                popup_look_cont.classList.add("opacity-100");
-                popup_look_cont.classList.add("visible");
-            });
-            closeBtn_look_cont.addEventListener("click", () => {
-                popup_look_cont.classList.add("invisible");
-                popup_look_cont.classList.add("opacity-0");
-                popup_look_cont.classList.remove("opacity-100");
-                popup_look_cont.classList.remove("visible");
-            });
-            closeBtn_look_cont2.addEventListener("click", () => {
-                popup_look_cont.classList.add("invisible");
-                popup_look_cont.classList.add("opacity-0");
-                popup_look_cont.classList.remove("opacity-100");
-                popup_look_cont.classList.remove("visible");
-            });
-        });
-    </script>
+    <script src="{{ asset('assets/js/user.js') }}"></script>
     <script src="{{ asset('assets/js/checkAll.js') }}"></script>
 @endsection

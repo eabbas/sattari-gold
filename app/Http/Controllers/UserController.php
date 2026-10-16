@@ -298,6 +298,23 @@ class UserController extends Controller
         $users = User::paginate(10);
         $logo = logo::first();
         $roles = role::all();
+        foreach($users as $user){
+            $roleIds = [];
+            foreach($user->roles as $role){
+                $roleIds []= $role->id;
+            }
+            $user->roleIds = $roleIds;
+        }
+        foreach($roles as $role){
+            switch($role->name){
+                case 'admin':
+                    $role->faTitle = 'ادمین';
+                    break;
+                case 'general_user':
+                    $role->faTitle = 'کاربر عادی';
+                    break;
+            }
+        }
         return view('admin.user.index', [
             'users' => $users,
             'logo' => $logo,
@@ -310,7 +327,8 @@ class UserController extends Controller
             Storage::disk('public')->delete($user['mainImage']);
         }
         $user->delete();
-        return to_route('user.index')->with('message', $user['name'] . $user['family'] . " " . "حذف شد .");
+        return response()->json($user);
+        // return to_route('user.index')->with('message', $user['name'] . $user['family'] . " " . "حذف شد .");
     }
     public function edit(Request $request)
     {
@@ -321,28 +339,28 @@ class UserController extends Controller
     }
     public function update(Request $request)
     {
-        // dd($request->all());
-        $validated = $request->validate(
-            [
-                'popupName' => ['required'],
-                'popupFamily' => ['required'],
-                'popupPhoneNumber' => ['required', 'min:11', 'max:11'],
-                'popupNationalCode' => ['required', 'min:10', 'max:10'],
-            ],
-            [
-                'popupName.required' => 'پر کردن این فیلد الزامی است.',
-                'popupFamily.required' => 'پر کردن این فیلد الزامی است.',
-                'popupPhoneNumber.required' => 'پر کردن این فیلد الزامی است.',
-                'popupPhoneNumber.max' => 'شماره تلفن باید 11 رقمی باشد.',
-                'popupPhoneNumber.min' => 'شماره تلفن باید 11 رقمی باشد.',
-                'popupNationalCode.max' => 'کد ملی باید 10 رقمی باشد.',
-                'popupNationalCode.min' => 'کد ملی باید 10 رقمی باشد.',
-                'popupNationalCode.required' => 'پر کردن این فیلد الزامی است.',
-            ]
-        );
+        // $validated = $request->validate(
+        //     [
+        //         'popupName' => ['required'],
+        //         'popupFamily' => ['required'],
+        //         'popupPhoneNumber' => ['required', 'min:11', 'max:11'],
+        //         'popupNationalCode' => ['required', 'min:10', 'max:10'],
+        //     ],
+        //     [
+        //         'popupName.required' => 'پر کردن این فیلد الزامی است.',
+        //         'popupFamily.required' => 'پر کردن این فیلد الزامی است.',
+        //         'popupPhoneNumber.required' => 'پر کردن این فیلد الزامی است.',
+        //         'popupPhoneNumber.max' => 'شماره تلفن باید 11 رقمی باشد.',
+        //         'popupPhoneNumber.min' => 'شماره تلفن باید 11 رقمی باشد.',
+        //         'popupNationalCode.max' => 'کد ملی باید 10 رقمی باشد.',
+        //         'popupNationalCode.min' => 'کد ملی باید 10 رقمی باشد.',
+        //         'popupNationalCode.required' => 'پر کردن این فیلد الزامی است.',
+        //     ]
+        // );
         // dd($request->all());
         $user = User::find($request->user_id);
-        $name = $user->name;
+        // $name = $user->name;
+        return response()->json($user);
         $user->name = $request->popupName;
         $user->family = $request->popupFamily;
         $user->phoneNumber = $request->popupPhoneNumber;
@@ -359,7 +377,8 @@ class UserController extends Controller
             }
         }
         $user->save();
-        return to_route('user.index')->with('message',  $name . ' به روزرسانی شد .');
+        return response()->json($user);
+        // return to_route('user.index')->with('message',  $name . ' به روزرسانی شد .');
     }
     public function profile($user = null)
     {
@@ -468,5 +487,8 @@ class UserController extends Controller
             $row->delete();
         }
         return response()->json($row);
+    }
+    public function userDetail(User $user){
+        return response()->json($user);
     }
 }

@@ -27,7 +27,7 @@
 
 <body>
     {{-- header --}}
-    <section class="w-full h-[9vh] py-2 bg-white flex gap-1 justify-between items-center px-3 z-2">
+    <section class="w-full py-2 bg-white flex gap-1 justify-between items-center px-3 z-2">
 
         <div class="h-full flex gap-6 justify-start items-center">
             <div class="flex flex-col gap-[3px] items-start justify-center " onclick="hamburger_menu_dashboard('open')">
