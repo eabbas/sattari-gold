@@ -109,13 +109,21 @@
             </div>
         </div>
         <div class="my-12 h-px bg-slate-200"></div>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
             <span onclick="editForm('open', {{ $user->id }})"
                 class="text-sm py-3 px-5 text-center mx-auto w-60 sm:w-40 rounded-xl border-2 border-slate-300 bg-slate-100 text-slate-700 transition-all duration-300 cursor-pointer">ویرایش
                 پروفایل</span>
             <a href="{{ route('wallet.wallet', [$user]) }}"
                 class="text-sm py-3 px-5 text-center mx-auto w-60 sm:w-40 rounded-xl border-2 border-slate-300 bg-slate-100 text-slate-700 transition-all duration-300 cursor-pointer">کیف
                 پول</a>
+            <a href="{{ route('deal.create') }}"
+                class="text-sm py-3 px-5 text-center mx-auto w-60 sm:w-40 rounded-xl border-2 border-slate-300 bg-slate-100 text-slate-700 transition-all duration-300 cursor-pointer">
+                شروع معامله
+            </a>
+            <a href="{{ route('deal.list') }}"
+                class="text-sm py-3 px-5 text-center mx-auto w-60 sm:w-40 rounded-xl border-2 border-slate-300 bg-slate-100 text-slate-700 transition-all duration-300 cursor-pointer">
+                تاریخچه معاملات
+            </a>
             @if ($user->id == Auth::id())
                 <a href="{{ route('user.logout') }}"
                     class="text-sm py-3 px-5 text-center mx-auto w-60 sm:w-40 rounded-xl border-2 border-red-300 bg-red-50 text-red-500 hover:bg-red-100 transition-all duration-300">خروج</a>
@@ -148,8 +156,8 @@
                                 </span>
                             </label>
                             <input type="text"
-                                class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]" name="name"
-                                id="name" placeholder="نام را وارد کنید">
+                                class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]"
+                                name="name" id="name" placeholder="نام را وارد کنید">
                             @error('name')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
                             @enderror

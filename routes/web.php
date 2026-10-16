@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CreditCardController;
 use App\Http\Controllers\DealController;
 use App\Http\Controllers\HeaderController;
 use App\Http\Controllers\HomeController;
@@ -219,7 +220,23 @@ Route::group([
     Route::post('/update/{deal}', 'update')->name('update');
     Route::get('/delete/{deal}', 'delete')->name('delete');
     Route::get('/single/{deal}', 'single')->name('single');
-    Route::get('/', 'list')->name('list');
+    Route::get('/list', 'list')->name('list');
+    Route::get('/adminIndex', 'adminIndex')->name('adminIndex');
+});
+
+// creditCard routes
+Route::group([
+    'prefix' => 'creditCard',
+    'controller' => CreditCardController::class,
+    'middleware' => [checklogin::class],
+    'as' => 'creditCard.'
+], function () {
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+    Route::get('/edit/{creditCard}', 'edit')->name('edit');
+    Route::post('/update/{creditCard}', 'update')->name('update');
+    Route::get('/delete/{creditCard}', 'delete')->name('delete');
+    Route::get('/list', 'list')->name('list');
     Route::get('/adminIndex', 'adminIndex')->name('adminIndex');
 });
 

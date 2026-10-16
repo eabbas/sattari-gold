@@ -4,14 +4,13 @@
     <main class="max-w-[1280px] mx-auto my-4 md:my-6 px-3 md:px-5">
         <div class="text-[#71717a] text-xs mb-[18px]">خانه / <b class="text-[#333]">جستجو</b></div>
 
-        @if (isset($title))
-            <div class="flex items-end justify-between gap-2.5 mb-[18px]">
-                <div>
-                    <h1 id="title" class="m-0 text-[18px] md:text-[22px]">نتایج جستجو برای "{{ $title }}"</h1>
-                    <div id="resultCount" class="text-[#71717a] text-[13px]"></div>
-                </div>
+        <div class="flex items-end justify-between gap-2.5 mb-[18px]">
+            <div>
+                <h1 id="title" class="m-0 text-[18px] md:text-[22px]">نتایج جستجو برای "{{ isset($title) ? $title : '' }}"
+                </h1>
+                <div id="resultCount" class="text-[#71717a] text-[13px]"></div>
             </div>
-        @endif
+        </div>
 
         <div class="grid grid-cols-1 md:grid-cols-[250px_1fr] gap-[18px]">
             <div class="fixed w-full h-dvh bg-black/50 z-99 top-0 right-0 md:hidden invisible opacity-0 transition-all duration-300"
@@ -58,20 +57,14 @@
             </aside>
 
             <section class="min-w-0">
-                <form action="{{ route('search.page') }}" method="POST">
-                    @csrf
-                    <div class="w-full flex items-center gap-3 border-1 border-gray-400 rounded-xl mb-3">
-                        <input type="text" class="w-full px-3.5 py-3 outline-none" name="title" required>
-                        <button type="submit" class="cursor-pointer">
-                            <svg class="w-6 h-6 text-gray-600 ml-2.5 cursor-pointer" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
-                                    d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
-                            </svg>
-                        </button>
-                    </div>
-                </form>
+                <div class="w-full flex items-center gap-3 border-1 border-gray-200 rounded-xl mb-3">
+                    <input type="text" class="w-full px-3.5 py-3 outline-none" id="searchInp">
+                    <svg class="w-6 h-6 text-gray-600 ml-2.5 cursor-pointer" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                            d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+                    </svg>
+                </div>
                 <div
                     class="bg-white border border-[#e4e4e7] rounded-xl p-3 md:px-[15px] flex flex-col md:flex-row md:items-center justify-between gap-3 mb-3.5">
                     <div class="flex items-center gap-2 flex-wrap">
@@ -126,8 +119,7 @@
                                         <span class="text-[10px] text-[#71717a]">تومان
                                         </span>
                                     </div>
-                                    <div class="line-through text-[#a1a1aa] text-[10px] in-fa">
-                                        {{ $product->primary_price }}
+                                    <div class="line-through text-[#a1a1aa] text-[10px] in-fa">{{ $product->primary_price }}
                                         تومان</div>
                                 @else
                                     <div class="flex items-center justify-between gap-2">
