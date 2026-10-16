@@ -20,10 +20,12 @@ class UserController extends Controller
     {
         return view('user.user.login');
     }
+
     public function loginWithCode()
     {
         return view('user.user.loginWithCode');
     }
+
     public function checkAuth(Request $request)
     {
         $data['nationalCode'] = false;
@@ -52,6 +54,7 @@ class UserController extends Controller
         }
         return response()->json($data);
     }
+
     public function checkUser(Request $request)
     {
         $user = User::where('phoneNumber', $request['phoneNumber'])->first();
@@ -61,6 +64,7 @@ class UserController extends Controller
         Auth::login($user);
         return to_route('home')->with('success', "$user->name $user->family عزیز خوش آمدید.");
     }
+
     public function checkUserPopup(Request $request)
     {
         $user = User::where('phoneNumber', $request['phoneNumber'])->first();
@@ -70,10 +74,10 @@ class UserController extends Controller
                     Auth::login($user);
                     return redirect()->back()->with('success', "$user->name $user->family عزیز خوش آمدید.");
                 } else {
-                    return redirect()->back()->with('failure', "رمز عبور وارد شده اشتباه است.");
+                    return redirect()->back()->with('failure', 'رمز عبور وارد شده اشتباه است.');
                 }
             } else {
-                return redirect()->back()->with('failure', "شماره مورد نظر یافت نشد ، ابتدا ثبت نام کنید.");
+                return redirect()->back()->with('failure', 'شماره مورد نظر یافت نشد ، ابتدا ثبت نام کنید.');
             }
         }
         if (isset($request['code'])) {
@@ -82,6 +86,7 @@ class UserController extends Controller
             return redirect()->back()->with('success', "$user->name $user->family عزیز خوش آمدید.");
         }
     }
+
     public function validate(Request $request)
     {
         // return response()->json($request->all());
@@ -110,10 +115,12 @@ class UserController extends Controller
         }
         return response()->json($data);
     }
+
     public function forgetPassword()
     {
         return view('user.user.forgetPassword');
     }
+
     public function send_code(Request $request)
     {
         $flag = false;
@@ -146,6 +153,7 @@ class UserController extends Controller
         }
         return response()->json($flag);
     }
+
     public function send_sms(Request $request)
     {
         $flag = false;
@@ -178,11 +186,13 @@ class UserController extends Controller
         }
         return response()->json($flag);
     }
+
     public function setPassword(Request $request)
     {
         $user = User::where('phoneNumber', $request->phoneNumber)->first();
         return view('user.user.setPassword', ['user' => $user]);
     }
+
     public function savePassword(Request $request)
     {
         $user = User::find($request->user_id);
@@ -190,10 +200,12 @@ class UserController extends Controller
         $user->save();
         return to_route('user.login')->with('success', 'رمز عبور شما با موفقیت تغییر یافت.');
     }
+
     public function signup()
     {
         return view('user.user.signup');
     }
+
     public function store(Request $request)
     {
         $validated = $request->validate(
@@ -231,12 +243,14 @@ class UserController extends Controller
         ]);
         return to_route('user.login')->with('success', "$user->name $user->family عزیز با موفقیت ثبت نام شدید لطفا وارد شوید.");
     }
+
     public function adminSignup()
     {
         $logo = logo::first();
         $roles = role::all();
         return view('admin.user.signup', ['roles' => $roles, 'logo' => $logo]);
     }
+
     public function adminStore(Request $request)
     {
         // dd($request->all());
@@ -287,26 +301,28 @@ class UserController extends Controller
         }
         return redirect()->back()->with('message', 'کاربر جدید برای سایت ایجاد شد.');
     }
+
     public function logout()
     {
         $name = Auth::user()->name;
         Auth::logout();
         return to_route('home')->with('failure', $name . ' عزیز به امید دیدار.');
     }
+
     public function index()
     {
         $users = User::paginate(10);
         $logo = logo::first();
         $roles = role::all();
-        foreach($users as $user){
+        foreach ($users as $user) {
             $roleIds = [];
-            foreach($user->roles as $role){
-                $roleIds []= $role->id;
+            foreach ($user->roles as $role) {
+                $roleIds[] = $role->id;
             }
             $user->roleIds = $roleIds;
         }
-        foreach($roles as $role){
-            switch($role->name){
+        foreach ($roles as $role) {
+            switch ($role->name) {
                 case 'admin':
                     $role->faTitle = 'ادمین';
                     break;
@@ -321,6 +337,7 @@ class UserController extends Controller
             'roles' => $roles,
         ]);
     }
+
     public function delete(User $user)
     {
         if ($user['mainImage']) {
@@ -330,6 +347,7 @@ class UserController extends Controller
         return response()->json($user);
         // return to_route('user.index')->with('message', $user['name'] . $user['family'] . " " . "حذف شد .");
     }
+
     public function edit(Request $request)
     {
         $user = User::find($request['id'])->load('roles');
@@ -337,6 +355,7 @@ class UserController extends Controller
         $roles = role::all();
         return response()->json(['user' => $user, 'roles' => $roles, 'roleIds' => $roleIds]);
     }
+
     public function update(Request $request)
     {
         // $validated = $request->validate(
@@ -357,9 +376,10 @@ class UserController extends Controller
         //         'popupNationalCode.required' => 'پر کردن این فیلد الزامی است.',
         //     ]
         // );
-        // dd($request->all());
         $user = User::find($request->user_id);
+        
         // $name = $user->name;
+        $flag = $request->flag;
         $user->name = $request->popupName;
         $user->family = $request->popupFamily;
         $user->phoneNumber = $request->popupPhoneNumber;
@@ -376,9 +396,28 @@ class UserController extends Controller
             }
         }
         $user->save();
+        $roles = role::all();
+        foreach ($roles as $role) {
+            if ($role->name == 'admin') {
+                $role->faTitle = 'ادمین';
+            }
+            if ($role->name == 'general_user') {
+                $role->faTitle = 'کاربر عمومی';
+            }
+        }
+        $user->wallet;
+        $roleIds = [];
+        foreach ($user->roles as $role) {
+            $roleIds[] = $role->id;
+        }
+        $user->roleIds = $roleIds;
+        if($request->flag){
+            return response()->json(['user' => $user, 'roles' => $roles]);
+        }
         return response()->json($user);
         // return to_route('user.index')->with('message',  $name . ' به روزرسانی شد .');
     }
+
     public function profile($user = null)
     {
         if (!$user) {
@@ -400,6 +439,7 @@ class UserController extends Controller
             'logo' => $logo,
         ]);
     }
+
     public function profileEdit(Request $request)
     {
         $user = User::find($request['id']);
@@ -408,6 +448,7 @@ class UserController extends Controller
         }
         return response()->json($user);
     }
+
     public function updateProfile(Request $request)
     {
         $validated = $request->validate(
@@ -456,8 +497,9 @@ class UserController extends Controller
         // ! بعد از افزودن امکان بارگذاری عکس برای کاربر خط زیر باید کار کند
         // $user->mainImage = $img_path;
         $user->save();
-        return redirect()->back()->with('message',  'پروفایل شما با موفقیت به روزرسانی شد.');
+        return redirect()->back()->with('message', 'پروفایل شما با موفقیت به روزرسانی شد.');
     }
+
     public function search(Request $request)
     {
         $roles = role::all();
@@ -479,6 +521,7 @@ class UserController extends Controller
             return view('admin.user.index', ['users' => $users, 'roles' => $roles, 'logo' => $logo]);
         }
     }
+
     public function removeActivationCode(Request $request)
     {
         $row = PhoneCode::where('phoneNumber', $request->phoneNumber)->first();
@@ -487,7 +530,9 @@ class UserController extends Controller
         }
         return response()->json($row);
     }
-    public function userDetail(User $user){
+
+    public function userDetail(User $user)
+    {
         return response()->json($user);
     }
 }

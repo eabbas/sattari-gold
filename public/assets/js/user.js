@@ -36,7 +36,7 @@ function wallet(el, state, userId) {
             }
         })
         $.ajax({
-            url: api +"popupWalletData",
+            url: api + "popupWalletData",
             type: "POST",
             dataType: "json",
             data: {
@@ -64,10 +64,11 @@ function wallet(el, state, userId) {
     }
 }
 
-document.querySelectorAll('.approvedUsers').forEach(row=>{
+document.querySelectorAll('.approvedUsers').forEach(row => {
     let openBtn_edited = row.querySelector(".open-popup-edited")
     let popup_edit = row.querySelector(".popup-edit")
     let closeBtn = row.querySelector(".closeBtn")
+    let submitBtn = row.querySelector(".submitBtn")
     let xBtn = row.querySelector(".close-popup-look-cont")
     openBtn_edited.addEventListener("click", () => {
         loader('open')
@@ -77,8 +78,12 @@ document.querySelectorAll('.approvedUsers').forEach(row=>{
             success: function (data) {
                 console.log(data)
                 loader('close')
+                
                 popup_edit.classList.remove("invisible")
                 popup_edit.classList.remove("opacity-0")
+                row.querySelector('.detailBox').classList.remove("invisible", 'opacity-0')
+
+
                 row.querySelector('.name').value = data.name
                 row.querySelector('.family').value = data.family
                 row.querySelector('.phoneNumber').value = data.phoneNumber
@@ -100,13 +105,63 @@ document.querySelectorAll('.approvedUsers').forEach(row=>{
             }
         })
     })
-    closeBtn.addEventListener('click', ()=>{
+    closeBtn.addEventListener('click', () => {
         popup_edit.classList.add("invisible")
         popup_edit.classList.add("opacity-0")
+        row.querySelector('.detailBox').classList.add("invisible", 'opacity-0')
     })
-    xBtn.addEventListener('click', ()=>{
+    xBtn.addEventListener('click', () => {
         popup_edit.classList.add("invisible")
         popup_edit.classList.add("opacity-0")
+        row.querySelector('.detailBox').classList.add("invisible", 'opacity-0')
+    })
+
+    submitBtn.addEventListener('click', () => {
+
+        let children = row.querySelector('.roles').children
+        let roles = []
+        for (let child of children) {
+            if (child.selected) {
+                roles.push(child.value)
+            }
+        }
+        $.ajax({
+            url: api + 'updateUser',
+            type: "POST",
+            dataType: "json",
+            data: {
+                'user_id': row.dataset.userId,
+                'popupName': row.querySelector('.name').value,
+                'popupFamily': row.querySelector('.family').value,
+                'popupPhoneNumber': row.querySelector('.phoneNumber').value,
+                'popupNationalCode': row.querySelector('.nationalCode').value,
+                'approvingStatus': row.querySelector('.isApproved').value,
+                'isActive': row.querySelector('#AisActive' + row.dataset.userId).checked ? 1 : 0,
+                'roles': roles,
+                'flag': true,
+            },
+            success: function (data) {
+                console.log(data)
+                popup_edit.classList.add("invisible")
+                popup_edit.classList.add("opacity-0")
+                row.querySelector('.detailBox').classList.remove("invisible", 'opacity-0')
+           
+                document.querySelectorAll('.approvedUsers').forEach(el => {
+                    if (el.dataset.userId == data.user.id) {
+                        row.querySelector('.fullNameList').textContent = data.user.name + ' ' + data.user.family
+                        row.querySelector('.phoneNumberList').textContent = data.user.phoneNumber
+                        row.querySelector('.nationalCodeList').textContent = data.user.nationalCode
+                        row.querySelector('.isActiveList').querySelector('span').classList = `px-3 py-1.5 border-1 ` + (data.user.isActive == 1 ? ` bg-(--primary-dashboard)/20 text-(--primary-dashboard) border-(--primary-dashboard)` : `bg-(--danger-dashboard)/20 text-(--danger-dashboard) border-(--danger-dashboard)`) + ` rounded-md p-1 cursor-default`
+                        row.querySelector('.isActiveList').querySelector('span').textContent = data.user.isActive == 1 ? 'فعال' : 'غیرفعال'
+                    }
+                })
+
+            },
+            error: function () {
+                console.log('failed to load data')
+            }
+        })
+
     })
 })
 
@@ -207,30 +262,30 @@ items_2.forEach((item_2) => {
     openBtn_look_cont.addEventListener("click", () => {
         loader('open')
         $.ajax({
-            url: api+'userDetail/'+item_2.dataset.userId,
+            url: api + 'userDetail/' + item_2.dataset.userId,
             type: "GET",
-            success: function(data){
+            success: function (data) {
                 popup_look_cont.classList.remove("invisible")
                 popup_look_cont.classList.remove("opacity-0")
                 loader('close')
                 item_2.querySelector('.detailBox').classList.remove('invisible', 'opacity-0')
-                item_2.querySelector('.name').value = data.name 
+                item_2.querySelector('.name').value = data.name
                 item_2.querySelector('.family').value = data.family
-                item_2.querySelector('.phoneNumber').value = data.phoneNumber 
-                item_2.querySelector('.nationalCode').value = data.nationalCode 
+                item_2.querySelector('.phoneNumber').value = data.phoneNumber
+                item_2.querySelector('.nationalCode').value = data.nationalCode
                 let isApprovedOptions = item_2.querySelector('.isApproved').children
-                for(let option of isApprovedOptions){
-                    if(option.value == data.isApproved){
+                for (let option of isApprovedOptions) {
+                    if (option.value == data.isApproved) {
                         option.selected = true
                     }
                 }
-                if(data.isActive == 1){
+                if (data.isActive == 1) {
                     item_2.querySelector('#isActive' + data.id).checked = true
                 } else {
                     item_2.querySelector('#isActive' + data.id).checked = false
                 }
             },
-            error: function(){
+            error: function () {
                 console.log('error')
             }
         })
@@ -238,7 +293,7 @@ items_2.forEach((item_2) => {
     closeBtn_look_cont.addEventListener("click", () => {
         popup_look_cont.classList.add("invisible")
         popup_look_cont.classList.add("opacity-0")
-        document.querySelectorAll('.detailBox').forEach(box=>{
+        document.querySelectorAll('.detailBox').forEach(box => {
             box.classList.add('invisible', 'opacity-0')
         })
     })
@@ -249,16 +304,16 @@ items_2.forEach((item_2) => {
             box.classList.add('invisible', 'opacity-0')
         })
     })
-    item_2.querySelector('.submitBtn').addEventListener('click', ()=>{
+    item_2.querySelector('.submitBtn').addEventListener('click', () => {
         let children = item_2.querySelector('.roles').children
         let roles = []
-        for(let child of children){
-            if(child.selected){
+        for (let child of children) {
+            if (child.selected) {
                 roles.push(child.value)
             }
         }
         $.ajax({
-            url: api+'updateUser',
+            url: api + 'updateUser',
             type: "POST",
             dataType: "json",
             data: {
@@ -268,10 +323,11 @@ items_2.forEach((item_2) => {
                 'popupPhoneNumber': item_2.querySelector('.phoneNumber').value,
                 'popupNationalCode': item_2.querySelector('.nationalCode').value,
                 'approvingStatus': item_2.querySelector('.isApproved').value,
-                'isActive': item_2.querySelector('#isActive'+item_2.dataset.userId).checked ? 1 : 0,
+                'isActive': item_2.querySelector('#isActive' + item_2.dataset.userId).checked ? 1 : 0,
                 'roles': roles,
+                'flag': false,
             },
-            success: function(data){
+            success: function (data) {
                 console.log(data)
                 popup_look_cont.classList.add("invisible")
                 popup_look_cont.classList.add("opacity-0")
@@ -285,13 +341,13 @@ items_2.forEach((item_2) => {
                 let inner = `
                     <td class="p-1 md:px-3 md:py-2 flex items-center justify-center gap-2 in-fa">
                         <input type="checkbox" name="" class="row-checkbox appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
-                        ${ data.id }
+                        ${data.id}
                     </td>
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                        ${ data.name+' '+data.family }
+                        ${data.name + ' ' + data.family}
                     </td>
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
-                        ${ data.phoneNumber }
+                        ${data.phoneNumber}
                     </td>
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                         -
@@ -300,14 +356,14 @@ items_2.forEach((item_2) => {
                         -
                     </td>
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
-                        ${ data.nationalCode }
+                        ${data.nationalCode}
                     </td>
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                         -
                     </td>
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                        <span class="px-3 py-1.5 border-1 ${ data.isActive == 1 ? 'border-(--primary-dashboard) bg-(--primary-dashboard)/20 text-(--primary-dashboard)' : 'border-(--danger-dashboard) bg-(--danger-dashboard)/20 text-(--danger-dashboard)' } rounded-md p-1 cursor-default">
-                               ${ data.isActive == 1 ? 'فعال' : 'غیرفعال' }
+                        <span class="px-3 py-1.5 border-1 ${data.isActive == 1 ? 'border-(--primary-dashboard) bg-(--primary-dashboard)/20 text-(--primary-dashboard)' : 'border-(--danger-dashboard) bg-(--danger-dashboard)/20 text-(--danger-dashboard)'} rounded-md p-1 cursor-default">
+                               ${data.isActive == 1 ? 'فعال' : 'غیرفعال'}
                         </span>
                     </td>
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
@@ -335,12 +391,12 @@ items_2.forEach((item_2) => {
                                         <div class="w-6/12">
                                             <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">نام
                                                 :</span>
-                                            <span class="text-xs md:text-base font-bold">${ data.name+' '+data.family }</span>
+                                            <span class="text-xs md:text-base font-bold">${data.name + ' ' + data.family}</span>
                                         </div>
                                         <div class="w-6/12 flex justify-between items-center">
                                             <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره
                                                 :</span>
-                                            <span class="text-[10px] md:text-base font-bold in-fa">${ data.phoneNumber }</span>
+                                            <span class="text-[10px] md:text-base font-bold in-fa">${data.phoneNumber}</span>
                                         </div>
                                     </div>
                                     <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
@@ -594,22 +650,22 @@ items_2.forEach((item_2) => {
                 parentTable.prepend(rowTable)
 
             },
-            error: function(){
+            error: function () {
                 console.log('failed to load data')
             }
         })
     })
-    item_2.querySelector('.deleteUser').addEventListener('click', ()=>{
+    item_2.querySelector('.deleteUser').addEventListener('click', () => {
         loader('open')
         $.ajax({
-            url: api+'deleteUser/'+item_2.dataset.userId,
+            url: api + 'deleteUser/' + item_2.dataset.userId,
             type: "GET",
-            success: function(response){
+            success: function (response) {
                 console.log(response)
                 loader('close')
                 item_2.remove()
             },
-            error: function(){
+            error: function () {
                 console.log('failed to load data')
             }
         })
