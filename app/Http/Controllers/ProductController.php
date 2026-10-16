@@ -20,6 +20,7 @@ class ProductController extends Controller
         $logo = logo::first();
         return view('admin.product.create', ['categories' => $cats, 'logo' => $logo]);
     }
+
     public function store(Request $request)
     {
         $validated = $request->validate(
@@ -86,6 +87,7 @@ class ProductController extends Controller
         }
         return to_route('product.create')->with('message', ' محصول ' . $product['title'] . ' ایجاد شد ');
     }
+
     public function adminIndex()
     {
         $products = product::with('media')->with('categories')->get();
@@ -93,7 +95,7 @@ class ProductController extends Controller
             if ($product->media->isNotEmpty()) {
                 foreach ($product->media as $media) {
                     if ($media['is_main']) {
-                        $product['mainImg']  = $media['media_path'];
+                        $product['mainImg'] = $media['media_path'];
                         break;
                     } else {
                         $product['mainImg'] = 'default.jpg';
@@ -106,6 +108,7 @@ class ProductController extends Controller
         $logo = logo::first();
         return view('admin.product.index', ['products' => $products, 'logo' => $logo]);
     }
+
     public function edit(Request $request)
     {
         $catIds = product::find($request['id'])->categories->pluck('id');
@@ -118,6 +121,7 @@ class ProductController extends Controller
         }
         return response()->json(['product' => $product, 'cats' => $categories, 'catIds' => $catIds]);
     }
+
     public function update(Request $request)
     {
         $validated = $request->validate(
@@ -215,6 +219,7 @@ class ProductController extends Controller
         $product->save();
         return to_route('product.adminIndex')->with('message', ' محصول ' . $title . ' به روز رسانی شد. ');
     }
+
     public function delete($id)
     {
         $product = product::find($id);
@@ -231,6 +236,7 @@ class ProductController extends Controller
         }
         return to_route('product.adminIndex')->with('message', ' محصول ' . $product['title'] . ' حذف شد. ');
     }
+
     public function deleteAll(Request $request)
     {
         if (!isset($request['products'])) {
@@ -250,13 +256,14 @@ class ProductController extends Controller
         }
         return to_route('product.adminIndex')->with('message', ' محصولات ' . $names . ' حذف شدند. ');
     }
+
     public function show(Product $product)
     {
         $categories = category::with('products')->has('products')->get();
         if ($product->media->isNotEmpty()) {
             foreach ($product->media as $media) {
                 if ($media['is_main']) {
-                    $product['mainImg']  = $media['media_path'];
+                    $product['mainImg'] = $media['media_path'];
                     break;
                 } else {
                     $product['mainImg'] = 'default.jpg';
@@ -272,6 +279,7 @@ class ProductController extends Controller
             'logo' => $logo
         ]);
     }
+
     public function index()
     {
         $products = product::paginate(10);
@@ -280,7 +288,7 @@ class ProductController extends Controller
             if ($product->media->isNotEmpty()) {
                 foreach ($product->media as $media) {
                     if ($media->is_main) {
-                        $product->image  = $media->media_path;
+                        $product->image = $media->media_path;
                         break;
                     } else {
                         $product->image = 'default.jpg';
@@ -298,6 +306,7 @@ class ProductController extends Controller
         $logo = logo::first();
         return view('search', ['products' => $products, 'categories' => $categories, 'logo' => $logo]);
     }
+
     public function filter(Request $request)
     {
         if (isset($request['all'])) {
@@ -313,7 +322,7 @@ class ProductController extends Controller
             if ($product->media->isNotEmpty()) {
                 foreach ($product->media as $media) {
                     if ($media['is_main']) {
-                        $product['mainImg']  = $media['media_path'];
+                        $product['mainImg'] = $media['media_path'];
                         break;
                     } else {
                         $product['mainImg'] = 'default.jpg';
@@ -329,12 +338,14 @@ class ProductController extends Controller
             'catIds' => $request['selectedCats']
         ]);
     }
+
     public function search(Request $request)
     {
         // $product = product::where('title', 'like', '%' . $request['title'] . '%')->orWhere('summary', 'like', '%' . $request['title'] . '%')->orWhere('description', 'like', '%' . $request['title'] . '%')->get();
         $products = product::where('title', 'like', '%' . $request['title'] . '%')->with('media')->get();
         return response()->json($products);
     }
+
     public function searchResult(Request $request)
     {
         $products = product::where('title', 'like', '%' . $request['searchedValue'] . '%')->get();
@@ -343,7 +354,7 @@ class ProductController extends Controller
             if ($product->media->isNotEmpty()) {
                 foreach ($product->media as $media) {
                     if ($media['is_main']) {
-                        $product['mainImg']  = $media['media_path'];
+                        $product['mainImg'] = $media['media_path'];
                         break;
                     } else {
                         $product['mainImg'] = 'default.jpg';
@@ -357,5 +368,22 @@ class ProductController extends Controller
             'categories' => $categories,
             'products' => $products,
         ]);
+    }
+
+    public function findProduct(product $product)
+    {
+        if ($product->media->isNotEmpty()) {
+            foreach ($product->media as $media) {
+                if ($media['is_main']) {
+                    $product['mainImg'] = $media['media_path'];
+                    break;
+                } else {
+                    $product['mainImg'] = 'default.jpg';
+                }
+            }
+        } else {
+            $product['mainImg'] = 'default.jpg';
+        }
+        return response()->json($product);
     }
 }
