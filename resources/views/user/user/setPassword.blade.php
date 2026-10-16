@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <div class="absolute z-999 top-0 opacity-0 invisible right-1/2 translate-x-1/2 w-2/3 lg:w-1/3 bg-white rounded-lg shadow-md transition-all duration-500"
+    <div class="absolute z-999 top-0 opacity-0 invisible right-1/2 translate-x-1/2 w-11/12 sm:w-2/3 lg:w-1/3 bg-white rounded-lg shadow-md transition-all duration-500"
         id="message">
         <div class="relative">
             <svg xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +56,8 @@
                     <input type="hidden" name="user_id" value="{{ $user->id }}">
                     <div class="w-full flex flex-col gap-y-3">
                         <div class="w-full flex flex-col gap-2">
-                            <label for="password" class="text-(--color-primary)  max-sm:text-sm font-bold">رمز عبور</label>
+                            <label for="password" class="text-(--color-primary)  max-sm:text-sm font-bold">رمز
+                                عبور</label>
                             <input id="password" type="password" placeholder="رمز عبور" name="password"
                                 class="placeholder:text-right placeholder-(--color-zinc-400) max-md:text-sm block w-full rounded-md sm:border-3 border-2 border-(--color-border-strong) px-3 sm:py-3 py-2 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
                             @error('password')
@@ -72,7 +73,8 @@
                         <div class="flex items-center justify-center gap-x-2 mt-3">
                             <span class="max-sm:text-sm text-(--color-zinc-800)">حساب کاربری ندارید؟</span>
                             <a href="{{ route('user.signup') }}"
-                                class="max-sm:text-sm text-(--color-primary) font-bold cursor-pointer underline">ثبت نام کنید!
+                                class="max-sm:text-sm text-(--color-primary) font-bold cursor-pointer underline">ثبت نام
+                                کنید!
                             </a>
                         </div>
                     </div>
@@ -81,12 +83,14 @@
             <div class="w-5/12 lg:w-8/12 h-full hidden md:flex flex-col items-start justify-start mt-5">
                 <div class="relative py-3 flex flex-col gap-5 ">
                     <div class="absolute inset-0 bg-white/5 backdrop-blur-sm rounded-lg"></div>
-                    <div class="relative z-10 xl:text-5xl lg:text-4xl text-3xl font-bold flex flex-col gap-5 bg-inherit px-4">
+                    <div
+                        class="relative z-10 xl:text-5xl lg:text-4xl text-3xl font-bold flex flex-col gap-5 bg-inherit px-4">
                         <span class="">به دنیای ارزشمند طلا</span>
                         <span class="text-(--color-primary)">خوش آمدید</span>
                     </div>
                     <div class="relative z-10 px-4">
-                        <span class="text-(--color-text-secondary) max-lg:text-sm">با ثبت نام در ستاری گلد، به جدید ترین قیمت ها،
+                        <span class="text-(--color-text-secondary) max-lg:text-sm">با ثبت نام در ستاری گلد، به جدید ترین
+                            قیمت ها،
                             محصولات متنوع و امکانات ویژه دسترسی پیدا کنید</span>
                     </div>
                 </div>
@@ -95,9 +99,10 @@
         {{-- loader --}}
         <div id="loader"
             class="w-full h-full bg-black/50 fixed top-0 right-0 z-999 flex items-center justify-center transition-all duration-300 invisible opacity-0">
-            <div class="p-10 bg-white shadow-xl rounded-lg flex flex-col items-center gap-10">
-                <span class="w-20 h-20 animate-spin rounded-full border-4 border-yellow-100 border-t-yellow-600"></span>
-                <p class="text-gray-600 font-bold text-xl">در حال بارگذاری لطفا شکیبا باشید....</p>
+            <div class="p-5 bg-white shadow-xl rounded-lg flex flex-col items-center gap-10">
+                <span
+                    class="w-15 md:w-20 h-15 md:h-20 animate-spin rounded-full border-4 border-yellow-100 border-t-yellow-600"></span>
+                <p class="text-gray-600 font-bold text-sm md:text-xl">در حال بارگذاری لطفا شکیبا باشید....</p>
             </div>
         </div>
         {{-- loader --}}

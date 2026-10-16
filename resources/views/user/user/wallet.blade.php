@@ -3,13 +3,13 @@
 @section('content')
     @if (session('success'))
         <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-0 z-5 flex justify-center items-center transition-all duration-300">
             <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('success') }} </span>
         </div>
     @endif
     @if (session('failure'))
         <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-0 z-5 flex justify-center items-center transition-all duration-300">
             <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('failure') }} </span>
         </div>
     @endif
@@ -201,7 +201,7 @@
                                         موجودی طلا
                                     </span>
                                 </div>
-                                <div class="font-bold pb-2 in-fa">{{ $user->wallet->goldWeight }} گرم</div>
+                                <div class="font-bold pb-2 in-fa">{{ $user->wallet->goldWeight ?? 0 }} گرم</div>
                             </div>
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3 pt-2">
@@ -210,7 +210,7 @@
                                     </span>
                                 </div>
                                 <div class="font-bold pt-2">
-                                    <span class="in-fa">{{ $user->wallet->goldWeight }}</span>
+                                    <span class="in-fa">{{ $user->wallet->goldWeight ?? 0 }}</span>
                                     <span class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
                                         گرم
                                     </span>

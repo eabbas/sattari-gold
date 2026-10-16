@@ -28,19 +28,19 @@
     </div>
     @if (session('success'))
         <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-0 z-5 flex justify-center items-center transition-all duration-300">
             <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('success') }} </span>
         </div>
     @endif
     @if (session('failure'))
         <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-0 z-5 flex justify-center items-center transition-all duration-300">
             <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('failure') }} </span>
         </div>
     @endif
     @if (session('message'))
         <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-0 z-5 flex justify-center items-center transition-all duration-300">
             <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('failure') }} </span>
         </div>
     @endif
@@ -59,7 +59,8 @@
             </a>
         </section>
         <section class="w-11/12 mx-auto flex items-start justify-between gap-10 mt-5">
-            <div id="login" class="mb-5 w-full md:w-7/12 xl:w-4/12 bg-(--color-primary-soft)/80 relative z-2 rounded-2xl mx-auto border-1 border-(--color-border-gold) max-h-[86vh] overflow-auto py-5 px-4"
+            <div id="login"
+                class="mb-5 w-full md:w-7/12 xl:w-4/12 bg-(--color-primary-soft)/80 relative z-2 rounded-2xl mx-auto border-1 border-(--color-border-gold) max-h-[86vh] overflow-auto py-5 px-4"
                 style="scrollbar-width: none">
                 <div class="w-12/12 flex items-center justify-center gap-5 ml-5">
                     <div
@@ -80,7 +81,8 @@
                             @enderror
                         </div>
                         <div class="w-full flex flex-col gap-2">
-                            <label for="family" class="text-(--color-primary) max-sm:text-sm font-bold">نام خانوادگی</label>
+                            <label for="family" class="text-(--color-primary) max-sm:text-sm font-bold">نام
+                                خانوادگی</label>
                             <input id="family" type="text" placeholder="نام خانوادگی" name="family"
                                 value="{{ old('family') }}"
                                 class="placeholder:text-right placeholder-(--color-zinc-400) max-md:text-sm block w-full rounded-md  sm:border-3 border-2 border-(--color-border-strong) px-3 sm:py-3 py-2 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
@@ -89,7 +91,8 @@
                             @enderror
                         </div>
                         <div class="w-full flex flex-col gap-2">
-                            <label for="phoneNumber" class="text-(--color-primary) max-sm:text-sm font-bold">شماره تلفن</label>
+                            <label for="phoneNumber" class="text-(--color-primary) max-sm:text-sm font-bold">شماره
+                                تلفن</label>
                             <input id="phoneNumber" type="number" placeholder="شماره تلفن" name="phoneNumber"
                                 value="{{ old('phoneNumber') }}"
                                 class="placeholder:text-right placeholder-(--color-zinc-400) max-md:text-sm block w-full rounded-md  sm:border-3 border-2 border-(--color-border-strong) px-3 sm:py-3 py-2 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
@@ -98,7 +101,8 @@
                             @enderror
                         </div>
                         <div class="w-full flex flex-col gap-2">
-                            <label for="nationalCode" class="text-(--color-primary) max-sm:text-sm font-bold">کد ملی</label>
+                            <label for="nationalCode" class="text-(--color-primary) max-sm:text-sm font-bold">کد
+                                ملی</label>
                             <input id="nationalCode" type="number" placeholder="کد ملی" name="nationalCode"
                                 value="{{ old('nationalCode') }}"
                                 class="placeholder:text-right placeholder-(--color-zinc-400) max-md:text-sm block w-full rounded-md  sm:border-3 border-2 border-(--color-border-strong) px-3 sm:py-3 py-2 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
@@ -107,7 +111,8 @@
                             @enderror
                         </div>
                         <div class="w-full flex flex-col gap-2">
-                            <label for="password" class="text-(--color-primary) max-sm:text-sm font-bold">رمز عبور</label>
+                            <label for="password" class="text-(--color-primary) max-sm:text-sm font-bold">رمز
+                                عبور</label>
                             <input id="password" type="password" placeholder="رمز عبور" name="password"
                                 class="placeholder:text-right placeholder-(--color-zinc-400) max-md:text-sm block w-full rounded-md  sm:border-3 border-2 border-(--color-border-strong) px-3 sm:py-3 py-2 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
                             @error('password')
@@ -115,7 +120,8 @@
                             @enderror
                         </div>
                         <div class="w-full flex flex-col gap-2">
-                            <label for="code" class="text-(--color-primary) max-sm:text-sm font-bold">کد ارسال شده</label>
+                            <label for="code" class="text-(--color-primary) max-sm:text-sm font-bold">کد ارسال
+                                شده</label>
                             <div class="w-full flex items-center justify-between gap-2">
                                 <input placeholder="کد ارسال شده" type="number" name="code" id="code"
                                     class="w-7/12 placeholder:text-right placeholder-(--color-zinc-400) text-sm block rounded-md  sm:border-3 border-2 border-(--color-border-strong) px-3 sm:py-3 py-2 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
@@ -131,7 +137,8 @@
                         <div class="flex items-center justify-center gap-x-2 mt-3">
                             <span class="max-sm:text-sm text-(--color-zinc-800)">حساب کاربری دارید؟</span>
                             <a href="{{ route('user.login') }}"
-                                class="max-sm:text-sm text-(--color-primary) font-bold cursor-pointer underline">وارد شوید
+                                class="max-sm:text-sm text-(--color-primary) font-bold cursor-pointer underline">وارد
+                                شوید
                             </a>
                         </div>
                     </div>
@@ -140,12 +147,14 @@
             <div class="w-5/12 lg:w-8/12 h-full hidden md:flex flex-col items-start justify-start mt-5">
                 <div class="relative py-3 flex flex-col gap-5 ">
                     <div class="absolute inset-0 bg-white/5 backdrop-blur-sm rounded-lg"></div>
-                    <div class="relative z-10 xl:text-5xl lg:text-4xl text-3xl font-bold flex flex-col gap-5 bg-inherit px-4">
+                    <div
+                        class="relative z-10 xl:text-5xl lg:text-4xl text-3xl font-bold flex flex-col gap-5 bg-inherit px-4">
                         <span class="">به دنیای ارزشمند طلا</span>
                         <span class="text-(--color-primary)">خوش آمدید</span>
                     </div>
                     <div class="relative z-10 px-4">
-                        <span class="text-(--color-text-secondary) max-lg:text-sm">با ثبت نام در ستاری گلد، به جدید ترین قیمت ها،
+                        <span class="text-(--color-text-secondary) max-lg:text-sm">با ثبت نام در ستاری گلد، به جدید
+                            ترین قیمت ها،
                             محصولات متنوع و امکانات ویژه دسترسی پیدا کنید</span>
                     </div>
                 </div>
@@ -154,10 +163,10 @@
         {{-- loader --}}
         <div id="loader"
             class="w-full h-full bg-black/50 fixed top-0 right-0 z-999 flex items-center justify-center transition-all duration-300 invisible opacity-0">
-            <div class="p-10 bg-white shadow-xl rounded-lg flex flex-col items-center gap-10">
+            <div class="p-5 bg-white shadow-xl rounded-lg flex flex-col items-center gap-10">
                 <span
-                    class="w-20 h-20 animate-spin rounded-full border-4 border-yellow-100 border-t-yellow-600"></span>
-                <p class="text-gray-600 font-bold text-xl">در حال بارگذاری لطفا شکیبا باشید....</p>
+                    class="w-15 md:w-20 h-15 md:h-20 animate-spin rounded-full border-4 border-yellow-100 border-t-yellow-600"></span>
+                <p class="text-gray-600 font-bold text-sm md:text-xl">در حال بارگذاری لطفا شکیبا باشید....</p>
             </div>
         </div>
         {{-- loader --}}
