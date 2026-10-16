@@ -1,7 +1,7 @@
 @extends('admin.app.dashboard')
 @section('title', 'ستاری گلد | کاربران')
 @section('content')
-    <div class="absolute z-999 top-0 opacity-0 invisible right-1/2 translate-x-1/2 w-2/3 lg:w-1/3 bg-white rounded-lg shadow-md transition-all duration-500"
+    <div class="absolute z-999 top-0 opacity-0 invisible right-1/2 translate-x-1/2 w-11/12 sm:w-2/3 lg:w-1/3 bg-white rounded-lg shadow-md transition-all duration-500"
         id="message">
         <div class="relative">
             <svg xmlns="http://www.w3.org/2000/svg" class="size-4 absolute top-1/2 -translate-y-1/2 right-3 cursor-pointer"
@@ -13,13 +13,13 @@
     </div>
     @if (session('success'))
         <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-0 z-5 flex justify-center items-center transition-all duration-300">
             <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('success') }} </span>
         </div>
     @endif
     @if (session('failure'))
         <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-0 z-5 flex justify-center items-center transition-all duration-300">
             <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('failure') }} </span>
         </div>
     @endif
@@ -810,19 +810,22 @@
                                                             نام خانوادگی
                                                             <input
                                                                 class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) family"
-                                                                type="text" style="font-family: 'IRANSansX';" name="" id="">
+                                                                type="text" style="font-family: 'IRANSansX';"
+                                                                name="" id="">
                                                         </div>
                                                         <div class="col-span-1 md:col-span-3 text-start">
                                                             کد ملی
                                                             <input
                                                                 class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa nationalCode"
-                                                                type="text" name="" dir="ltr" id="">
+                                                                type="text" name="" dir="ltr"
+                                                                id="">
                                                         </div>
                                                         <div class="col-span-1 md:col-span-3 text-start">
                                                             شماره تلفن
                                                             <input
                                                                 class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa phoneNumber"
-                                                                type="text" name="" dir="ltr" id="">
+                                                                type="text" name="" dir="ltr"
+                                                                id="">
                                                         </div>
                                                         <div class="col-span-1 md:col-span-2 text-start">
                                                             وضعیت تایید
@@ -846,7 +849,7 @@
                                                                 @endforeach
                                                             </select>
                                                         </div>
-                                      
+
                                                         <div
                                                             class="border-1 border-(--border-dashboard) h-fit rounded-md hover:shadow-sm transition-all col-span-2 md:col-span-2 flex items-center justify-between w-full py-2 px-4 mt-[30px]">
                                                             <div class="w-full flex justify-between items-center">
@@ -856,7 +859,8 @@
                                                                 <label for="isActive{{ $user->id }}"
                                                                     class="w-[50px] h-[28px] flex rounded-full cursor-pointer relative">
                                                                     <input type="checkbox" name="isActive" value="1"
-                                                                        id="isActive{{ $user->id }}" hidden class="peer cursor-pointer">
+                                                                        id="isActive{{ $user->id }}" hidden
+                                                                        class="peer cursor-pointer">
                                                                     <span
                                                                         class="size-full bg-gray-300 shadow-inner rounded-full peer-checked:bg-[#1B84FF] transition-all duration-300"></span>
                                                                     <span
@@ -864,7 +868,7 @@
                                                                 </label>
                                                             </div>
                                                         </div>
-                                           
+
                                                         <button
                                                             class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold submitBtn cursor-pointer transition-all duration-300 hover:bg-(--primary-dashboard) hover:text-white">ثبت</button>
                                                         <button

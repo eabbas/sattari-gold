@@ -181,7 +181,7 @@ Route::group([
     'controller' => WalletController::class,
     'as' => 'wallet.',
 ], function () {
-    Route::get('/user/{user}', 'wallet')->missing(function () {
+    Route::get('/user/{user?}', 'wallet')->missing(function () {
         return to_route('missing');
     })->middleware(checklogin::class)->name('wallet');
     Route::post('/transaction/request', 'transactionRequest')->middleware(checkIsActive::class)->name('transactionRequest');
