@@ -18,3 +18,4 @@ Route::post('/submitChanges', [WalletController::class, 'submitChanges']);
 
 Route::get('/userDetail/{user}', [UserController::class, 'userDetail']);
 Route::post('/updateUser', [UserController::class, 'update']);
+Route::get('/deleteUser/{user}', [UserController::class, 'delete']);

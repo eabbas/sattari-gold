@@ -810,7 +810,7 @@
                                                             نام خانوادگی
                                                             <input
                                                                 class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) family"
-                                                                type="text" name="" id="">
+                                                                type="text" style="font-family: 'IRANSansX';" name="" id="">
                                                         </div>
                                                         <div class="col-span-1 md:col-span-3 text-start">
                                                             کد ملی
@@ -873,7 +873,7 @@
                                                 </div>
                                             </div>
                                             <button
-                                                class="w-3/6 bg-(--danger-dashboard) text-white rounded-md px-2 py-2 cursor-pointer text-nowrap">
+                                                class="w-3/6 bg-(--danger-dashboard) text-white rounded-md px-2 py-2 cursor-pointer text-nowrap deleteUser">
                                                 حذف درخواست
                                             </button>
                                         </td>
@@ -889,7 +889,7 @@
 
     {{-- loader --}}
     <div id="loader"
-        class="w-full h-full fixed top-0 right-0 z-999 flex items-center justify-center transition-all duration-300 invisible opacity-0">
+        class="w-full h-full fixed top-0 right-0 z-999 flex items-center justify-center transition-all bg-black/50 duration-300 invisible opacity-0">
         <div class="p-10 bg-white shadow-xl rounded-lg flex flex-col items-center gap-10">
             <span class="w-20 h-20 animate-spin rounded-full border-4 border-yellow-100 border-t-yellow-600"></span>
             <p class="text-gray-600 font-bold text-xl">در حال بارگذاری لطفا

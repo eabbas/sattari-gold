@@ -191,13 +191,13 @@ items_2.forEach((item_2) => {
         popup_look_cont.classList.remove("visible")
     })
     openBtn_look_cont.addEventListener("click", () => {
-        popup_look_cont.classList.remove("invisible")
-        popup_look_cont.classList.remove("opacity-0")
         loader('open')
         $.ajax({
             url: api+'userDetail/'+item_2.dataset.userId,
             type: "GET",
             success: function(data){
+                popup_look_cont.classList.remove("invisible")
+                popup_look_cont.classList.remove("opacity-0")
                 loader('close')
                 item_2.querySelector('.detailBox').classList.remove('invisible', 'opacity-0')
                 item_2.querySelector('.name').value = data.name 
@@ -264,6 +264,21 @@ items_2.forEach((item_2) => {
                 document.querySelectorAll('.detailBox').forEach(box => {
                     box.classList.add('invisible', 'opacity-0')
                 })
+                item_2.remove()
+            },
+            error: function(){
+                console.log('failed to load data')
+            }
+        })
+    })
+    item_2.querySelector('.deleteUser').addEventListener('click', ()=>{
+        loader('open')
+        $.ajax({
+            url: api+'deleteUser/'+item_2.dataset.userId,
+            type: "GET",
+            success: function(response){
+                console.log(response)
+                loader('close')
                 item_2.remove()
             },
             error: function(){

@@ -327,7 +327,8 @@ class UserController extends Controller
             Storage::disk('public')->delete($user['mainImage']);
         }
         $user->delete();
-        return to_route('user.index')->with('message', $user['name'] . $user['family'] . " " . "حذف شد .");
+        return response()->json($user);
+        // return to_route('user.index')->with('message', $user['name'] . $user['family'] . " " . "حذف شد .");
     }
     public function edit(Request $request)
     {
