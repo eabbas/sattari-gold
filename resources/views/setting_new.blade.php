@@ -215,8 +215,10 @@
                 <!-- تنضیمات عمومی -->
                 <!-- حساب ها -->
                 <div class="w-full flex flex-col gap-4 justify-start items-center ">
-                    <form action=""
+                    <form action="{{route('creditcard.store')}}" method="POST"
                         class="w-full flex flex-col gap-4 justify-start items-start p-4 bg-[#FAFBFD] border-2 border-(--border) rounded-xl">
+                        @csrf
+                        <input type="hidden" name="id" value="{{Auth::user()->id}}">
                         <div class="w-full flex justify-start items-center md:gap-4 gap-2">
                             <div class="p-1 bg-(--active) rounded-full">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="size-3 fill-white">
@@ -227,12 +229,12 @@
                             <span class="font-bold  max-md:text-sm">افزودن شماره حساب جدید</span>
                         </div>
                         <div
-                            class="w-full grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-3 justify-start items-center">
+                            class="w-full grid sm:grid-cols-2 grid-cols-1  gap-3 gap-y-7 justify-start items-center">
                             <div class="w-full flex flex-col justify-start items-start gap-2">
                                 <label for="" class="md:text-sm text-xs font-bold text-[#8B929D]">به نام</label>
                                 <div
                                     class="w-full border-2 border-(--border) py-2 px-3 bg-white flex justify-between items-center rounded-xl">
-                                    <input type="text" class="w-full outline-none font-bold rounded-xl max-lg:text-sm">
+                                    <input type="text" name="name" class="w-full outline-none font-bold rounded-xl max-lg:text-sm">
                                 </div>
                             </div>
                             <div class="w-full flex flex-col justify-start items-start gap-2 relative">
@@ -240,7 +242,7 @@
                                     کارت</label>
                                 <div
                                     class="w-full border-2 border-(--disactive) py-2 px-3 bg-red-200 flex justify-between items-center rounded-xl">
-                                    <input type="text"
+                                    <input type="text" name="card_number"
                                         class="w-10/12 outline-none font-bold rounded-xl max-lg:text-sm">
                                     <div>
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="size-4">
@@ -266,12 +268,25 @@
                                     شبا</label>
                                 <div
                                     class="w-full border-2 border-(--border) py-2 px-3 bg-white flex justify-between items-center rounded-xl">
-                                    <input type="text"
+                                    <input type="text" name="shaba_number"
                                         class="w-10/12 outline-none font-bold rounded-xl max-lg:text-sm">
                                     <span class="font-bold max-md:text-sm">IR</span>
                                 </div>
                             </div>
-
+                            <div class="w-full flex flex-col justify-start items-start gap-2">
+                                <label for="" class="md:text-sm text-xs font-bold text-[#8B929D]">شماره حساب</label>
+                                <div
+                                    class="w-full border-2 border-(--border) py-2 px-3 bg-white flex justify-between items-center rounded-xl">
+                                    <input type="text" name="account_number" class="w-10/12 outline-none font-bold rounded-xl max-lg:text-sm">
+                                </div>
+                            </div>
+                            <div class="w-full flex justify-start items-start gap-2">
+                                <label for="" class="md:text-sm text-xs text-nowrap font-bold text-[#8B929D]">کارت اصلی</label>
+                                <div
+                                    class="">
+                                    <input type="checkbox" name="default" value="1">
+                                </div>
+                            </div>
                         </div>
                         <button class="self-end px-8 py-2.5 font-bold text-white bg-(--active) rounded-xl  max-md:text-sm">
                             افزودن به لیست
@@ -306,23 +321,27 @@
                             </thead>
 
                             <tbody>
+                                @php
+                                    $i=1
+                                @endphp
+                                @foreach($creditcard as $card)
                                 <tr class="item text-nowrap font-bold max-sm:text-sm">
                                     <td class="px-3 py-2 flex items-center justify-center">
-                                        1
+                                        {{$i}}
                                     </td>
                                     <td class="border-1 border-(--border) px-3 py-2 text-center">
-                                        ماهان فضلی
+                                        {{$card->name}} 
                                     </td>
                                     <td class="border-1 border-(--border) px-3 py-2 text-center">
-                                        6404331049108724
+                                        {{$card->card_number}}
                                     </td>
                                     <td class="border-1 border-(--border) px-3 py-2 text-center">
-                                        IR640433104910872464043311
+                                        {{$card->shaba_number}}
                                     </td>
 
                                     <td class="border-1 border-(--border) px-3 py-2">
                                         <div
-                                            class="lg:w-12 w-10 lg:h-6.5 h-5.5 bg-(--border) rounded-full flex justify-end items-center transition_normal relative group p-0.5 change_status_product mx-auto">
+                                            class="lg:w-12 w-10 lg:h-6.5 h-5.5 @if($card->default==0) bg-(--border) @else bg-green-400 @endif rounded-full flex @if($card->default==0) justify-end @else justify-start @endif items-center transition_normal relative group p-0.5 change_status_product mx-auto">
                                             <div class="w-1/2 h-full rounded-full bg-white transition_normal"></div>
                                         </div>
                                     </td>
@@ -405,6 +424,10 @@
                                         </button>
                                     </td>
                                 </tr>
+                                    @php
+                                        $i++
+                                    @endphp
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

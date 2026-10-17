@@ -8,6 +8,7 @@ class creditCard extends Model
 {
     protected $fillable = [
         'user_id',
+        'name',
         'card_number',
         'account_number',
         'shaba_number',

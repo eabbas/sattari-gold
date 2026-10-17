@@ -8,6 +8,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WalletController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MessageController;
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -42,3 +44,4 @@ Route::get('/order/showItems/{order}', [OrdersController::class, 'showItems']);
 
 Route::get('/findProduct/{product}', [ProductController::class, 'findProduct']);
 Route::post('/cities', [CartsController::class, 'showCities']);
+Route::post("messageStatus", [MessageController::class, "messageStatus"]);

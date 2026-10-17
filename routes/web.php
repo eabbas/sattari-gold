@@ -14,12 +14,14 @@ use App\Http\Controllers\WalletController;
 use App\Http\Middleware\checkAdminMiddleware;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\CartsController;
+use App\Http\Controllers\MessageController;
 use App\Http\Middleware\checkIsActive;
 use App\Http\Middleware\checklogin;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\logo;
+use App\Models\creditCard;
 
 
 
@@ -32,7 +34,8 @@ Route::get('/z', function () {
 
 Route::get('/y', function () {
     $logo = logo::first();
-    return view('setting_new', ['logo' => $logo]);
+    $creditcard=creditCard::where('user_id' , Auth::user()->id)->get();
+    return view('setting_new', ['logo' => $logo , 'creditcard'=>$creditcard]);
 });
 
 Route::get('/p', function () {
@@ -227,11 +230,9 @@ Route::group([
     'as' => 'deal.'
 ], function () {
     Route::get('/create', 'create')->name('create');
-    Route::post('/store', 'store')->name('store');
-    Route::get('/edit/{deal}', 'edit')->name('edit');
-    Route::post('/update/{deal}', 'update')->name('update');
-    Route::get('/delete/{deal}', 'delete')->name('delete');
-    Route::get('/single/{deal}', 'single')->name('single');
+    Route::get('/conferm/{deal}', 'conferm')->name('conferm');
+    Route::post('/store', 'store')->middleware(checkIsActive::class)->name('store');
+    Route::post('/storeTemporary', 'storeTemporary')->middleware(checkIsActive::class)->name('storeTemporary');
     Route::get('/list', 'list')->name('list');
     Route::get('/adminIndex', 'adminIndex')->name('adminIndex');
 });
@@ -275,3 +276,28 @@ Route::group([
 // fallback and missing
 Route::fallback([HomeController::class, 'pageNotFound'])->name('fallback');
 Route::get('/missing', [HomeController::class, 'pageNotFound'])->name('missing');
+
+
+
+Route::group([
+    "as" => "Message.",
+    "prefix" => "Message",
+    "controller" => MessageController::class
+], function () {
+    Route::get("insert", 'insert')->name('insert');
+    Route::post("/create", "create")->name("create");
+    Route::get("list", "list")->name("list");
+    Route::get("delete/{id}", "delete")->name("delete");
+    Route::get("update/{id}", "update")->name("update");
+    Route::post("edite", "edite")->name("edite");
+    Route::post("messageStatus",  "messageStatus")->name("messageStatus");
+});
+
+Route::group([
+    'as'=>'creditcard.',
+    'controller'=>CreditCardController::class,
+    'prifix'=>'creditcard',
+    'middleware' => [checklogin::class],
+], function(){
+    Route::post('store' , "store")->name('store');
+});

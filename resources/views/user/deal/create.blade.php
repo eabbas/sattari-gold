@@ -43,10 +43,12 @@
                         </path>
                     </svg>
                 </div>
-                <p class="mb-2">فیش های واریز و پرداخت باید تا تایم بانکی (روز ۱۳:۳۰) تسویه جا به جا شوند.</p>
-                <p class="mb-2">برای ثبت حواله و معاملات پشت خطی با شماره ۰۹۱۴۳۲۲۵۴۲۹ تماس بگیرید.</p>
-                <p class="mb-2">تمام معاملات نقدی بوده و تمام مشتریان ملزم به جابجایی فیزیکی طلا و پول می باشند.</p>
-                <p>تمامی معاملات ریالی چهارشنبه برای شنبه میباشد.</p>
+                @if(isset($message))
+                    @foreach($message as $mess)
+                    <p>{{$mess->message}}</p>
+                    <br>
+                    @endforeach
+                @endif
             </div>
 
             <div class="flex justify-between items-center text-xs text-gray-500 mb-4 px-2">
@@ -76,9 +78,9 @@
                         <span class="font-bold mb-2">بخرید</span>
                         <span class="text-xs text-gray-500 mb-3">گرم: ۲۴۲,۶۹۳,۴۵۶</span>
                         <button
-                            class="w-full bg-[#2eb85c] text-white py-2 rounded-lg font-bold text-sm shadow-md hover:bg-green-700 transition cursor-pointer"
+                            class="w-full bg-[#2eb85c] text-white py-2 rounded-lg font-bold text-sm shadow-md hover:bg-green-700 transition cursor-pointer in-fa"
                             id="buyBox" onclick="openBlock(this)" data-state="buy">
-                            ۱,۰۵۱,۳۰۰,۰۰۰
+                            {{ number_format(25200000) }}
                         </button>
                     </div>
 
@@ -86,9 +88,9 @@
                         <span class="font-bold mb-2">بفروشید</span>
                         <span class="text-xs text-gray-500 mb-3">گرم: ۲۴۲,۱۶۲,۴۹۹</span>
                         <button
-                            class="w-full bg-[#e53945] text-white py-2 rounded-lg font-bold text-sm shadow-md hover:bg-red-700 transition cursor-pointer"
+                            class="w-full bg-[#e53945] text-white py-2 rounded-lg font-bold text-sm shadow-md hover:bg-red-700 transition cursor-pointer in-fa"
                             id="sellBox" onclick="openBlock(this)" data-state="sell">
-                            ۱,۰۳۹,۰۰۰,۰۰۰
+                            {{ number_format(25000000) }}
                         </button>
                     </div>
                 </div>
