@@ -215,10 +215,10 @@
                 <!-- تنضیمات عمومی -->
                 <!-- حساب ها -->
                 <div class="w-full flex flex-col gap-4 justify-start items-center ">
-                    <form action="{{route('creditcard.store')}}" method="POST"
+                    <form action="{{ route('creditcard.store') }}" method="POST"
                         class="w-full flex flex-col gap-4 justify-start items-start p-4 bg-[#FAFBFD] border-2 border-(--border) rounded-xl">
                         @csrf
-                        <input type="hidden" name="id" value="{{Auth::user()->id}}">
+                        <input type="hidden" name="id" value="{{ Auth::id() }}">
                         <div class="w-full flex justify-start items-center md:gap-4 gap-2">
                             <div class="p-1 bg-(--active) rounded-full">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="size-3 fill-white">
@@ -228,13 +228,13 @@
                             </div>
                             <span class="font-bold  max-md:text-sm">افزودن شماره حساب جدید</span>
                         </div>
-                        <div
-                            class="w-full grid sm:grid-cols-2 grid-cols-1  gap-3 gap-y-7 justify-start items-center">
+                        <div class="w-full grid sm:grid-cols-2 grid-cols-1  gap-3 gap-y-7 justify-start items-center">
                             <div class="w-full flex flex-col justify-start items-start gap-2">
                                 <label for="" class="md:text-sm text-xs font-bold text-[#8B929D]">به نام</label>
                                 <div
                                     class="w-full border-2 border-(--border) py-2 px-3 bg-white flex justify-between items-center rounded-xl">
-                                    <input type="text" name="name" class="w-full outline-none font-bold rounded-xl max-lg:text-sm">
+                                    <input type="text" name="name"
+                                        class="w-full outline-none font-bold rounded-xl max-lg:text-sm">
                                 </div>
                             </div>
                             <div class="w-full flex flex-col justify-start items-start gap-2 relative">
@@ -274,16 +274,18 @@
                                 </div>
                             </div>
                             <div class="w-full flex flex-col justify-start items-start gap-2">
-                                <label for="" class="md:text-sm text-xs font-bold text-[#8B929D]">شماره حساب</label>
+                                <label for="" class="md:text-sm text-xs font-bold text-[#8B929D]">شماره
+                                    حساب</label>
                                 <div
                                     class="w-full border-2 border-(--border) py-2 px-3 bg-white flex justify-between items-center rounded-xl">
-                                    <input type="text" name="account_number" class="w-10/12 outline-none font-bold rounded-xl max-lg:text-sm">
+                                    <input type="text" name="account_number"
+                                        class="w-10/12 outline-none font-bold rounded-xl max-lg:text-sm">
                                 </div>
                             </div>
                             <div class="w-full flex justify-start items-start gap-2">
-                                <label for="" class="md:text-sm text-xs text-nowrap font-bold text-[#8B929D]">کارت اصلی</label>
-                                <div
-                                    class="">
+                                <label for="" class="md:text-sm text-xs text-nowrap font-bold text-[#8B929D]">کارت
+                                    اصلی</label>
+                                <div class="">
                                     <input type="checkbox" name="default" value="1">
                                 </div>
                             </div>
@@ -322,110 +324,114 @@
 
                             <tbody>
                                 @php
-                                    $i=1
+                                    $i = 1;
                                 @endphp
-                                @foreach($creditcard as $card)
-                                <tr class="item text-nowrap font-bold max-sm:text-sm">
-                                    <td class="px-3 py-2 flex items-center justify-center">
-                                        {{$i}}
-                                    </td>
-                                    <td class="border-1 border-(--border) px-3 py-2 text-center">
-                                        {{$card->name}} 
-                                    </td>
-                                    <td class="border-1 border-(--border) px-3 py-2 text-center">
-                                        {{$card->card_number}}
-                                    </td>
-                                    <td class="border-1 border-(--border) px-3 py-2 text-center">
-                                        {{$card->shaba_number}}
-                                    </td>
+                                @foreach ($creditcard as $card)
+                                    <tr class="item text-nowrap font-bold max-sm:text-sm">
+                                        <td class="px-3 py-2 flex items-center justify-center">
+                                            {{ $i }}
+                                        </td>
+                                        <td class="border-1 border-(--border) px-3 py-2 text-center">
+                                            {{ $card->name }}
+                                        </td>
+                                        <td class="border-1 border-(--border) px-3 py-2 text-center">
+                                            {{ $card->card_number }}
+                                        </td>
+                                        <td class="border-1 border-(--border) px-3 py-2 text-center">
+                                            {{ $card->shaba_number }}
+                                        </td>
 
-                                    <td class="border-1 border-(--border) px-3 py-2">
-                                        <div
-                                            class="lg:w-12 w-10 lg:h-6.5 h-5.5 @if($card->default==0) bg-(--border) @else bg-green-400 @endif rounded-full flex @if($card->default==0) justify-end @else justify-start @endif items-center transition_normal relative group p-0.5 change_status_product mx-auto">
-                                            <div class="w-1/2 h-full rounded-full bg-white transition_normal"></div>
-                                        </div>
-                                    </td>
-
-                                    <td class="border-1 border-(--border) px-3 py-2 flex gap-2">
-                                        <div>
-                                            <div data-edit_cart="open"
-                                                class="popup_edit_cart text-(--primary-dashboard) border-1 border-(--active) rounded-md p-1.5 mx-auto cursor-pointer flex items-center justify-center">
-                                                <svg class="size-4 fill-(--active)" xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 512 512">
-                                                    <path
-                                                        d="M395.8 39.6c9.4-9.4 24.6-9.4 33.9 0l42.6 42.6c9.4 9.4 9.4 24.6 0 33.9L417.6 171 341 94.4l54.8-54.8zM318.4 117L395 193.6 159.6 428.9c-7.6 7.6-16.9 13.1-27.2 16.1L39.6 472.4l27.3-92.8c3-10.3 8.6-19.6 16.1-27.2L318.4 117zM452.4 17c-21.9-21.9-57.3-21.9-79.2 0L60.4 329.7c-11.4 11.4-19.7 25.4-24.2 40.8L.7 491.5c-1.7 5.6-.1 11.7 4 15.8s10.2 5.7 15.8 4l121-35.6c15.4-4.5 29.4-12.9 40.8-24.2L495 138.8c21.9-21.9 21.9-57.3 0-79.2L452.4 17z" />
-                                                </svg>
-                                            </div>
+                                        <td class="border-1 border-(--border) px-3 py-2">
                                             <div
-                                                class="fixed z-50 w-full h-dvh top-0 right-0 flex items-center justify-center invisible opacity-0 transition_normal">
-                                                <div data-edit_cart="close_black"
-                                                    class="popup_edit_cart w-full h-full bg-black/50 absolute top-0 right-0 -z-1">
-                                                </div>
-                                                <div class=" lg:w-1/2 w-10/12 bg-white rounded-md px-3 py-2">
-                                                    <div
-                                                        class="w-full flex items-center justify-between border-b-1 border-(--border) pb-2">
-                                                        <div class="font-bold">ویرایش اطلاعات حساب</div>
-                                                        <div data-edit_cart="close_xmark" class="popup_edit_cart">
-                                                            <svg class="size-6" fill="currentColor"
-                                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                                                                <path
-                                                                    d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z">
-                                                                </path>
-                                                            </svg>
-                                                        </div>
-                                                    </div>
-                                                    <form action=""
-                                                        class="grid sm:grid-cols-2 grid-cols-1 gap-5 mt-5">
-                                                        <div class="w-full flex flex-col justify-start items-start gap-2">
-                                                            <label class="" for="name">
-                                                                نام و نام خانوادگی
-                                                            </label>
-                                                            <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border) rounded-md p-2 outline-none"
-                                                                type="text" name="" id="name">
-                                                        </div>
-                                                        <div class="w-full flex flex-col justify-start items-start gap-2">
-                                                            <label class="" for="name">
-                                                                شماره کارت
-                                                            </label>
-                                                            <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border) rounded-md p-2 outline-none"
-                                                                type="text" name="" id="name">
-                                                        </div>
-                                                        <div class="w-full flex flex-col justify-start items-start gap-2">
-                                                            <label class="" for="name">
-                                                                شماره شبا
-                                                            </label>
-                                                            <input
-                                                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border) rounded-md p-2 outline-none"
-                                                                type="text" name="" id="name">
-                                                        </div>
+                                                class="lg:w-12 w-10 lg:h-6.5 h-5.5 @if ($card->default == 0) bg-(--border) @else bg-green-400 @endif rounded-full flex @if ($card->default == 0) justify-end @else justify-start @endif items-center transition_normal relative group p-0.5 change_status_product mx-auto">
+                                                <div class="w-1/2 h-full rounded-full bg-white transition_normal"></div>
+                                            </div>
+                                        </td>
 
+                                        <td class="border-1 border-(--border) px-3 py-2 flex gap-2">
+                                            <div>
+                                                <div data-edit_cart="open"
+                                                    class="popup_edit_cart text-(--primary-dashboard) border-1 border-(--active) rounded-md p-1.5 mx-auto cursor-pointer flex items-center justify-center">
+                                                    <svg class="size-4 fill-(--active)" xmlns="http://www.w3.org/2000/svg"
+                                                        viewBox="0 0 512 512">
+                                                        <path
+                                                            d="M395.8 39.6c9.4-9.4 24.6-9.4 33.9 0l42.6 42.6c9.4 9.4 9.4 24.6 0 33.9L417.6 171 341 94.4l54.8-54.8zM318.4 117L395 193.6 159.6 428.9c-7.6 7.6-16.9 13.1-27.2 16.1L39.6 472.4l27.3-92.8c3-10.3 8.6-19.6 16.1-27.2L318.4 117zM452.4 17c-21.9-21.9-57.3-21.9-79.2 0L60.4 329.7c-11.4 11.4-19.7 25.4-24.2 40.8L.7 491.5c-1.7 5.6-.1 11.7 4 15.8s10.2 5.7 15.8 4l121-35.6c15.4-4.5 29.4-12.9 40.8-24.2L495 138.8c21.9-21.9 21.9-57.3 0-79.2L452.4 17z" />
+                                                    </svg>
+                                                </div>
+                                                <div
+                                                    class="fixed z-50 w-full h-dvh top-0 right-0 flex items-center justify-center invisible opacity-0 transition_normal">
+                                                    <div data-edit_cart="close_black"
+                                                        class="popup_edit_cart w-full h-full bg-black/50 absolute top-0 right-0 -z-1">
+                                                    </div>
+                                                    <div class=" lg:w-1/2 w-10/12 bg-white rounded-md px-3 py-2">
                                                         <div
-                                                            class="col-span-2 w-full flex gap-4 justify-between items-center">
-                                                            <button
-                                                                class="w-1/2 border-1 border-(--active) bg-(--active) sm:text-lg font-bold text-white py-2 rounded-md">ویرایش</button>
-                                                            <button
-                                                                class="w-1/2 border-1 border-(--border) bg-(--disactive) sm:text-lg font-bold text-white py-2 rounded-md">
-                                                                لغو</button>
+                                                            class="w-full flex items-center justify-between border-b-1 border-(--border) pb-2">
+                                                            <div class="font-bold">ویرایش اطلاعات حساب</div>
+                                                            <div data-edit_cart="close_xmark" class="popup_edit_cart">
+                                                                <svg class="size-6" fill="currentColor"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    viewBox="0 0 384 512">
+                                                                    <path
+                                                                        d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z">
+                                                                    </path>
+                                                                </svg>
+                                                            </div>
                                                         </div>
-                                                    </form>
+                                                        <form action=""
+                                                            class="grid sm:grid-cols-2 grid-cols-1 gap-5 mt-5">
+                                                            <div
+                                                                class="w-full flex flex-col justify-start items-start gap-2">
+                                                                <label class="" for="name">
+                                                                    نام و نام خانوادگی
+                                                                </label>
+                                                                <input
+                                                                    class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border) rounded-md p-2 outline-none"
+                                                                    type="text" name="" id="name">
+                                                            </div>
+                                                            <div
+                                                                class="w-full flex flex-col justify-start items-start gap-2">
+                                                                <label class="" for="name">
+                                                                    شماره کارت
+                                                                </label>
+                                                                <input
+                                                                    class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border) rounded-md p-2 outline-none"
+                                                                    type="text" name="" id="name">
+                                                            </div>
+                                                            <div
+                                                                class="w-full flex flex-col justify-start items-start gap-2">
+                                                                <label class="" for="name">
+                                                                    شماره شبا
+                                                                </label>
+                                                                <input
+                                                                    class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border) rounded-md p-2 outline-none"
+                                                                    type="text" name="" id="name">
+                                                            </div>
+
+                                                            <div
+                                                                class="col-span-2 w-full flex gap-4 justify-between items-center">
+                                                                <button
+                                                                    class="w-1/2 border-1 border-(--active) bg-(--active) sm:text-lg font-bold text-white py-2 rounded-md">ویرایش</button>
+                                                                <button
+                                                                    class="w-1/2 border-1 border-(--border) bg-(--disactive) sm:text-lg font-bold text-white py-2 rounded-md">
+                                                                    لغو</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <button
-                                            class="open-popup-edit text-(--primary-dashboard) border-1 border-(--disactive) rounded-md p-1.5 mx-auto cursor-pointer flex items-center justify-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
-                                                class="size-4 fill-(--disactive)">
-                                                <path
-                                                    d="M164.2 39.5L148.9 64H299.1L283.8 39.5c-2.9-4.7-8.1-7.5-13.6-7.5H177.7c-5.5 0-10.6 2.8-13.6 7.5zM311 22.6L336.9 64H384h32 16c8.8 0 16 7.2 16 16s-7.2 16-16 16H416V432c0 44.2-35.8 80-80 80H112c-44.2 0-80-35.8-80-80V96H16C7.2 96 0 88.8 0 80s7.2-16 16-16H32 64h47.1L137 22.6C145.8 8.5 161.2 0 177.7 0h92.5c16.6 0 31.9 8.5 40.7 22.6zM64 96V432c0 26.5 21.5 48 48 48H336c26.5 0 48-21.5 48-48V96H64zm80 80V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V176c0-8.8 7.2-16 16-16s16 7.2 16 16zm96 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V176c0-8.8 7.2-16 16-16s16 7.2 16 16zm96 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V176c0-8.8 7.2-16 16-16s16 7.2 16 16z" />
-                                            </svg>
-                                        </button>
-                                    </td>
-                                </tr>
+                                            <button
+                                                class="open-popup-edit text-(--primary-dashboard) border-1 border-(--disactive) rounded-md p-1.5 mx-auto cursor-pointer flex items-center justify-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                                                    class="size-4 fill-(--disactive)">
+                                                    <path
+                                                        d="M164.2 39.5L148.9 64H299.1L283.8 39.5c-2.9-4.7-8.1-7.5-13.6-7.5H177.7c-5.5 0-10.6 2.8-13.6 7.5zM311 22.6L336.9 64H384h32 16c8.8 0 16 7.2 16 16s-7.2 16-16 16H416V432c0 44.2-35.8 80-80 80H112c-44.2 0-80-35.8-80-80V96H16C7.2 96 0 88.8 0 80s7.2-16 16-16H32 64h47.1L137 22.6C145.8 8.5 161.2 0 177.7 0h92.5c16.6 0 31.9 8.5 40.7 22.6zM64 96V432c0 26.5 21.5 48 48 48H336c26.5 0 48-21.5 48-48V96H64zm80 80V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V176c0-8.8 7.2-16 16-16s16 7.2 16 16zm96 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V176c0-8.8 7.2-16 16-16s16 7.2 16 16zm96 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V176c0-8.8 7.2-16 16-16s16 7.2 16 16z" />
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
                                     @php
-                                        $i++
+                                        $i++;
                                     @endphp
                                 @endforeach
                             </tbody>

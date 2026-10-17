@@ -13,6 +13,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
 use App\Http\Middleware\checkAdminMiddleware;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ReferenceSitesController;
 use App\Http\Middleware\checkIsActive;
 use App\Http\Middleware\checklogin;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\logo;
 use App\Models\creditCard;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/z', function () {
     $logo = logo::first();
@@ -28,9 +30,9 @@ Route::get('/z', function () {
 
 Route::get('/y', function () {
     $logo = logo::first();
-    $creditcard=creditCard::where('user_id' , Auth::user()->id)->get();
-    return view('setting_new', ['logo' => $logo , 'creditcard'=>$creditcard]);
-});
+    $creditcard = creditCard::where('user_id', Auth::id())->get();
+    return view('setting_new', ['logo' => $logo, 'creditcard' => $creditcard]);
+})->name('y');
 
 Route::get('/p', function () {
     $logo = logo::first();
@@ -239,11 +241,18 @@ Route::group([
     Route::get('/adminIndex', 'adminIndex')->name('adminIndex');
 });
 
-// fallback and missing
-Route::fallback([HomeController::class, 'pageNotFound'])->name('fallback');
-Route::get('/missing', [HomeController::class, 'pageNotFound'])->name('missing');
-
-
+// reference sites routes
+Route::group([
+    'prefix' => 'referenceSite',
+    'controller' => ReferenceSitesController::class,
+    'middleware' => checkAdminMiddleware::class,
+    'as' => 'referenceSite.'
+], function () {
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+    Route::post('/update', 'update')->name('update');
+    Route::get('/delete/{site}', 'delete')->name('delete');
+});
 
 Route::group([
     "as" => "Message.",
@@ -260,10 +269,14 @@ Route::group([
 });
 
 Route::group([
-    'as'=>'creditcard.',
-    'controller'=>CreditCardController::class,
-    'prifix'=>'creditcard',
+    'as' => 'creditcard.',
+    'controller' => CreditCardController::class,
+    'prifix' => 'creditcard',
     'middleware' => [checklogin::class],
-], function(){
-    Route::post('store' , "store")->name('store');
+], function () {
+    Route::post('store', "store")->name('store');
 });
+
+// fallback and missing
+Route::fallback([HomeController::class, 'pageNotFound'])->name('fallback');
+Route::get('/missing', [HomeController::class, 'pageNotFound'])->name('missing');
