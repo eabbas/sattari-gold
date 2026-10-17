@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('credit_cards', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
+            $table->string('name');
             $table->string('card_number');
             $table->string('account_number');
             $table->string('shaba_number');

@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
+use App\Http\Controllers\MessageController;
+
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -21,3 +23,4 @@ Route::post('/submitChanges', [WalletController::class, 'submitChanges']);
 Route::get('/userDetail/{user}', [UserController::class, 'userDetail']);
 Route::post('/updateUser', [UserController::class, 'update']);
 Route::get('/deleteUser/{user}', [UserController::class, 'delete']);
+Route::post("messageStatus", [MessageController::class, "messageStatus"]);
