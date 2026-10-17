@@ -124,6 +124,10 @@
                 class="text-sm py-3 px-5 text-center mx-auto w-60 sm:w-40 rounded-xl border-2 border-slate-300 bg-slate-100 text-slate-700 transition-all duration-300 cursor-pointer">
                 تاریخچه معاملات
             </a>
+            <a href="{{ route('y') }}"
+                class="text-sm py-3 px-5 text-center mx-auto w-60 sm:w-40 rounded-xl border-2 border-slate-300 bg-slate-100 text-slate-700 transition-all duration-300 cursor-pointer">
+                مدیریت کارت ها
+            </a>
             @if ($user->id == Auth::id())
                 <a href="{{ route('user.logout') }}"
                     class="text-sm py-3 px-5 text-center mx-auto w-60 sm:w-40 rounded-xl border-2 border-red-300 bg-red-50 text-red-500 hover:bg-red-100 transition-all duration-300">خروج</a>

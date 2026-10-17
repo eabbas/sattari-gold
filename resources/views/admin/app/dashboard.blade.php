@@ -158,6 +158,14 @@
                         </svg>
                     </a>
                     @can('access', ['admin'])
+                        <a href="{{ route('referenceSite.create') }}"
+                            class="px-2 py-2 rounded-xl @if (Route::is('referenceSite.create')) bg-green-300 @endif flex gap-3 justify-start items-center"
+                            title="سایت های مرجع">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="xl:size-4 size-5">
+                                <path
+                                    d="M320 464c8.8 0 16-7.2 16-16V160H256c-17.7 0-32-14.3-32-32V48H64c-8.8 0-16 7.2-16 16V448c0 8.8 7.2 16 16 16H320zM0 64C0 28.7 28.7 0 64 0H229.5c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64z" />
+                            </svg>
+                        </a>
                         <a href="{{ route('wallet.transactionsList') }}"
                             class="px-2 py-2 rounded-xl @if (Route::is('wallet.transactionsList')) bg-green-300 @endif flex gap-3 justify-start items-center"
                             title="واریز و برداشت">
@@ -206,7 +214,7 @@
                             </svg>
                         </a>
                         <a href="{{ route('Message.insert') }}"
-                            class="px-2 py-2 rounded-xl @if (Route::is('product.adminIndex')) bg-green-300 @endif flex gap-3 justify-start items-center"
+                            class="px-2 py-2 rounded-xl @if (Route::is('Message.insert')) bg-green-300 @endif flex gap-3 justify-start items-center"
                             title="پیام">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="xl:size-4 size-5">
                                 <path
@@ -356,6 +364,23 @@
                         @endif
                     </li>
                     @can('access', ['admin'])
+                        <li
+                            class="@if (Route::is('referenceSite.create')) text-(--active) @endif flex justify-center flex-col items-center group cursor-pointer py-1 transition_normal">
+                            <a href="{{ route('referenceSite.create') }}"
+                                class="flex gap-2 justify-start items-center px-2">
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"
+                                        class="xl:size-4 size-5 @if (Route::is('referenceSite.create')) fill-green-700 @endif">
+                                        <path
+                                            d="M320 464c8.8 0 16-7.2 16-16V160H256c-17.7 0-32-14.3-32-32V48H64c-8.8 0-16 7.2-16 16V448c0 8.8 7.2 16 16 16H320zM0 64C0 28.7 28.7 0 64 0H229.5c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64z" />
+                                    </svg>
+                                </div>
+                                <span>سایت های مرجع</span>
+                            </a>
+                            @if (Route::is('referenceSite.create'))
+                                <div class="rounded-md w-full bg-(--active) h-[2px] transition_normal"></div>
+                            @endif
+                        </li>
                         <li
                             class="@if (Route::is('wallet.transactionsList')) text-(--active) @endif flex justify-center flex-col items-center group cursor-pointer py-1 transition_normal">
                             <a href="{{ route('wallet.transactionsList') }}"
