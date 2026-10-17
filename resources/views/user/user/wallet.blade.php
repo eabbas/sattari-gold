@@ -284,6 +284,12 @@
         {{--  --}}
     </div>
     <script>
+        let input=document.getElementById('fee')
+        input.addEvintListener("input" , function () {
+            let value=this.value.replace(/,/g,"")
+            if(!value) return
+            this.value= Number(value).toLocaleString("en-US")
+        })
         function sendReceipt(state) {
             let receipt = document.getElementById('receipt').parentElement
             if (state == 'deposit') {

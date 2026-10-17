@@ -8,6 +8,7 @@ use App\Models\transaction;
 use App\Models\User;
 use App\Models\wallet;
 use Illuminate\Http\Request;
+use App\Models\Message;
 use Illuminate\Support\Facades\Auth;
 use Log;
 
@@ -26,7 +27,8 @@ class DealController extends Controller
         if (Auth::user()->wallet) {
             $asset = Auth::user()->wallet->asset;
         }
-        return view('user.deal.create', ['asset' => $asset, 'totalGoldWeight' => $totalGoldWeight, 'logo' => $logo]);
+        $message=Message::all()->first();
+        return view('user.deal.create', ['asset' => $asset, 'totalGoldWeight' => $totalGoldWeight, 'logo' => $logo , "message"=>$message]);
     }
 
 
