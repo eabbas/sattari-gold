@@ -55,23 +55,44 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
     public function roles()
     {
         return $this->belongsToMany(role::class, 'user_roles');
     }
+
     public function wallet()
     {
         return $this->hasOne(wallet::class);
     }
+
     public function walletTransactions()
     {
         return $this->hasManyThrough(transaction::class, wallet::class);
     }
+
     public function hasRole($roles)
     {
         return $this->roles()->whereIn('name', $roles)->exists();
     }
-    public function deals(){
+
+    public function deals()
+    {
         return $this->hasMany(deal::class);
+    }
+
+    public function carts()
+    {
+        return $this->hasMany(carts::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(orders::class);
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(address::class);
     }
 }

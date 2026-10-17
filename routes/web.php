@@ -12,6 +12,8 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
 use App\Http\Middleware\checkAdminMiddleware;
+use App\Http\Controllers\OrdersController;
+use App\Http\Controllers\CartsController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ReferenceSitesController;
 use App\Http\Middleware\checkIsActive;
@@ -22,6 +24,10 @@ use Illuminate\Support\Facades\Schema;
 use App\Models\logo;
 use App\Models\creditCard;
 use Illuminate\Support\Facades\Auth;
+
+
+
+Route::get('/checkout', [CartsController::class, 'checkout'])->name('checkout');
 
 Route::get('/z', function () {
     $logo = logo::first();
@@ -57,6 +63,12 @@ Route::get('/xyz', function () {
     //     $table->string('date')->nullable()->after('description');
     //     $table->string('time')->nullable()->after('date');
     // });
+    // Schema::table('users', function (Blueprint $table) {
+    //     $table->string('password')->nullable()->change();
+    // });
+    Schema::table('orders', function (Blueprint $table) {
+        $table->string('receipt')->nullable()->after('description');
+    });
 });
 
 // home routes
@@ -220,7 +232,9 @@ Route::group([
     'as' => 'deal.'
 ], function () {
     Route::get('/create', 'create')->name('create');
+    Route::get('/conferm/{deal}', 'conferm')->name('conferm');
     Route::post('/store', 'store')->middleware(checkIsActive::class)->name('store');
+    Route::post('/storeTemporary', 'storeTemporary')->middleware(checkIsActive::class)->name('storeTemporary');
     Route::get('/list', 'list')->name('list');
     Route::get('/adminIndex', 'adminIndex')->name('adminIndex');
 });
@@ -255,11 +269,30 @@ Route::group([
 });
 
 Route::group([
+    'prefix'=>'order',
+    'controller'=>OrdersController::class,
+    'middleware'=>checklogin::class,
+    'as'=>'order.'
+], function(){
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store')->withoutMiddleware([checklogin::class]);
+    Route::get('/index', 'index')->name('index');
+});
+
+Route::group([
+    'prefix'=>'cart',
+    'controller'=>CartsController::class,
+    'as'=>'cart.'
+], function(){
+    Route::get('/', 'list')->name('list');
+});
+
+Route::group([
     "as" => "Message.",
     "prefix" => "Message",
     "controller" => MessageController::class
 ], function () {
-    Route::view("insert", "admin.Message.insert")->name('insert');
+    Route::get("insert", 'insert')->name('insert');
     Route::post("/create", "create")->name("create");
     Route::get("list", "list")->name("list");
     Route::get("delete/{id}", "delete")->name("delete");
