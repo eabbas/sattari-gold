@@ -277,6 +277,7 @@ Route::group([
     Route::get('/create', 'create')->name('create');
     Route::post('/store', 'store')->name('store')->withoutMiddleware([checklogin::class]);
     Route::get('/index', 'index')->name('index');
+    Route::get('/userOrders', 'userOrders')->name('userOrders');
 });
 
 Route::group([

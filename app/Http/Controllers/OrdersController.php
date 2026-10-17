@@ -138,7 +138,6 @@ class OrdersController extends Controller
         carts::where('user_id', $user->id)->whereNull('order_id')->delete();
         return response()->json('ok');
     }
-
     public function acceptOrder(Request $request)
     {
         $order = orders::with(['state', 'carts.product'])->find($request->order_id);
@@ -175,5 +174,32 @@ class OrdersController extends Controller
         // return response()->json([$order, $request->all()]);
         return response()->json($order);
     }
-   
+    public function userOrders()
+    {
+        $orders = Auth::user()->orders()->orderBy('date', 'desc')->orderBy('time', 'desc')->get();
+        $categories = category::with('products')->has('products')->get();
+        $products = product::where('show_in_home', 1)->get();
+
+        foreach ($products as $product) {
+            if ($product->media->isNotEmpty()) {
+                foreach ($product->media as $media) {
+                    if ($media['is_main']) {
+                        $product['mainImg'] = $media['media_path'];
+                        break;
+                    } else {
+                        $product['mainImg'] = 'default.jpg';
+                    }
+                }
+            } else {
+                $product['mainImg'] = 'default.jpg';
+            }
+        }
+        $logo = logo::first();
+        return view('admin.order.userOrders', [
+            'categories' => $categories,
+            'products' => $products,
+            'orders' => $orders,
+            'logo' => $logo,
+        ]);
+    }
 }
