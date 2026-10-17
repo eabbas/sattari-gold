@@ -218,7 +218,9 @@ Route::group([
     'as' => 'deal.'
 ], function () {
     Route::get('/create', 'create')->name('create');
+    Route::get('/conferm/{deal}', 'conferm')->name('conferm');
     Route::post('/store', 'store')->middleware(checkIsActive::class)->name('store');
+    Route::post('/storeTemporary', 'storeTemporary')->middleware(checkIsActive::class)->name('storeTemporary');
     Route::get('/list', 'list')->name('list');
     Route::get('/adminIndex', 'adminIndex')->name('adminIndex');
 });
@@ -250,7 +252,7 @@ Route::group([
     "prefix" => "Message",
     "controller" => MessageController::class
 ], function () {
-    Route::view("insert", "admin.Message.insert")->name('insert');
+    Route::get("insert", 'insert')->name('insert');
     Route::post("/create", "create")->name("create");
     Route::get("list", "list")->name("list");
     Route::get("delete/{id}", "delete")->name("delete");

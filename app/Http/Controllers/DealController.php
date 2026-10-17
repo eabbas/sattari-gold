@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\wallet;
 use Illuminate\Http\Request;
 use App\Models\Message;
+use App\Models\dealTemporary;
 use Illuminate\Support\Facades\Auth;
 use Log;
 
@@ -27,14 +28,13 @@ class DealController extends Controller
         if (Auth::user()->wallet) {
             $asset = Auth::user()->wallet->asset;
         }
-        $message=Message::all()->first();
+        $message=Message::all();
         return view('user.deal.create', ['asset' => $asset, 'totalGoldWeight' => $totalGoldWeight, 'logo' => $logo , "message"=>$message]);
     }
 
 
     public function store(Request $request)
     {
-
         $dateTime = explode(' ', now());
         $dateJalali = verta($dateTime[0]);
         $date = explode(' ', $dateJalali);
@@ -87,7 +87,7 @@ class DealController extends Controller
                 'isApproved' => 0,
             ]);
 
-            deal::create([
+            $id_deal= deal::insertGetId([
                 'user_id' => Auth::id(),
                 'transaction_id' => $transaction->id,
                 'goldWeight' => $weight,
@@ -97,13 +97,17 @@ class DealController extends Controller
                 'time' => $time,
                 'description' => $description
             ]);
-
-            $wallet->update([
-                'asset' => $totalAsset,
-                'goldWeight' => $totalGold
+            //حسین
+            dealTemporary::create([
+                'user_id'=>Auth::id(),
+                'deal_id'=>$id_deal,
+                'goldPrice'=>$request->goldPrice,
+                'action'=>$request->action,
+                'calcBy'=>$request->calcBy,
+                'userInput'=>$request->userInput,
+                'resultOutput'=>$request->resultOutput,
             ]);
-
-            return redirect()->back()->with('success', "$weight گرم طلا به سپرده شما افزوده شد");
+            return redirect()->back()->with('success', "منتظر تایید");
         }
 
         if ($action == 'sell') {
@@ -163,6 +167,7 @@ class DealController extends Controller
     public function adminIndex()
     {
         $deals = deal::orderBy('date', 'desc')->orderBy('time', 'desc')->get();
+        // dd($deals[0]->transaction);
         foreach ($deals as $deal) {
             switch ($deal->transaction->isApproved) {
                 case -1:
@@ -181,5 +186,50 @@ class DealController extends Controller
         }
         $logo = logo::first();
         return view('admin.deal.index', ['logo' => $logo, 'deals' => $deals]);
+    }
+    public function conferm(deal $deal){
+        $deal->isApproved=1;
+        $deal->transaction->isApproved=1;
+        $deal->transaction->save();
+        $deal->save();
+        $dealTemporary=dealTemporary::where('deal_id' , $deal->id)->first();
+        $action = $dealTemporary->action;
+        $calcBy = $dealTemporary->calcBy;
+        $input = $dealTemporary->userInput;
+        $output = $dealTemporary->resultOutput;
+        $goldPrice = $dealTemporary->goldPrice;
+
+        $amount = 0;
+        $weight = 0;
+        $wallet = Wallet::where('user_id', Auth::id())->first();
+        $totalAsset = $wallet->asset;
+        $totalGold = $wallet->goldWeight ?? 0;
+                $cleanOutput = (float) str_replace(',', '', $output);
+
+        if ($action == 'buy') {
+            $buyPrice = 0;
+            if ($calcBy == 'price') {
+                $amount = (float) $input;
+                $weight = $cleanOutput;
+                $buyPrice = $input;
+            } elseif ($calcBy == 'weight') {
+                $weight = (float) $input;
+                $amount = $cleanOutput;
+                $buyPrice = $amount;
+            }
+            if ($wallet->asset < $amount) {
+                return redirect()->back()->with('failure', 'موجودی کیف پول شما کافی نیست.');
+            }
+        }
+        
+        $totalAsset = $wallet->asset - $amount;
+        $totalGold = ($wallet->goldWeight ?? 0) + $weight;
+
+        $wallet->update([
+            'asset' => $totalAsset,
+            'goldWeight' => $totalGold
+        ]);
+        $dealTemporary=dealTemporary::where('deal_id' , $deal->id)->delete();
+        return to_route('deal.adminIndex');
     }
 }
