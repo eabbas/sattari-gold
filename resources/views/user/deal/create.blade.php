@@ -43,7 +43,12 @@
                         </path>
                     </svg>
                 </div>
-                <p>{{$message->message}}</p>
+                @if(isset($message))
+                    @foreach($message as $mess)
+                    <p>{{$mess->message}}</p>
+                    <br>
+                    @endforeach
+                @endif
             </div>
 
             <div class="flex justify-between items-center text-xs text-gray-500 mb-4 px-2">

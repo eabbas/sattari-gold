@@ -321,7 +321,7 @@
                                 </th>
                             </tr>
                         </thead>
-
+                        
                         <tbody>
                             @php
                                 $counter = 0;
@@ -367,10 +367,17 @@
                                         <span class="w-5/12 text-left in-fa">{{ $deal->date }}</span>
                                     </td>
                                     <td class="border-1 border-(--color-border) p-1 md:px-3 md:py-2 text-center">
+                                        @if($deal->state!="تایید شده")
+                                        <a href="{{route('deal.conferm' , $deal->id)}}"
+                                            class="px-3 py-1.5 bg-[{{ $deal->color }}]/20 text-[{{ $deal->color }}] rounded-md border-1 border-[[{{ $deal->color }}]] p-1 cursor-default cursor-pointer">
+                                            {{ $deal->state }}
+                                        </a>
+                                        @else
                                         <span
                                             class="px-3 py-1.5 bg-[{{ $deal->color }}]/20 text-[{{ $deal->color }}] rounded-md border-1 border-[[{{ $deal->color }}]] p-1 cursor-default">
                                             {{ $deal->state }}
                                         </span>
+                                        @endif
                                     </td>
                                     <td class="relative p-1 md:px-3 md:py-2 flex items-center justify-center gap-3">
                                         <button
@@ -691,6 +698,9 @@
             popup_report.classList.remove("opacity-100");
             popup_report.classList.remove("visible");
         });
+
+
+
     </script>
     <script src="{{ asset('assets/js/adminDeal.js') }}"></script>
 
