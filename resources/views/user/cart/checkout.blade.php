@@ -1,7 +1,7 @@
 @extends('app.document')
 @section('title', 'پرداخت')
 @section('content')
-    <form action="{{ route('order.store') }}" method="POST" class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 mt-5">
+    <form action="{{ route('order.store') }}" method="POST" enctype="multipart/form-data" class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 mt-5">
 
         <div class="lg:col-span-7 xl:col-span-8 bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
             <h2 class="text-lg font-bold mb-6 text-gray-700">صورت حساب و حمل و نقل</h2>
@@ -21,11 +21,15 @@
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2">کد ملی <span class="text-red-500">*</span></label>
-                        <input type="number" name="nationalCode" value="{{ Auth::check() ? Auth::user()->nationalCode : "" }}" class="w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none" required>
+                        <input type="number" name="nationalCode" dir="ltr" value="{{ Auth::check() ? Auth::user()->nationalCode : "" }}" class="w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none in-fa" required>
                     </div>
                     <div>
                         <label class="block text-sm font-medium mb-2">شماره تلفن <span class="text-red-500">*</span></label>
-                        <input type="number" name="phoneNumber" value="{{ Auth::check() ? Auth::user()->phoneNumber : "" }}" class="w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none" required>
+                        <input type="number" name="phoneNumber" dir="ltr" value="{{ Auth::check() ? Auth::user()->phoneNumber : "" }}" class="w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none in-fa" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">تصویر رسید <span class="text-red-500">*</span></label>
+                        <input type="file" name="receipt" dir="ltr" class="w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none in-fa" required>
                     </div>
                 </div>
                

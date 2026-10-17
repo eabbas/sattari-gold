@@ -36,6 +36,7 @@ Route::post('/cart/showCarts', [CartsController::class, 'showCarts']);
 Route::post('/cart/saveOrder', [CartsController::class, 'saveOrder']);
 
 Route::post('/order/store', [OrdersController::class, 'store']);
+Route::post('/order/acceptOrder', [OrdersController::class, 'acceptOrder']);
 Route::get('/order/cancelAll/{user}', [OrdersController::class, 'cancelAll']);
 Route::get('/order/showItems/{order}', [OrdersController::class, 'showItems']);
 

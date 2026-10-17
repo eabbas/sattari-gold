@@ -11,6 +11,7 @@ class orders extends Model
         'user_id',
         'order_status_id',
         'order_code',
+        'receipt',
         'description',
         'onlinePayment',
         'date',

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\address;
 use App\Models\carts;
 use App\Models\category;
+use App\Models\logo;
 use App\Models\orders;
 use App\Models\product;
 use App\Models\User;
@@ -12,29 +13,30 @@ use App\Models\order_status;
 use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Log;
 class OrdersController extends Controller
 {
     public function store(Request $request)
     {
+        // dd($request->all());
         $name = $request->input('name');
         $family = $request->input('family');
         $cityId = $request->input('cityId');
         $addressText = $request->input('address');
         $postalCode = $request->input('postalCode');
         $phoneNumber = $request->input('phoneNumber');
-        // $email = $request->input('email');
         $nationalCode = $request->input('nationalCode');
-        $descriptoin = $request->input('descriptoin');
+        $description = $request->input('description');
         $onlinePayment = $request->input('onlinePayment');
         $products = json_decode($request->products);
         $packs = json_decode($request->packs);
+        $receiptImgName = $request->file('receipt')->getClientOriginalName();
+        $receipt = $request->file('receipt')->storeAs('receipt', $receiptImgName, 'public');
 
         User::upsert([
             'name' => $name,
             'family' => $family,
             'phoneNumber' => $phoneNumber,
-            // 'email' => $email,
             'nationalCode' => $nationalCode,
         ], ['phoneNumber'], ['name', 'family', 'nationalCode']);
 
@@ -55,7 +57,8 @@ class OrdersController extends Controller
 
         $order = orders::create([
             'user_id' => $user->id,
-            'description' => $descriptoin,
+            'description' => $description,
+            'receipt' => $receipt,
             'onlinePayment' => $onlinePayment,
             'address_id' => $address->id,
             'order_status_id' => 1,
@@ -109,10 +112,12 @@ class OrdersController extends Controller
                 $product['mainImg'] = 'default.jpg';
             }
         }
+        $logo = logo::first();
         return view('admin.order.index', [
             'categories' => $categories,
             'products' => $products,
             'orders' => $orders,
+            'logo' => $logo,
         ]);
     }
     public function showItems(orders $order)
@@ -123,7 +128,7 @@ class OrdersController extends Controller
                     $qr->where('is_main', 1)->get();
                 }]);
             }]);
-            $query->with('pack');
+            
         }]);
         $order->state;
         return response()->json($order);
@@ -132,6 +137,43 @@ class OrdersController extends Controller
     {
         carts::where('user_id', $user->id)->whereNull('order_id')->delete();
         return response()->json('ok');
+    }
+
+    public function acceptOrder(Request $request)
+    {
+        $order = orders::with(['state', 'carts.product'])->find($request->order_id);
+
+        // if (!$order) {
+        //     return response()->json(['error' => 'سفارش یافت نشد'], 404);
+        // }
+
+        // return response()->json($order);
+
+        if ($request->status == 1) {
+            $order->order_status_id = 2;
+        }
+        if ($request->status == 2) {
+            $order->order_status_id = 3;
+        }
+        if ($request->status == 3) {
+            $order->order_status_id = 4;
+        }
+        // if ($request->status == 4) {
+        //     $order->order_status_id = 5;
+        // }
+        // if ($request->status == 5) {
+        //     $order->order_status_id = 6;
+        // }
+
+        $order->save();
+
+        // Log::info($order);
+
+        $order->load('state');
+
+
+        // return response()->json([$order, $request->all()]);
+        return response()->json($order);
     }
    
 }

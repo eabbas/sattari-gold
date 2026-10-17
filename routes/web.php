@@ -58,8 +58,11 @@ Route::get('/xyz', function () {
     //     $table->string('date')->nullable()->after('description');
     //     $table->string('time')->nullable()->after('date');
     // });
-    Schema::table('users', function (Blueprint $table) {
-        $table->string('password')->nullable()->change();
+    // Schema::table('users', function (Blueprint $table) {
+    //     $table->string('password')->nullable()->change();
+    // });
+    Schema::table('orders', function (Blueprint $table) {
+        $table->string('receipt')->nullable()->after('description');
     });
 });
 
