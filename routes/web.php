@@ -215,11 +215,7 @@ Route::group([
     'as' => 'deal.'
 ], function () {
     Route::get('/create', 'create')->name('create');
-    Route::post('/store', 'store')->name('store');
-    Route::get('/edit/{deal}', 'edit')->name('edit');
-    Route::post('/update/{deal}', 'update')->name('update');
-    Route::get('/delete/{deal}', 'delete')->name('delete');
-    Route::get('/single/{deal}', 'single')->name('single');
+    Route::post('/store', 'store')->middleware(checkIsActive::class)->name('store');
     Route::get('/list', 'list')->name('list');
     Route::get('/adminIndex', 'adminIndex')->name('adminIndex');
 });
