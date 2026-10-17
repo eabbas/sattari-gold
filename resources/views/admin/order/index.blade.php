@@ -263,7 +263,7 @@
                         </td>
                         <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
                             <button
-                                onclick="accept({{ $order->id }}, this, 1)"
+                                onclick="accept({{ $order->id }}, this, {{ $order->state->id }})"
                                 class="w-full text-[{{ $order->state->color }}] border-1 border-[{{ $order->state->color }}] rounded-md px-3 py-2 cursor-pointer openPopup">
                                     {{ $order->state->admin_title }}
                             </button>
@@ -278,8 +278,7 @@
         class="fixed w-full h-dvh bg-black/50 top-0 right-0 z-999999 transition-all duration-300 invisible opacity-0 flex justify-center items-center">
         <div class="w-full h-full flex justify-center items-center lg:w-[calc(100%-265px)]">
             <div class="w-11/12 lg:w-3/4 p-3 lg:p-5 rounded-xl bg-white relative pt-5">
-                <span class="absolute -top-4 -right-2 text-md bg-white p-2 rounded-full cursor-pointer"
-                    onclick="hideItems()">❌</span>
+                
                 <div class="w-full flex flex-row items-center">
                     <h2 class="w-1/3 text-sm font-bold text-(--primary-text-color) in-fa" id="tableName"></h2>
                     <div class="w-1/3 flex flex-row justify-center">
@@ -311,7 +310,11 @@
 
     <div id="receiptBlock" class="fixed w-full h-dvh bg-black/50 top-0 right-0 flex justify-center items-center z-9 invisible opacity-0 transition-all duration-300">
         <div class="w-11/12 lg:w-1/2 p-5 flex justify-center items-center rounded-lg bg-white relative">
-            <span class="absolute top-3 right-6 cursor-pointer" onclick="closeReceipt()">X</span>
+            <span class="absolute top-3 right-6 cursor-pointer" onclick="closeReceipt()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 fill-gray-600" viewBox="0 0 384 512">
+                    <path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"/>
+                </svg>
+            </span>
             <img src="" class="w-full mt-6" alt="">
         </div>
     </div>
@@ -347,11 +350,12 @@
             el.classList.add('cursor-no-drop')
             el.classList.remove('cursor-pointer')
             el.classList.add('opacity-50')
+            loader('open')
             $.ajax({
                 url: "{{ url('api/order/showItems') }}/" + orderId,
                 type: "GET",
                 success: function(data) {
-
+                    loader('close')
                     let formatter = new Intl.NumberFormat('en-US')
 
                     itemList.innerHTML = ""
@@ -362,8 +366,11 @@
                     el.classList.remove('opacity-50')
                     el.classList.add('cursor-pointer')
 
-                    tableName.innerText = data.qr_code ? (data.qr_code.description ? data.qr_code.description :
-                        data.qr_code.slug) : "-"
+                    tableName.innerHTML = data.qr_code ? (data.qr_code.description ? data.qr_code.description :
+                        data.qr_code.slug) : `
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 fill-gray-600 cursor-pointer" onclick="hideItems()" viewBox="0 0 384 512">
+                        <path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"/>
+                    </svg>`
                     orderStatus.classList =
                         `text-[10px] font-bold px-2 py-0.5 rounded-full border-1 border-[${ data.state.color }] text-[${ data.state.color }] bg-[${ data.state.color }]/10`
                     orderStatus.innerText = data.state.title
@@ -380,11 +387,11 @@
                         let inner = `
                         <div class="w-full flex gap-3 items-center relative">
                             <div class="w-7/12 relative">
-                    `
+                        `
                         if (cart.product) {
                             inner += `
                         <img src='${cart.product.media[0].media_path ? "{{ asset('storage/') }}/" + cart.product.media[0].media_path : "{{ asset('storage/resturan_img/807c88cc-7948-4f75-88e5-4c4598ab8175_1767800481_6872954f6e4630ba6c0eda84b2ca1882.jpg') }}"}'
-                                alt="" class="w-full min-h-24 max-h-24 rounded-xl object-cover">
+                            alt="" class="w-full min-h-24 max-h-24 rounded-xl object-cover">
                        </div>
                         <div class="w-full flex h-full flex-col gap-1 items-start">
                             <div class="w-full flex gap-1 items-center">
@@ -592,7 +599,6 @@
 
         function closeReceipt(){
             receiptBlock.classList.add('invisible', 'opacity-0')
-            receiptBlock.querySelector('img').src = ''
         }
     </script>
 
