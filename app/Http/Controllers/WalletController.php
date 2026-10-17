@@ -16,7 +16,7 @@ class WalletController extends Controller
     public function wallet(User $user)
     {
         $logo = logo::first();
-        return view('user.user.wallet', ['user' => $user, 'logo' => $logo]);
+        return view('user.wallet.wallet', ['user' => $user, 'logo' => $logo]);
     }
 
     public function transactionRequest(Request $request)
@@ -146,13 +146,11 @@ class WalletController extends Controller
     {
         $request->validate(
             [
-                'fee' => ['required', 'numeric', 'min:1000000', 'max:1000000000'],
+                'fee' => ['required'],
                 'receipt' => ['required', 'max:100']
             ],
             [
                 'fee.required' => 'پر کردن این فیلد الزامی است.',
-                'fee.min' => 'حداقل مبلغ واریزی یک میلیون تومان است.',
-                'fee.max' => 'حداکثر مبلغ واریزی یک میلیارد تومان است.',
                 'receipt.required' => 'پر کردن این فیلد الزامی است.',
                 'receipt.max' => 'حجم فایل نباید بیشتر از 100 کیلوبایت باشد',
             ]
@@ -191,11 +189,10 @@ class WalletController extends Controller
     {
         $request->validate(
             [
-                'fee' => ['required', 'numeric', 'min:10000']
+                'fee' => ['required']
             ],
             [
                 'fee.required' => 'پر کردن این فیلد الزامی است.',
-                'fee.min' => 'حداقل مبلغ قابل برداشت ده هزار تومان است.',
             ]
         );
         $dateTime = explode(' ', now());
