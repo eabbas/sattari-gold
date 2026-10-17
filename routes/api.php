@@ -18,6 +18,7 @@ Route::post('/getTransactionFilter', [SearchController::class, 'getTransactionFi
 
 Route::post('/submitChanges', [WalletController::class, 'submitChanges']);
  Route::post('/popupWalletData', [WalletController::class, 'popupWalletData']);
+ Route::post('/transactionRequestApi', [WalletController::class, 'transactionRequestApi']);
 
 Route::get('/userDetail/{user}', [UserController::class, 'userDetail']);
 Route::post('/updateUser', [UserController::class, 'update']);
