@@ -58,6 +58,9 @@ Route::get('/xyz', function () {
     //     $table->string('date')->nullable()->after('description');
     //     $table->string('time')->nullable()->after('date');
     // });
+    Schema::table('users', function (Blueprint $table) {
+        $table->string('password')->nullable()->change();
+    });
 });
 
 // home routes

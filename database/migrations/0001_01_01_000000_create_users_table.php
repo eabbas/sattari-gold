@@ -24,7 +24,7 @@ return new class extends Migration
             // $table->string('referralCode')->unique()->nullable();
             // $table->text('note')->nullable();
             // $table->boolean('loginWithPass')->default(0);
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -19,6 +19,14 @@
                         <label class="block text-sm font-medium mb-2">نام خانوادگی <span class="text-red-500">*</span></label>
                         <input type="text" name="family" value="{{ Auth::check() ? Auth::user()->family : "" }}" class="w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none" required>
                     </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">کد ملی <span class="text-red-500">*</span></label>
+                        <input type="number" name="nationalCode" value="{{ Auth::check() ? Auth::user()->nationalCode : "" }}" class="w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">شماره تلفن <span class="text-red-500">*</span></label>
+                        <input type="number" name="phoneNumber" value="{{ Auth::check() ? Auth::user()->phoneNumber : "" }}" class="w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none" required>
+                    </div>
                 </div>
                
 
@@ -26,8 +34,7 @@
                     <div>
                         <label class="block text-sm font-medium mb-2">استان <span class="text-red-500">*</span></label>
                         <div class="relative">
-                            <select id="province" class="w-full bg-gray-100 border-none rounded-lg p-3 appearance-none focus:ring-2 focus:ring-(--bg-dark-green) focus:ring-(--bg-dark-green) outline-none cursor-pointer
-               [&>option]:bg-(--bg-dark-green) [&>option]:text-white">
+                            <select id="province" class="w-full bg-gray-100 border-none rounded-lg p-3 appearance-none focus:ring-2 focus:ring-yellow-500 outline-none cursor-pointer">
                                 @foreach ($provinces as $province)
                                     <option value="{{ $province->id }}" @if (Auth::check() && (count(Auth::user()->addresses) && Auth::user()->addresses[0]->city->province->id == $province->id)) selected @endif>{{ $province->title }}</option>
                                 @endforeach
@@ -42,8 +49,7 @@
                     <div>
                         <label class="block text-sm font-medium mb-2">شهر <span class="text-red-500">*</span></label>
                         <div class="relative">
-                            <select name="cityId" id="city" class="w-full bg-gray-100 border-none rounded-lg p-3 appearance-none focus:ring-2 focus:ring-(--bg-dark-green) focus:ring-(--bg-dark-green) outline-none cursor-pointer
-               [&>option]:bg-(--bg-dark-green) [&>option]:text-white">
+                            <select name="cityId" id="city" class="w-full bg-gray-100 border-none rounded-lg p-3 appearance-none focus:ring-2 focus:ring-yellow-500 outline-none cursor-pointer">
                                 <option disabled>یک شهر انتخاب کنید</option>
                                 @foreach ($cities as $city)
                                     <option value="{{ $city->id }}" @if (Auth::check() && (count(Auth::user()->addresses) && Auth::user()->addresses[0]->city->id == $city->id)) selected @endif>{{ $city->title }}</option>
@@ -68,20 +74,20 @@
                     <input type="text" name="postalCode" value="{{ Auth::check() ? (count(Auth::user()->addresses) ? Auth::user()->addresses[0]->postalCode : '') : "" }}" class="in-fa w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none" dir="ltr">
                 </div>
 
-                <div>
+                {{-- <div>
                     <label class="block text-sm font-medium mb-2">تلفن <span class="text-red-500">*</span></label>
                     <input type="tel" name="phoneNumber" value="{{ Auth::check() ? Auth::user()->phoneNumber : "" }}" class="in-fa w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none" required>
-                </div>
+                </div> --}}
 
                 <div>
                     <label class="block text-sm font-medium mb-2">آدرس ایمیل (اختیاری)</label>
                     <input type="email" name="email" value="{{ Auth::check() ? Auth::user()->email : "" }}" class="w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none" dir="ltr">
                 </div>
 
-                <div>
+                {{-- <div>
                     <label class="block text-sm font-medium mb-2">کد ملی (اختیاری)</label>
                     <input type="text" name="nationalCode" value="{{ Auth::check() ? Auth::user()->nationalCode : "" }}" class="in-fa w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none" dir="ltr">
-                </div>
+                </div> --}}
 
                 <div>
                     <label class="block text-sm font-medium mb-2">توضیحات تکمیلی</label>

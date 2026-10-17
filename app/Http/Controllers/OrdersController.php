@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\classes\homeSetting;
 use App\Models\address;
 use App\Models\carts;
 use App\Models\category;
@@ -16,11 +15,6 @@ use Illuminate\Support\Facades\Auth;
 
 class OrdersController extends Controller
 {
-    public function create()
-    {
-        $setting = homeSetting::document();
-        return view('user.order.create', ['setting' => $setting]);
-    }
     public function store(Request $request)
     {
         $name = $request->input('name');
@@ -29,7 +23,7 @@ class OrdersController extends Controller
         $addressText = $request->input('address');
         $postalCode = $request->input('postalCode');
         $phoneNumber = $request->input('phoneNumber');
-        $email = $request->input('email');
+        // $email = $request->input('email');
         $nationalCode = $request->input('nationalCode');
         $descriptoin = $request->input('descriptoin');
         $onlinePayment = $request->input('onlinePayment');
@@ -40,9 +34,9 @@ class OrdersController extends Controller
             'name' => $name,
             'family' => $family,
             'phoneNumber' => $phoneNumber,
-            'email' => $email,
+            // 'email' => $email,
             'nationalCode' => $nationalCode,
-        ], ['phoneNumber'], ['name', 'family', 'email', 'nationalCode']);
+        ], ['phoneNumber'], ['name', 'family', 'nationalCode']);
 
         $user = User::where('phoneNumber', $phoneNumber)->first();
 
@@ -115,12 +109,10 @@ class OrdersController extends Controller
                 $product['mainImg'] = 'default.jpg';
             }
         }
-        $setting = homeSetting::document();
         return view('admin.order.index', [
             'categories' => $categories,
             'products' => $products,
             'orders' => $orders,
-            'setting' => $setting
         ]);
     }
     public function showItems(orders $order)
