@@ -27,7 +27,7 @@ class OrdersController extends Controller
         $phoneNumber = $request->input('phoneNumber');
         $nationalCode = $request->input('nationalCode');
         $description = $request->input('description');
-        $onlinePayment = $request->input('onlinePayment');
+        // $onlinePayment = $request->input('onlinePayment');
         $products = json_decode($request->products);
         $packs = json_decode($request->packs);
         $receiptImgName = $request->file('receipt')->getClientOriginalName();
@@ -59,7 +59,7 @@ class OrdersController extends Controller
             'user_id' => $user->id,
             'description' => $description,
             'receipt' => $receipt,
-            'onlinePayment' => $onlinePayment,
+            // 'onlinePayment' => $onlinePayment,
             'address_id' => $address->id,
             'order_status_id' => 1,
             'date' => $date,

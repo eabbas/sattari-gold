@@ -88,26 +88,24 @@ document.querySelectorAll('.approvedUsers').forEach(row => {
         if(fee.value == ''){
             alert('لطفا مبلغ را وارد کنید')
         } 
-        // else if(){} 
-        else {
+        else if(!receipt.parentElement.classList.contains('hidden') && receipt.value == ''){
+            alert('آپلود رسید الزامی است')
+        }  else {
             let transactionType
             if (deposit.checked) {
                 transactionType = 'deposit'
             } else if (withdraw.checked) {
                 transactionType = 'withdraw'
             }
-    
             let formData = new FormData()
-    
             formData.append('transactionType', transactionType)
             if (receipt.value != '') {
                 formData.append('receipt', receipt.files[0])
             }
             formData.append('description', description.value)
             formData.append('fee', fee.value)
-    
+            formData.append('userId', userId)
             loader('open')
-    
             $.ajax({
                 url: api + 'transactionRequestApi',
                 type: "POST",
@@ -740,7 +738,7 @@ function loader(state) {
 }
 
 function sendReceipt(el, state, userId) {
-    let receipt = el.closest('.popup-wallet').querySelector('#receipt' + userId)
+    let receipt = el.closest('.popup-wallet').querySelector('#receipt' + userId).parentElement
     if (state == 'deposit') {
         receipt.classList.remove('hidden')
     }
