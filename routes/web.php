@@ -16,6 +16,7 @@ use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\CartsController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ReferenceSitesController;
+use App\Http\Controllers\TransactionSettingController;
 use App\Http\Middleware\checkIsActive;
 use App\Http\Middleware\checklogin;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Models\logo;
 use App\Models\creditCard;
+use App\Models\transactionSetting;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -66,9 +68,9 @@ Route::get('/xyz', function () {
     // Schema::table('users', function (Blueprint $table) {
     //     $table->string('password')->nullable()->change();
     // });
-    Schema::table('orders', function (Blueprint $table) {
-        $table->string('receipt')->nullable()->after('description');
-    });
+    // Schema::table('orders', function (Blueprint $table) {
+    //     $table->string('receipt')->nullable()->after('description');
+    // });
 });
 
 // home routes
@@ -268,12 +270,23 @@ Route::group([
     Route::get('/delete/{site}', 'delete')->name('delete');
 });
 
+// transaction setting routes
 Route::group([
-    'prefix'=>'order',
-    'controller'=>OrdersController::class,
-    'middleware'=>checklogin::class,
-    'as'=>'order.'
-], function(){
+    'prefix' => 'transactionSetting',
+    'controller' => TransactionSettingController::class,
+    'middleware' => checkAdminMiddleware::class,
+    'as' => 'transactionSetting.'
+], function () {
+    Route::get('/create', 'create')->name('create');
+    Route::post('/updateOrCreate', 'updateOrCreate')->name('updateOrCreate');
+});
+
+Route::group([
+    'prefix' => 'order',
+    'controller' => OrdersController::class,
+    'middleware' => checklogin::class,
+    'as' => 'order.'
+], function () {
     Route::get('/create', 'create')->name('create');
     Route::post('/store', 'store')->name('store')->withoutMiddleware([checklogin::class]);
     Route::get('/index', 'index')->name('index');
@@ -281,10 +294,10 @@ Route::group([
 });
 
 Route::group([
-    'prefix'=>'cart',
-    'controller'=>CartsController::class,
-    'as'=>'cart.'
-], function(){
+    'prefix' => 'cart',
+    'controller' => CartsController::class,
+    'as' => 'cart.'
+], function () {
     Route::get('/', 'list')->name('list');
 });
 

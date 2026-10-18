@@ -13,7 +13,7 @@
             <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('failure') }} </span>
         </div>
     @endif
-    <div class="w-2/3 mx-auto">
+    <div class="w-full sm:w-2/3 mx-auto">
         {{--  --}}
         <div class="w-full bg-white rounded-md px-3 py-2">
             <form action="{{ route('wallet.transactionRequest') }}" method="POST" enctype="multipart/form-data">
@@ -24,13 +24,13 @@
                         <div class="w-full md:w-6/12">
                             <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">نام
                                 :</span>
-                            <span class="text-xs md:text-base font-bold">{{ Auth::user()['name'] }}
-                                {{ Auth::user()['family'] }}</span>
+                            <span class="text-xs md:text-base font-bold">{{ $user['name'] }}
+                                {{ $user['family'] }}</span>
                         </div>
                         <div class="w-full md:w-6/12">
                             <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره
                                 :</span>
-                            <span class="text-[10px] md:text-base font-bold in-fa">{{ Auth::user()['phoneNumber'] }}</span>
+                            <span class="text-[10px] md:text-base font-bold in-fa">{{ $user['phoneNumber'] }}</span>
                         </div>
                     </div>
                     <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
@@ -133,73 +133,88 @@
                     <div class="col-span-6">
                         <div
                             class="flex items-center border-1 border-(--border-dashboard) rounded-lg divide-x-1 divide-(--border-dashboard) px-2 py-3 gap-2">
-                            <label for="deposit" class="w-6/12 flex items-center gap-1 md:gap-3">
-                                <input class="accent-(--primary-dashboard) size-4 md:size-5" type="radio"
-                                    name="transactionType" value="deposit" id="deposit" onchange="sendReceipt('deposit')">
-                                <span class="text-xs text-green-400 md:text-base font-bold">واریز</span>
-                            </label>
-                            <label for="withdraw" class="w-6/12 flex items-center gap-1 md:gap-3">
-                                <input class="accent-(--primary-dashboard) size-4 md:size-5" type="radio"
-                                    name="transactionType" value="withdraw" id="withdraw"
-                                    onchange="sendReceipt('withdraw')">
-                                <span class="text-xs text-red-400 md:text-base font-bold">برداشت</span>
-                            </label>
+                            @if ($setting && $setting['depositIsActive'])
+                                <label for="deposit" class="w-6/12 flex items-center gap-1 md:gap-3">
+                                    <input class="accent-(--primary-dashboard) size-4 md:size-5" type="radio"
+                                        name="transactionType" value="deposit" id="deposit"
+                                        onchange="sendReceipt('deposit')">
+                                    <span class="text-xs text-green-400 md:text-base font-bold">واریز</span>
+                                </label>
+                            @else
+                                <span class="w-1/2 text-xs text-[var(--color-warning)] font-bold">در حال حاضر امکان واریز
+                                    کردن غیر
+                                    فعال میباشد.</span>
+                            @endif
+                            @if ($setting && $setting['withdrawIsActive'])
+                                <label for="withdraw" class="w-6/12 flex items-center gap-1 md:gap-3">
+                                    <input class="accent-(--primary-dashboard) size-4 md:size-5" type="radio"
+                                        name="transactionType" value="withdraw" id="withdraw"
+                                        onchange="sendReceipt('withdraw')">
+                                    <span class="text-xs text-red-400 md:text-base font-bold">برداشت</span>
+                                </label>
+                            @else
+                                <span class="w-1/2 text-xs text-[var(--color-warning)] font-bold">در حال حاضر امکان برداشت
+                                    کردن غیر
+                                    فعال میباشد.</span>
+                            @endif
                         </div>
                         @error('transactionType')
                             <span class="text-xs text-red-400">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div id="percents" class="col-span-6 p-4 hidden">
-                        <span class="mb-5 block">برداشت از کیف پول به مقدار:</span>
-                        <div class="w-full flex items-center justify-between gap-2">
-                            <div class="">
-                                <label for="withdrawPercent10" class="in-fa">10%</label>
-                                <input type="radio" name="withdrawPercent" id="withdrawPercent10" value="10">
-                            </div>
-                            <div class="">
-                                <label for="withdrawPercent25" class="in-fa">25%</label>
-                                <input type="radio" name="withdrawPercent" id="withdrawPercent25" value="25">
-                            </div>
-                            <div class="">
-                                <label for="withdrawPercent50" class="in-fa">50%</label>
-                                <input type="radio" name="withdrawPercent" id="withdrawPercent50" value="50">
-                            </div>
-                            <div class="">
-                                <label for="withdrawPercent75" class="in-fa">75%</label>
-                                <input type="radio" name="withdrawPercent" id="withdrawPercent75" value="75">
-                            </div>
-                            <div class="">
-                                <label for="withdrawPercent100" class="in-fa">100%</label>
-                                <input type="radio" name="withdrawPercent" id="withdrawPercent100" value="100">
+                    <div id="transactionMethod" class="col-span-6 grid grid-cols-6 gap-4 ">
+                        <div id="percents" class="col-span-6 p-4 hidden">
+                            <span class="mb-5 block">برداشت از کیف پول به مقدار:</span>
+                            <div class="w-full flex items-center justify-between gap-2">
+                                <div class="">
+                                    <label for="withdrawPercent10" class="in-fa">10%</label>
+                                    <input type="radio" name="withdrawPercent" id="withdrawPercent10" value="10">
+                                </div>
+                                <div class="">
+                                    <label for="withdrawPercent25" class="in-fa">25%</label>
+                                    <input type="radio" name="withdrawPercent" id="withdrawPercent25" value="25">
+                                </div>
+                                <div class="">
+                                    <label for="withdrawPercent50" class="in-fa">50%</label>
+                                    <input type="radio" name="withdrawPercent" id="withdrawPercent50" value="50">
+                                </div>
+                                <div class="">
+                                    <label for="withdrawPercent75" class="in-fa">75%</label>
+                                    <input type="radio" name="withdrawPercent" id="withdrawPercent75" value="75">
+                                </div>
+                                <div class="">
+                                    <label for="withdrawPercent100" class="in-fa">100%</label>
+                                    <input type="radio" name="withdrawPercent" id="withdrawPercent100" value="100">
+                                </div>
                             </div>
                         </div>
+                        <label class="col-span-6 md:col-span-3" for="fee">
+                            مبلغ
+                            <input
+                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa"
+                                type="number" name="fee" id="fee" placeholder="ریال"
+                                value="{{ old('fee') }}">
+                            @error('fee')
+                                <span class="text-xs text-red-400">{{ $message }}</span>
+                            @enderror
+                        </label>
+                        <label class="col-span-6 md:col-span-3 @if (!$errors->hasAny(['receipt'])) hidden @endif"
+                            for="receipt">
+                            تصویر فیش واریزی
+                            <input
+                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
+                                type="file" name="receipt" id="receipt">
+                            @error('receipt')
+                                <span class="text-xs text-red-400">{{ $message }}</span>
+                            @enderror
+                        </label>
+                        <label class="col-span-6" for="description">
+                            توضیحات
+                            <textarea
+                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
+                                name="description" id="description"></textarea>
+                        </label>
                     </div>
-                    <label class="col-span-6 md:col-span-3" for="fee">
-                        مبلغ
-                        <input
-                            class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa"
-                            type="number" name="fee" id="fee" placeholder="ریال"
-                            value="{{ old('fee') }}">
-                        @error('fee')
-                            <span class="text-xs text-red-400">{{ $message }}</span>
-                        @enderror
-                    </label>
-                    <label class="col-span-6 md:col-span-3 @if (!$errors->hasAny(['receipt'])) hidden @endif"
-                        for="receipt">
-                        تصویر فیش واریزی
-                        <input
-                            class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
-                            type="file" name="receipt" id="receipt">
-                        @error('receipt')
-                            <span class="text-xs text-red-400">{{ $message }}</span>
-                        @enderror
-                    </label>
-                    <label class="col-span-6" for="description">
-                        توضیحات
-                        <textarea
-                            class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
-                            name="description" id="description"></textarea>
-                    </label>
                     <button type="submit"
                         class="col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold cursor-pointer">ثبت</button>
                     <button type="reset"
@@ -211,6 +226,31 @@
         {{--  --}}
     </div>
     <script>
+        let setting = "{{ $setting }}"
+        let settingArr = setting.split(',')
+        console.log(settingArr);
+        // settingArr.forEach(item => {
+        //     console.log(item);
+        //     let newItem = JSON.parse(item)
+        //     console.log(newItem);
+        // });
+
+        // let radioInputs = document.querySelectorAll('input[name="transactionType"]')
+        // let transactionMethod = document.getElementById('transactionMethod')
+        // radioInputs.forEach(radio => {
+        //     radio.addEventListener('change', function() {
+        //         radioInputs.forEach(item => {
+        //             // if (item.checked) {
+        //                 if (transactionMethod.classList.contains('hidden')) {
+        //                     transactionMethod.classList.remove('hidden')
+        //                 } else {
+        //                     transactionMethod.classList.add('hidden')
+        //                 }
+        //             // }
+        //         })
+        //     })
+        // })
+
         function sendReceipt(state) {
             let receipt = document.getElementById('receipt').parentElement
             let percents = document.getElementById('percents')

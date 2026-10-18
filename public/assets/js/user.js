@@ -31,7 +31,7 @@ function wallet(el, state, userId) {
     let wallet = el.closest('td').querySelector('.popup-wallet')
     if (state == 'open') {
         loader('open')
-  
+
         $.ajax({
             url: api + "popupWalletData",
             type: "POST",
@@ -43,7 +43,7 @@ function wallet(el, state, userId) {
                 console.log(data)
                 loader('close')
                 wallet.classList.remove('invisible', 'opacity-0')
-                wallet.querySelector('.fullName').textContent = data.name+' '+data.family
+                wallet.querySelector('.fullName').textContent = data.name + ' ' + data.family
                 wallet.querySelector('.phoneNumber').textContent = data.phoneNumber
                 wallet.querySelector('.moneyAsset').textContent = data.wallet.asset
                 wallet.querySelector('.takebleMoneyAsset').textContent = data.wallet.asset
@@ -62,7 +62,7 @@ function wallet(el, state, userId) {
                 }, 2500)
             }
         })
-        
+
     }
     if (state == 'close') {
         wallet.classList.add('invisible', 'opacity-0')
@@ -76,7 +76,7 @@ document.querySelectorAll('.approvedUsers').forEach(row => {
     let submitBtn = row.querySelector(".submitBtn")
     let xBtn = row.querySelector(".close-popup-look-cont")
 
-    row.querySelector('.submitWallet').addEventListener('click', (e)=>{
+    row.querySelector('.submitWallet').addEventListener('click', (e) => {
 
         let el = e.target
         let deposit = el.closest('.popup-wallet').querySelector('.deposit')
@@ -85,18 +85,18 @@ document.querySelectorAll('.approvedUsers').forEach(row => {
         let fee = el.closest('.popup-wallet').querySelector('.fee')
         let description = el.closest('.popup-wallet').querySelector('.description')
 
-        
+
         let transactionType
-        if(deposit.checked){
+        if (deposit.checked) {
             transactionType = 'deposit'
-        } else if(withdraw.checked){
+        } else if (withdraw.checked) {
             transactionType = 'withdraw'
         }
 
         let formData = new FormData()
 
         formData.append('transactionType', transactionType)
-        if(receipt.value != ''){
+        if (receipt.value != '') {
             formData.append('receipt', receipt.files[0])
         }
         formData.append('description', description.value)
@@ -105,26 +105,26 @@ document.querySelectorAll('.approvedUsers').forEach(row => {
         loader('open')
 
         $.ajax({
-            url: api +'transactionRequestApi',
+            url: api + 'transactionRequestApi',
             type: "POST",
             dataType: "json",
             contentType: false,
             processData: false,
             data: formData,
-            success: function(data){
+            success: function (data) {
                 console.log(data)
                 loader('close')
                 el.classList.add('invisible', 'opacity-0')
             },
-            error: function(){
+            error: function () {
                 console.log('error')
             }
         })
-        
-        
+
+
     })
 
-    row.querySelectorAll('.closeWalletBtn').forEach(btn=>{
+    row.querySelectorAll('.closeWalletBtn').forEach(btn => {
         btn.addEventListener('click', () => {
             row.querySelector('.popup-wallet').classList.add('invisible', 'opacity-0')
         })
@@ -137,7 +137,7 @@ document.querySelectorAll('.approvedUsers').forEach(row => {
             success: function (data) {
                 console.log(data)
                 loader('close')
-                
+
                 popup_edit.classList.remove("invisible")
                 popup_edit.classList.remove("opacity-0")
                 row.querySelector('.detailBox').classList.remove("invisible", 'opacity-0')
@@ -203,7 +203,7 @@ document.querySelectorAll('.approvedUsers').forEach(row => {
                 popup_edit.classList.add("invisible")
                 popup_edit.classList.add("opacity-0")
                 row.querySelector('.detailBox').classList.remove("invisible", 'opacity-0')
-           
+
                 document.querySelectorAll('.approvedUsers').forEach(el => {
                     if (el.dataset.userId == data.user.id) {
                         row.querySelector('.fullNameList').textContent = data.user.name + ' ' + data.user.family
@@ -734,7 +734,7 @@ function loader(state) {
 }
 
 function sendReceipt(el, state, userId) {
-    let receipt = el.closest('.popup-wallet').querySelector('#receipt'+userId)
+    let receipt = el.closest('.popup-wallet').querySelector('#receipt' + userId)
     if (state == 'deposit') {
         receipt.classList.remove('hidden')
     }
