@@ -85,41 +85,47 @@ document.querySelectorAll('.approvedUsers').forEach(row => {
         let fee = el.closest('.popup-wallet').querySelector('.fee')
         let description = el.closest('.popup-wallet').querySelector('.description')
 
-
-        let transactionType
-        if (deposit.checked) {
-            transactionType = 'deposit'
-        } else if (withdraw.checked) {
-            transactionType = 'withdraw'
-        }
-
-        let formData = new FormData()
-
-        formData.append('transactionType', transactionType)
-        if (receipt.value != '') {
-            formData.append('receipt', receipt.files[0])
-        }
-        formData.append('description', description.value)
-        formData.append('fee', fee.value)
-
-        loader('open')
-
-        $.ajax({
-            url: api + 'transactionRequestApi',
-            type: "POST",
-            dataType: "json",
-            contentType: false,
-            processData: false,
-            data: formData,
-            success: function (data) {
-                console.log(data)
-                loader('close')
-                el.classList.add('invisible', 'opacity-0')
-            },
-            error: function () {
-                console.log('error')
+        if(fee.value == ''){
+            alert('لطفا مبلغ را وارد کنید')
+        } 
+        // else if(){} 
+        else {
+            let transactionType
+            if (deposit.checked) {
+                transactionType = 'deposit'
+            } else if (withdraw.checked) {
+                transactionType = 'withdraw'
             }
-        })
+    
+            let formData = new FormData()
+    
+            formData.append('transactionType', transactionType)
+            if (receipt.value != '') {
+                formData.append('receipt', receipt.files[0])
+            }
+            formData.append('description', description.value)
+            formData.append('fee', fee.value)
+    
+            loader('open')
+    
+            $.ajax({
+                url: api + 'transactionRequestApi',
+                type: "POST",
+                dataType: "json",
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: function (data) {
+                    console.log(data)
+                    loader('close')
+                    el.closest('.popup-wallet').classList.add('invisible', 'opacity-0')
+                },
+                error: function () {
+                    console.log('error')
+                }
+            })
+        }
+
 
 
     })
