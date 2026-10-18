@@ -42,6 +42,7 @@ class WalletController extends Controller
 
     public function transactionRequestApi(Request $request)
     {
+        return response()->json($request->all());
         // $request->validate(
         //     [
         //         'transactionType' => ['required'],

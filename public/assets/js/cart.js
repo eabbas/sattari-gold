@@ -4,7 +4,9 @@ let discountEl = document.getElementById('discountEl')
 let addPackToCartBtn = document.getElementById('addPackToCartBtn')
 let cartItemsBlock = document.getElementById('cartItemsBlock')
 let localProducts = JSON.parse(localStorage.getItem('products'))
-orderBasket.children[1].innerText = localProducts.length
+if(localProducts){
+    orderBasket.children[1].innerText = localProducts.length
+}
 let popupFlag = false
 function addToCart(btn) {
     btn.removeAttribute('onclick')
