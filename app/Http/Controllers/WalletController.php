@@ -42,7 +42,6 @@ class WalletController extends Controller
 
     public function transactionRequestApi(Request $request)
     {
-        return response()->json($request->all());
         // $request->validate(
         //     [
         //         'transactionType' => ['required'],
@@ -75,6 +74,7 @@ class WalletController extends Controller
         //         'receipt.max' => 'حجم فایل نباید بیشتر از 100 کیلوبایت باشد',
         //     ]
         // );
+        $userId = $request->userId;
         $dateTime = explode(' ', now());
         $dateJalali = verta($dateTime[0]);
         $date = explode(' ', $dateJalali);
@@ -87,10 +87,10 @@ class WalletController extends Controller
         } else {
             $receipt = null;
         }
-        $wallet = wallet::where('user_id', Auth::id())->first();
+        $wallet = wallet::where('user_id', $userId)->first();
         if (!$wallet) {
             $wallet = wallet::create([
-                'user_id' => Auth::id(),
+                'user_id' => $userId,
                 'asset' => 0
             ]);
         }
@@ -119,12 +119,13 @@ class WalletController extends Controller
         //         'fee.min' => 'حداقل مبلغ قابل برداشت ده هزار تومان است.',
         //     ]
         // );
+        $userId = $request->userId;
         $dateTime = explode(' ', now());
         $dateJalali = verta($dateTime[0]);
         $date = explode(' ', $dateJalali);
         $date = implode('/', explode('-', $date[0]));
         $time = $dateTime[1];
-        $wallet = wallet::where('user_id', Auth::id())->first();
+        $wallet = wallet::where('user_id', $userId)->first();
         $total = 0;
         if ($wallet) {
             $total = $wallet['asset'] - $request['fee'];

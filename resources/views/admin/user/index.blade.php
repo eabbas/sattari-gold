@@ -330,14 +330,14 @@
                                             قلک طلا
                                         </td>
                                         <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
-                                            {{-- <button onclick="wallet(this, 'open', {{ $user->id }})"
+                                            <button onclick="wallet(this, 'open', {{ $user->id }})"
                                                 class="w-3/6 text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer walletBtn">
                                                 کیف پول
-                                            </button> --}}
-                                            <a href="{{ route('wallet.wallet', $user->id) }}" 
+                                            </button>
+                                            {{-- <a href="{{ route('wallet.wallet', $user->id) }}" 
                                                 class="w-3/6 text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer walletBtn">
                                                 کیف پول
-                                            </a>
+                                            </a> --}}
                                             <div id=""
                                                 class="fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2 invisible opacity-0 transition-all flex items-center justify-center popup-wallet">
                                                 <div onclick="wallet(this, 'close')"
