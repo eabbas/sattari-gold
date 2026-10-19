@@ -314,37 +314,8 @@ items_2.forEach((item_2) => {
         popup_look_cont.classList.remove("opacity-100")
         popup_look_cont.classList.remove("visible")
     })
-    openBtn_look_cont.addEventListener("click", () => {
-        loader('open')
-        $.ajax({
-            url: api + 'userDetail/' + item_2.dataset.userId,
-            type: "GET",
-            success: function (data) {
-                popup_look_cont.classList.remove("invisible")
-                popup_look_cont.classList.remove("opacity-0")
-                loader('close')
-                item_2.querySelector('.detailBox').classList.remove('invisible', 'opacity-0')
-                item_2.querySelector('.name').value = data.name
-                item_2.querySelector('.family').value = data.family
-                item_2.querySelector('.phoneNumber').value = data.phoneNumber
-                item_2.querySelector('.nationalCode').value = data.nationalCode
-                let isApprovedOptions = item_2.querySelector('.isApproved').children
-                for (let option of isApprovedOptions) {
-                    if (option.value == data.isApproved) {
-                        option.selected = true
-                    }
-                }
-                if (data.isActive == 1) {
-                    item_2.querySelector('#isActive' + data.id).checked = true
-                } else {
-                    item_2.querySelector('#isActive' + data.id).checked = false
-                }
-            },
-            error: function () {
-                console.log('error')
-            }
-        })
-    })
+    
+   
     closeBtn_look_cont.addEventListener("click", () => {
         popup_look_cont.classList.add("invisible")
         popup_look_cont.classList.add("opacity-0")
@@ -353,11 +324,7 @@ items_2.forEach((item_2) => {
         })
     })
     closeBtn_look_cont2.addEventListener("click", () => {
-        popup_look_cont.classList.add("invisible")
-        popup_look_cont.classList.add("opacity-0")
-        document.querySelectorAll('.detailBox').forEach(box => {
-            box.classList.add('invisible', 'opacity-0')
-        })
+        
     })
     item_2.querySelector('.submitBtn').addEventListener('click', () => {
         let children = item_2.querySelector('.roles').children
@@ -727,6 +694,23 @@ items_2.forEach((item_2) => {
     })
 })
 
+function deleteUser(el){
+    loader('open')
+    let item_2 = el.closest('.item_2')
+    $.ajax({
+        url: api + 'deleteUser/' + item_2.dataset.userId,
+        type: "GET",
+        success: function (response) {
+            console.log(response)
+            loader('close')
+            item_2.remove()
+        },
+        error: function () {
+            console.log('failed to load data')
+        }
+    })
+}
+
 function loader(state) {
     let loader = document.getElementById('loader')
     if (state == 'open') {
@@ -745,4 +729,58 @@ function sendReceipt(el, state, userId) {
     if (state == 'withdraw') {
         receipt.classList.add('hidden')
     }
+}
+
+function popupLookCont(el) {
+    let item_2 = el.closest('.item_2')
+    let popup_look_cont = item_2.querySelector(".popup-look-cont")
+    loader('open')
+    $.ajax({
+        url: api + 'userDetail/' + item_2.dataset.userId,
+        type: "GET",
+        success: function (data) {
+            popup_look_cont.classList.remove("invisible")
+            popup_look_cont.classList.remove("opacity-0")
+            loader('close')
+            item_2.querySelector('.detailBox').classList.remove('invisible', 'opacity-0')
+            item_2.querySelector('.name').value = data.name
+            item_2.querySelector('.family').value = data.family
+            item_2.querySelector('.phoneNumber').value = data.phoneNumber
+            item_2.querySelector('.nationalCode').value = data.nationalCode
+            let isApprovedOptions = item_2.querySelector('.isApproved').children
+            for (let option of isApprovedOptions) {
+                if (option.value == data.isApproved) {
+                    option.selected = true
+                }
+            }
+            if (data.isActive == 1) {
+                item_2.querySelector('#isActive' + data.id).checked = true
+            } else {
+                item_2.querySelector('#isActive' + data.id).checked = false
+            }
+        },
+        error: function () {
+            console.log('error')
+        }
+    })
+}
+
+function closePopupLookCont2(el){
+    let item_2 = el.closest('.item_2')
+    let popup_look_cont = item_2.querySelector(".popup-look-cont")
+    popup_look_cont.classList.add("invisible")
+    popup_look_cont.classList.add("opacity-0")
+    document.querySelectorAll('.detailBox').forEach(box => {
+        box.classList.add('invisible', 'opacity-0')
+    })
+}
+
+function closePopupLookCont(el){
+    let item_2 = el.closest('.item_2')
+    let popup_look_cont = item_2.querySelector(".popup-look-cont")
+    popup_look_cont.classList.add("invisible")
+    popup_look_cont.classList.add("opacity-0")
+    document.querySelectorAll('.detailBox').forEach(box => {
+        box.classList.add('invisible', 'opacity-0')
+    })
 }
