@@ -18,6 +18,7 @@ Route::get('/user', function (Request $request) {
 Route::post('/getFilters', [SearchController::class, 'getFilters']);
 Route::post('/getDealFilter', [SearchController::class, 'getDealFilter']);
 Route::post('/getTransactionFilter', [SearchController::class, 'getTransactionFilter']);
+Route::post('/getUserFilter', [SearchController::class, 'getUserFilter']);
 
 Route::post('/submitChanges', [WalletController::class, 'submitChanges']);
 Route::post('/popupWalletData', [WalletController::class, 'popupWalletData']);
