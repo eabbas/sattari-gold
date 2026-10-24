@@ -27,10 +27,6 @@ use App\Models\creditCard;
 use App\Models\transactionSetting;
 use Illuminate\Support\Facades\Auth;
 
-
-
-Route::get('/checkout', [CartsController::class, 'checkout'])->name('checkout');
-
 Route::get('/z', function () {
     $logo = logo::first();
     return view('user.user.account', ['logo' => $logo]);
@@ -299,6 +295,7 @@ Route::group([
     'as' => 'cart.'
 ], function () {
     Route::get('/', 'list')->name('list');
+    Route::get('/checkout', 'checkout')->name('checkout');
 });
 
 Route::group([

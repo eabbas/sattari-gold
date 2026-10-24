@@ -16,14 +16,14 @@
 <body>
     @if (session('success'))
         <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-0 z-5 flex justify-center items-center transition-all duration-300">
-            <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('success') }} </span>
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-0 sm:right-5 z-9999999999 flex justify-center items-center transition-all duration-300 in-fa">
+            <span class="text-sm text-[var(--light-theme-text-color)] in-fa"> {{ session('success') }} </span>
         </div>
     @endif
     @if (session('failure'))
         <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-0 z-5 flex justify-center items-center transition-all duration-300">
-            <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('failure') }} </span>
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-0 sm:right-5 z-9999999999 flex justify-center items-center transition-all duration-300 in-fa">
+            <span class="text-sm text-[var(--light-theme-text-color)] in-fa"> {{ session('failure') }} </span>
         </div>
     @endif
     @if (session('message'))
@@ -169,7 +169,7 @@
                 message.children[0].appendChild(element)
                 setTimeout(() => {
                     showMessage('close')
-                }, 2000)
+                }, 5000)
             } else {
                 loader('open')
                 $.ajaxSetup({
@@ -196,7 +196,7 @@
                             message.children[0].appendChild(element)
                             setTimeout(() => {
                                 showMessage('close')
-                            }, 2000)
+                            }, 5000)
                         } else {
                             showMessage('open')
                             element.innerHTML = `
@@ -206,7 +206,7 @@
                             setTimeout(() => {
                                 showMessage('close')
                                 location.assign("{{ route('user.signup') }}")
-                            }, 2000)
+                            }, 5000)
                         }
                     },
                     error: function() {
@@ -237,7 +237,7 @@
                 message.children[0].appendChild(element)
                 setTimeout(() => {
                     showMessage('close')
-                }, 2000)
+                }, 5000)
             } else {
                 loader('open')
                 $.ajaxSetup({
@@ -265,7 +265,7 @@
                             setTimeout(() => {
                                 showMessage('close')
                                 location.assign("{{ route('user.signup') }}")
-                            }, 2000)
+                            }, 5000)
                         } else {
                             if (!user.pass) {
                                 showMessage('open')
@@ -275,7 +275,7 @@
                                 message.children[0].appendChild(element)
                                 setTimeout(() => {
                                     showMessage('close')
-                                }, 2000)
+                                }, 5000)
                                 return
                             }
                             if (!user.match) {
@@ -286,7 +286,7 @@
                                 message.children[0].appendChild(element)
                                 setTimeout(() => {
                                     showMessage('close')
-                                }, 2000)
+                                }, 5000)
                                 return
                             }
                             if (user.pass && user.match) {

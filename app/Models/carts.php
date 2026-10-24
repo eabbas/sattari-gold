@@ -13,7 +13,6 @@ class carts extends Model
         'quantity',
         'order_id'
     ];
-
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -26,5 +25,4 @@ class carts extends Model
     {
         return $this->belongsTo(orders::class, 'order_id');
     }
-
 }

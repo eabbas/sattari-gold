@@ -105,12 +105,12 @@ class CartsController extends Controller
         ]);
     }
 
-   
+
     public function list()
     {
         $categories = category::all();
         $logo = logo::first();
-        return view('user.cart.cart', ['categories' => $categories, 'logo'=>$logo]);
+        return view('user.cart.cart', ['categories' => $categories, 'logo' => $logo]);
     }
 
     public function packStore(Request $request)
@@ -126,7 +126,7 @@ class CartsController extends Controller
         return response()->json($cart);
     }
 
-     function packUpdate(Request $request)
+    function packUpdate(Request $request)
     {
         $user_id = $request->input('userId');
         if (Auth::check()) {
@@ -158,15 +158,17 @@ class CartsController extends Controller
         ]);
     }
 
-    public function checkout(){
+    public function checkout()
+    {
         $categories = category::all();
         $provinces = province_cities::where('parent', 0)->get();
         $cities = province_cities::where('parent', 1)->get();
         $logo = logo::first();
-        return view('user.cart.checkout', ['categories' => $categories, 'provinces'=>$provinces, 'cities'=>$cities, 'logo'=>$logo]);
+        return view('user.cart.checkout', ['categories' => $categories, 'provinces' => $provinces, 'cities' => $cities, 'logo' => $logo]);
     }
 
-    public function showCities(Request $request){
+    public function showCities(Request $request)
+    {
         $provinceId = $request->input('provinceId');
         $cities = province_cities::where('parent', $provinceId)->get();
         return response()->json($cities);

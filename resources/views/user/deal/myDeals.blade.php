@@ -3,6 +3,50 @@
 طلای ستاری | خرید و فروش سپرده طلا
 @endsection
 @section('content')
+    <style>
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+    </style>
+
+    @if (session('success'))
+        <div
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-0 sm:right-5 z-9999999999 flex justify-center items-center transition-all duration-300 in-fa">
+            <span class="text-sm text-[var(--light-theme-text-color)] in-fa in-fa"> {{ session('success') }} </span>
+        </div>
+    @endif
+    @if (session('failure'))
+        <div
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-0 sm:right-5 z-9999999999 flex justify-center items-center transition-all duration-300 in-fa">
+            <span class="text-sm text-[var(--light-theme-text-color)] in-fa in-fa"> {{ session('failure') }} </span>
+        </div>
+    @endif
+    <div class="w-full bg-[#fdf5f6] min-h-screen relative shadow-2xl overflow-hidden flex flex-col">
+
+        <div class="w-full overflow-y-auto pb-24 px-4">
+
+            <div class="bg-white rounded-2xl shadow-sm p-6 flex flex-col items-center justify-center text-center">
+                <h3 class="text-sm font-bold mb-6">معاملات من در برنامه</h3>
+                @if (count(Auth::user()->deals))
+                    <div class="border p-5 mb-10">
+                        <table class="w-full max-h-20 overflow-auto">
+                            <thead class="w-full">
+                                <tr class="w-full mb-10 px-4 grid grid-cols-6">
+                                    <th>نوع / زمان</th>
+                                    <th class="col-span-2">وضعیت</th>
+                                    <th>قیمت وقت طلا</th>
+                                    <th>وزن</th>
+                                    <th>مبلغ تراکنش</th>
 <style>
     ::-webkit-scrollbar {
         display: none;
