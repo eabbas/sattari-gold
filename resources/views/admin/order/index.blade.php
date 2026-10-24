@@ -198,7 +198,7 @@
                     <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                         تعداد آیتم
                     </th>
-                   
+
                     <th class="min-w-33 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                         زمان | تاریخ
                     </th>
@@ -239,7 +239,7 @@
                         <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
                             {{ count($order->carts) }}
                         </td>
-                       
+
                         <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
                             {{ $order->time . ' | ' . $order->date }}
                         </td>
@@ -262,10 +262,9 @@
                             </button>
                         </td>
                         <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
-                            <button
-                                onclick="accept({{ $order->id }}, this, {{ $order->state->id }})"
+                            <button onclick="accept({{ $order->id }}, this, {{ $order->state->id }})"
                                 class="w-full text-[{{ $order->state->color }}] border-1 border-[{{ $order->state->color }}] rounded-md px-3 py-2 cursor-pointer openPopup">
-                                    {{ $order->state->admin_title }}
+                                {{ $order->state->admin_title }}
                             </button>
                         </td>
                     </tr>
@@ -278,7 +277,7 @@
         class="fixed w-full h-dvh bg-black/50 top-0 right-0 z-999999 transition-all duration-300 invisible opacity-0 flex justify-center items-center">
         <div class="w-full h-full flex justify-center items-center lg:w-[calc(100%-265px)]">
             <div class="w-11/12 lg:w-3/4 p-3 lg:p-5 rounded-xl bg-white relative pt-5">
-                
+
                 <div class="w-full flex flex-row items-center">
                     <h2 class="w-1/3 text-sm font-bold text-(--primary-text-color) in-fa" id="tableName"></h2>
                     <div class="w-1/3 flex flex-row justify-center">
@@ -308,11 +307,13 @@
     </div>
     {{-- loader --}}
 
-    <div id="receiptBlock" class="fixed w-full h-dvh bg-black/50 top-0 right-0 flex justify-center items-center z-9 invisible opacity-0 transition-all duration-300">
+    <div id="receiptBlock"
+        class="fixed w-full h-dvh bg-black/50 top-0 right-0 flex justify-center items-center z-9 invisible opacity-0 transition-all duration-300">
         <div class="w-11/12 lg:w-1/2 p-5 flex justify-center items-center rounded-lg bg-white relative">
             <span class="absolute top-3 right-6 cursor-pointer" onclick="closeReceipt()">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 fill-gray-600" viewBox="0 0 384 512">
-                    <path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"/>
+                    <path
+                        d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z" />
                 </svg>
             </span>
             <img src="" class="w-full mt-6" alt="">
@@ -479,7 +480,7 @@
                     message.children[0].appendChild(element)
                     setTimeout(() => {
                         showMessage('close')
-                    }, 2000)
+                    }, 5000)
                 }
             })
         }
@@ -527,7 +528,8 @@
                     ${ data.state.title }
                     </div>
                     `
-                    el.classList = `w-full text-[${ data.state.color }] border-1 border-[${ data.state.color }] rounded-md px-3 py-2 cursor-pointer openPopup`
+                    el.classList =
+                        `w-full text-[${ data.state.color }] border-1 border-[${ data.state.color }] rounded-md px-3 py-2 cursor-pointer openPopup`
                     el.innerText = data.state.admin_title
                     el.setAttribute('onclick', `accept(${data.id}, this, ${data.state.id})`)
                     // stateTitle
@@ -550,12 +552,12 @@
                     //             `w-1/2 flex flex-row gap-1 items-center justify-center py-1.5 rounded-md border-1 border-blue-500 bg-blue-500 text-white text-xs cursor-pointer order-show-btn`
                     //         accept.setAttribute('onclick', `accept(${data.id}, this, ${data.state.id})`)
                     //         accept.innerHTML = `
-                    //                 <span class="text-white text-sm font-bold">${data.state.admin_title}</span>
-                    //                 <svg class="size-6 rounded-lg" viewBox="0 0 36 36" fill="white">
-                    //                     <path class="clr-i-outline clr-i-outline-path-1" d="M18,6A12,12,0,1,0,30,18,12,12,0,0,0,18,6Zm0,22A10,10,0,1,1,28,18,10,10,0,0,1,18,28Z"></path>
-                    //                     <path d="M16.34,23.74l-5-5a1,1,0,0,1,1.41-1.41l3.59,3.59,6.78-6.78a1,1,0,0,1,1.41,1.41Z"></path>
-                    //                     <path class="clr-i-solid clr-i-solid-path-1" d="M30,18A12,12,0,1,1,18,6,12,12,0,0,1,30,18Zm-4.77-2.16a1.4,1.4,0,0,0-2-2l-6.77,6.77L13,17.16a1.4,1.4,0,0,0-2,2l5.45,5.45Z" style="display:none"></path>
-                    //                 </svg>`
+                //                 <span class="text-white text-sm font-bold">${data.state.admin_title}</span>
+                //                 <svg class="size-6 rounded-lg" viewBox="0 0 36 36" fill="white">
+                //                     <path class="clr-i-outline clr-i-outline-path-1" d="M18,6A12,12,0,1,0,30,18,12,12,0,0,0,18,6Zm0,22A10,10,0,1,1,28,18,10,10,0,0,1,18,28Z"></path>
+                //                     <path d="M16.34,23.74l-5-5a1,1,0,0,1,1.41-1.41l3.59,3.59,6.78-6.78a1,1,0,0,1,1.41,1.41Z"></path>
+                //                     <path class="clr-i-solid clr-i-solid-path-1" d="M30,18A12,12,0,1,1,18,6,12,12,0,0,1,30,18Zm-4.77-2.16a1.4,1.4,0,0,0-2-2l-6.77,6.77L13,17.16a1.4,1.4,0,0,0-2,2l5.45,5.45Z" style="display:none"></path>
+                //                 </svg>`
                     //         // }
                     //     }
                     // })
@@ -591,13 +593,13 @@
             })
         } --}}
 
-        function showReceipt(el, img){
-            let path = "{{ asset('storage/') }}/"+img
+        function showReceipt(el, img) {
+            let path = "{{ asset('storage/') }}/" + img
             receiptBlock.classList.remove('invisible', 'opacity-0')
             receiptBlock.querySelector('img').src = path
         }
 
-        function closeReceipt(){
+        function closeReceipt() {
             receiptBlock.classList.add('invisible', 'opacity-0')
         }
     </script>

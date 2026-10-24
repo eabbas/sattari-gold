@@ -59,7 +59,7 @@ class UserController extends Controller
     {
         $user = User::where('phoneNumber', $request['phoneNumber'])->first();
         if ($user->isApproved == 0 || $user->isApproved == -1) {
-            return redirect()->back()->with('failure', "$user->name $user->family عزیز شما فعلا اجازه ورود ندارید.");
+            return redirect()->back()->with('failure', "$user->name $user->family عزیز پس از تایید شدن حسابتان توسط مدیر میتوانید وارد شوید.");
         }
         Auth::login($user);
         return to_route('home')->with('success', "$user->name $user->family عزیز خوش آمدید.");
@@ -215,7 +215,7 @@ class UserController extends Controller
                 'phoneNumber' => ['required', 'min:11', 'max:11'],
                 'nationalCode' => ['required', 'min:10', 'max:10'],
                 'code' => ['required', 'min:4', 'max:4'],
-                'password' => ['required', 'min:4', 'max:8'],
+                'password' => ['required', 'min:8'],
             ],
             [
                 'name.required' => 'پر کردن این فیلد الزامی است.',
@@ -230,8 +230,7 @@ class UserController extends Controller
                 'code.max' => 'کد فعال سازی باید 4 رقمی باشد.',
                 'code.min' => 'کد فعال سازی باید 4 رقمی باشد.',
                 'password.required' => 'پر کردن این فیلد الزامی است.',
-                'password.max' => 'رمز عبور حداکثر باید 8 رقمی باشد.',
-                'password.min' => 'رمز عبور حدافل باید 4 رقمی باشد.',
+                'password.min' => 'رمز عبور حدافل باید 8 رقمی باشد.',
             ]
         );
         $user = User::create([
@@ -260,7 +259,7 @@ class UserController extends Controller
                 'family' => ['required'],
                 'phoneNumber' => ['required', 'min:11', 'max:11'],
                 'nationalCode' => ['required', 'min:10', 'max:10'],
-                'password' => ['required', 'min:4', 'max:8'],
+                'password' => ['required', 'min:8'],
                 'roles' => ['required'],
             ],
             [
@@ -273,8 +272,7 @@ class UserController extends Controller
                 'nationalCode.min' => 'کد ملی باید 10 رقمی باشد.',
                 'nationalCode.required' => 'پر کردن این فیلد الزامی است.',
                 'password.required' => 'پر کردن این فیلد الزامی است.',
-                'password.max' => 'رمز عبور حداکثر باید 8 رقمی باشد.',
-                'password.min' => 'رمز عبور حدافل باید 4 رقمی باشد.',
+                'password.min' => 'رمز عبور حدافل باید 8 رقمی باشد.',
                 'roles.required' => 'پر کردن این فیلد الزامی است.',
             ]
         );
@@ -377,7 +375,7 @@ class UserController extends Controller
         //     ]
         // );
         $user = User::find($request->user_id);
-        
+
         // $name = $user->name;
         $flag = $request->flag;
         $user->name = $request->popupName;
@@ -411,7 +409,7 @@ class UserController extends Controller
             $roleIds[] = $role->id;
         }
         $user->roleIds = $roleIds;
-        if($request->flag){
+        if ($request->flag) {
             return response()->json(['user' => $user, 'roles' => $roles]);
         }
         return response()->json($user);

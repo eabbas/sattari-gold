@@ -74,6 +74,7 @@ class WalletController extends Controller
         //         'receipt.max' => 'حجم فایل نباید بیشتر از 100 کیلوبایت باشد',
         //     ]
         // );
+        $userId = $request->userId;
         $dateTime = explode(' ', now());
         $dateJalali = verta($dateTime[0]);
         $date = explode(' ', $dateJalali);
@@ -86,10 +87,10 @@ class WalletController extends Controller
         } else {
             $receipt = null;
         }
-        $wallet = wallet::where('user_id', Auth::id())->first();
+        $wallet = wallet::where('user_id', $userId)->first();
         if (!$wallet) {
             $wallet = wallet::create([
-                'user_id' => Auth::id(),
+                'user_id' => $userId,
                 'asset' => 0
             ]);
         }
@@ -118,12 +119,13 @@ class WalletController extends Controller
         //         'fee.min' => 'حداقل مبلغ قابل برداشت ده هزار تومان است.',
         //     ]
         // );
+        $userId = $request->userId;
         $dateTime = explode(' ', now());
         $dateJalali = verta($dateTime[0]);
         $date = explode(' ', $dateJalali);
         $date = implode('/', explode('-', $date[0]));
         $time = $dateTime[1];
-        $wallet = wallet::where('user_id', Auth::id())->first();
+        $wallet = wallet::where('user_id', $userId)->first();
         $total = 0;
         if ($wallet) {
             $total = $wallet['asset'] - $request['fee'];
@@ -148,22 +150,21 @@ class WalletController extends Controller
     {
         $request->validate(
             [
-                'fee' => ['required'],
-                'receipt' => ['required', 'max:100']
+                'depositFee' => ['required'],
+                'receipt' => ['required']
             ],
             [
-                'fee.required' => 'پر کردن این فیلد الزامی است.',
-                'receipt.required' => 'پر کردن این فیلد الزامی است.',
-                'receipt.max' => 'حجم فایل نباید بیشتر از 100 کیلوبایت باشد',
+                'depositFee.required' => 'لطفا مبلغ را وارد کنید.',
+                'receipt.required' => 'تصویر رسید را بارگذاری کنید.'
             ]
         );
         $setting = transactionSetting::first();
         if ($setting) {
-            if ($request->fee < $setting->minDepositAmount) {
-                return redirect()->back()->with('failure', ' مبلغ واریزی بایداز ' . $setting->minDepositAmount . ' بیشتر باشد.');
+            if ($request->depositFee < $setting->minDepositAmount) {
+                return redirect()->back()->with('failure', ' مبلغ واریزی بایداز ' . number_format($setting->minDepositAmount) . ' بیشتر باشد.');
             }
-            if ($request->fee > $setting->maxDepositAmount) {
-                return redirect()->back()->with('failure', ' مبلغ واریزی بایداز ' . $setting->maxDepositAmount . ' کمتر باشد.');
+            if ($request->depositFee > $setting->maxDepositAmount) {
+                return redirect()->back()->with('failure', ' مبلغ واریزی بایداز ' . number_format($setting->maxDepositAmount) . ' کمتر باشد.');
             }
         }
         $dateTime = explode(' ', now());
@@ -185,7 +186,7 @@ class WalletController extends Controller
         }
         transaction::create([
             'wallet_id' => $wallet['id'],
-            'amount' => $request->fee,
+            'amount' => $request->depositFee,
             'type' => 'deposit',
             'isApproved' => 0,
             'receipt' => $receipt,
@@ -193,26 +194,26 @@ class WalletController extends Controller
             'time' => $time,
             'description' => $request->description
         ]);
-        return redirect()->back()->with('success', ' مبلغ ' . $request->fee . ' پس از تایید به کیف پول شما افزوده خواهد شد.');
+        return redirect()->back()->with('success', ' مبلغ ' . number_format($request->depositFee) . ' تومان پس از تایید به کیف پول شما افزوده خواهد شد.');
     }
 
     public function withdraw($request)
     {
         $request->validate(
             [
-                'fee' => ['required']
+                'withdrawFee' => ['required']
             ],
             [
-                'fee.required' => 'پر کردن این فیلد الزامی است.',
+                'withdrawFee.required' => 'لطفا مبلغ را وارد کنید.',
             ]
         );
         $setting = transactionSetting::first();
         if ($setting) {
-            if ($request->fee < $setting->minWithdrawAmount) {
-                return redirect()->back()->with('failure', ' مبلغ برداشتی بایداز ' . $setting->minWithdrawAmount . ' بیشتر باشد.');
+            if ($request->withdrawFee < $setting->minWithdrawAmount) {
+                return redirect()->back()->with('failure', ' مبلغ برداشتی بایداز ' . number_format($setting->minWithdrawAmount) . ' بیشتر باشد.');
             }
-            if ($request->fee > $setting->maxWithdrawAmount) {
-                return redirect()->back()->with('failure', ' مبلغ برداشتی بایداز ' . $setting->maxWithdrawAmount . ' کمتر باشد.');
+            if ($request->withdrawFee > $setting->maxWithdrawAmount) {
+                return redirect()->back()->with('failure', ' مبلغ برداشتی بایداز ' . number_format($setting->maxWithdrawAmount) . ' کمتر باشد.');
             }
         }
         $dateTime = explode(' ', now());
@@ -223,20 +224,20 @@ class WalletController extends Controller
         $wallet = wallet::where('user_id', Auth::id())->first();
         $total = 0;
         if ($wallet) {
-            $total = $wallet['asset'] - $request['fee'];
+            $total = $wallet['asset'] - $request['withdrawFee'];
         }
         if (!$wallet || $total < 0) {
             return redirect()->back()->with('failure', 'موجودی کیف پول شما کافی نیست.');
         }
         transaction::create([
             'wallet_id' => $wallet['id'],
-            'amount' => $request->fee,
+            'amount' => $request->withdrawFee,
             'type' => 'withdraw',
             'date' => $date,
             'time' => $time,
             'isApproved' => 0
         ]);
-        return redirect()->back()->with('failure', ' مبلغ ' . $request->fee . ' پس از تایید از کیف پول شما کسر خواهد شد. ');
+        return redirect()->back()->with('failure', ' مبلغ ' . number_format($request->withdrawFee) . ' تومان پس از تایید از کیف پول شما کسر خواهد شد. ');
     }
 
     public function transactions(Request $request)

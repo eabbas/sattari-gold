@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <div class="absolute z-999 top-0 opacity-0 invisible right-1/2 translate-x-1/2 w-2/3 lg:w-1/3 rounded-lg shadow-md transition-all duration-500"
+    <div class="absolute z-999 top-0 opacity-0 invisible right-1/2 translate-x-1/2 w-2/3 lg:w-1/3 rounded-lg shadow-md transition-all duration-500 bg-white"
         id="message">
         <div class="relative">
             <svg xmlns="http://www.w3.org/2000/svg"
@@ -28,20 +28,20 @@
     </div>
     @if (session('success'))
         <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-0 z-5 flex justify-center items-center transition-all duration-300">
-            <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('success') }} </span>
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-0 sm:right-5 z-9999999999 flex justify-center items-center transition-all duration-300 in-fa">
+            <span class="text-sm text-[var(--light-theme-text-color)] in-fa"> {{ session('success') }} </span>
         </div>
     @endif
     @if (session('failure'))
         <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-0 z-5 flex justify-center items-center transition-all duration-300">
-            <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('failure') }} </span>
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-0 sm:right-5 z-9999999999 flex justify-center items-center transition-all duration-300 in-fa">
+            <span class="text-sm text-[var(--light-theme-text-color)] in-fa"> {{ session('failure') }} </span>
         </div>
     @endif
     @if (session('message'))
         <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-0 z-5 flex justify-center items-center transition-all duration-300">
-            <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('failure') }} </span>
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-0 sm:right-5 z-9999999999 flex justify-center items-center transition-all duration-300 in-fa">
+            <span class="text-sm text-[var(--light-theme-text-color)] in-fa"> {{ session('failure') }} </span>
         </div>
     @endif
     <main
@@ -197,7 +197,7 @@
                 message.children[0].appendChild(element)
                 setTimeout(() => {
                     showMessage('close')
-                }, 2000)
+                }, 5000)
             } else {
                 loader('open')
                 $.ajaxSetup({
@@ -224,7 +224,7 @@
                             message.children[0].appendChild(element)
                             setTimeout(() => {
                                 showMessage('close')
-                            }, 2000)
+                            }, 5000)
                         } else {
                             showMessage('open')
                             element.innerHTML = `
@@ -234,7 +234,7 @@
                             setTimeout(() => {
                                 showMessage('close')
                                 location.assign("{{ route('user.login') }}")
-                            }, 2000)
+                            }, 5000)
                         }
                     },
                     error: function() {
@@ -246,7 +246,7 @@
                         message.children[0].appendChild(element)
                         setTimeout(() => {
                             showMessage('close')
-                        }, 2500)
+                        }, 5000)
                     }
                 })
             }
@@ -267,7 +267,7 @@
                 message.children[0].appendChild(element)
                 setTimeout(() => {
                     showMessage('close')
-                }, 2000)
+                }, 5000)
             } else {
                 loader('open')
                 $.ajaxSetup({
@@ -295,7 +295,7 @@
                             setTimeout(() => {
                                 showMessage('close')
                                 location.assign("{{ route('user.login') }}")
-                            }, 2000)
+                            }, 5000)
                         } else {
                             if (user.nationalCode) {
                                 showMessage('open')
@@ -305,7 +305,7 @@
                                 message.children[0].appendChild(element)
                                 setTimeout(() => {
                                     showMessage('close')
-                                }, 2000)
+                                }, 5000)
                                 return
                             }
                             if (!user.checkCode) {
@@ -316,7 +316,7 @@
                                 message.children[0].appendChild(element)
                                 setTimeout(() => {
                                     showMessage('close')
-                                }, 2000)
+                                }, 5000)
                                 return
                             }
                             if (!user.match) {
@@ -327,7 +327,7 @@
                                 message.children[0].appendChild(element)
                                 setTimeout(() => {
                                     showMessage('close')
-                                }, 2000)
+                                }, 5000)
                                 return
                             }
                             if (user.checkCode && user.match) {
@@ -344,7 +344,7 @@
                         message.children[0].appendChild(element)
                         setTimeout(() => {
                             showMessage('close')
-                        }, 2500)
+                        }, 5000)
                     }
                 })
             }

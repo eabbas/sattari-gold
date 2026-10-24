@@ -3,8 +3,8 @@
 @section('content')
     @if (session('success'))
         <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-25 right-10 z-5000 flex justify-center items-center transition-all duration-300">
-            <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('success') }} </span>
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-0 sm:right-5 z-9999999999 flex justify-center items-center transition-all duration-300 in-fa">
+            <span class="text-sm text-[var(--light-theme-text-color)] in-fa"> {{ session('success') }} </span>
         </div>
     @endif
     <form action="{{ route('transactionSetting.updateOrCreate') }}" method="post"

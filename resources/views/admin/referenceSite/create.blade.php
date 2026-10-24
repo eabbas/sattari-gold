@@ -8,7 +8,7 @@
         </div>
     @endif
     {{-- reference site --}}
-    <div class="w-1/2 mx-auto flex flex-col gap-4 justify-start items-center ">
+    <div class="w-full sm:w-10/12 mx-auto flex flex-col gap-4 justify-start items-center ">
         <form action="{{ route('referenceSite.store') }}" method="POST"
             class="w-full flex flex-col gap-4 justify-start items-start p-4 bg-[#FAFBFD] border-2 border-(--border) rounded-xl">
             @csrf
@@ -23,17 +23,6 @@
             </div>
             <div class="w-full grid sm:grid-cols-2 grid-cols-1  gap-3 gap-y-7 justify-start items-center">
                 <div class="w-full flex flex-col justify-start items-start gap-2">
-                    <label for="" class="md:text-sm text-xs font-bold text-[#8B929D]">آدرس دامنه : </label>
-                    <div
-                        class="w-full border-2 border-(--border) py-2 px-3 bg-white flex justify-between items-center rounded-xl">
-                        <input type="text" name="address" class="w-full outline-none font-bold rounded-xl max-lg:text-sm"
-                            value="{{ old('address') }}">
-                    </div>
-                    @error('address')
-                        <span class="text-xs text-red-400">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="w-full flex flex-col justify-start items-start gap-2">
                     <label for="" class="md:text-sm text-xs font-bold text-[#8B929D]">عنوان سایت : </label>
                     <div
                         class="w-full border-2 border-(--border) py-2 px-3 bg-white flex justify-between items-center rounded-xl">
@@ -41,6 +30,17 @@
                             value="{{ old('title') }}">
                     </div>
                     @error('title')
+                        <span class="text-xs text-red-400">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="w-full flex flex-col justify-start items-start gap-2">
+                    <label for="" class="md:text-sm text-xs font-bold text-[#8B929D]">آدرس دامنه : </label>
+                    <div
+                        class="w-full border-2 border-(--border) py-2 px-3 bg-white flex justify-between items-center rounded-xl">
+                        <input type="text" name="address" class="w-full outline-none font-bold rounded-xl max-lg:text-sm"
+                            value="{{ old('address') }}">
+                    </div>
+                    @error('address')
                         <span class="text-xs text-red-400">{{ $message }}</span>
                     @enderror
                 </div>
@@ -60,10 +60,10 @@
                             ردیف
                         </th>
                         <th class="border-1 border-(--border) px-3 py-2">
-                            آدرس دامنه
+                            عنوان سایت
                         </th>
                         <th class="border-1 border-(--border) px-3 py-2">
-                            عنوان سایت
+                            آدرس دامنه
                         </th>
                         <th class="border-1 border-(--border) px-3 py-2">
                             ابزار
@@ -81,10 +81,10 @@
                                 {{ $i }}
                             </td>
                             <td class="border-1 border-(--border) px-3 py-2 text-center">
-                                {{ $site->address }}
+                                {{ $site->title }}
                             </td>
                             <td class="border-1 border-(--border) px-3 py-2 text-center">
-                                {{ $site->title }}
+                                {{ $site->address }}
                             </td>
                             <td class="px-3 py-2">
                                 <div class="flex items-center justify-between">
@@ -141,18 +141,6 @@
                     </div>
                     <div class="w-full grid sm:grid-cols-2 grid-cols-1  gap-3 gap-y-7 justify-start items-center">
                         <div class="w-full flex flex-col justify-start items-start gap-2">
-                            <label for="" class="md:text-sm text-xs font-bold text-[#8B929D]">آدرس دامنه : </label>
-                            <div
-                                class="w-full border-2 border-(--border) py-2 px-3 bg-white flex justify-between items-center rounded-xl">
-                                <input type="text" name="editAddress" id="editAddress"
-                                    class="w-full outline-none font-bold rounded-xl max-lg:text-sm"
-                                    value="{{ old('editAddress') }}">
-                            </div>
-                            @error('editAddress')
-                                <span class="text-xs text-red-400">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="w-full flex flex-col justify-start items-start gap-2">
                             <label for="" class="md:text-sm text-xs font-bold text-[#8B929D]">عنوان سایت : </label>
                             <div
                                 class="w-full border-2 border-(--border) py-2 px-3 bg-white flex justify-between items-center rounded-xl">
@@ -161,6 +149,18 @@
                                     value="{{ old('editTitle') }}">
                             </div>
                             @error('editTitle')
+                                <span class="text-xs text-red-400">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="w-full flex flex-col justify-start items-start gap-2">
+                            <label for="" class="md:text-sm text-xs font-bold text-[#8B929D]">آدرس دامنه : </label>
+                            <div
+                                class="w-full border-2 border-(--border) py-2 px-3 bg-white flex justify-between items-center rounded-xl">
+                                <input type="text" name="editAddress" id="editAddress"
+                                    class="w-full outline-none font-bold rounded-xl max-lg:text-sm"
+                                    value="{{ old('editAddress') }}">
+                            </div>
+                            @error('editAddress')
                                 <span class="text-xs text-red-400">{{ $message }}</span>
                             @enderror
                         </div>

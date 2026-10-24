@@ -3,16 +3,34 @@
 @section('content')
     @if (session('success'))
         <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-0 z-5 flex justify-center items-center transition-all duration-300">
-            <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('success') }} </span>
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-0 sm:right-5 z-9999999999 flex justify-center items-center transition-all duration-300 in-fa">
+            <span class="text-sm text-[var(--light-theme-text-color)] in-fa"> {{ session('success') }} </span>
         </div>
     @endif
     @if (session('failure'))
         <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-0 z-5 flex justify-center items-center transition-all duration-300">
-            <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('failure') }} </span>
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-0 sm:right-5 z-9999999999 flex justify-center items-center transition-all duration-300 in-fa">
+            <span class="text-sm text-[var(--light-theme-text-color)] in-fa"> {{ session('failure') }} </span>
         </div>
     @endif
+    @error('depositFee')
+        <div
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-0 sm:right-5 z-9999999999 flex justify-center items-center transition-all duration-300 in-fa">
+            <span class="text-sm text-[var(--light-theme-text-color)] in-fa"> {{ $message }} </span>
+        </div>
+    @enderror
+    @error('withdrawFee')
+        <div
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-0 sm:right-5 z-9999999999 flex justify-center items-center transition-all duration-300 in-fa">
+            <span class="text-sm text-[var(--light-theme-text-color)] in-fa"> {{ $message }} </span>
+        </div>
+    @enderror
+    @error('receipt')
+        <div
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-30 right-0 sm:right-5 z-9999999999 flex justify-center items-center transition-all duration-300 in-fa">
+            <span class="text-sm text-[var(--light-theme-text-color)] in-fa"> {{ $message }} </span>
+        </div>
+    @enderror
     <div class="w-full sm:w-2/3 mx-auto">
         {{--  --}}
         <div class="w-full bg-white rounded-md px-3 py-2">
@@ -71,7 +89,6 @@
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-2 pb-2">
                                     <span class="">
-
                                         <svg height="30px" width="30px" version="1.1" id="Layer_1"
                                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                             viewBox="0 0 511.882 511.882" xml:space="preserve">
@@ -133,37 +150,115 @@
                     <div class="col-span-6">
                         <div
                             class="flex items-center border-1 border-(--border-dashboard) rounded-lg divide-x-1 divide-(--border-dashboard) px-2 py-3 gap-2">
-                            @if ($setting && $setting['depositIsActive'])
-                                <label for="deposit" class="w-6/12 flex items-center gap-1 md:gap-3">
+                            <div class="w-6/12">
+                                <label for="deposit" class="flex items-center gap-1 md:gap-3">
                                     <input class="accent-(--primary-dashboard) size-4 md:size-5" type="radio"
                                         name="transactionType" value="deposit" id="deposit"
-                                        onchange="sendReceipt('deposit')">
+                                        onclick="transactionMethod('deposit',this)">
                                     <span class="text-xs text-green-400 md:text-base font-bold">واریز</span>
                                 </label>
-                            @else
-                                <span class="w-1/2 text-xs text-[var(--color-warning)] font-bold">در حال حاضر امکان واریز
-                                    کردن غیر
-                                    فعال میباشد.</span>
-                            @endif
-                            @if ($setting && $setting['withdrawIsActive'])
-                                <label for="withdraw" class="w-6/12 flex items-center gap-1 md:gap-3">
+                                <span class="text-xs text-red-400"></span>
+                            </div>
+                            <div class="w-6/12">
+                                <label for="withdraw" class="flex items-center gap-1 md:gap-3">
                                     <input class="accent-(--primary-dashboard) size-4 md:size-5" type="radio"
                                         name="transactionType" value="withdraw" id="withdraw"
-                                        onchange="sendReceipt('withdraw')">
+                                        onclick="transactionMethod('withdraw',this)">
                                     <span class="text-xs text-red-400 md:text-base font-bold">برداشت</span>
                                 </label>
-                            @else
-                                <span class="w-1/2 text-xs text-[var(--color-warning)] font-bold">در حال حاضر امکان برداشت
-                                    کردن غیر
-                                    فعال میباشد.</span>
-                            @endif
+                                <span class="text-xs text-red-400"></span>
+                            </div>
                         </div>
                         @error('transactionType')
                             <span class="text-xs text-red-400">{{ $message }}</span>
                         @enderror
                     </div>
                     <div id="transactionMethod" class="col-span-6 grid grid-cols-6 gap-4 ">
-                        <div id="percents" class="col-span-6 p-4 hidden">
+
+                    </div>
+                    <button type="submit" onclick="submitBtn(event)"
+                        class="col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold cursor-pointer">ثبت</button>
+                    <button type="reset"
+                        class="col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold cursor-pointer">
+                        لغو</button>
+                </div>
+            </form>
+        </div>
+        {{--  --}}
+    </div>
+    <script>
+        let setting = JSON.parse('{!! $setting !!}')
+        let minDeposit
+        let maxDeposit
+        let minWithdraw
+        let maxWithdraw
+
+        function checkFee(state, el) {
+            let inputValue = Number(el.children[0].value)
+            el.children[1].innerText = ""
+            minDeposit = true
+            maxDeposit = true
+            minWithdraw = true
+            maxWithdraw = true
+            if (state == 'deposit') {
+                if (inputValue < setting.minDepositAmount) {
+                    el.children[1].innerText =
+                        `حداقل مبلغ قابل واریز ${parseInt(setting.minDepositAmount).toLocaleString('fa-IR')} تومان است.`
+                    minDeposit = false
+                }
+                if (inputValue > setting.maxDepositAmount) {
+                    el.children[1].innerText =
+                        `حداکثر مبلغ قابل واریز ${parseInt(setting.maxDepositAmount).toLocaleString('fa-IR')} تومان است.`
+                    maxDeposit = false
+                }
+            }
+            if (state == 'withdraw') {
+                if (inputValue < setting.minWithdrawAmount) {
+                    el.children[1].innerText =
+                        `حداقل مبلغ قابل برداشت ${parseInt(setting.minWithdrawAmount).toLocaleString('fa-IR')} تومان است.`
+                    minWithdraw = false
+                }
+                if (inputValue > setting.maxWithdrawAmount) {
+                    el.children[1].innerText =
+                        `حداکثر مبلغ قابل برداشت ${parseInt(setting.maxWithdrawAmount).toLocaleString('fa-IR')} تومان است.`
+                    maxWithdraw = false
+                }
+            }
+        }
+
+        function transactionMethod(state, el) {
+            let transactionMethod = document.getElementById('transactionMethod')
+            if (state == 'deposit') {
+                if (setting.depositIsActive == 0) {
+                    el.parentElement.nextElementSibling.innerText = 'در حال حاضر امکان واریز کردن غیرفعال است'
+                    el.checked = false
+                } else {
+                    transactionMethod.innerHTML = `
+                        <label class="col-span-6 md:col-span-3" for="depositFee" onkeyup="checkFee('deposit', this)">
+                                مبلغ
+                                <span class="text-[10px] text-red-500">(اجباری)</span>
+                                <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa" type="number" name="depositFee" id="depositFee" placeholder="ریال" value="">
+                                <span class="text-xs text-red-500"></span>
+                        </label>
+                        <label class="col-span-6 md:col-span-3" for="receipt">
+                                تصویر فیش واریزی
+                                <span class="text-[10px] text-red-500">(اجباری)</span>
+                                <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)" type="file" name="receipt" id="receipt">
+                        </label>
+                        <label class="col-span-6" for="description">
+                                توضیحات
+                                <textarea class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)" name="description" id="description"></textarea>
+                        </label>
+                `
+                }
+            }
+            if (state == 'withdraw') {
+                if (setting.withdrawIsActive == 0) {
+                    el.parentElement.nextElementSibling.innerText = 'در حال حاضر امکان برداشت کردن غیرفعال است'
+                    el.checked = false
+                } else {
+                    transactionMethod.innerHTML = `
+                        <div id="percents" class="col-span-6 p-4">
                             <span class="mb-5 block">برداشت از کیف پول به مقدار:</span>
                             <div class="w-full flex items-center justify-between gap-2">
                                 <div class="">
@@ -188,91 +283,41 @@
                                 </div>
                             </div>
                         </div>
-                        <label class="col-span-6 md:col-span-3" for="fee">
+                        <label class="col-span-6 md:col-span-3" for="withdrawFee" onkeyup="checkFee('withdraw', this)">
                             مبلغ
-                            <input
-                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa"
-                                type="number" name="fee" id="fee" placeholder="ریال"
-                                value="{{ old('fee') }}">
-                            @error('fee')
-                                <span class="text-xs text-red-400">{{ $message }}</span>
-                            @enderror
-                        </label>
-                        <label class="col-span-6 md:col-span-3 @if (!$errors->hasAny(['receipt'])) hidden @endif"
-                            for="receipt">
-                            تصویر فیش واریزی
-                            <input
-                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
-                                type="file" name="receipt" id="receipt">
-                            @error('receipt')
-                                <span class="text-xs text-red-400">{{ $message }}</span>
-                            @enderror
+                            <span class="text-[10px] text-red-500">(اجباری)</span>
+                            <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa" type="number" name="withdrawFee" id="withdrawFee" placeholder="ریال" value="">
+                            <span class="text-xs text-red-500"></span>
                         </label>
                         <label class="col-span-6" for="description">
                             توضیحات
-                            <textarea
-                                class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)"
-                                name="description" id="description"></textarea>
+                            <textarea class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)" name="description" id="description"></textarea>
                         </label>
-                    </div>
-                    <button type="submit"
-                        class="col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold cursor-pointer">ثبت</button>
-                    <button type="reset"
-                        class="col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold cursor-pointer">
-                        لغو</button>
-                </div>
-            </form>
-        </div>
-        {{--  --}}
-    </div>
-    <script>
-        let setting = "{{ $setting }}"
-        let settingArr = setting.split(',')
-        console.log(settingArr);
-        // settingArr.forEach(item => {
-        //     console.log(item);
-        //     let newItem = JSON.parse(item)
-        //     console.log(newItem);
-        // });
-
-        // let radioInputs = document.querySelectorAll('input[name="transactionType"]')
-        // let transactionMethod = document.getElementById('transactionMethod')
-        // radioInputs.forEach(radio => {
-        //     radio.addEventListener('change', function() {
-        //         radioInputs.forEach(item => {
-        //             // if (item.checked) {
-        //                 if (transactionMethod.classList.contains('hidden')) {
-        //                     transactionMethod.classList.remove('hidden')
-        //                 } else {
-        //                     transactionMethod.classList.add('hidden')
-        //                 }
-        //             // }
-        //         })
-        //     })
-        // })
-
-        function sendReceipt(state) {
-            let receipt = document.getElementById('receipt').parentElement
-            let percents = document.getElementById('percents')
-            if (state == 'deposit') {
-                receipt.classList.remove('hidden')
-                percents.classList.add('hidden')
-            }
-            if (state == 'withdraw') {
-                receipt.classList.add('hidden')
-                percents.classList.remove('hidden')
+                `
+                    percents()
+                }
             }
         }
 
-        let withdrawPercents = document.querySelectorAll('input[name="withdrawPercent"]')
-        let withdrawableBalance = document.getElementById('withdrawableBalance').dataset.balance
-        let feeInput = document.getElementById('fee')
-        withdrawPercents.forEach(percent => {
-            percent.addEventListener('change', function() {
-                let result = (parseInt(percent.value) / 100) * parseInt(withdrawableBalance)
-                let value = Math.round(result)
-                feeInput.value = value
-            })
-        });
+        function percents() {
+            let withdrawPercents = document.querySelectorAll('input[name="withdrawPercent"]')
+            let withdrawableBalance = document.getElementById('withdrawableBalance').dataset.balance
+            let feeInput = document.getElementById('withdrawFee')
+            withdrawPercents.forEach(percent => {
+                percent.addEventListener('change', function() {
+                    let result = (parseInt(percent.value) / 100) * parseInt(withdrawableBalance)
+                    let value = Math.round(result)
+                    feeInput.value = value
+                    checkFee('withdraw', feeInput.parentElement)
+                })
+            });
+        }
+
+        function submitBtn(e) {
+            e.preventDefault()
+            if (minDeposit && maxDeposit && minWithdraw && maxWithdraw) {
+                document.forms[0].submit()
+            }
+        }
     </script>
 @endsection

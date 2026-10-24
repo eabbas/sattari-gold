@@ -13,14 +13,14 @@
     </div>
     @if (session('success'))
         <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-0 z-5 flex justify-center items-center transition-all duration-300">
-            <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('success') }} </span>
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-0 sm:right-5 z-9999999999 flex justify-center items-center transition-all duration-300 in-fa">
+            <span class="text-sm text-[var(--light-theme-text-color)] in-fa"> {{ session('success') }} </span>
         </div>
     @endif
     @if (session('failure'))
         <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-0 z-5 flex justify-center items-center transition-all duration-300">
-            <span class="text-sm text-[var(--light-theme-text-color)]"> {{ session('failure') }} </span>
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-0 sm:right-5 z-9999999999 flex justify-center items-center transition-all duration-300 in-fa">
+            <span class="text-sm text-[var(--light-theme-text-color)] in-fa"> {{ session('failure') }} </span>
         </div>
     @endif
     @if (session('message'))
@@ -334,7 +334,7 @@
                                                 class="w-3/6 text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer walletBtn">
                                                 کیف پول
                                             </button> --}}
-                                            <a href="{{ route('wallet.wallet', $user->id) }}" 
+                                            <a href="{{ route('wallet.wallet', $user->id) }}"
                                                 class="w-3/6 text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer walletBtn">
                                                 کیف پول
                                             </a>
@@ -344,7 +344,8 @@
                                                     class="absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2 cursour-pointer">
                                                 </div>
                                                 <div class="w-2/3 mx-auto bg-white relative z-51 rounded-md">
-                                                    <div class="w-full bg-white p-3 border-b-1 border-b-gray-300 rounded-t-md">
+                                                    <div
+                                                        class="w-full bg-white p-3 border-b-1 border-b-gray-300 rounded-t-md">
                                                         <svg xmlns="http://www.w3.org/2000/svg"
                                                             class="w-5 fill-gray-500 transition-all duration-300 hover:fill-red-600 cursor-pointer closeWalletBtn"
                                                             viewBox="0 0 384 512">
@@ -362,7 +363,8 @@
                                                                         <span
                                                                             class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">نام
                                                                             :</span>
-                                                                        <span class="text-xs md:text-base font-bold fullName"></span>
+                                                                        <span
+                                                                            class="text-xs md:text-base font-bold fullName"></span>
                                                                     </div>
                                                                     <div class="w-6/12">
                                                                         <span
@@ -402,7 +404,8 @@
                                                                                 </span>
                                                                             </div>
                                                                             <div class="font-bold pt-2">
-                                                                                <span class="in-fa takebleMoneyAsset"></span>
+                                                                                <span
+                                                                                    class="in-fa takebleMoneyAsset"></span>
                                                                                 <span
                                                                                     class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
                                                                                     تومان
@@ -458,7 +461,8 @@
                                                                                     موجودی طلا
                                                                                 </span>
                                                                             </div>
-                                                                            <div class="font-bold pb-2 in-fa goldAsset"></div>
+                                                                            <div class="font-bold pb-2 in-fa goldAsset">
+                                                                            </div>
                                                                         </div>
                                                                         <div class="flex items-center justify-between">
                                                                             <div class="flex items-center gap-3 pt-2">
@@ -468,7 +472,8 @@
                                                                                 </span>
                                                                             </div>
                                                                             <div class="font-bold pt-2">
-                                                                                <span class="in-fa takebleGoldAsset"></span>
+                                                                                <span
+                                                                                    class="in-fa takebleGoldAsset"></span>
                                                                                 <span
                                                                                     class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
                                                                                     گرم
@@ -484,8 +489,10 @@
                                                                             class="w-6/12 flex items-center gap-1 md:gap-3">
                                                                             <input
                                                                                 class="accent-(--primary-dashboard) size-4 md:size-5 deposit"
-                                                                                type="radio" name="transactionType{{ $user->id }}" checked
-                                                                                value="deposit" id="deposit{{ $user->id }}"
+                                                                                type="radio"
+                                                                                name="transactionType{{ $user->id }}"
+                                                                                checked value="deposit"
+                                                                                id="deposit{{ $user->id }}"
                                                                                 onchange="sendReceipt(this, 'deposit', {{ $user->id }})">
                                                                             <span
                                                                                 class="text-xs text-green-400 md:text-base font-bold">واریز</span>
@@ -494,8 +501,10 @@
                                                                             class="w-6/12 flex items-center gap-1 md:gap-3">
                                                                             <input
                                                                                 class="accent-(--primary-dashboard) size-4 md:size-5 withdraw"
-                                                                                type="radio" name="transactionType{{ $user->id }}"
-                                                                                value="withdraw" id="withdraw{{ $user->id }}"
+                                                                                type="radio"
+                                                                                name="transactionType{{ $user->id }}"
+                                                                                value="withdraw"
+                                                                                id="withdraw{{ $user->id }}"
                                                                                 onchange="sendReceipt(this, 'withdraw', {{ $user->id }})">
                                                                             <span
                                                                                 class="text-xs text-red-400 md:text-base font-bold">برداشت</span>
@@ -507,16 +516,20 @@
                                                                     مبلغ
                                                                     <input
                                                                         class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa fee"
-                                                                        type="number" name="fee{{ $user->id }}" id="fee{{ $user->id }}"
-                                                                        placeholder="ریال" value="">
+                                                                        type="number" name="fee{{ $user->id }}"
+                                                                        id="fee{{ $user->id }}" placeholder="ریال"
+                                                                        value="">
                                                                 </label>
-                                                                <label class="col-span-3" for="receipt{{ $user->id }}">
+                                                                <label class="col-span-3"
+                                                                    for="receipt{{ $user->id }}">
                                                                     تصویر فیش واریزی
                                                                     <input
                                                                         class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) receipt"
-                                                                        type="file" name="receipt{{ $user->id }}" id="receipt{{ $user->id }}">
+                                                                        type="file" name="receipt{{ $user->id }}"
+                                                                        id="receipt{{ $user->id }}">
                                                                 </label>
-                                                                <label class="col-span-6" for="description{{ $user->id }}">
+                                                                <label class="col-span-6"
+                                                                    for="description{{ $user->id }}">
                                                                     توضیحات
                                                                     <textarea
                                                                         class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) description"
