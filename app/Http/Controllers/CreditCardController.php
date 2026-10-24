@@ -3,19 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\creditCard;
+use App\Models\logo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CreditCardController extends Controller
 {
-    public function create() {}
-    public function store(Request $request) {
+    public function create()
+    {
+        $logo = logo::first();
+        $creditcard = creditCard::where('user_id', Auth::id())->get();
+        return view('user.creditCard.create', ['logo' => $logo, 'creditcard' => $creditcard]);
+    }
+    public function store(Request $request)
+    {
         creditcard::create([
-            'user_id'=>$request->id,
-            'name'=>$request->name,
-            'card_number'=>$request->card_number,
-            'account_number'=>$request->account_number,
-            'shaba_number'=>$request->shaba_number,
-            'default'=>$request->default ? 1 : 0,
+            'user_id' => $request->id,
+            'name' => $request->name,
+            'card_number' => $request->card_number,
+            'account_number' => $request->account_number,
+            'shaba_number' => $request->shaba_number,
+            'default' => $request->default ? 1 : 0,
         ]);
         return redirect('y');
     }

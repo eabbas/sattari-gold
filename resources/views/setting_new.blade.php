@@ -215,7 +215,7 @@
                 <!-- تنضیمات عمومی -->
                 <!-- حساب ها -->
                 <div class="w-full flex flex-col gap-4 justify-start items-center ">
-                    <form action="{{ route('creditcard.store') }}" method="POST"
+                    <form action="{{ route('creditCard.store') }}" method="POST"
                         class="w-full flex flex-col gap-4 justify-start items-start p-4 bg-[#FAFBFD] border-2 border-(--border) rounded-xl">
                         @csrf
                         <input type="hidden" name="id" value="{{ Auth::id() }}">

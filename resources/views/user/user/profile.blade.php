@@ -124,7 +124,7 @@
                 class="text-sm py-3 px-5 text-center mx-auto w-60 sm:w-40 rounded-xl border-2 border-slate-300 bg-slate-100 text-slate-700 transition-all duration-300 cursor-pointer">
                 تاریخچه معاملات
             </a>
-            <a href="{{ route('y') }}"
+            <a href="{{ route('creditCard.create') }}"
                 class="text-sm py-3 px-5 text-center mx-auto w-60 sm:w-40 rounded-xl border-2 border-slate-300 bg-slate-100 text-slate-700 transition-all duration-300 cursor-pointer">
                 مدیریت کارت ها
             </a>
