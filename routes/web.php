@@ -32,12 +32,6 @@ Route::get('/z', function () {
     return view('user.user.account', ['logo' => $logo]);
 });
 
-Route::get('/y', function () {
-    $logo = logo::first();
-    $creditcard = creditCard::where('user_id', Auth::id())->get();
-    return view('setting_new', ['logo' => $logo, 'creditcard' => $creditcard]);
-})->name('y');
-
 Route::get('/p', function () {
     $logo = logo::first();
     return view('admin.product.managing_product', ['logo' => $logo]);
@@ -246,11 +240,6 @@ Route::group([
 ], function () {
     Route::get('/create', 'create')->name('create');
     Route::post('/store', 'store')->name('store');
-    Route::get('/edit/{creditCard}', 'edit')->name('edit');
-    Route::post('/update/{creditCard}', 'update')->name('update');
-    Route::get('/delete/{creditCard}', 'delete')->name('delete');
-    Route::get('/list', 'list')->name('list');
-    Route::get('/adminIndex', 'adminIndex')->name('adminIndex');
 });
 
 // reference sites routes
@@ -310,15 +299,6 @@ Route::group([
     Route::get("update/{id}", "update")->name("update");
     Route::post("edite", "edite")->name("edite");
     Route::post("messageStatus",  "messageStatus")->name("messageStatus");
-});
-
-Route::group([
-    'as' => 'creditcard.',
-    'controller' => CreditCardController::class,
-    'prifix' => 'creditcard',
-    'middleware' => [checklogin::class],
-], function () {
-    Route::post('store', "store")->name('store');
 });
 
 // fallback and missing
