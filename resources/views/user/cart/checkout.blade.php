@@ -4,7 +4,7 @@
     <form action="{{ route('order.store') }}" method="POST" enctype="multipart/form-data" class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 mt-5">
 
         <div class="lg:col-span-7 xl:col-span-8 bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
-            <h2 class="text-lg font-bold mb-6 text-gray-700">صورت حساب و حمل و نقل</h2>
+            <h2 class="text-lg font-bold mb-6 text-gray-700">صورت حساب</h2>
             
             <div class="space-y-5">
                 @csrf
@@ -112,7 +112,7 @@
 
                     <div id="parentCheckout"></div>
 
-                    <div class="p-3 border-b border-gray-200 text-sm">
+                    {{-- <div class="p-3 border-b border-gray-200 text-sm">
                         <div class="flex justify-between mb-2">
                             <span class="font-bold">مرسوله</span>
                         </div>
@@ -126,20 +126,20 @@
                                 <span>پرداخت آنلاین</span>
                             </label>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="flex justify-between p-3 border-b border-gray-200 text-sm font-bold">
                         <span>مجموع</span>
                         <span id="totalPriceCheckout">0</span>
                     </div>
 
-                    <div class="flex justify-between p-3 bg-gray-50 text-sm font-bold text-gray-800">
+                    {{-- <div class="flex justify-between p-3 bg-gray-50 text-sm font-bold text-gray-800">
                         <span>سود شما از این خرید</span>
                         <span class="text-(--discount-color)" id="totalDiscountCheckout">0</span>
-                    </div>
+                    </div> --}}
                 </div>
 
-                <div class="bg-gray-100/80 p-4 rounded-lg border border-gray-200 mb-4">
+                {{-- <div class="bg-gray-100/80 p-4 rounded-lg border border-gray-200 mb-4">
                     <div class="flex items-center gap-2 mb-4">
                         <input type="checkbox" id="zarinpal" class="w-4 h-4 text-primary rounded focus:ring-primary border-gray-300" checked>
                         <label for="zarinpal" class="flex items-center gap-2 cursor-pointer font-bold text-gray-700">
@@ -153,10 +153,10 @@
                         <br>
                         اطلاعات شخصی شما برای پردازش سفارش شما، پشتیبانی از تجربه شما در سراسر این وب سایت و برای اهداف دیگری که در سیاست حفظ حریم خصوصی ذکر شده است استفاده می‌شود.
                     </p>
-                </div>
+                </div> --}}
 
                 <button class="w-full bg-[image:var(--gradient-gold)] text-white font-bold py-3 px-4 rounded-lg transition duration-200 shadow-md cursor-pointer">
-                    پرداخت با زرین‌پال
+                   ثبت
                 </button>
             </div>
         </div>

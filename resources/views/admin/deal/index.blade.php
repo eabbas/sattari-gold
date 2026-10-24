@@ -310,10 +310,10 @@
                                 <th class="min-w-20 border-1 border-(--color-border) p-1 md:px-3 md:py-2">
                                     شماره سند
                                 </th>
-                                <th class="min-w-33 border-1 border-(--color-border) p-1 md:px-3 md:py-2">
+                                <th class="min-w-40 border-1 border-(--color-border) p-1 md:px-3 md:py-2">
                                     تاریخ معامله
                                 </th>
-                                <th class="min-w-20 border-1 border-(--color-border) p-1 md:px-3 md:py-2">
+                                <th class="min-w-30 border-1 border-(--color-border) p-1 md:px-3 md:py-2">
                                     وضعیت
                                 </th>
                                 <th class="min-w-20 border-1 border-(--color-border) p-1 md:px-3 md:py-2">

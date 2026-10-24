@@ -1,7 +1,7 @@
 @extends('app.document')
 @section('title', 'جست و جو')
 @section('content')
-    <main class="max-w-[1280px] mx-auto my-4 md:my-6 px-3 md:px-5">
+    <main class="w-11/12 max-w-[1700px] mx-auto my-4 md:my-6">
         <div class="text-[#71717a] text-xs mb-[18px]">خانه / <b class="text-[#333]">جستجو</b></div>
 
         <div class="flex items-end justify-between gap-2.5 mb-[18px]">
@@ -12,11 +12,10 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-[250px_1fr] gap-[18px]">
+        <div class="grid grid-cols-1 md:grid-cols-10 lg:gap-7 gap-4">
             <div class="fixed w-full h-dvh bg-black/50 z-99 top-0 right-0 md:hidden invisible opacity-0 transition-all duration-300"
                 id="filterBg"></div>
-            <aside
-                class="invisible opacity-0 transition-all duration-300 md:visible md:opacity-100 fixed top-1/2 w-10/12 -translate-y-1/2 right-1/2 translate-x-1/2 md:translate-x-0 md:translate-y-0 z-999 md:z-0 md:static md:block bg-white border border-[#e4e4e7] rounded-xl h-[500px] overflow-y-auto md:h-max md:overflow-hidden"
+            <aside class="invisible opacity-0 transition-all duration-300 md:visible md:opacity-100 fixed top-1/2 w-full -translate-y-1/2 right-1/2 translate-x-1/2 md:translate-x-0 md:translate-y-0 z-999 md:z-0 md:static md:block bg-white border border-[#e4e4e7] rounded-xl h-[500px] overflow-y-auto md:h-max md:overflow-hidden lg:col-span-2 col-span-3"
                 id="filterSection">
                 <div class="flex justify-between p-[18px] border-b border-[#e4e4e7] font-bold">
                     <span>فیلترها</span>
@@ -56,8 +55,8 @@
                 </section>
             </aside>
 
-            <section class="min-w-0">
-                <div class="w-full flex items-center gap-3 border-1 border-gray-200 rounded-xl mb-3">
+            <section class="min-w-0 lg:col-span-8 col-span-7">
+                <div class="w-full flex items-center gap-3 border-1 bg-white border-gray-200 rounded-xl mb-3">
                     <input type="text" class="w-full px-3.5 py-3 outline-none" id="searchInp">
                     <svg class="w-6 h-6 text-gray-600 ml-2.5 cursor-pointer" aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -94,10 +93,10 @@
                 </div>
 
                 <div id="products"
-                    class="grid grid-cols-2 min-[431px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 bg-white border border-[#e4e4e7] rounded-xl overflow-hidden">
+                    class="grid grid-cols-1 min-[450px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 bg-white border border-[#e4e4e7] rounded-xl gap-5 sm:p-5 p-3">
                     @foreach ($products as $product)
                         <a href="{{ route('product.show', [$product->id]) }}"
-                            class="group relative min-w-0 bg-white p-[17px] border-l border-b border-[#e4e4e7] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_6px_22px_rgba(0,0,0,.08)]">
+                            class="w-full group relative min-w-0 bg-white flex flex-col gap-2 p-[17px] rounded-lg transition duration-200 hover:-translate-y-0.5 shadow-[0_0_7px_2px_rgba(0,0,0,.08)]">
                             @if ($product->percent)
                                 <span
                                     class="absolute top-[25px] right-[25px] z-10 bg-[#c3924d] text-white rounded-[5px] text-[10px] px-[7px] py-1 in-fa">{{ $product->percent }}
@@ -105,11 +104,14 @@
                             @endif
                             {{-- <button
                                 class="absolute top-[22px] left-5 z-10 border-0 bg-white text-xl text-[#aaa]">♡</button> --}}
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->title }}" loading="lazy"
-                                class="w-full aspect-square object-contain rounded-lg bg-[#f8f8f8] block mb-3.5">
-                            <h3 class="m-0 mb-2.5 text-[13px] leading-[1.9] h-[50px] overflow-hidden">{{ $product->title }}
+                                <div class="w-full h-2/3 bg-[#f8f8f8] flex justify-center items-center">
+                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->title }}" loading="lazy"
+                                        class="min-w-9/12 min-h-9/12 max-w-full max-md:max-h-50 aspect-square rounded-lg">
+                                    
+                                </div>
+                            <h3 class="mb-2 text-[13px] leading-[1.9] overflow-hidden">{{ $product->title }}
                             </h3>
-                            <div class="flex justify-between items-center mb-2.5 text-[11px]">
+                            <div class="flex justify-between items-center text-[11px]">
                                 <span>۴٫۹ ⭐</span><span class="text-[#f59e0b]">★★★★★</span>
                             </div>
                             @if ($product->primary_price)
@@ -133,11 +135,13 @@
                                     بگیرید</span>
                             @endif
                             @if ($product->count > 0)
-                                <div class="mt-2.5 text-[10px] text-[#16a34a]">● موجود در انبار</div>
+                                <div class="text-[10px] text-[#16a34a]">● موجود در انبار</div>
                             @else
-                                <div class="mt-2.5 text-[10px] text-[#a31616]">● ناموجود</div>
+                                <div class="text-[10px] text-[#a31616]">● ناموجود</div>
                             @endif
                         </a>
+                       
+                    
                     @endforeach
                 </div>
 
