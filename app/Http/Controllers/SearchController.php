@@ -7,6 +7,8 @@ use App\Models\deal;
 use App\Models\logo;
 use App\Models\product;
 use App\Models\transaction;
+use App\Models\role;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Log;
 
@@ -168,8 +170,8 @@ class SearchController extends Controller
             $dealState[] = '-1';
             $dealState[] = '0';
             $dealState[] = '1';
-            }
-            
+        }
+
         $deals = deal::where(function ($query) use ($price, $weight, $fromDate, $toDate, $dealState) {
             if ($price) {
                 $query->where('deals.buyPrice', $price);
@@ -217,9 +219,9 @@ class SearchController extends Controller
         }
         return response()->json($deals);
     }
+
     public function getTransactionFilter(Request $request)
     {
-
         $filters = $request->input('filters');
         $fromDate = $filters['fromDate'] ?? null;
         $fullName = $filters['fullName'] ?? null;
@@ -312,5 +314,76 @@ class SearchController extends Controller
             }
         }
         return response()->json($transactions);
+    }
+
+    public function getUserFilter(Request $request)
+    {
+        $filters = $request->input('filters');
+        $name = $filters['name'] ?? null;
+        $family = $filters['family'] ?? null;
+        $phoneNumber = $filters['phoneNumber'] ?? null;
+        $nationalCode = $filters['nationalCode'] ?? null;
+        $activity = $filters['activity'] ?? ['all'];
+        $approve = $filters['approve'] ?? ['all'];
+
+        if ($activity == ['all']) {
+            $activity = [];
+            $activity[] = '1';
+            $activity[] = '0';
+        }
+
+        if ($approve == ['all']) {
+            $approve = [];
+            $approve[] = '-1';
+            $approve[] = '0';
+            $approve[] = '1';
+        }
+
+        $users = User::where(function ($query) use ($name, $family, $phoneNumber, $nationalCode, $activity, $approve) {
+            if ($name) {
+                $query->where('users.name', 'like', '%'.$name.'%');
+            }
+            if ($family) {
+                $query->where('users.family', 'like', '%'.$family.'%');
+            }
+            if ($phoneNumber) {
+                $query->where('users.phoneNumber', $phoneNumber);
+            }
+            if ($nationalCode) {
+                $query->where('users.nationalCode', $nationalCode);
+            }
+            if ($activity) {
+                $query->whereIn('users.isActive', $activity);
+            }
+            if ($approve) {
+                $query->whereIn('users.isApproved', $approve);
+            }
+        })->with(['wallet', 'roles']);
+
+        $users = $users->orderBy('created_at', 'desc')->get();
+        foreach($users as $user){
+            $roleArr = [];
+            Log::info($user->roles);
+            foreach($user->roles as $role){
+                $roleArr[]=$role->id;
+            }
+            $user->created_at = verta($user->created_at);
+        }
+
+        $roles = role::all();
+        foreach($roles as $role){
+            switch($role->name){
+                case "admin":
+                    $role->faTitle = 'ادمین';
+                    break;
+                case "general_user":
+                    $role->faTitle = 'کاربر عادی';
+                    break;
+            }
+        }
+
+        
+
+        return response()->json(['users'=>$users, 'roles'=>$roles]);
     }
 }

@@ -18,7 +18,7 @@
             <div class="w-full lg:w-4/12">
                 <div class="flex flex-col items-center">
                     <div class="relative w-full flex items-center justify-center">
-                        <div
+                        {{-- <div
                             class="absolute top-5 right-3 w-46 bg-white rounded-full flex items-center justify-center px-3 py-2 shadow-lg">
                             <span class="">
                                 <svg class="size-5 fill-(--color-primary)" xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +28,7 @@
                                 </svg>
                             </span>
                             <span class="text-sm font-extrabold">اصالت کالا تضمین شده</span>
-                        </div>
+                        </div> --}}
                         <img id="product-image" src="{{ asset('storage/' . $product->mainImg) }}" alt=""
                             class="w-full min-h-60 sm:min-h-115 md:max-w-120 max-h-88 sm:max-h-100 md:max-h-120 object-cover rounded-lg">
                     </div>
