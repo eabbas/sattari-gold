@@ -829,9 +829,9 @@
                                                                 {{--  onclick="submitBtn(event)" --}}
                                                                 </div>
                                                                 <button type="submit"
-                                                                    class="col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold cursor-pointer submitWallet">ثبت</button>
+                                                                    class="col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold cursor-pointer submitWallet" onclick="submitWallet(this)">ثبت</button>
                                                                 <button type="reset"
-                                                                    class="col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold cursor-pointer closeWalletBtn">
+                                                                    class="col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold cursor-pointer closeWalletBtn" onclick="closeWalletBtn(this)">
                                                                     لغو</button>
                                                             </div>
                                                         </div>
@@ -960,7 +960,7 @@
                                                     </div>
                                                 </div> --}}
                                                 <button
-                                                    class="open-popup-edited w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-1 py-2 cursor-pointer flex items-center justify-center">
+                                                    class="open-popup-edited w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-1 py-2 cursor-pointer flex items-center justify-center" onclick="openEditPopup(this)">
                                                     <svg class="size-5" fill="currentColor"
                                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                                         <path
@@ -978,7 +978,7 @@
                                                             class="w-full flex items-center justify-between border-b-1 border-(--border-dashboard) pb-2">
                                                             <div class="text-sm md:text-base font-bold text-nowrap">ویرایش
                                                                 اطلاعات مشتری</div>
-                                                            <svg class="size-6 cursor-pointer close-popup-look-cont"
+                                                            <svg class="size-6 cursor-pointer close-popup-look-cont" onclick="closeEditUser(this)"
                                                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg"
                                                                 viewBox="0 0 384 512">
                                                                 <path
@@ -1059,9 +1059,9 @@
                                                             </div>
 
                                                             <button
-                                                                class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold submitBtn cursor-pointer transition-all duration-300 hover:bg-(--primary-dashboard) hover:text-white">ثبت</button>
+                                                                class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold submitBtn cursor-pointer transition-all duration-300 hover:bg-(--primary-dashboard) hover:text-white" onclick="submitEditUser(this)">ثبت</button>
                                                             <button
-                                                                class="col-span-1 md:col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold closeBtn cursor-pointer transition-all duration-300 hover:bg-(--danger-dashboard) hover:text-white">لغو</button>
+                                                                class="col-span-1 md:col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold closeBtn cursor-pointer transition-all duration-300 hover:bg-(--danger-dashboard) hover:text-white" onclick="closeEditUser(this)">لغو</button>
                                                         </div>
                                                     </div>
                                                 </div>
