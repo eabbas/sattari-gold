@@ -337,7 +337,7 @@
                                     <th class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                         ردیف
                                     </th>
-                                    <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                                    <th class="min-w-40 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                         نام و نام خانوادگی
                                     </th>
                                     <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
@@ -346,13 +346,13 @@
                                     <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                         آخرین بازدید
                                     </th>
-                                    <th class="min-w-25 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                                    <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                         آخرین معامله
                                     </th>
                                     <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                         کد ملی
                                     </th>
-                                    <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                                    <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                         کد حسابداری
                                     </th>
                                     <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
@@ -361,7 +361,7 @@
                                     <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                         دسته‌بندی
                                     </th>
-                                    <th class="min-w-45 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                                    <th class="min-w-60 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                         ابزار
                                     </th>
                                 </tr>
@@ -419,9 +419,9 @@
                                                 class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                                                 قلک طلا
                                             </td>
-                                            <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
+                                            <td class="relative p-1 md:px-3 md:py-2 grid grid-cols-2 gap-3">
                                                 <button onclick="wallet(this, 'open', {{ $user->id }})"
-                                                    class="w-3/6 text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer walletBtn">
+                                                    class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer walletBtn">
                                                     کیف پول
                                                 </button>
                                                 {{-- <a href="{{ route('wallet.wallet', $user->id) }}" 
@@ -640,7 +640,7 @@
 
                                                     </div>
                                                 </div>
-                                                <button
+                                                {{-- <button
                                                     class="open-popup-look w-2/6 text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-2 py-2 cursor-pointer">
                                                     بیشتر
                                                 </button>
@@ -761,9 +761,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 <button
-                                                    class="open-popup-edited w-1/6 text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-1 py-2 cursor-pointer flex items-center justify-center">
+                                                    class="open-popup-edited w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-1 py-2 cursor-pointer flex items-center justify-center">
                                                     <svg class="size-5" fill="currentColor"
                                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                                         <path
