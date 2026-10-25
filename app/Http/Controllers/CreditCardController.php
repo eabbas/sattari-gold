@@ -16,6 +16,13 @@ class CreditCardController extends Controller
         return view('user.creditCard.create', ['logo' => $logo, 'creditcard' => $creditcard]);
     }
     public function store(Request $request){
+        if(isset($request->default)){
+            $allcard=creditcard::all();
+            foreach($allcard as $card){
+                $card->default=0;
+                $card->save();
+            }
+        }
         $validated=$request->validate([
             'name'=>['required'],
             'card_number'=>['required'],
@@ -39,11 +46,30 @@ class CreditCardController extends Controller
         return to_route('creditCard.create');
     }
     public function update(Request $request) {
+        if(isset($request->default)){
+            $allcard=creditcard::all();
+            foreach($allcard as $card){
+                $card->default=0;
+                $card->save();
+            }
+        }
+        $validated=$request->validate([
+            'popupname'=>['required'],
+            'popupcard_number'=>['required'],
+            'popupaccount_number'=>['required'],
+            'popupshaba_number'=>['required'],
+        ],[
+            'popupname.required'=>'نام صاحب کارت را وارد کنید',
+            'popupcard_number.required'=>' شماره کارت را وارد کنید',
+            'popupaccount_number.required'=>' شماره حساب کارت را وارد کنید',
+            'popupshaba_number.required'=>' شماره شبای کارت را وارد کنید',
+        ]);
+
         $card=creditcard::find($request->id);
-        $card->name=$request->name;
-        $card->card_number=$request->card_number;
-        $card->account_number=$request->account_number;
-        $card->shaba_number=$request->shaba_number;
+        $card->name=$request->popupname;
+        $card->card_number=$request->popupcard_number;
+        $card->account_number=$request->popupaccount_number;
+        $card->shaba_number=$request->popupshaba_number;
         $card->default=$request->default?1:0;
         $card->save();
         return to_route('creditCard.create');
