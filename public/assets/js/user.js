@@ -171,7 +171,7 @@ function submitEditUser(el){
             'user_id': el.closest('.approvedUsers').dataset.userId,
             'popupName': el.closest('.approvedUsers').querySelector('.name').value,
             'popupFamily': el.closest('.approvedUsers').querySelector('.family').value,
-            'popupPhoneNumber': el.closest('.approvedUsers').querySelector('.phoneNumber').value,
+            'popupPhoneNumber': el.closest('.approvedUsers').querySelector('.phoneNumberEd').value,
             'popupNationalCode': el.closest('.approvedUsers').querySelector('.nationalCode').value,
             'approvingStatus': el.closest('.approvedUsers').querySelector('.isApproved').value,
             'isActive': el.closest('.approvedUsers').querySelector('#AisActive' + el.closest('.approvedUsers').dataset.userId).checked ? 1 : 0,
@@ -180,8 +180,8 @@ function submitEditUser(el){
         },
         success: function (data) {
             console.log(data)
-            popup_edit.classList.add("invisible")
-            popup_edit.classList.add("opacity-0")
+            el.closest('.approvedUsers').querySelector('.popup-edit').classList.add("invisible")
+            el.closest('.approvedUsers').querySelector('.popup-edit').classList.add("opacity-0")
             el.closest('.approvedUsers').querySelector('.detailBox').classList.remove("invisible", 'opacity-0')
 
             document.querySelectorAll('.approvedUsers').forEach(el => {
