@@ -1,6 +1,12 @@
 @extends('admin.app.dashboard')
 @section('title', 'ستاری گلد | مدیریت کارت ها ')
 @section('content')
+    @if ($errors->hasAny(['popupname','popupcard_number','popupaccount_number','popupshaba_number',]))
+        <div
+            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-0 sm:right-5 z-9999999999 flex justify-center items-center transition-all duration-300 in-fa">
+            <span class="text-sm text-[var(--light-theme-text-color)] in-fa"> پر کردن این فیلد الزامی است. </span>
+        </div>
+    @endif
     <div class="w-full flex flex-col gap-4 justify-start items-center ">
         <form action="{{ route('creditCard.store') }}" method="POST"
             class="w-full flex flex-col gap-4 justify-start items-start p-4 bg-[#FAFBFD] border-2 border-(--border) rounded-xl">
@@ -64,15 +70,20 @@
                         <div class="text-red-500">{{$message}}</div>
                     @enderror
                 </div>
-                <div class="w-full flex justify-start items-start gap-2">
-                    <label for="" class="md:text-sm text-xs text-nowrap font-bold text-[#8B929D]">کارت
-                        اصلی</label>
-                    <div class="">
-                        <input type="checkbox" name="default" value="1">
-                    </div>
+                <div class="flex items-center gap-4">
+                    <label for="show_in_home">کارت پیش فرض</label>
+                    <label for="show_in_home"
+                        class="w-[50px] h-[28px] flex rounded-full cursor-pointer relative">
+                        <input type="checkbox" name="default" value="1" id="show_in_home"
+                            hidden class="peer">
+                        <span
+                            class="size-full bg-gray-300 shadow-inner rounded-full peer-checked:bg-(--active) transition-all duration-300"></span>
+                        <span
+                            class="size-[20px] rounded-full bg-white absolute top-1 left-1 peer-checked:translate-x-[22px] transition-all duration-300 shadow-md"></span>
+                    </label>
                 </div>
             </div>
-            <button class="self-end px-8 py-2.5 font-bold text-white bg-(--active) rounded-xl  max-md:text-sm">
+            <button class="self-end px-8 py-2.5 font-bold text-white bg-(--active) rounded-xl  max-md:text-sm cursor-pointer">
                 افزودن به لیست
             </button>
         </form>
@@ -98,7 +109,7 @@
                             شماره حساب
                         </th>
                         <th class="border-1 border-(--border) px-3 py-2">
-                            نمایش در برنامه
+                             کارت پیش فرض 
                         </th>
 
                         <th class="border-1 border-(--border) px-3 py-2">
@@ -130,10 +141,17 @@
                             </td>
                             
                             <td class="border-1 border-(--border) px-3 py-2">
+                                @if($card->default)
                                 <div
-                                    class="lg:w-12 w-10 lg:h-6.5 h-5.5 @if ($card->default == 0) bg-(--border) @else bg-green-400 @endif rounded-full flex @if ($card->default == 0) justify-end @else justify-start @endif items-center transition_normal relative group p-0.5 change_status_product mx-auto">
-                                    <div class="w-1/2 h-full rounded-full bg-white transition_normal"></div>
+                                    class="lg:w-12 w-10 lg:h-6.5 h-5.5 flex justify-center rounded-full items-center transition_normal relative group p-0.5 change_status_product mx-auto">
+                                    <div class="text-center"> پیش فرض</div>
                                 </div>
+                                @else
+                                <div
+                                    class="lg:w-12 w-10 lg:h-6.5 h-5.5 flex justify-center rounded-full items-center transition_normal relative group p-0.5 change_status_product mx-auto">
+                                    <div class="text-3xl">-</div>
+                                </div>
+                                @endif
                             </td>
 
                             <td class="border-1 border-(--border) px-3 py-2 flex gap-2">
@@ -173,7 +191,10 @@
                                                     </label>
                                                     <input
                                                         class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border) rounded-md p-2 outline-none"
-                                                        type="text" name="name" id="name" value="{{$card->name}}">
+                                                        type="text" name="popupname" id="name" value="{{$card->name}}">
+                                                        @error('popupname')
+                                                            <div class="text-red-500">{{$message}}</div>
+                                                        @enderror
                                                 </div>
                                                 <div class="w-full flex flex-col justify-start items-start gap-2">
                                                     <label class="" for="name">
@@ -181,7 +202,10 @@
                                                     </label>
                                                     <input
                                                         class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border) rounded-md p-2 outline-none"
-                                                        type="text" name="card_number" id="card_number" value="{{ $card->card_number }}">
+                                                        type="text" name="popupcard_number" id="card_number" value="{{ $card->card_number }}">
+                                                        @error('popupcard_number')
+                                                            <div class="text-red-500">{{$message}}</div>
+                                                        @enderror
                                                 </div>
                                                 <div class="w-full flex flex-col justify-start items-start gap-2">
                                                     <label class="" for="name">
@@ -189,7 +213,10 @@
                                                     </label>
                                                     <input
                                                         class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border) rounded-md p-2 outline-none"
-                                                        type="text" name="shaba_number" id="shaba_number" value="{{ $card->shaba_number }}">
+                                                        type="text" name="popupshaba_number" id="shaba_number" value="{{ $card->shaba_number }}">
+                                                        @error('popupshaba_number')
+                                                            <div class="text-red-500">{{$message}}</div>
+                                                        @enderror
                                                 </div>
                                                 <div class="w-full flex flex-col justify-start items-start gap-2">
                                                     <label class="" for="name">
@@ -197,7 +224,10 @@
                                                     </label>
                                                     <input
                                                         class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border) rounded-md p-2 outline-none"
-                                                        type="text" name="account_number" id="account_number" value="{{ $card->account_number }}">
+                                                        type="text" name="popupaccount_number" id="account_number" value="{{ $card->account_number }}">
+                                                        @error('popupaccount_number')
+                                                            <div class="text-red-500">{{$message}}</div>
+                                                        @enderror
                                                 </div>
                                                 <div class="w-full flex justify-start items-start gap-2">
                                                     <label for="" class="md:text-sm text-xs text-nowrap font-bold text-[#8B929D]">کارت
