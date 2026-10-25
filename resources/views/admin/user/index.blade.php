@@ -411,7 +411,7 @@
                                                 @else
                                                     <span
                                                         class="w-10 h-10 bg-(--color-danger)/20 text-(--color-danger) rounded-md border-1 border-(--color-danger) p-1 cursor-default">
-                                                        فعال
+                                                        غیرفعال
                                                     </span>
                                                 @endif
                                             </td>
@@ -773,7 +773,7 @@
                                                 <div
                                                     class="popup-edit fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2  invisible opacity-0 transition-all flex items-center justify-center">
                                                     <div
-                                                        class="close-popup-edit2 absolute z-49 w-full h-[100dvh] left-1/2 -translate-x-1/2">
+                                                        class="close-popup-edit2 absolute z-9 w-full h-[100dvh] left-1/2 -translate-x-1/2">
                                                     </div>
                                                     <div
                                                         class="relative z-51 w-[80%] md:w-200 bg-white rounded-md px-3 py-2 transition-all duration-300 detailBox">

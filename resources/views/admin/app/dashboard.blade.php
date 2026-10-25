@@ -99,7 +99,7 @@
         <!-- dashboard_start -->
         <div class="w-full h-dvh bg-black/50 fixed top-0 right-0 invisible opacity-0 transition_normal lg:hidden z-3"
             onclick="hamburger_menu_dashboard('close')" id="hamburger_menu_dashboard_item_close"></div>
-        <div class="bg-white h-dvh p-1.5 justify-start max-lg:translate-x-full transition_normal z-99999 max-lg:fixed top-0 right-0"
+        <div class="bg-white h-dvh p-1.5 justify-start max-lg:translate-x-full transition_normal z-4 max-lg:fixed top-0 right-0"
             id="hamburger_menu_dashboard_item">
             <div class="w-full h-full flex flex-col gap-6 justify-start items-start rounded-l-4xl">
                 <!-- item_dashboard -->
