@@ -212,6 +212,7 @@ class UserController extends Controller
             [
                 'name' => ['required'],
                 'family' => ['required'],
+                'birthday' => ['required'],
                 'phoneNumber' => ['required', 'min:11', 'max:11'],
                 'nationalCode' => ['required', 'min:10', 'max:10'],
                 'code' => ['required', 'min:4', 'max:4'],
@@ -220,6 +221,7 @@ class UserController extends Controller
             [
                 'name.required' => 'پر کردن این فیلد الزامی است.',
                 'family.required' => 'پر کردن این فیلد الزامی است.',
+                'birthday.required' => 'پر کردن این فیلد الزامی است.',
                 'phoneNumber.required' => 'پر کردن این فیلد الزامی است.',
                 'phoneNumber.max' => 'شماره تلفن باید 11 رقمی باشد.',
                 'phoneNumber.min' => 'شماره تلفن باید 11 رقمی باشد.',
@@ -236,6 +238,8 @@ class UserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'family' => $request->family,
+            'birthday' => $request->birthday,
+            'address' => $request->address,
             'phoneNumber' => $request->phoneNumber,
             'nationalCode' => $request->nationalCode,
             'password' => $request->password,
@@ -455,7 +459,7 @@ class UserController extends Controller
                 'family' => ['required'],
                 'phoneNumber' => ['required', 'min:11', 'max:11'],
                 'nationalCode' => ['required', 'min:10', 'max:10'],
-                'mainImage' => ['max:100'],
+                // 'mainImage' => ['max:100'],
             ],
             [
                 'name.required' => 'پر کردن این فیلد الزامی است.',
@@ -466,7 +470,7 @@ class UserController extends Controller
                 'nationalCode.max' => 'کد ملی باید 10 رقمی باشد.',
                 'nationalCode.min' => 'کد ملی باید 10 رقمی باشد.',
                 'nationalCode.required' => 'پر کردن این فیلد الزامی است.',
-                'mainImage.max' => 'حجم فایل نباید بیشتر از 100 کیلوبایت باشد.',
+                // 'mainImage.max' => 'حجم فایل نباید بیشتر از 100 کیلوبایت باشد.',
             ]
         );
         if (isset($request['removedImg'])) {
@@ -493,7 +497,7 @@ class UserController extends Controller
             $user->password = $password;
         }
         // ! بعد از افزودن امکان بارگذاری عکس برای کاربر خط زیر باید کار کند
-        // $user->mainImage = $img_path;
+        $user->mainImage = $img_path;
         $user->save();
         return redirect()->back()->with('message', 'پروفایل شما با موفقیت به روزرسانی شد.');
     }
