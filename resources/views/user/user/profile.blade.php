@@ -54,7 +54,7 @@
                 @endforeach
             </p>
         </div>
-        <div class="flex flex-col lg:flex-row gap-6 lg:gap-2 mt-14">
+        <div class="flex flex-col lg:grid grid-cols-3 gap-6 lg:gap-2 mt-14">
             <div class="w-full bg-white border-2 border-slate-300 rounded-2xl p-4 hover:shadow-lg transition duration-300">
                 <div class="flex flex-col items-start gap-4">
                     <div class="flex items-center gap-2">
@@ -104,6 +104,36 @@
                     </div>
                     <div>
                         <p class="text-slate-800 font-bold mt-1 text-sm sm:text-lg in-fa">{{ verta($user->created_at) }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full bg-white border-2 border-slate-300 rounded-2xl p-4 hover:shadow-lg transition duration-300">
+                <div class="flex flex-col items-start gap-4">
+                    <div class="flex items-center gap-2">
+                        <div class="rounded-xl bg-red-100 p-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="size-6 fill-red-600">
+                                <path d="M320 128a96 96 0 1 0 -192 0 96 96 0 1 0 192 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM32 480H416c-1.2-79.7-66.2-144-146.3-144H178.3c-80 0-145 64.3-146.3 144zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/>
+                            </svg>
+                        </div>
+                        <span class="texttext-xs sm:-sm text-slate-400">تاریخ تولد</span>
+                    </div>
+                    <div>
+                        <p class="text-slate-800 font-bold mt-1 text-sm sm:text-lg in-fa">@if(isset($user->birthday)){{$user->birthday}} @else ثبت نشده @endif</p>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full bg-white border-2 border-slate-300 rounded-2xl p-4 hover:shadow-lg transition duration-300">
+                <div class="flex flex-col items-start gap-4">
+                    <div class="flex items-center gap-2">
+                        <div class="rounded-xl bg-pink-100 p-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="size-6 fill-pink-600">
+                                <path d="M298.6 4c-6-5.3-15.1-5.3-21.2 0L5.4 244c-6.6 5.8-7.3 16-1.4 22.6s16 7.3 22.6 1.4L64 235V432c0 44.2 35.8 80 80 80H432c44.2 0 80-35.8 80-80V235l37.4 33c6.6 5.8 16.7 5.2 22.6-1.4s5.2-16.7-1.4-22.6L298.6 4zM96 432V206.7L288 37.3 480 206.7V432c0 26.5-21.5 48-48 48H368V320c0-17.7-14.3-32-32-32H240c-17.7 0-32 14.3-32 32V480H144c-26.5 0-48-21.5-48-48zm144 48V320h96V480H240z"/>
+                            </svg>
+                        </div>
+                        <span class="texttext-xs sm:-sm text-slate-400">آدرس</span>
+                    </div>
+                    <div>
+                        <p class="text-slate-800 font-bold mt-1 text-sm sm:text-lg in-fa">@if(isset($user->address)){{$user->address}} @else ثبت نشده @endif</p>
                     </div>
                 </div>
             </div>
