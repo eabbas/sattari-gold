@@ -23,31 +23,21 @@
                         <input type="text" name="name"
                             class="w-full outline-none font-bold rounded-xl max-lg:text-sm">
                     </div>
+                    @error('name')
+                        <div class="text-red-500">{{$message}}</div>
+                    @enderror
                 </div>
                 <div class="w-full flex flex-col justify-start items-start gap-2 relative">
                     <label for="" class="md:text-sm text-xs font-bold text-[#8B929D]">شماره
                         کارت</label>
                     <div
-                        class="w-full border-2 border-(--disactive) py-2 px-3 bg-red-200 flex justify-between items-center rounded-xl">
+                        class="w-full border-2 border-(--border) bg-white  py-2 px-3 flex justify-between items-center rounded-xl">
                         <input type="text" name="card_number"
                             class="w-10/12 outline-none font-bold rounded-xl max-lg:text-sm">
-                        <div>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="size-4">
-                                <path
-                                    d="M512 80c8.8 0 16 7.2 16 16v32H48V96c0-8.8 7.2-16 16-16H512zm16 144V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V224H528zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm56 304c-13.3 0-24 10.7-24 24s10.7 24 24 24h48c13.3 0 24-10.7 24-24s-10.7-24-24-24H120zm128 0c-13.3 0-24 10.7-24 24s10.7 24 24 24H360c13.3 0 24-10.7 24-24s-10.7-24-24-24H248z" />
-                            </svg>
-                        </div>
                     </div>
-                    <div class="w-full flex gap-2 justify-start items-start sm:absolute sm:-bottom-7">
-                        <div class="p-0.5 rounded-full border border-(--disactive)">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 512" class="size-3 fill-(--disactive)">
-                                <path
-                                    d="M64 64c0-17.7-14.3-32-32-32S0 46.3 0 64V320c0 17.7 14.3 32 32 32s32-14.3 32-32V64zM32 480a40 40 0 1 0 0-80 40 40 0 1 0 0 80z" />
-                            </svg>
-                        </div>
-                        <p class="lg:text-sm sm:text-xs text-[10px] text-(--disactive) font-bold">شماره کارت
-                            الزامی است</p>
-                    </div>
+                    @error('card_number')
+                        <div class="text-red-500">{{$message}}</div>
+                    @enderror
                 </div>
                 <div class="w-full flex flex-col justify-start items-start gap-2">
                     <label for="" class="md:text-sm text-xs font-bold text-[#8B929D]">شماره
@@ -58,6 +48,9 @@
                             class="w-10/12 outline-none font-bold rounded-xl max-lg:text-sm">
                         <span class="font-bold max-md:text-sm">IR</span>
                     </div>
+                    @error('shaba_number')
+                        <div class="text-red-500">{{$message}}</div>
+                    @enderror
                 </div>
                 <div class="w-full flex flex-col justify-start items-start gap-2">
                     <label for="" class="md:text-sm text-xs font-bold text-[#8B929D]">شماره
@@ -67,6 +60,9 @@
                         <input type="text" name="account_number"
                             class="w-10/12 outline-none font-bold rounded-xl max-lg:text-sm">
                     </div>
+                    @error('account_number')
+                        <div class="text-red-500">{{$message}}</div>
+                    @enderror
                 </div>
                 <div class="w-full flex justify-start items-start gap-2">
                     <label for="" class="md:text-sm text-xs text-nowrap font-bold text-[#8B929D]">کارت
@@ -99,6 +95,9 @@
                             شماره شبا
                         </th>
                         <th class="border-1 border-(--border) px-3 py-2">
+                            شماره حساب
+                        </th>
+                        <th class="border-1 border-(--border) px-3 py-2">
                             نمایش در برنامه
                         </th>
 
@@ -126,7 +125,10 @@
                             <td class="border-1 border-(--border) px-3 py-2 text-center">
                                 {{ $card->shaba_number }}
                             </td>
-
+                            <td class="border-1 border-(--border) px-3 py-2 text-center">
+                                {{ $card->account_number }}
+                            </td>
+                            
                             <td class="border-1 border-(--border) px-3 py-2">
                                 <div
                                     class="lg:w-12 w-10 lg:h-6.5 h-5.5 @if ($card->default == 0) bg-(--border) @else bg-green-400 @endif rounded-full flex @if ($card->default == 0) justify-end @else justify-start @endif items-center transition_normal relative group p-0.5 change_status_product mx-auto">
@@ -136,7 +138,7 @@
 
                             <td class="border-1 border-(--border) px-3 py-2 flex gap-2">
                                 <div>
-                                    <div data-edit_cart="open"
+                                    <div data-edit_cart="open" data-id="{{$card->id}}"
                                         class="popup_edit_cart text-(--primary-dashboard) border-1 border-(--active) rounded-md p-1.5 mx-auto cursor-pointer flex items-center justify-center">
                                         <svg class="size-4 fill-(--active)" xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 512 512">
@@ -162,14 +164,16 @@
                                                     </svg>
                                                 </div>
                                             </div>
-                                            <form action="" class="grid sm:grid-cols-2 grid-cols-1 gap-5 mt-5">
+                                            <form action="{{route('creditCard.update')}}" method="post" class="grid sm:grid-cols-2 grid-cols-1 gap-5 mt-5">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{$card->id}}">
                                                 <div class="w-full flex flex-col justify-start items-start gap-2">
                                                     <label class="" for="name">
-                                                        نام و نام خانوادگی
+                                                        به نام
                                                     </label>
                                                     <input
                                                         class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border) rounded-md p-2 outline-none"
-                                                        type="text" name="" id="name">
+                                                        type="text" name="name" id="name" value="{{$card->name}}">
                                                 </div>
                                                 <div class="w-full flex flex-col justify-start items-start gap-2">
                                                     <label class="" for="name">
@@ -177,7 +181,7 @@
                                                     </label>
                                                     <input
                                                         class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border) rounded-md p-2 outline-none"
-                                                        type="text" name="" id="name">
+                                                        type="text" name="card_number" id="card_number" value="{{ $card->card_number }}">
                                                 </div>
                                                 <div class="w-full flex flex-col justify-start items-start gap-2">
                                                     <label class="" for="name">
@@ -185,29 +189,36 @@
                                                     </label>
                                                     <input
                                                         class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border) rounded-md p-2 outline-none"
-                                                        type="text" name="" id="name">
+                                                        type="text" name="shaba_number" id="shaba_number" value="{{ $card->shaba_number }}">
                                                 </div>
-
+                                                <div class="w-full flex flex-col justify-start items-start gap-2">
+                                                    <label class="" for="name">
+                                                        شماره حساب
+                                                    </label>
+                                                    <input
+                                                        class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border) rounded-md p-2 outline-none"
+                                                        type="text" name="account_number" id="account_number" value="{{ $card->account_number }}">
+                                                </div>
+                                                <div class="w-full flex justify-start items-start gap-2">
+                                                    <label for="" class="md:text-sm text-xs text-nowrap font-bold text-[#8B929D]">کارت
+                                                        اصلی</label>
+                                                    <div class="">
+                                                        <input type="checkbox" name="default" value="1" id="default" @if($card->default==1 ) checked  @endif>
+                                                    </div>
+                                                </div>
                                                 <div class="col-span-2 w-full flex gap-4 justify-between items-center">
-                                                    <button
-                                                        class="w-1/2 border-1 border-(--active) bg-(--active) sm:text-lg font-bold text-white py-2 rounded-md">ویرایش</button>
-                                                    <button
-                                                        class="w-1/2 border-1 border-(--border) bg-(--disactive) sm:text-lg font-bold text-white py-2 rounded-md">
-                                                        لغو</button>
+                                                    <button class="w-1/2 border-1 border-(--active) bg-(--active) sm:text-lg font-bold text-white py-2 rounded-md">ویرایش</button>
+                                                    <button class="w-1/2 border-1 border-(--border) bg-(--disactive) sm:text-lg font-bold text-white py-2 rounded-md">لغو</button>
                                                 </div>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
-
-                                <button
-                                    class="open-popup-edit text-(--primary-dashboard) border-1 border-(--disactive) rounded-md p-1.5 mx-auto cursor-pointer flex items-center justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
-                                        class="size-4 fill-(--disactive)">
-                                        <path
-                                            d="M164.2 39.5L148.9 64H299.1L283.8 39.5c-2.9-4.7-8.1-7.5-13.6-7.5H177.7c-5.5 0-10.6 2.8-13.6 7.5zM311 22.6L336.9 64H384h32 16c8.8 0 16 7.2 16 16s-7.2 16-16 16H416V432c0 44.2-35.8 80-80 80H112c-44.2 0-80-35.8-80-80V96H16C7.2 96 0 88.8 0 80s7.2-16 16-16H32 64h47.1L137 22.6C145.8 8.5 161.2 0 177.7 0h92.5c16.6 0 31.9 8.5 40.7 22.6zM64 96V432c0 26.5 21.5 48 48 48H336c26.5 0 48-21.5 48-48V96H64zm80 80V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V176c0-8.8 7.2-16 16-16s16 7.2 16 16zm96 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V176c0-8.8 7.2-16 16-16s16 7.2 16 16zm96 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V176c0-8.8 7.2-16 16-16s16 7.2 16 16z" />
+                                <a href="{{route('creditCard.delete' , $card->id )}}" class="open-popup-edit text-(--primary-dashboard) border-1 border-(--disactive) rounded-md p-1.5 mx-auto cursor-pointer flex items-center justify-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="size-4 fill-(--disactive)">
+                                        <path d="M164.2 39.5L148.9 64H299.1L283.8 39.5c-2.9-4.7-8.1-7.5-13.6-7.5H177.7c-5.5 0-10.6 2.8-13.6 7.5zM311 22.6L336.9 64H384h32 16c8.8 0 16 7.2 16 16s-7.2 16-16 16H416V432c0 44.2-35.8 80-80 80H112c-44.2 0-80-35.8-80-80V96H16C7.2 96 0 88.8 0 80s7.2-16 16-16H32 64h47.1L137 22.6C145.8 8.5 161.2 0 177.7 0h92.5c16.6 0 31.9 8.5 40.7 22.6zM64 96V432c0 26.5 21.5 48 48 48H336c26.5 0 48-21.5 48-48V96H64zm80 80V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V176c0-8.8 7.2-16 16-16s16 7.2 16 16zm96 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V176c0-8.8 7.2-16 16-16s16 7.2 16 16zm96 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V176c0-8.8 7.2-16 16-16s16 7.2 16 16z" />
                                     </svg>
-                                </button>
+                                </a>
                             </td>
                         </tr>
                         @php
@@ -228,7 +239,6 @@
                 if (item.getAttribute('data-edit_cart') == 'open') {
                     item.nextElementSibling.classList.remove('invisible')
                     item.nextElementSibling.classList.remove('opacity-0')
-
                 }
                 if (item.getAttribute('data-edit_cart') == 'close_black') {
                     item.parentElement.classList.add('invisible')

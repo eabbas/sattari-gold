@@ -240,6 +240,9 @@ Route::group([
 ], function () {
     Route::get('/create', 'create')->name('create');
     Route::post('/store', 'store')->name('store');
+    Route::post('/edit', 'edit')->name('edit');
+    Route::post('/update', 'update')->name('update');
+    Route::get('/delete/{creditCard}', 'delete')->name('delete');
 });
 
 // reference sites routes
