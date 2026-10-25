@@ -347,10 +347,10 @@ class SearchController extends Controller
                 $query->where('users.family', 'like', '%'.$family.'%');
             }
             if ($phoneNumber) {
-                $query->where('users.phoneNumber', $phoneNumber);
+                $query->where('users.phoneNumber', 'like', '%'.$phoneNumber.'%');
             }
             if ($nationalCode) {
-                $query->where('users.nationalCode', $nationalCode);
+                $query->where('users.nationalCode', 'like', '%'.$nationalCode.'%');
             }
             if ($activity) {
                 $query->whereIn('users.isActive', $activity);

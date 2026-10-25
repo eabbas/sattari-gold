@@ -77,20 +77,18 @@ document.querySelectorAll('.approvedUsers').forEach(row => {
     let xBtn = row.querySelector(".close-popup-look-cont")
 
     row.querySelector('.submitWallet').addEventListener('click', (e) => {
-
         let el = e.target
         let deposit = el.closest('.popup-wallet').querySelector('.deposit')
         let withdraw = el.closest('.popup-wallet').querySelector('.withdraw')
         let receipt = el.closest('.popup-wallet').querySelector('.receipt')
         let fee = el.closest('.popup-wallet').querySelector('.fee')
         let description = el.closest('.popup-wallet').querySelector('.description')
-
         if(fee.value == ''){
             alert('لطفا مبلغ را وارد کنید')
         } 
-        else if(!receipt.parentElement.classList.contains('hidden') && receipt.value == ''){
+        else if(!receipt && receipt.value == ''){
             alert('آپلود رسید الزامی است')
-        }  else {
+        } else {
             let transactionType
             if (deposit.checked) {
                 transactionType = 'deposit'
@@ -149,7 +147,7 @@ document.querySelectorAll('.approvedUsers').forEach(row => {
 
                 row.querySelector('.name').value = data.name
                 row.querySelector('.family').value = data.family
-                row.querySelector('.phoneNumber').value = data.phoneNumber
+                row.querySelector('.phoneNumberEd').value = data.phoneNumber
                 row.querySelector('.nationalCode').value = data.nationalCode
                 let isApprovedOptions = row.querySelector('.isApproved').children
                 for (let option of isApprovedOptions) {
@@ -269,35 +267,35 @@ rowCheckboxes.forEach((checkbox) => {
 const item_list = document.querySelectorAll(".item_list")
 
 item_list.forEach((item_list) => {
-    const openBtn_look_edit = item_list.querySelector(".open-popup-look-edit")
+    // const openBtn_look_edit = item_list.querySelector(".open-popup-look-edit")
     const popup_edit = item_list.querySelector(".popup-edit")
     const closeBtn_edit2 = item_list.querySelector(".close-popup-edit2")
-    const openBtn_look = item_list.querySelector(".open-popup-look")
+    // const openBtn_look = item_list.querySelector(".open-popup-look")
     const popup_look = item_list.querySelector(".popup-look")
-    const closeBtn_look = item_list.querySelector(".close-popup-look")
-    const closeBtn_look2 = item_list.querySelector(".close-popup-look2")
+    // const closeBtn_look = item_list.querySelector(".close-popup-look")
+    // const closeBtn_look2 = item_list.querySelector(".close-popup-look2")
     closeBtn_edit2.addEventListener("click", () => {
         popup_edit.classList.add("invisible")
         popup_edit.classList.add("opacity-0")
     })
-    openBtn_look_edit.addEventListener("click", () => {
-        popup_edit.classList.remove("invisible")
-        popup_edit.classList.remove("opacity-0")
-        popup_look.classList.add("invisible")
-        popup_look.classList.add("opacity-0")
-    })
-    openBtn_look.addEventListener("click", () => {
-        popup_look.classList.remove("invisible")
-        popup_look.classList.remove("opacity-0")
-    })
-    closeBtn_look.addEventListener("click", () => {
-        popup_look.classList.add("invisible")
-        popup_look.classList.add("opacity-0")
-    })
-    closeBtn_look2.addEventListener("click", () => {
-        popup_look.classList.add("invisible")
-        popup_look.classList.add("opacity-0")
-    })
+    // openBtn_look_edit.addEventListener("click", () => {
+    //     popup_edit.classList.remove("invisible")
+    //     popup_edit.classList.remove("opacity-0")
+    //     popup_look.classList.add("invisible")
+    //     popup_look.classList.add("opacity-0")
+    // })
+    // openBtn_look.addEventListener("click", () => {
+    //     popup_look.classList.remove("invisible")
+    //     popup_look.classList.remove("opacity-0")
+    // })
+    // closeBtn_look.addEventListener("click", () => {
+    //     popup_look.classList.add("invisible")
+    //     popup_look.classList.add("opacity-0")
+    // })
+    // closeBtn_look2.addEventListener("click", () => {
+    //     popup_look.classList.add("invisible")
+    //     popup_look.classList.add("opacity-0")
+    // })
 })
 
 const items_2 = document.querySelectorAll(".item_2")

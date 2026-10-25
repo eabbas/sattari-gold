@@ -7,6 +7,7 @@ use App\Models\logo;
 use App\Models\PhoneCode;
 use App\Models\role;
 use App\Models\User;
+use App\Models\transactionSetting;
 use App\Models\user_role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -329,10 +330,12 @@ class UserController extends Controller
                     break;
             }
         }
+        $setting = transactionSetting::first();
         return view('admin.user.index', [
             'users' => $users,
             'logo' => $logo,
             'roles' => $roles,
+            'setting' => $setting,
         ]);
     }
 
