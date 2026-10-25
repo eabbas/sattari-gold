@@ -799,7 +799,7 @@
                                                                                     class="accent-(--primary-dashboard) size-4 md:size-5 deposit"
                                                                                     type="radio" name="transactionType{{ $user->id }}"
                                                                                     value="deposit" id="deposit"
-                                                                                    onclick="transactionMethod('deposit',this, {{ $user->id }}, {{ $user->id }})">
+                                                                                    onclick="transactionMethod('deposit',this, {{ $user->id }})">
                                                                                 <span
                                                                                     class="text-xs text-green-400 md:text-base font-bold">واریز</span>
                                                                             </label>
@@ -812,7 +812,7 @@
                                                                                     class="accent-(--primary-dashboard) size-4 md:size-5 withdraw"
                                                                                     type="radio" name="transactionType{{ $user->id }}"
                                                                                     value="withdraw" id="withdraw"
-                                                                                    onclick="transactionMethod('withdraw',this, {{ $user->id }}, {{ $user->id }})">
+                                                                                    onclick="transactionMethod('withdraw',this, {{ $user->id }})">
                                                                                 <span
                                                                                     class="text-xs text-red-400 md:text-base font-bold">برداشت</span>
                                                                             </label>

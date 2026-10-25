@@ -363,13 +363,13 @@ class SearchController extends Controller
         $users = $users->orderBy('created_at', 'desc')->get();
         foreach($users as $user){
             $roleArr = [];
-            Log::info($user->roles);
+            
             foreach($user->roles as $role){
                 $roleArr[]=$role->id;
             }
             $user->created_at = verta($user->created_at);
+            $user->roleArr = $roleArr;
         }
-
         $roles = role::all();
         foreach($roles as $role){
             switch($role->name){
