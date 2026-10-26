@@ -293,14 +293,15 @@ Route::group([
 Route::group([
     "as" => "Message.",
     "prefix" => "Message",
-    "controller" => MessageController::class
+    "controller" => MessageController::class,
+    'middleware' => checklogin::class,
 ], function () {
     Route::get("insert", 'insert')->name('insert');
     Route::post("/create", "create")->name("create");
     Route::get("list", "list")->name("list");
     Route::get("delete/{id}", "delete")->name("delete");
-    Route::get("update/{id}", "update")->name("update");
-    Route::post("edite", "edite")->name("edite");
+    Route::post("/update", "update")->name("update");
+    Route::post("edit", "edit")->name("edit");
     Route::post("messageStatus",  "messageStatus")->name("messageStatus");
 });
 
