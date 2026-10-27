@@ -230,6 +230,7 @@ class SearchController extends Controller
         $toDate = $filters['toDate'] ?? null;
         $price = $filters['price'] ?? null;
         $number = $filters['transactionId'] ?? null;
+        $sortType = $filters['sortType'] ?? 'desc';
         if ($number) {
             $transactionId = substr($number, 3);
             $transactions = transaction::find($transactionId);
@@ -276,7 +277,7 @@ class SearchController extends Controller
                 });
             });
         }
-        $transactions = $transactions->orderBy('created_at', 'desc')->get();
+        $transactions = $transactions->orderBy('date', $sortType)->orderBy('time', $sortType)->get();
         foreach ($transactions as $transaction) {
             $transaction->fullName = $transaction->wallet->user->name . ' ' . $transaction->wallet->user->family;
             $transaction->phoneNumber = $transaction->wallet->user->phoneNumber;
@@ -325,6 +326,7 @@ class SearchController extends Controller
         $nationalCode = $filters['nationalCode'] ?? null;
         $activity = $filters['activity'] ?? ['all'];
         $approve = $filters['approve'] ?? ['all'];
+        $sortType = $filters['sortType'] ?? 'desc';
 
         if ($activity == ['all']) {
             $activity = [];
@@ -360,7 +362,7 @@ class SearchController extends Controller
             }
         })->with(['wallet', 'roles']);
 
-        $users = $users->orderBy('created_at', 'desc')->get();
+        $users = $users->orderBy('created_at', $sortType)->get();
         foreach($users as $user){
             $roleArr = [];
             
