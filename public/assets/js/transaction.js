@@ -17,6 +17,7 @@ let price = document.getElementById('price')
 let transactionId = document.getElementById('transactionId')
 let type = document.getElementById('type')
 let transactionControl = document.getElementById('transactionControl')
+let showImg = document.getElementById('showImg')
 
 let transactionPopup = document.getElementById('transaction')
 let closeBtn = document.getElementById('closeBtn')
@@ -165,6 +166,10 @@ document.addEventListener('click', (e) => {
     if (clickedOnCloseBtn || clickedInsidePopup) {
         transactionPopup.classList.add('invisible', 'opacity-0')
     }
+    if (!showImg.children[0].children[0].contains(e.target) && !document.getElementById('transactionPopupReceipt').querySelector('img').contains(e.target)) {
+        closeZoom()
+    }
+   
 })
 
 function transactionAct(isApproved) {
@@ -250,3 +255,13 @@ function sort(el){
     }
     applyDealFilters()
 }
+
+function showImage(el){
+    showImg.classList.remove('invisible', 'opacity-0')
+    showImg.querySelector('img').src = el.src
+}
+
+function closeZoom(){
+    showImg.classList.add('invisible', 'opacity-0')
+}
+

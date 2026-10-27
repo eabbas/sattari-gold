@@ -291,7 +291,7 @@
                 </div>
                 <div id="transactionPopupReceipt"
                     class="col-span-6 border-1 border-(--border-dashboard) rounded-lg p-2 items-center justify-center hidden">
-                    <img class="w-[90%] h-50 bg-zinc-300" src="" alt="">
+                    <img class="w-[90%] h-50 bg-zinc-300" onclick="showImage(this)" src="" alt="">
                 </div>
                 <div id="transactionControl" class="w-full grid grid-cols-2 gap-3 col-span-6" data-transaction-id="">
                     <button onclick="transactionAct('1')"
@@ -303,6 +303,17 @@
                         رد تراکنش
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full h-dvh fixed top-0 right-0 bg-black/50 transition-all duration-300 z-999 invisible opacity-0" id='showImg'>
+        <div class="w-full h-full flex justify-center items-center">
+            <div class="relative w-11/12  p-6 rounded-lg bg-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="absolute top-2 right-3 w-4 cursor-pointer" onclick="closeZoom()" viewBox="0 0 384 512">
+                    <path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"/>
+                </svg>
+                <img src="" class="w-full max-h-[calc(100vh-100px)]" alt="">
             </div>
         </div>
     </div>
