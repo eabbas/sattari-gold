@@ -154,6 +154,7 @@ class SearchController extends Controller
         $fullName = $filters['fullName'] ?? null;
         $price = $filters['price'] ?? null;
         $weight = $filters['weight'] ?? null;
+        $sortType = $filters['sortType'] ?? 'desc';
         if ($number) {
             $dealId = substr($number, 3);
             $deals = deal::find($dealId);
@@ -200,7 +201,7 @@ class SearchController extends Controller
                 $query->where('name', 'like', '%' . $fullName . '%')->orWhere('family', 'like', '%' . $fullName . '%');
             }]);
         }
-        $deals = $deals->orderBy('date', 'desc')->orderBy('time', 'desc')->get();
+        $deals = $deals->orderBy('date', $sortType)->orderBy('time', $sortType)->get();
         foreach ($deals as $deal) {
             switch ($deal->transaction->isApproved) {
                 case -1:

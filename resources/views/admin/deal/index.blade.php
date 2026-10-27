@@ -181,6 +181,21 @@
         <!-- ارشیو معامله / لسیت -->
         <section class="w-full mx-auto rounded-md border-1 border-(--color-border) mt-5 pb-10 overflow-hidden">
             <div class="w-full">
+                <div class="w-full pb-3 px-3 flex flex-row justify-end">
+                        <button onclick="sort(this)" class="flex gap-5 items-center" data-sort="desc">
+                            <span>مرتب سازی :</span>
+                            <p>نزولی</p>
+                            <img src="{{ asset('assets/img/sort/desc.png') }}"
+                                style="
+                            max-width: 30px;
+                            max-height: 30px;
+                            margin-top: 10px;
+                            margin-left: 5px;
+                            cursor: pointer;
+                        "
+                                alt="">
+                        </button>
+                    </div>
                 <div class="w-full bg-white py-5 px-2 mb-2">
                     <div class="w-full grid grid-cols-2 md:grid-cols-4 justify-items-end gap-2">
                         <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
@@ -292,13 +307,13 @@
                                 <th class="border-1 border-(--color-border) p-1 md:px-3 md:py-2">
                                     ردیف
                                 </th>
-                                <th class="min-w-40 border-1 border-(--color-border) p-1 md:px-3 md:py-2">
+                                <th class="min-w-50 border-1 border-(--color-border) p-1 md:px-3 md:py-2">
                                     نام و نام خانوادگی
                                 </th>
                                 <th class="min-w-30 border-1 border-(--color-border) p-1 md:px-3 md:py-2">
                                     کالا
                                 </th>
-                                <th class="min-w-20 border-1 border-(--color-border) p-1 md:px-3 md:py-2">
+                                <th class="min-w-30 border-1 border-(--color-border) p-1 md:px-3 md:py-2">
                                     تعداد/وزن
                                 </th>
                                 <th class="min-w-25 border-1 border-(--color-border) p-1 md:px-3 md:py-2">
@@ -307,10 +322,10 @@
                                 <th class="min-w-30 border-1 border-(--color-border) p-1 md:px-3 md:py-2">
                                     مبلغ
                                 </th>
-                                <th class="min-w-20 border-1 border-(--color-border) p-1 md:px-3 md:py-2">
+                                <th class="min-w-24 border-1 border-(--color-border) p-1 md:px-3 md:py-2">
                                     شماره سند
                                 </th>
-                                <th class="min-w-40 border-1 border-(--color-border) p-1 md:px-3 md:py-2">
+                                <th class="min-w-50 border-1 border-(--color-border) p-1 md:px-3 md:py-2">
                                     تاریخ معامله
                                 </th>
                                 <th class="min-w-30 border-1 border-(--color-border) p-1 md:px-3 md:py-2">
@@ -337,7 +352,7 @@
                                     <td class="p-1 md:px-3 md:py-2 flex items-center justify-around">
                                         <div
                                             class="w-18 px-2 py-1 {{ $deal->transaction->type == 'buy' ? 'border-2 border-(--color-success) text-(--color-success)' : 'border-2 border-(--color-danger) text-(--color-danger)' }} text-center rounded-lg">
-                                            {{ $deal->transaction->type == 'buy' ? 'خریدار' : 'فروشنده' }}
+                                            {{ $deal->transaction->type == 'buy' ? 'خرید' : 'فروش' }}
                                         </div>
                                         <div class="w-fit">
                                             {{ $deal->user->name . ' ' . $deal->user->family }}

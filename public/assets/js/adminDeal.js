@@ -6,7 +6,8 @@ let dealFilters = {
     'toDate': null,
     'weight': null,
     'price': null,
-    'dealId': null
+    'dealId': null,
+    'sortType': 'desc',
 }
 
 let fullName = document.getElementById('fullName')
@@ -39,7 +40,7 @@ function applyDealFilters() {
                     </td>
                     <td class="p-1 md:px-3 md:py-2 flex items-center justify-around">
                         <div class="w-18 px-2 py-1 ${ row.transaction.type == 'sell' ? ' border-2 border-(--color-danger) text-(--color-danger) ' : ' border-2 border-(--color-success) text-(--color-success) ' } rounded-lg text-center">
-                        ${ row.transaction.type == 'sell' ? 'فروشنده' : 'خریدار' }
+                        ${ row.transaction.type == 'sell' ? 'فروش' : 'خرید' }
                         </div>
                         <div class="w-fit">
                         ${ row.user.name+' '+row.user.family }
@@ -92,20 +93,20 @@ function applyDealFilters() {
 // مقداردهی اولیه بعد از لود شدن MultiSelect
 document.addEventListener('DOMContentLoaded', function () {
     setTimeout(function () {
-        const dealTypeSelect = document.getElementById('dealType');
-        const dealTypeMs = dealTypeSelect ? dealTypeSelect._multiSelect : null;
+        const dealTypeSelect = document.getElementById('dealType')
+        const dealTypeMs = dealTypeSelect ? dealTypeSelect._multiSelect : null
         if (dealTypeMs) {
-            dealFilters.dealType = dealTypeMs.getFilterValues();
+            dealFilters.dealType = dealTypeMs.getFilterValues()
         }
-    }, 100);
+    }, 100)
     setTimeout(function () {
-        const dealStateSelect = document.getElementById('dealState');
-        const dealStateMs = dealStateSelect ? dealStateSelect._multiSelect : null;
+        const dealStateSelect = document.getElementById('dealState')
+        const dealStateMs = dealStateSelect ? dealStateSelect._multiSelect : null
         if (dealStateMs) {
-            dealFilters.dealState = dealStateMs.getFilterValues();
+            dealFilters.dealState = dealStateMs.getFilterValues()
         }
     }, 100);
-});
+})
 
 function setDatas() {
     dealFilters.fullName = fullName.value;
@@ -115,18 +116,33 @@ function setDatas() {
     dealFilters.price = price.value;
     dealFilters.dealId = dealId.value;
 
-    // استفاده از getFilterValues برای MultiSelect
     const dealTypeSelect = document.getElementById('dealType');
-    const dealTypeMs = dealTypeSelect ? dealTypeSelect._multiSelect : null;
+    const dealTypeMs = dealTypeSelect ? dealTypeSelect._multiSelect : null
     if (dealTypeMs) {
-        dealFilters.dealType = dealTypeMs.getFilterValues();
+        dealFilters.dealType = dealTypeMs.getFilterValues()
     }
     
-    const dealStateSelect = document.getElementById('dealState');
-    const dealStateMs = dealStateSelect ? dealStateSelect._multiSelect : null;
+    const dealStateSelect = document.getElementById('dealState')
+    const dealStateMs = dealStateSelect ? dealStateSelect._multiSelect : null
     if (dealStateMs) {
-        dealFilters.dealState = dealStateMs.getFilterValues();
+        dealFilters.dealState = dealStateMs.getFilterValues()
     }
+    applyDealFilters()
+}
 
-    applyDealFilters();
+
+function sort(el) {
+    if (el.dataset.sort == 'desc') {
+        el.querySelector('img').src = url + 'assets/img/sort/asc.png'
+        el.querySelector('p').innerText = 'صعودی'
+        el.dataset.sort = 'asc'
+        dealFilters.sortType = 'asc'
+    }
+    else {
+        el.querySelector('img').src = url + 'assets/img/sort/desc.png'
+        el.querySelector('p').innerText = 'نزولی'
+        el.dataset.sort = 'desc'
+        dealFilters.sortType = 'desc'
+    }
+    setDatas()
 }
