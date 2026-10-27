@@ -69,163 +69,142 @@ function wallet(el, state, userId) {
     }
 }
 
-document.querySelectorAll('.approvedUsers').forEach(row => {
-    let openBtn_edited = row.querySelector(".open-popup-edited")
-    let popup_edit = row.querySelector(".popup-edit")
-    let closeBtn = row.querySelector(".closeBtn")
-    let submitBtn = row.querySelector(".submitBtn")
-    let xBtn = row.querySelector(".close-popup-look-cont")
-
-    row.querySelector('.submitWallet').addEventListener('click', (e) => {
-
-        let el = e.target
-        let deposit = el.closest('.popup-wallet').querySelector('.deposit')
-        let withdraw = el.closest('.popup-wallet').querySelector('.withdraw')
-        let receipt = el.closest('.popup-wallet').querySelector('.receipt')
-        let fee = el.closest('.popup-wallet').querySelector('.fee')
-        let description = el.closest('.popup-wallet').querySelector('.description')
-
-        if(fee.value == ''){
-            alert('لطفا مبلغ را وارد کنید')
-        } 
-        else if(!receipt.parentElement.classList.contains('hidden') && receipt.value == ''){
-            alert('آپلود رسید الزامی است')
-        }  else {
-            let transactionType
-            if (deposit.checked) {
-                transactionType = 'deposit'
-            } else if (withdraw.checked) {
-                transactionType = 'withdraw'
-            }
-            let formData = new FormData()
-            formData.append('transactionType', transactionType)
-            if (receipt.value != '') {
-                formData.append('receipt', receipt.files[0])
-            }
-            formData.append('description', description.value)
-            formData.append('fee', fee.value)
-            formData.append('userId', userId)
-            loader('open')
-            $.ajax({
-                url: api + 'transactionRequestApi',
-                type: "POST",
-                dataType: "json",
-                contentType: false,
-                processData: false,
-                data: formData,
-                success: function (data) {
-                    console.log(data)
-                    loader('close')
-                    el.closest('.popup-wallet').classList.add('invisible', 'opacity-0')
-                },
-                error: function () {
-                    console.log('error')
-                }
-            })
+function submitWallet(el){
+    let deposit = el.closest('.popup-wallet').querySelector('.deposit')
+    let withdraw = el.closest('.popup-wallet').querySelector('.withdraw')
+    let receipt = el.closest('.popup-wallet').querySelector('.receipt')
+    let fee = el.closest('.popup-wallet').querySelector('.fee')
+    let description = el.closest('.popup-wallet').querySelector('.description')
+    if (fee.value == '') {
+        alert('لطفا مبلغ را وارد کنید')
+    }
+    else if (!receipt && receipt.value == '') {
+        alert('آپلود رسید الزامی است')
+    } else {
+        let transactionType
+        if (deposit.checked) {
+            transactionType = 'deposit'
+        } else if (withdraw.checked) {
+            transactionType = 'withdraw'
         }
-
-
-
-    })
-
-    row.querySelectorAll('.closeWalletBtn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            row.querySelector('.popup-wallet').classList.add('invisible', 'opacity-0')
-        })
-    })
-    openBtn_edited.addEventListener("click", () => {
+        let formData = new FormData()
+        formData.append('transactionType', transactionType)
+        if (receipt.value != '') {
+            formData.append('receipt', receipt.files[0])
+        }
+        formData.append('description', description.value)
+        formData.append('fee', fee.value)
+        formData.append('userId', userId)
         loader('open')
         $.ajax({
-            url: api + 'userDetail/' + row.dataset.userId,
-            type: "GET",
+            url: api + 'transactionRequestApi',
+            type: "POST",
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            data: formData,
             success: function (data) {
                 console.log(data)
                 loader('close')
-
-                popup_edit.classList.remove("invisible")
-                popup_edit.classList.remove("opacity-0")
-                row.querySelector('.detailBox').classList.remove("invisible", 'opacity-0')
-
-
-                row.querySelector('.name').value = data.name
-                row.querySelector('.family').value = data.family
-                row.querySelector('.phoneNumber').value = data.phoneNumber
-                row.querySelector('.nationalCode').value = data.nationalCode
-                let isApprovedOptions = row.querySelector('.isApproved').children
-                for (let option of isApprovedOptions) {
-                    if (option.value == data.isApproved) {
-                        option.selected = true
-                    }
-                }
-                if (data.isActive == 1) {
-                    row.querySelector('#AisActive' + data.id).checked = true
-                } else {
-                    row.querySelector('#AisActive' + data.id).checked = false
-                }
+                el.closest('.popup-wallet').classList.add('invisible', 'opacity-0')
             },
             error: function () {
-                console.log('failed to load data')
+                console.log('error')
             }
         })
-    })
-    closeBtn.addEventListener('click', () => {
-        popup_edit.classList.add("invisible")
-        popup_edit.classList.add("opacity-0")
-        row.querySelector('.detailBox').classList.add("invisible", 'opacity-0')
-    })
-    xBtn.addEventListener('click', () => {
-        popup_edit.classList.add("invisible")
-        popup_edit.classList.add("opacity-0")
-        row.querySelector('.detailBox').classList.add("invisible", 'opacity-0')
-    })
-    submitBtn.addEventListener('click', () => {
+    }
+}
 
-        let children = row.querySelector('.roles').children
-        let roles = []
-        for (let child of children) {
-            if (child.selected) {
-                roles.push(child.value)
+function closeWalletBtn(el){
+    el.closest('.popup-wallet').classList.add('invisible', 'opacity-0')
+}
+
+function openEditPopup(el){
+    loader('open')
+    $.ajax({
+        url: api + 'userDetail/' + el.closest('.approvedUsers').dataset.userId,
+        type: "GET",
+        success: function (data) {
+            console.log(data)
+            loader('close')
+
+            el.closest('tr').querySelector('.popup-edit').classList.remove("invisible")
+            el.closest('tr').querySelector('.popup-edit').classList.remove("opacity-0")
+            el.closest('.approvedUsers').querySelector('.detailBox').classList.remove("invisible", 'opacity-0')
+
+
+            el.closest('.approvedUsers').querySelector('.name').value = data.name
+            el.closest('.approvedUsers').querySelector('.family').value = data.family
+            el.closest('.approvedUsers').querySelector('.phoneNumberEd').value = data.phoneNumber
+            el.closest('.approvedUsers').querySelector('.nationalCode').value = data.nationalCode
+            let isApprovedOptions = el.closest('.approvedUsers').querySelector('.isApproved').children
+            for (let option of isApprovedOptions) {
+                if (option.value == data.isApproved) {
+                    option.selected = true
+                }
             }
+            if (data.isActive == 1) {
+                el.closest('.approvedUsers').querySelector('#AisActive' + data.id).checked = true
+            } else {
+                el.closest('.approvedUsers').querySelector('#AisActive' + data.id).checked = false
+            }
+        },
+        error: function () {
+            console.log('failed to load data')
         }
-        $.ajax({
-            url: api + 'updateUser',
-            type: "POST",
-            dataType: "json",
-            data: {
-                'user_id': row.dataset.userId,
-                'popupName': row.querySelector('.name').value,
-                'popupFamily': row.querySelector('.family').value,
-                'popupPhoneNumber': row.querySelector('.phoneNumber').value,
-                'popupNationalCode': row.querySelector('.nationalCode').value,
-                'approvingStatus': row.querySelector('.isApproved').value,
-                'isActive': row.querySelector('#AisActive' + row.dataset.userId).checked ? 1 : 0,
-                'roles': roles,
-                'flag': true,
-            },
-            success: function (data) {
-                console.log(data)
-                popup_edit.classList.add("invisible")
-                popup_edit.classList.add("opacity-0")
-                row.querySelector('.detailBox').classList.remove("invisible", 'opacity-0')
-
-                document.querySelectorAll('.approvedUsers').forEach(el => {
-                    if (el.dataset.userId == data.user.id) {
-                        row.querySelector('.fullNameList').textContent = data.user.name + ' ' + data.user.family
-                        row.querySelector('.phoneNumberList').textContent = data.user.phoneNumber
-                        row.querySelector('.nationalCodeList').textContent = data.user.nationalCode
-                        row.querySelector('.isActiveList').querySelector('span').classList = `px-3 py-1.5 border-1 ` + (data.user.isActive == 1 ? ` bg-(--primary-dashboard)/20 text-(--primary-dashboard) border-(--primary-dashboard)` : `bg-(--danger-dashboard)/20 text-(--danger-dashboard) border-(--danger-dashboard)`) + ` rounded-md p-1 cursor-default`
-                        row.querySelector('.isActiveList').querySelector('span').textContent = data.user.isActive == 1 ? 'فعال' : 'غیرفعال'
-                    }
-                })
-
-            },
-            error: function () {
-                console.log('failed to load data')
-            }
-        })
-
     })
-})
+}
+
+function submitEditUser(el){
+    let children = el.closest('.approvedUsers').querySelector('.roles').children
+    let roles = []
+    for (let child of children) {
+        if (child.selected) {
+            roles.push(child.value)
+        }
+    }
+    $.ajax({
+        url: api + 'updateUser',
+        type: "POST",
+        dataType: "json",
+        data: {
+            'user_id': el.closest('.approvedUsers').dataset.userId,
+            'popupName': el.closest('.approvedUsers').querySelector('.name').value,
+            'popupFamily': el.closest('.approvedUsers').querySelector('.family').value,
+            'popupPhoneNumber': el.closest('.approvedUsers').querySelector('.phoneNumberEd').value,
+            'popupNationalCode': el.closest('.approvedUsers').querySelector('.nationalCode').value,
+            'approvingStatus': el.closest('.approvedUsers').querySelector('.isApproved').value,
+            'isActive': el.closest('.approvedUsers').querySelector('#AisActive' + el.closest('.approvedUsers').dataset.userId).checked ? 1 : 0,
+            'roles': roles,
+            'flag': true,
+        },
+        success: function (data) {
+            console.log(data)
+            el.closest('.approvedUsers').querySelector('.popup-edit').classList.add("invisible")
+            el.closest('.approvedUsers').querySelector('.popup-edit').classList.add("opacity-0")
+            el.closest('.approvedUsers').querySelector('.detailBox').classList.remove("invisible", 'opacity-0')
+
+            document.querySelectorAll('.approvedUsers').forEach(el => {
+                if (el.dataset.userId == data.user.id) {
+                    el.closest('.approvedUsers').querySelector('.fullNameList').textContent = data.user.name + ' ' + data.user.family
+                    el.closest('.approvedUsers').querySelector('.phoneNumberList').textContent = data.user.phoneNumber
+                    el.closest('.approvedUsers').querySelector('.nationalCodeList').textContent = data.user.nationalCode
+                    el.closest('.approvedUsers').querySelector('.isActiveList').querySelector('span').classList = `px-3 py-1.5 border-1 ` + (data.user.isActive == 1 ? ` bg-(--primary-dashboard)/20 text-(--primary-dashboard) border-(--primary-dashboard)` : `bg-(--danger-dashboard)/20 text-(--danger-dashboard) border-(--danger-dashboard)`) + ` rounded-md p-1 cursor-default`
+                    el.closest('.approvedUsers').querySelector('.isActiveList').querySelector('span').textContent = data.user.isActive == 1 ? 'فعال' : 'غیرفعال'
+                }
+            })
+        },
+        error: function () {
+            console.log('failed to load data')
+        }
+    })
+}
+
+function closeEditUser(el){
+    el.closest('.popup-edit').classList.add("invisible")
+    el.closest('.popup-edit').classList.add("opacity-0")
+    el.closest('.approvedUsers').querySelector('.detailBox').classList.add("invisible", 'opacity-0')
+}
 
 let confirmed = document.getElementById("confirmed");
 let pending = document.getElementById("pending");
@@ -269,35 +248,35 @@ rowCheckboxes.forEach((checkbox) => {
 const item_list = document.querySelectorAll(".item_list")
 
 item_list.forEach((item_list) => {
-    const openBtn_look_edit = item_list.querySelector(".open-popup-look-edit")
+    // const openBtn_look_edit = item_list.querySelector(".open-popup-look-edit")
     const popup_edit = item_list.querySelector(".popup-edit")
     const closeBtn_edit2 = item_list.querySelector(".close-popup-edit2")
-    const openBtn_look = item_list.querySelector(".open-popup-look")
+    // const openBtn_look = item_list.querySelector(".open-popup-look")
     const popup_look = item_list.querySelector(".popup-look")
-    const closeBtn_look = item_list.querySelector(".close-popup-look")
-    const closeBtn_look2 = item_list.querySelector(".close-popup-look2")
+    // const closeBtn_look = item_list.querySelector(".close-popup-look")
+    // const closeBtn_look2 = item_list.querySelector(".close-popup-look2")
     closeBtn_edit2.addEventListener("click", () => {
         popup_edit.classList.add("invisible")
         popup_edit.classList.add("opacity-0")
     })
-    openBtn_look_edit.addEventListener("click", () => {
-        popup_edit.classList.remove("invisible")
-        popup_edit.classList.remove("opacity-0")
-        popup_look.classList.add("invisible")
-        popup_look.classList.add("opacity-0")
-    })
-    openBtn_look.addEventListener("click", () => {
-        popup_look.classList.remove("invisible")
-        popup_look.classList.remove("opacity-0")
-    })
-    closeBtn_look.addEventListener("click", () => {
-        popup_look.classList.add("invisible")
-        popup_look.classList.add("opacity-0")
-    })
-    closeBtn_look2.addEventListener("click", () => {
-        popup_look.classList.add("invisible")
-        popup_look.classList.add("opacity-0")
-    })
+    // openBtn_look_edit.addEventListener("click", () => {
+    //     popup_edit.classList.remove("invisible")
+    //     popup_edit.classList.remove("opacity-0")
+    //     popup_look.classList.add("invisible")
+    //     popup_look.classList.add("opacity-0")
+    // })
+    // openBtn_look.addEventListener("click", () => {
+    //     popup_look.classList.remove("invisible")
+    //     popup_look.classList.remove("opacity-0")
+    // })
+    // closeBtn_look.addEventListener("click", () => {
+    //     popup_look.classList.add("invisible")
+    //     popup_look.classList.add("opacity-0")
+    // })
+    // closeBtn_look2.addEventListener("click", () => {
+    //     popup_look.classList.add("invisible")
+    //     popup_look.classList.add("opacity-0")
+    // })
 })
 
 const items_2 = document.querySelectorAll(".item_2")

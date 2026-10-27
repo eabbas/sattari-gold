@@ -347,10 +347,10 @@ class SearchController extends Controller
                 $query->where('users.family', 'like', '%'.$family.'%');
             }
             if ($phoneNumber) {
-                $query->where('users.phoneNumber', $phoneNumber);
+                $query->where('users.phoneNumber', 'like', '%'.$phoneNumber.'%');
             }
             if ($nationalCode) {
-                $query->where('users.nationalCode', $nationalCode);
+                $query->where('users.nationalCode', 'like', '%'.$nationalCode.'%');
             }
             if ($activity) {
                 $query->whereIn('users.isActive', $activity);
@@ -363,13 +363,13 @@ class SearchController extends Controller
         $users = $users->orderBy('created_at', 'desc')->get();
         foreach($users as $user){
             $roleArr = [];
-            Log::info($user->roles);
+            
             foreach($user->roles as $role){
                 $roleArr[]=$role->id;
             }
             $user->created_at = verta($user->created_at);
+            $user->roleArr = $roleArr;
         }
-
         $roles = role::all();
         foreach($roles as $role){
             switch($role->name){
