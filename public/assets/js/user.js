@@ -193,7 +193,6 @@ function submitEditUser(el){
                     el.closest('.approvedUsers').querySelector('.isActiveList').querySelector('span').textContent = data.user.isActive == 1 ? 'فعال' : 'غیرفعال'
                 }
             })
-
         },
         error: function () {
             console.log('failed to load data')
@@ -206,28 +205,6 @@ function closeEditUser(el){
     el.closest('.popup-edit').classList.add("opacity-0")
     el.closest('.approvedUsers').querySelector('.detailBox').classList.add("invisible", 'opacity-0')
 }
-document.querySelectorAll('.approvedUsers').forEach(row => {
-    // let openBtn_edited = row.querySelector(".open-popup-edited") // openEditPopup
-    // let popup_edit = row.querySelector(".popup-edit")
-    // let closeBtn = row.querySelector(".closeBtn")
-    // let submitBtn = row.querySelector(".submitBtn")
-    // let xBtn = row.querySelector(".close-popup-look-cont")
-
-   
-    // closeBtn.addEventListener('click', () => {
-        
-    // })
-    // xBtn.addEventListener('click', () => {
-    //     popup_edit.classList.add("invisible")
-    //     popup_edit.classList.add("opacity-0")
-    //     row.querySelector('.detailBox').classList.add("invisible", 'opacity-0')
-    // })
-    // submitBtn.addEventListener('click', () => {
-
-        
-
-    // })
-})
 
 let confirmed = document.getElementById("confirmed");
 let pending = document.getElementById("pending");
