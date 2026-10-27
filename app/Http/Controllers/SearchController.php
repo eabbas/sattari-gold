@@ -230,6 +230,7 @@ class SearchController extends Controller
         $toDate = $filters['toDate'] ?? null;
         $price = $filters['price'] ?? null;
         $number = $filters['transactionId'] ?? null;
+        $sortType = $filters['sortType'] ?? 'desc';
         if ($number) {
             $transactionId = substr($number, 3);
             $transactions = transaction::find($transactionId);
@@ -276,7 +277,7 @@ class SearchController extends Controller
                 });
             });
         }
-        $transactions = $transactions->orderBy('created_at', 'desc')->get();
+        $transactions = $transactions->orderBy('date', $sortType)->orderBy('time', $sortType)->get();
         foreach ($transactions as $transaction) {
             $transaction->fullName = $transaction->wallet->user->name . ' ' . $transaction->wallet->user->family;
             $transaction->phoneNumber = $transaction->wallet->user->phoneNumber;

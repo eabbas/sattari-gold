@@ -41,6 +41,19 @@
         <!-- واریز و برداشت / لسیت -->
         <section class="w-full mx-auto rounded-md border-1 border-(--border-dashboard) mt-5 pb-10 overflow-hidden">
             <div class="w-full">
+                <div class="w-full pb-3 px-3 flex flex-row justify-end">
+                    <button onclick="sort(this)" class="flex gap-5 items-center" data-sort="desc">
+                        <span>مرتب سازی  :</span>
+                        <p>نزولی</p>
+                        <img src="{{ asset('assets/img/sort/desc.png') }}" style="
+                            max-width: 30px;
+                            max-height: 30px;
+                            margin-top: 10px;
+                            margin-left: 5px;
+                            cursor: pointer;
+                        " alt="">
+                    </button>
+                </div>
                 <div class="w-full bg-white py-5 px-2 mb-2">
                     <div class="w-full grid grid-cols-2 md:grid-cols-4 justify-items-end gap-2">
                         <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
@@ -107,7 +120,7 @@
                     </div>
                     <div class="w-full flex justify-end">
                         <button
-                            class="w-fit flex items-center justify-center font-bold text-xs md:text-base py-2 md:px-6 mt-5 hover:bg-(--color-blue) hover:text-white transition-all duratoin-300 col-span-1 md:text-right border-1 border-(--color-blue) text-(--color-blue) rounded-md text-center cursor-pointer"
+                            class="w-fit flex items-center justify-center font-bold text-xs md:text-base px-3 py-2 md:px-6 mt-5 hover:bg-(--color-blue) hover:text-white transition-all duratoin-300 col-span-1 md:text-right border-1 border-(--color-blue) text-(--color-blue) rounded-md text-center cursor-pointer"
                             onclick="setDatas()">اعمال</button>
                     </div>
                 </div>
@@ -127,13 +140,13 @@
                                 <th class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     ردیف
                                 </th>
-                                <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                                <th class="min-w-40 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     نام و نام خانوادگی
                                 </th>
                                 <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     شماره موبایل
                                 </th>
-                                <th class="min-w-25 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                                <th class="min-w-32 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     نوع تراکنش
                                 </th>
                                 <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
@@ -142,13 +155,13 @@
                                 <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     وزن
                                 </th>
-                                <th class="min-w-33 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                                <th class="min-w-48 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     زمان | تاریخ
                                 </th>
                                 <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     شماره سند
                                 </th>
-                                <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                                <th class="min-w-36 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     وضعیت
                                 </th>
                                 <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">

@@ -5,7 +5,8 @@ let dealFilters = {
     'fromDate': null,
     'toDate': null,
     'price': null,
-    'transactionId': null
+    'transactionId': null,
+    'sortType': 'desc'
 }
 
 let fullName = document.getElementById('fullName')
@@ -232,4 +233,20 @@ function transactionAct(isApproved) {
             console.log('failed to load data')
         }
     })
+}
+
+function sort(el){
+    if(el.dataset.sort == 'desc'){
+        el.querySelector('img').src = url+'assets/img/sort/asc.png'
+        el.querySelector('p').innerText = 'صعودی'
+        el.dataset.sort = 'asc'
+        dealFilters.sortType = 'asc'
+    }
+    else{
+        el.querySelector('img').src = url+'assets/img/sort/desc.png'
+        el.querySelector('p').innerText = 'نزولی'
+        el.dataset.sort = 'desc'
+        dealFilters.sortType = 'desc'
+    }
+    applyDealFilters()
 }

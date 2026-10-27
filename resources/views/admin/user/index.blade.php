@@ -306,7 +306,7 @@
                         </div>
                         <div class="w-full flex justify-end">
                             <button
-                                class="w-fit flex items-center justify-center font-bold text-xs md:text-base py-2 md:px-6 mt-5 hover:bg-(--color-blue) hover:text-white transition-all duratoin-300 col-span-1 md:text-right border-1 border-(--color-blue) text-(--color-blue) rounded-md text-center cursor-pointer"
+                                class="w-fit flex items-center justify-center px-3 font-bold text-xs md:text-base py-2 md:px-6 mt-5 hover:bg-(--color-blue) hover:text-white transition-all duratoin-300 col-span-1 md:text-right border-1 border-(--color-blue) text-(--color-blue) rounded-md text-center cursor-pointer"
                                 onclick="setDatas()">اعمال</button>
                         </div>
                     </div>
