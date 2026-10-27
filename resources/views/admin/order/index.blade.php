@@ -186,31 +186,31 @@
                     <th class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                         ردیف
                     </th>
-                    <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                    <th class="min-w-40 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                         نام و نام خانوادگی
                     </th>
                     <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                         شماره موبایل
                     </th>
-                    <th class="min-w-25 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                    <th class="min-w-40 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                         وضعیت
                     </th>
-                    <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                    <th class="min-w-24 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                         تعداد آیتم
                     </th>
-                    <th class="min-w-33 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                    <th class="min-w-44 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                         زمان | تاریخ
                     </th>
-                    <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                    <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                         شماره سفارش
                     </th>
-                    <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                    <th class="min-w-38 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                         مشاهده
                     </th>
-                    <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                    <th class="min-w-38 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                         رسید
                     </th>
-                    <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                    <th class="min-w-40 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                         دکمه ها
                     </th>
                 </tr>
