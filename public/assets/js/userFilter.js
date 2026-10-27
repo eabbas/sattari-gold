@@ -5,6 +5,7 @@ let userFilter = {
     'nationalCode': false,
     'activity': ['all'],
     'approve': ['all'],
+    'sortType': 'desc',
 }
 
 let filter_name = document.getElementById('filter-name')
@@ -554,4 +555,20 @@ function applyuserFilter(){
             console.log('error')
         }
     })
+}
+
+function sort(el) {
+    if (el.dataset.sort == 'desc') {
+        el.querySelector('img').src = url + 'assets/img/sort/asc.png'
+        el.querySelector('p').innerText = 'صعودی'
+        el.dataset.sort = 'asc'
+        userFilter.sortType = 'asc'
+    }
+    else {
+        el.querySelector('img').src = url + 'assets/img/sort/desc.png'
+        el.querySelector('p').innerText = 'نزولی'
+        el.dataset.sort = 'desc'
+        userFilter.sortType = 'desc'
+    }
+    setDatas()
 }

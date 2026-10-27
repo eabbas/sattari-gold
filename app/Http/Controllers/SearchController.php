@@ -326,6 +326,7 @@ class SearchController extends Controller
         $nationalCode = $filters['nationalCode'] ?? null;
         $activity = $filters['activity'] ?? ['all'];
         $approve = $filters['approve'] ?? ['all'];
+        $sortType = $filters['sortType'] ?? 'desc';
 
         if ($activity == ['all']) {
             $activity = [];
@@ -361,7 +362,7 @@ class SearchController extends Controller
             }
         })->with(['wallet', 'roles']);
 
-        $users = $users->orderBy('created_at', 'desc')->get();
+        $users = $users->orderBy('created_at', $sortType)->get();
         foreach($users as $user){
             $roleArr = [];
             

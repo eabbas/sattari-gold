@@ -234,7 +234,21 @@
                     </form> --}}
 
 
-
+                    <div class="w-full pb-3 px-3 flex flex-row justify-end">
+                        <button onclick="sort(this)" class="flex gap-5 items-center" data-sort="desc">
+                            <span>مرتب سازی :</span>
+                            <p>نزولی</p>
+                            <img src="{{ asset('assets/img/sort/desc.png') }}"
+                                style="
+                            max-width: 30px;
+                            max-height: 30px;
+                            margin-top: 10px;
+                            margin-left: 5px;
+                            cursor: pointer;
+                        "
+                                alt="">
+                        </button>
+                    </div>
 
 
                     <div class="w-full bg-white py-5 px-2 mb-2">
@@ -649,9 +663,10 @@
 
 
 
-                                                    <div class="px-3 py-2 w-2/3 mx-auto bg-white relative z-51 rounded-md max-h-[500px] overflow-y-auto">
+                                                    <div
+                                                        class="px-3 py-2 w-2/3 mx-auto bg-white relative z-51 rounded-md max-h-[500px] overflow-y-auto">
                                                         {{-- action="{{ route('wallet.transactionRequest') }}" --}}
-                                                            {{-- method="POST" enctype="multipart/form-data" --}}
+                                                        {{-- method="POST" enctype="multipart/form-data" --}}
                                                         <div>
                                                             {{-- @csrf --}}
                                                             <div class="grid grid-cols-6 gap-5 mt-5">
@@ -691,7 +706,7 @@
                                                                                 </span>
                                                                             </div>
                                                                             <div class="font-bold pb-2 in-fa moneyAsset">
-                                                                                
+
                                                                             </div>
                                                                         </div>
                                                                         <div class="flex items-center justify-between">
@@ -751,7 +766,7 @@
                                                                                 </span>
                                                                             </div>
                                                                             <div class="font-bold pb-2 in-fa goldAsset">
-                                                                                
+
                                                                             </div>
                                                                         </div>
                                                                         <div class="flex items-center justify-between">
@@ -778,8 +793,7 @@
                                                                                 </span>
                                                                             </div>
                                                                             <div class="font-bold pt-2">
-                                                                                <span
-                                                                                {{-- {{ number_format(($user->wallet->goldWeight ?? 0) * 25000000) }} --}}
+                                                                                <span {{-- {{ number_format(($user->wallet->goldWeight ?? 0) * 25000000) }} --}}
                                                                                     class="in-fa takebleGoldAsset"></span>
                                                                                 <span
                                                                                     class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
@@ -797,7 +811,8 @@
                                                                                 class="flex items-center gap-1 md:gap-3">
                                                                                 <input
                                                                                     class="accent-(--primary-dashboard) size-4 md:size-5 deposit"
-                                                                                    type="radio" name="transactionType{{ $user->id }}"
+                                                                                    type="radio"
+                                                                                    name="transactionType{{ $user->id }}"
                                                                                     value="deposit" id="deposit"
                                                                                     onclick="transactionMethod('deposit',this, {{ $user->id }})">
                                                                                 <span
@@ -810,7 +825,8 @@
                                                                                 class="flex items-center gap-1 md:gap-3">
                                                                                 <input
                                                                                     class="accent-(--primary-dashboard) size-4 md:size-5 withdraw"
-                                                                                    type="radio" name="transactionType{{ $user->id }}"
+                                                                                    type="radio"
+                                                                                    name="transactionType{{ $user->id }}"
                                                                                     value="withdraw" id="withdraw"
                                                                                     onclick="transactionMethod('withdraw',this, {{ $user->id }})">
                                                                                 <span
@@ -826,12 +842,14 @@
                                                                 </div>
                                                                 <div id="transactionMethod{{ $user->id }}"
                                                                     class="col-span-6 grid grid-cols-6 gap-4">
-                                                                {{--  onclick="submitBtn(event)" --}}
+                                                                    {{--  onclick="submitBtn(event)" --}}
                                                                 </div>
                                                                 <button type="submit"
-                                                                    class="col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold cursor-pointer submitWallet" onclick="submitWallet(this)">ثبت</button>
+                                                                    class="col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold cursor-pointer submitWallet"
+                                                                    onclick="submitWallet(this)">ثبت</button>
                                                                 <button type="reset"
-                                                                    class="col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold cursor-pointer closeWalletBtn" onclick="closeWalletBtn(this)">
+                                                                    class="col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold cursor-pointer closeWalletBtn"
+                                                                    onclick="closeWalletBtn(this)">
                                                                     لغو</button>
                                                             </div>
                                                         </div>
@@ -960,7 +978,8 @@
                                                     </div>
                                                 </div> --}}
                                                 <button
-                                                    class="open-popup-edited w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-1 py-2 cursor-pointer flex items-center justify-center" onclick="openEditPopup(this)">
+                                                    class="open-popup-edited w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-1 py-2 cursor-pointer flex items-center justify-center"
+                                                    onclick="openEditPopup(this)">
                                                     <svg class="size-5" fill="currentColor"
                                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                                         <path
@@ -978,9 +997,9 @@
                                                             class="w-full flex items-center justify-between border-b-1 border-(--border-dashboard) pb-2">
                                                             <div class="text-sm md:text-base font-bold text-nowrap">ویرایش
                                                                 اطلاعات مشتری</div>
-                                                            <svg class="size-6 cursor-pointer close-popup-look-cont" onclick="closeEditUser(this)"
-                                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-                                                                viewBox="0 0 384 512">
+                                                            <svg class="size-6 cursor-pointer close-popup-look-cont"
+                                                                onclick="closeEditUser(this)" fill="currentColor"
+                                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
                                                                 <path
                                                                     d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z">
                                                                 </path>
@@ -1059,9 +1078,11 @@
                                                             </div>
 
                                                             <button
-                                                                class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold submitBtn cursor-pointer transition-all duration-300 hover:bg-(--primary-dashboard) hover:text-white" onclick="submitEditUser(this)">ثبت</button>
+                                                                class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold submitBtn cursor-pointer transition-all duration-300 hover:bg-(--primary-dashboard) hover:text-white"
+                                                                onclick="submitEditUser(this)">ثبت</button>
                                                             <button
-                                                                class="col-span-1 md:col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold closeBtn cursor-pointer transition-all duration-300 hover:bg-(--danger-dashboard) hover:text-white" onclick="closeEditUser(this)">لغو</button>
+                                                                class="col-span-1 md:col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold closeBtn cursor-pointer transition-all duration-300 hover:bg-(--danger-dashboard) hover:text-white"
+                                                                onclick="closeEditUser(this)">لغو</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1306,7 +1327,7 @@
         }
 
         function transactionMethod(state, el, userId) {
-            let transactionMethod = document.getElementById('transactionMethod'+userId)
+            let transactionMethod = document.getElementById('transactionMethod' + userId)
             if (state == 'deposit') {
                 if (setting.depositIsActive == 0) {
                     el.parentElement.nextElementSibling.innerText = 'در حال حاضر امکان واریز کردن غیرفعال است'
