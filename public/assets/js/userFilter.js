@@ -70,7 +70,10 @@ function applyuserFilter(){
             confirmed.querySelector('tbody').innerHTML = ""
             pending.querySelector('tbody').innerHTML = ""
             loader('close')
+            let i = 0
+            let j = 0
             data.users.forEach(user=>{
+                i++
                 if(user.isApproved==1){
                     console.log(1)
                     let tr = document.createElement('tr')
@@ -82,7 +85,7 @@ function applyuserFilter(){
                         <td class="p-1 md:px-3 md:py-2 flex items-center justify-center gap-2 in-fa">
                             <input type="checkbox" name=""
                                 class="row-checkbox appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
-                            ${user.id}
+                            ${i}
                         </td>
                         <td
                             class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center fullNameList">
@@ -442,10 +445,10 @@ function applyuserFilter(){
                     let tr = document.createElement('tr')
                     tr.classList = 'item_2 text-xs lg:text-base'
                     tr.dataset.userId = user.id
-
+                    j++
                     let html = `
                         <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center text-nowrap">
-                            ${user.id}
+                            ${j}
                         </td>
                         <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center text-nowrap">
                             ${user.name+' '+user.family}

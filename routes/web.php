@@ -25,7 +25,9 @@ use Illuminate\Support\Facades\Schema;
 use App\Models\logo;
 use App\Models\creditCard;
 use App\Models\transactionSetting;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 Route::get('/z', function () {
     $logo = logo::first();
@@ -61,6 +63,15 @@ Route::get('/xyz', function () {
     // Schema::table('orders', function (Blueprint $table) {
     //     $table->string('receipt')->nullable()->after('description');
     // });
+
+    Schema::table('users', function (Blueprint $table) {
+        $table->string('referral_code')->unique()->nullable()->after('id');
+    });
+
+    foreach(User::all() as $user){
+        $code = strtoupper(Str::random(10));
+        $user->update(['referral_code'=>$code]);
+    }
 });
 
 // home routes

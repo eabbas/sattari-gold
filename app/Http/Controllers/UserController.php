@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Api\NationalCode;
+use Illuminate\Support\Str;
 use App\Models\logo;
 use App\Models\PhoneCode;
 use App\Models\role;
@@ -236,6 +237,7 @@ class UserController extends Controller
                 'password.min' => 'رمز عبور حدافل باید 8 رقمی باشد.',
             ]
         );
+        $code = strtoupper(Str::random(10));
         $user = User::create([
             'name' => $request->name,
             'family' => $request->family,
@@ -244,6 +246,7 @@ class UserController extends Controller
             'phoneNumber' => $request->phoneNumber,
             'nationalCode' => $request->nationalCode,
             'password' => $request->password,
+            'referral_code' => $code,
         ]);
         return to_route('user.login')->with('success', "$user->name $user->family عزیز با موفقیت ثبت نام شدید لطفا وارد شوید.");
     }
@@ -289,12 +292,14 @@ class UserController extends Controller
         if (!$result['data']) {
             return redirect()->back()->with('failure', 'شماره تلفن و کدملی باهم مطابقت ندارند.');
         }
+        $code = strtoupper(Str::random(10));
         $user = User::create([
             'name' => $request->name,
             'family' => $request->family,
             'phoneNumber' => $request->phoneNumber,
             'nationalCode' => $request->nationalCode,
             'password' => $request->password,
+            'referral_code' => $code,
         ]);
         foreach ($request->roles as $role) {
             user_role::create([

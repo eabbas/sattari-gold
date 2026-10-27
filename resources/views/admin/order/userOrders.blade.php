@@ -216,10 +216,13 @@
             </thead>
 
             <tbody class="bg-white">
+                @php
+                    $i=1;
+                @endphp
                 @foreach ($orders as $order)
                     <tr class="text-xs lg:text-base" data-order-id="{{ $order->id }}">
-                        <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                            {{ $order->id }}
+                        <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
+                            {{ $i }}
                         </td>
                         <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                             {{ $order->user['name'] }}
@@ -261,6 +264,9 @@
                         </td>
 
                     </tr>
+                    @php
+                        $i++;
+                    @endphp
                 @endforeach
             </tbody>
         </table>
