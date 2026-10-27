@@ -77,7 +77,7 @@
                     @endphp
                     @foreach ($referenceSites as $site)
                         <tr class="item text-nowrap font-bold max-sm:text-sm">
-                            <td class="px-3 py-2 flex items-center justify-center">
+                            <td class="px-3 py-2 flex items-center justify-center in-fa">
                                 {{ $i }}
                             </td>
                             <td class="border-1 border-(--border) px-3 py-2 text-center">

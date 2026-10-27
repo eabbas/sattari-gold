@@ -382,14 +382,20 @@
                             </thead>
 
                             <tbody>
+                                @php
+                                    $i=0;
+                                @endphp
                                 @foreach ($users as $user)
+                                @php
+                                    $i++;
+                                @endphp
                                     @if ($user->isApproved)
                                         <tr class="item_list text-xs lg:text-base approvedUsers"
                                             data-user-id="{{ $user->id }}">
                                             <td class="p-1 md:px-3 md:py-2 flex items-center justify-center gap-2 in-fa">
                                                 <input type="checkbox" name=""
                                                     class="row-checkbox appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
-                                                {{ $user->id }}
+                                                {{ $i }}
                                             </td>
                                             <td
                                                 class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center fullNameList">
@@ -1121,12 +1127,18 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $j=0;
+                                @endphp
                                 @foreach ($users as $user)
+                                @php
+                                    $j++;
+                                @endphp
                                     @if (!$user->isApproved)
                                         <tr class="item_2 text-xs lg:text-base" data-user-id="{{ $user->id }}">
                                             <td
                                                 class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center text-nowrap">
-                                                {{ $user->id }}
+                                                {{ $j }}
                                             </td>
                                             <td
                                                 class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center text-nowrap">

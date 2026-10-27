@@ -124,19 +124,19 @@
                     @endphp
                     @foreach ($creditcard as $card)
                         <tr class="item text-nowrap font-bold max-sm:text-sm">
-                            <td class="px-3 py-2 flex items-center justify-center">
+                            <td class="px-3 py-2 flex items-center justify-center in-fa">
                                 {{ $i }}
                             </td>
                             <td class="border-1 border-(--border) px-3 py-2 text-center">
                                 {{ $card->name }}
                             </td>
-                            <td class="border-1 border-(--border) px-3 py-2 text-center">
+                            <td class="border-1 border-(--border) px-3 py-2 text-center in-fa">
                                 {{ $card->card_number }}
                             </td>
-                            <td class="border-1 border-(--border) px-3 py-2 text-center">
+                            <td class="border-1 border-(--border) px-3 py-2 text-center in-fa">
                                 {{ $card->shaba_number }}
                             </td>
-                            <td class="border-1 border-(--border) px-3 py-2 text-center">
+                            <td class="border-1 border-(--border) px-3 py-2 text-center in-fa">
                                 {{ $card->account_number }}
                             </td>
                             

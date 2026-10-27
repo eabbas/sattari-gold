@@ -62,7 +62,7 @@ function applyDealFilters() {
                 parentRow.classList = 'item_fayle text-xs lg:text-base'
                 counter++
                 let html = `
-                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
+                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
                         ${counter}
                     </td>
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">

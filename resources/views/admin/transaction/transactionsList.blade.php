@@ -171,10 +171,16 @@
                         </thead>
 
                         <tbody>
+                            @php
+                                $i=0;
+                            @endphp
                             @foreach ($transactions as $transaction)
+                            @php
+                                $i++;
+                            @endphp
                                 <tr class="text-xs lg:text-base" data-transaction-id="{{ $transaction->id }}">
-                                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                                        {{ $transaction->id }}
+                                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
+                                        {{ $i }}
                                     </td>
                                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                                         {{ $transaction->wallet->user['name'] }}
