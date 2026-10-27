@@ -198,7 +198,6 @@
                     <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                         تعداد آیتم
                     </th>
-
                     <th class="min-w-33 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                         زمان | تاریخ
                     </th>
