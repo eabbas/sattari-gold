@@ -444,6 +444,9 @@ class UserController extends Controller
         }
         $user['persianRoles'] = $roles;
         $logo = logo::first();
+        $dateTime = explode(' ', verta($user->created_at));
+        $user->date = implode('/', explode('-', $dateTime[0]));
+        $user->time = $dateTime[1];
         return view('user.user.profile', [
             'user' => $user,
             'logo' => $logo,

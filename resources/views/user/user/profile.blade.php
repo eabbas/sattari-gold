@@ -103,7 +103,7 @@
                         <span class="texttext-xs sm:-sm text-slate-400">تاریخ عضویت</span>
                     </div>
                     <div>
-                        <p class="text-slate-800 font-bold mt-1 text-sm sm:text-lg in-fa">{{ verta($user->created_at) }}</p>
+                        <p class="text-slate-800 font-bold mt-1 text-sm sm:text-lg in-fa">{{ $user->time . ' - ' . $user->date }}</p>
                     </div>
                 </div>
             </div>

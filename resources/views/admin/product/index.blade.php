@@ -244,7 +244,7 @@
                                     </div>
                                 </td>
                                 <td class="p-1 md:px-3 md:py-2  in-fa">
-                                    <div class="flex items-center justify-center gap-2">
+                                    <div class="flex items-center justify-center gap-2 in-fa">
                                         {{ $product->title }}
                                     </div>
                                 </td>
@@ -355,7 +355,7 @@
     <div class="size-full relative">
         <div class="size-full bg-black/40 absolute top-0 left-0" onclick="editForm('close')"></div>
         <div
-            class="w-9/12 2xl:container 2xl:w-9/12 max-h-160 overflow-auto mx-auto border border-[#D5DFE4] rounded-[10px] text-[#425A8B] p-5 bg-white absolute right-1/2 translate-x-1/2 top-1/2 -translate-y-1/2">
+            class="w-9/12 2xl:container 2xl:w-9/12 max-h-160 overflow-auto mx-auto border border-[#D5DFE4] rounded-[10px] text-[#425A8B] p-5 bg-white absolute right-1/2 translate-x-1/2 top-1/2 -translate-y-1/2 max-h-[calc(100vh-100px)]">
             <div class="relative">
                 <button class="absolute -top-4 -left-4 size-6 flex flex-col justify-center items-center cursor-pointer"
                     onclick="editForm('close')">
@@ -376,7 +376,7 @@
                                     <span class="text-rose-500">*</span>
                                 </label>
                                 <input type="text"
-                                    class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-xl focus:bg-[#f1f1f4]"
+                                    class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-xl focus:bg-[#f1f1f4] in-fa"
                                     name="title" id="title" placeholder="نام محصول را وارد کنید">
                                 @error('title')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
@@ -384,7 +384,7 @@
                             </div>
                             <div class="w-full flex flex-col mt-5">
                                 <label for="description" class="mb-2">توضیحات محصول:</label>
-                                <textarea name="description" class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-xl focus:bg-[#f1f1f4]" rows="4"
+                                <textarea name="description" class="outline-none pr-5 py-3 bg-[#F9F9F9] in-fa rounded-xl focus:bg-[#f1f1f4]" rows="4"
                                     id="description" placeholder="توضیحات محصول را وارد کنید"></textarea>
                                 @error('description')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
@@ -392,7 +392,7 @@
                             </div>
                             <div class="w-full flex flex-col mt-5">
                                 <label for="summary" class="mb-2">خلاصه محصول:</label>
-                                <textarea class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-xl focus:bg-[#f1f1f4]" rows="4"
+                                <textarea class="outline-none pr-5 py-3 bg-[#F9F9F9] in-fa rounded-xl focus:bg-[#f1f1f4]" rows="4"
                                     placeholder="خلاصه" name="summary" id="summary"></textarea>
                                 @error('summary')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
@@ -443,7 +443,7 @@
                                                 class="inline-block size-7 rounded-lg bg-[#1B84FF] hover:bg-[#056EE9] cursor-pointer text-white"
                                                 onclick="calculate('+')">+</button>
                                             <input type="number" min="1"
-                                                class="outline-none w-14 text-center text-xs" name="count"
+                                                class="outline-none w-14 text-center text-xs in-fa" name="count"
                                                 id="count" dir="ltr">
                                             <button type="button"
                                                 class="inline-block size-7 rounded-lg bg-[#1B84FF] hover:bg-[#056EE9] cursor-pointer text-white"
@@ -582,10 +582,10 @@
                         div.innerHTML = `
                                             <div class="w-full flex flex-col sm:flex-row items-center gap-4">
                                                 <input type="text"
-                                                    class="w-full outline-none pr-3 py-3 bg-[#F9F9F9] rounded-xl focus:bg-[#f1f1f4]"
+                                                    class="w-full in-fa outline-none pr-3 py-3 bg-[#F9F9F9] rounded-xl focus:bg-[#f1f1f4]"
                                                     placeholder="ویژگی" name="attributes[oldAttrs][attribute_key][${attribute.id}]" required value="${attribute.attribute_key}">
                                                 <input type="text"
-                                                    class="w-full outline-none pr-3 py-3 bg-[#F9F9F9] rounded-xl focus:bg-[#f1f1f4]"
+                                                    class="w-full in-fa outline-none pr-3 py-3 bg-[#F9F9F9] rounded-xl focus:bg-[#f1f1f4]"
                                                     placeholder="مقدار ویژگی" name="attributes[oldAttrs][attribute_value][${attribute.id}]" required value="${attribute.attribute_value}">
                                             </div>
                                             <button type="button"
