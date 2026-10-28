@@ -241,7 +241,7 @@
                             </label>
                             <input type="text"
                                 class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]"
-                                name="name" id="name" placeholder="نام را وارد کنید">
+                                name="name" id="name" placeholder="نام را وارد کنید" disabled>
                             @error('name')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
                             @enderror
@@ -255,7 +255,7 @@
                             </label>
                             <input type="text"
                                 class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]"
-                                name="family" id="family" placeholder="نام خانوادگی را وارد کنید">
+                                name="family" id="family" placeholder="نام خانوادگی را وارد کنید" disabled>
                             @error('family')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
                             @enderror
@@ -269,7 +269,7 @@
                             </label>
                             <input type="tel"
                                 class="text-right outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]"
-                                name="phoneNumber" id="phoneNumber" placeholder="0912345678">
+                                name="phoneNumber" id="phoneNumber" placeholder="0912345678" disabled>
                             @error('phoneNumber')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
                             @enderror
@@ -283,8 +283,34 @@
                             </label>
                             <input type="text"
                                 class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]"
-                                name="nationalCode" id="nationalCode" placeholder="1234567890">
+                                name="nationalCode" id="nationalCode" placeholder="1234567890" disabled>
                             @error('nationalCode')
+                                <span class="text-xs text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="w-full flex flex-col">
+                            <label for="address" class="mb-2">
+                                <span>
+                                    آدرس  :
+                                </span>
+                            </label>
+                            <input type="text"
+                                class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]"
+                                name="address" id="address" placeholder="آدرس خود را وارد کنید">
+                            @error('password')
+                                <span class="text-xs text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="w-full flex flex-col">
+                            <label for="birthday" class="mb-2">
+                                <span>
+                                     تارخ تولد :
+                                </span>
+                            </label>
+                            <input type="text"
+                                class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]"
+                                name="birthday" id="birthday" placeholder="تاریخ تولد خود را وارد کنید" disabled>
+                            @error('password')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
@@ -338,6 +364,8 @@
                 let phoneNumber = document.getElementById('phoneNumber')
                 let nationalCode = document.getElementById('nationalCode')
                 let imgContainer = document.getElementById('imgContainer')
+                let birthday = document.getElementById('birthday')
+                let address = document.getElementById('address')
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -351,11 +379,14 @@
                         'id': id,
                     },
                     success: function(data) {
+                        console.log(data)
                         user_id.value = data.id
                         name.value = data.name
                         family.value = data.family
                         phoneNumber.value = data.phoneNumber
                         nationalCode.value = data.nationalCode
+                        address.value = data.address
+                        birthday.value = data.birthday
                         imgContainer.innerHTML = ''
                         if (data.mainImage) {
                             let div = document.createElement('div')
