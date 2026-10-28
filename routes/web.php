@@ -11,10 +11,11 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
-use App\Http\Middleware\checkAdminMiddleware;
+use App\Http\Middleware\checkAccess;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\CartsController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ReferenceSitesController;
 use App\Http\Controllers\TransactionSettingController;
 use App\Http\Middleware\checkIsActive;
@@ -87,15 +88,12 @@ Route::group([
     Route::post('/store', 'store')->name('store');
     Route::post('/adminStore', 'adminStore')->name('adminStore');
     Route::get('/logout', 'logout')->name('logout');
-    Route::get('/index', 'index')->middleware(checkAdminMiddleware::class)->name('index');
+    Route::get('/index', 'index')->middleware(checkAccess::class . ":user_idex")->name('index');
     Route::post('/edit', 'edit')->name('edit');
     Route::post('/profileEdit', 'profileEdit')->name('profileEdit');
     Route::post('/update', 'update')->name('update');
     Route::post('/updateProfile', 'updateProfile')->name('updateProfile');
     Route::post('/removeActivationCode', 'removeActivationCode')->name('removeActivationCode');
-    Route::get('/delete/{user}', 'delete')->missing(function () {
-        return to_route('missing');
-    })->name('delete');
     Route::post('/checkAuth', 'checkAuth')->name('checkAuth');
     Route::get('/profile/{user?}', 'profile')->middleware(checklogin::class)->missing(function () {
         return to_route('missing');
@@ -107,7 +105,7 @@ Route::group([
     'prefix' => 'header',
     'controller' => HeaderController::class,
     'as' => 'header.',
-    'middleware' => checkAdminMiddleware::class
+    'middleware' => checkAccess::class . ":header"
 ], function () {
     Route::get('/create', 'create')->name('create');
     Route::post('/store', 'store')->name('store');
@@ -118,7 +116,7 @@ Route::group([
     'prefix' => 'logo',
     'controller' => LogoController::class,
     'as' => 'logo.',
-    'middleware' => checkAdminMiddleware::class
+    'middleware' => checkAccess::class . ":logo"
 ], function () {
     Route::get('/create', 'create')->name('create');
     Route::post('/store', 'store')->name('store');
@@ -129,7 +127,7 @@ Route::group([
     'prefix' => 'menu',
     'controller' => MenuController::class,
     'as' => 'menu.',
-    'middleware' => checkAdminMiddleware::class
+    'middleware' => checkAccess::class . ":menu"
 ], function () {
     Route::get('/create', 'create')->name('create');
     Route::post('/store', 'store')->name('store');
@@ -145,21 +143,21 @@ Route::group([
     'prefix' => 'category',
     'controller' => CategoryController::class,
     'as' => 'category.',
-    'middleware' => checkAdminMiddleware::class
+    // 'middleware' => checkAccess::class . ":category"
 ], function () {
-    Route::get('/create', 'create')->name('create');
-    Route::post('/store', 'store')->name('store');
-    Route::get('/admin/list', 'adminIndex')->name('adminIndex');
-    Route::post('/admin/show', 'adminShow')->name('adminShow');
-    Route::post('/edit/', 'edit')->name('edit');
-    Route::post('/update', 'update')->name('update');
-    Route::get('/delete/{id}', 'delete')->name('delete');
-    Route::get('/list', 'index')->withoutMiddleware(checkAdminMiddleware::class)->name('index');
-    Route::get('/show/{category}', 'show')->withoutMiddleware(checkAdminMiddleware::class)->missing(function () {
+    Route::get('/create', 'create')->middleware(checkAccess::class . ":category_create")->name('create');
+    Route::post('/store', 'store')->middleware(checkAccess::class . ":category_create")->name('store');
+    Route::get('/admin/list', 'adminIndex')->middleware(checkAccess::class . ":category_show")->name('adminIndex');
+    Route::post('/admin/show', 'adminShow')->middleware(checkAccess::class . ":category_show")->name('adminShow');
+    Route::post('/edit/', 'edit')->middleware(checkAccess::class . ":category_edit")->name('edit');
+    Route::post('/update', 'update')->middleware(checkAccess::class . ":category_edit")->name('update');
+    Route::get('/delete/{id}', 'delete')->middleware(checkAccess::class . ":category_delete")->name('delete');
+    Route::post('/admin/deleteAll', 'deleteAll')->middleware(checkAccess::class . ":category_delete")->name('deleteAll');
+    Route::get('/list', 'index')->withoutMiddleware(checkAccess::class)->name('index');
+    Route::get('/show/{category}', 'show')->withoutMiddleware(checkAccess::class)->missing(function () {
         return to_route('missing');
     })->name('show');
-    Route::post('/showSubCategories', 'showSubCats')->withoutMiddleware(checkAdminMiddleware::class)->name('showSubCats');
-    Route::post('/admin/deleteAll', 'deleteAll')->name('deleteAll');
+    Route::post('/showSubCategories', 'showSubCats')->withoutMiddleware(checkAccess::class)->name('showSubCats');
 });
 
 // product routes
@@ -167,22 +165,22 @@ Route::group([
     'prefix' => 'product',
     'controller' => ProductController::class,
     'as' => 'product.',
-    'middleware' => checkAdminMiddleware::class
+    // 'middleware' => checkAccess::class
 ], function () {
-    Route::get('/create', 'create')->name('create');
-    Route::post('/store', 'store')->name('store');
-    Route::get('/admin/list', 'adminIndex')->name('adminIndex');
-    Route::post('/edit/', 'edit')->name('edit');
-    Route::post('/update', 'update')->name('update');
-    Route::get('/delete/{id}', 'delete')->name('delete');
-    Route::get('/show/{product}', 'show')->withoutMiddleware(checkAdminMiddleware::class)->missing(function () {
+    Route::get('/create', 'create')->middleware(checkAccess::class . ":product_create")->name('create');
+    Route::post('/store', 'store')->middleware(checkAccess::class . ":product_create")->name('store');
+    Route::get('/admin/list', 'adminIndex')->middleware(checkAccess::class . ":product_show")->name('adminIndex');
+    Route::post('/edit/', 'edit')->middleware(checkAccess::class . ":product_edit")->name('edit');
+    Route::post('/update', 'update')->middleware(checkAccess::class . ":product_edit")->name('update');
+    Route::get('/delete/{id}', 'delete')->middleware(checkAccess::class . ":product_delete")->name('delete');
+    Route::post('/admin/deleteAll', 'deleteAll')->middleware(checkAccess::class . ":product_delete")->name('deleteAll');
+    Route::get('/show/{product}', 'show')->withoutMiddleware(checkAccess::class)->missing(function () {
         return to_route('missing');
     })->name('show');
-    Route::get('/list', 'index')->withoutMiddleware(checkAdminMiddleware::class)->name('index');
-    Route::post('/filterRelatedProducts', 'filter')->withoutMiddleware(checkAdminMiddleware::class)->name('filter');
-    Route::post('/search', 'search')->withoutMiddleware(checkAdminMiddleware::class)->name('search');
-    Route::post('/searchResult', 'searchResult')->withoutMiddleware(checkAdminMiddleware::class)->name('searchResult');
-    Route::post('/admin/deleteAll', 'deleteAll')->name('deleteAll');
+    Route::get('/list', 'index')->withoutMiddleware(checkAccess::class)->name('index');
+    Route::post('/filterRelatedProducts', 'filter')->withoutMiddleware(checkAccess::class)->name('filter');
+    Route::post('/search', 'search')->withoutMiddleware(checkAccess::class)->name('search');
+    Route::post('/searchResult', 'searchResult')->withoutMiddleware(checkAccess::class)->name('searchResult');
 });
 
 // wallet routes
@@ -196,11 +194,11 @@ Route::group([
     })->middleware(checklogin::class)->name('wallet');
     Route::post('/transaction/request', 'transactionRequest')->middleware(checkIsActive::class)->name('transactionRequest');
     Route::post('/transactions', 'transactions')->name('transactions');
-    Route::get('/transactions/list', 'transactionsList')->middleware(checkAdminMiddleware::class)->name('transactionsList');
+    Route::get('/transactions/list', 'transactionsList')->middleware(checkAccess::class . ":transactionsList")->name('transactionsList');
     Route::get('/transactions/user/{user}', 'transactionsListSingle')->missing(function () {
         return to_route('missing');
-    })->middleware(checkAdminMiddleware::class)->name('transactionsListSingle');
-    Route::post('/submitChanges', 'submitChanges')->middleware(checkAdminMiddleware::class)->name('submitChanges');
+    })->middleware(checkAccess::class)->name('transactionsListSingle');
+    Route::post('/submitChanges', 'submitChanges')->middleware(checkAccess::class)->name('submitChanges');
     Route::post('/popupWalletData', 'popupWalletData')->name('popupWalletData');
 });
 
@@ -224,18 +222,18 @@ Route::group([
     'as' => 'deal.'
 ], function () {
     Route::get('/create', 'create')->name('create');
-    Route::get('/conferm/{deal}', 'conferm')->name('conferm');
+    Route::get('/confirm/{deal}', 'confirm')->name('confirm');
     Route::post('/store', 'store')->middleware(checkIsActive::class)->name('store');
     Route::post('/storeTemporary', 'storeTemporary')->middleware(checkIsActive::class)->name('storeTemporary');
     Route::get('/list', 'list')->name('list');
-    Route::get('/adminIndex', 'adminIndex')->name('adminIndex');
+    Route::get('/adminIndex', 'adminIndex')->middleware(checkAccess::class . ":deal_index")->name('adminIndex');
 });
 
 // creditCard routes
 Route::group([
     'prefix' => 'creditCard',
     'controller' => CreditCardController::class,
-    'middleware' => [checklogin::class],
+    'middleware' => checklogin::class,
     'as' => 'creditCard.'
 ], function () {
     Route::get('/create', 'create')->name('create');
@@ -246,26 +244,40 @@ Route::group([
 Route::group([
     'prefix' => 'referenceSite',
     'controller' => ReferenceSitesController::class,
-    'middleware' => checkAdminMiddleware::class,
+    // 'middleware' => checkAccess::class,
     'as' => 'referenceSite.'
 ], function () {
-    Route::get('/create', 'create')->name('create');
-    Route::post('/store', 'store')->name('store');
-    Route::post('/update', 'update')->name('update');
-    Route::get('/delete/{site}', 'delete')->name('delete');
+    Route::get('/create', 'create')->middleware(checkAccess::class . ":referenceSite_create")->name('create');
+    Route::post('/store', 'store')->middleware(checkAccess::class . ":referenceSite_create")->name('store');
+    Route::post('/update', 'update')->middleware(checkAccess::class . ":referenceSite_edit")->name('update');
+    Route::get('/delete/{site}', 'delete')->middleware(checkAccess::class . ":referenceSite_delete")->name('delete');
 });
 
 // transaction setting routes
 Route::group([
     'prefix' => 'transactionSetting',
     'controller' => TransactionSettingController::class,
-    'middleware' => checkAdminMiddleware::class,
+    'middleware' => checkAccess::class . ":transactionSetting",
     'as' => 'transactionSetting.'
 ], function () {
     Route::get('/create', 'create')->name('create');
     Route::post('/updateOrCreate', 'updateOrCreate')->name('updateOrCreate');
 });
 
+// role permission routes
+Route::group([
+    'prefix' => 'role',
+    'controller' => PermissionController::class,
+    // 'middleware' => checkAccess::class,
+    'as' => 'role.'
+], function () {
+    Route::get('/create', 'create')->middleware(checkAccess::class . ":role_create")->name('create');
+    Route::post('/store', 'roleStore')->middleware(checkAccess::class . ":role_create")->name('roleStore');
+    Route::get('/delete/{role}', 'roleDelete')->middleware(checkAccess::class . ":role_delete")->name('roleDelete');
+    Route::post('/setPermissions', 'setPermissions')->middleware(checkAccess::class . ":setPermissions")->name('setPermissions');
+});
+
+// order routes
 Route::group([
     'prefix' => 'order',
     'controller' => OrdersController::class,
@@ -274,10 +286,11 @@ Route::group([
 ], function () {
     Route::get('/create', 'create')->name('create');
     Route::post('/store', 'store')->name('store')->withoutMiddleware([checklogin::class]);
-    Route::get('/index', 'index')->name('index');
+    Route::get('/index', 'index')->middleware(checkAccess::class . ":order_show")->name('index');
     Route::get('/userOrders', 'userOrders')->name('userOrders');
 });
 
+// cart routes
 Route::group([
     'prefix' => 'cart',
     'controller' => CartsController::class,
@@ -287,17 +300,18 @@ Route::group([
     Route::get('/checkout', 'checkout')->name('checkout');
 });
 
+// message routes
 Route::group([
     "as" => "Message.",
     "prefix" => "Message",
     "controller" => MessageController::class
 ], function () {
-    Route::get("insert", 'insert')->name('insert');
-    Route::post("/create", "create")->name("create");
+    Route::get("insert", 'insert')->middleware(checkAccess::class . ":message_create")->name('insert');
+    Route::post("/create", "create")->middleware(checkAccess::class . ":message_create")->name("create");
     Route::get("list", "list")->name("list");
     Route::get("delete/{id}", "delete")->name("delete");
     Route::get("update/{id}", "update")->name("update");
-    Route::post("edite", "edite")->name("edite");
+    Route::post("edit", "edit")->name("edit");
     Route::post("messageStatus",  "messageStatus")->name("messageStatus");
 });
 

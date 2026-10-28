@@ -10,20 +10,20 @@ use App\Models\logo;
 
 class MessageController extends Controller
 {
-    public function insert(){
+    public function insert()
+    {
         $logo = logo::first();
-        $message=Message::all();
-        return view('admin.Message.insert' , ['logo'=>$logo , 'message'=>$message]);
+        $message = Message::all();
+        return view('admin.Message.insert', ['logo' => $logo, 'message' => $message]);
     }
     public function create(Request $request)
     {
         Message::create([
             "message" => $request->message
         ]);
-        $message=Message::all();
+        $message = Message::all();
         $logo = logo::first();
-
-        return view("admin.Message.insert" , ['logo'=>$logo ,'message'=>$message]);
+        return view("admin.Message.insert", ['logo' => $logo, 'message' => $message]);
     }
     public function list()
     {

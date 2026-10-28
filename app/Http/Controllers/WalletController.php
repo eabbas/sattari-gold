@@ -290,12 +290,6 @@ class WalletController extends Controller
         return view('admin.transaction.transactionsList', ['logo' => $logo, 'transactions' => $transactions]);
     }
 
-    public function transactionsListSingle(User $user)
-    {
-        $logo = logo::first();
-        return view('admin.transaction.transactionsListSingle', ['user' => $user, 'logo' => $logo]);
-    }
-
     public function submitChanges(Request $request)
     {
         $transactionId = $request->input('transactionId');

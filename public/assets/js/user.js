@@ -85,12 +85,12 @@ document.querySelectorAll('.approvedUsers').forEach(row => {
         let fee = el.closest('.popup-wallet').querySelector('.fee')
         let description = el.closest('.popup-wallet').querySelector('.description')
 
-        if(fee.value == ''){
+        if (fee.value == '') {
             alert('لطفا مبلغ را وارد کنید')
-        } 
-        else if(!receipt.parentElement.classList.contains('hidden') && receipt.value == ''){
+        }
+        else if (!receipt.parentElement.classList.contains('hidden') && receipt.value == '') {
             alert('آپلود رسید الزامی است')
-        }  else {
+        } else {
             let transactionType
             if (deposit.checked) {
                 transactionType = 'deposit'
@@ -164,7 +164,7 @@ document.querySelectorAll('.approvedUsers').forEach(row => {
                 }
             },
             error: function () {
-                console.log('failed to load data')
+                alert('failed to load data')
             }
         })
     })
@@ -220,7 +220,7 @@ document.querySelectorAll('.approvedUsers').forEach(row => {
 
             },
             error: function () {
-                console.log('failed to load data')
+                alert('failed to load data')
             }
         })
 
@@ -314,8 +314,8 @@ items_2.forEach((item_2) => {
         popup_look_cont.classList.remove("opacity-100")
         popup_look_cont.classList.remove("visible")
     })
-    
-   
+
+
     closeBtn_look_cont.addEventListener("click", () => {
         popup_look_cont.classList.add("invisible")
         popup_look_cont.classList.add("opacity-0")
@@ -324,7 +324,7 @@ items_2.forEach((item_2) => {
         })
     })
     closeBtn_look_cont2.addEventListener("click", () => {
-        
+
     })
     item_2.querySelector('.submitBtn').addEventListener('click', () => {
         let children = item_2.querySelector('.roles').children
@@ -673,7 +673,7 @@ items_2.forEach((item_2) => {
 
             },
             error: function () {
-                console.log('failed to load data')
+                alert('failed to load data')
             }
         })
     })
@@ -688,13 +688,13 @@ items_2.forEach((item_2) => {
                 item_2.remove()
             },
             error: function () {
-                console.log('failed to load data')
+                alert('failed to load data')
             }
         })
     })
 })
 
-function deleteUser(el){
+function deleteUser(el) {
     loader('open')
     let item_2 = el.closest('.item_2')
     $.ajax({
@@ -706,7 +706,7 @@ function deleteUser(el){
             item_2.remove()
         },
         error: function () {
-            console.log('failed to load data')
+            alert('failed to load data')
         }
     })
 }
@@ -765,7 +765,7 @@ function popupLookCont(el) {
     })
 }
 
-function closePopupLookCont2(el){
+function closePopupLookCont2(el) {
     let item_2 = el.closest('.item_2')
     let popup_look_cont = item_2.querySelector(".popup-look-cont")
     popup_look_cont.classList.add("invisible")
@@ -775,7 +775,7 @@ function closePopupLookCont2(el){
     })
 }
 
-function closePopupLookCont(el){
+function closePopupLookCont(el) {
     let item_2 = el.closest('.item_2')
     let popup_look_cont = item_2.querySelector(".popup-look-cont")
     popup_look_cont.classList.add("invisible")

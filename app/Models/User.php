@@ -71,9 +71,12 @@ class User extends Authenticatable
         return $this->hasManyThrough(transaction::class, wallet::class);
     }
 
-    public function hasRole($roles)
+    public function hasAccess($permission)
     {
-        return $this->roles()->whereIn('name', $roles)->exists();
+        // return $this->roles()->whereIn('name', $roles)->exists();
+        foreach ($this->roles as $role) {
+            return $role->permissions()->whereIn('en_title', $permission)->exists();
+        }
     }
 
     public function deals()

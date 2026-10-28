@@ -368,7 +368,7 @@
                                     </td>
                                     <td class="border-1 border-(--color-border) p-1 md:px-3 md:py-2 text-center">
                                         @if ($deal->state != 'تایید شده')
-                                            <a href="{{ route('deal.conferm', $deal->id) }}"
+                                            <a href="{{ route('deal.confirm', $deal->id) }}"
                                                 class="px-3 py-1.5 bg-[{{ $deal->color }}]/20 text-[{{ $deal->color }}] rounded-md border-1 border-[[{{ $deal->color }}]] p-1 cursor-default cursor-pointer">
                                                 {{ $deal->state }}
                                             </a>
@@ -389,60 +389,60 @@
                                             </svg>
                                         </button>
                                         <!-- <div class="popup-fayle fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2 hidden flex items-center justify-center">
-                                                                                            <div class="close-popup-fayle2 absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2"></div>
-                                                                                            <div class="relative z-51 w-[80%] lg:w-200 bg-white rounded-md px-3 py-2">
-                                                                                                <div class="w-full flex items-center justify-between border-b-1 border-(--color-border) pb-2">
-                                                                                                    <div class="font-bold">مشاهده فیش واریزی</div>
-                                                                                                    <div class="close-popup-fayle">
-                                                                                                        <svg class="size-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                                                                                                            <path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"></path>
-                                                                                                        </svg>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="grid grid-cols-6 gap-5 mt-5">
-                                                                                                    <div class="col-span-6 flex items-center border-1 border-(--color-border) rounded-lg divide-x-1 divide-(--border-dashboard) px-1 md:px-2 py-2 md:py-3 gap-2">
-                                                                                                        <div class="w-4/12 flex flex-col sm:flex-row">
-                                                                                                            <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">نام :</span>
-                                                                                                            <span class="text-[10px] md:text-base font-bold">امید حسن نژاد</span>
-                                                                                                        </div>
-                                                                                                        <div class="w-4/12 flex flex-col sm:flex-row">
-                                                                                                            <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره :</span>
-                                                                                                            <span class="text-[10px] md:text-base font-bold">09123456789</span>
-                                                                                                        </div>
-                                                                                                        <div class="w-4/12 flex flex-col sm:flex-row">
-                                                                                                            <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">تاریخ ثبت :</span>
-                                                                                                            <span class="text-[10px] md:text-base font-bold">1405/2/7</span>
+                                                                                                <div class="close-popup-fayle2 absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2"></div>
+                                                                                                <div class="relative z-51 w-[80%] lg:w-200 bg-white rounded-md px-3 py-2">
+                                                                                                    <div class="w-full flex items-center justify-between border-b-1 border-(--color-border) pb-2">
+                                                                                                        <div class="font-bold">مشاهده فیش واریزی</div>
+                                                                                                        <div class="close-popup-fayle">
+                                                                                                            <svg class="size-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                                                                                                                <path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"></path>
+                                                                                                            </svg>
                                                                                                         </div>
                                                                                                     </div>
-                                                                                                    <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
-                                                                                                        <div class="w-full bg-white divide-x-1 divide-(--border-dashboard) flex items-center gap-2 p-2 rounded-lg">
-                                                                                                            <div class="w-6/12 flex flex-col sm:flex-row gap-2">
-                                                                                                                <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره کارت :</span>
-                                                                                                                <span class="text-[8px] sm:text-xs md:text-base font-bold">6037 9975 4568 2589</span>
+                                                                                                    <div class="grid grid-cols-6 gap-5 mt-5">
+                                                                                                        <div class="col-span-6 flex items-center border-1 border-(--color-border) rounded-lg divide-x-1 divide-(--border-dashboard) px-1 md:px-2 py-2 md:py-3 gap-2">
+                                                                                                            <div class="w-4/12 flex flex-col sm:flex-row">
+                                                                                                                <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">نام :</span>
+                                                                                                                <span class="text-[10px] md:text-base font-bold">امید حسن نژاد</span>
                                                                                                             </div>
-                                                                                                            <div class="w-6/12 flex flex-col sm:flex-row gap-2">
-                                                                                                                <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره شبا :</span>
-                                                                                                                <span class="text-[8px] sm:text-xs md:text-base font-bold">IR 584100000005478925784</span>
+                                                                                                            <div class="w-4/12 flex flex-col sm:flex-row">
+                                                                                                                <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره :</span>
+                                                                                                                <span class="text-[10px] md:text-base font-bold">09123456789</span>
+                                                                                                            </div>
+                                                                                                            <div class="w-4/12 flex flex-col sm:flex-row">
+                                                                                                                <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">تاریخ ثبت :</span>
+                                                                                                                <span class="text-[10px] md:text-base font-bold">1405/2/7</span>
                                                                                                             </div>
                                                                                                         </div>
-                                                                                                    </div>
-                                                                                                    <div class="col-span-6  border-1 border-(--color-border) rounded-lg p-2 flex items-center justify-center">
-                                                                                                        <img class="w-[90%] h-50 bg-zinc-300" src="" alt="">
-                                                                                                    </div>
-                                                                                                    <div class="col-span-3 bg-zinc-100 px-2 py-4 rounded-md  flex flex-col sm:flex-row">
-                                                                                                        <span class="text-xs md:text-base text-(--text-secondary-dashboard)">تایید شده توسط :</span>
-                                                                                                        <span class="text-[10px] md:text-base font-bold">محمد رضا عولیا فام</span>
-                                                                                                    </div>
-                                                                                                    <div class="col-span-3 bg-zinc-100 px-1 md:px-2 py-2 md:py-4 rounded-md  flex flex-col sm:flex-row">
-                                                                                                        <span class="text-xs md:text-base text-(--text-secondary-dashboard)">مبلغ :</span>
-                                                                                                        <span>
-                                                                                                            <span class="text-[10px] md:text-base font-bold">500.000.000</span>
-                                                                                                            <span class="text-xs md:text-base text-(--text-secondary-dashboard)">ریال</span>
-                                                                                                        </span>
+                                                                                                        <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
+                                                                                                            <div class="w-full bg-white divide-x-1 divide-(--border-dashboard) flex items-center gap-2 p-2 rounded-lg">
+                                                                                                                <div class="w-6/12 flex flex-col sm:flex-row gap-2">
+                                                                                                                    <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره کارت :</span>
+                                                                                                                    <span class="text-[8px] sm:text-xs md:text-base font-bold">6037 9975 4568 2589</span>
+                                                                                                                </div>
+                                                                                                                <div class="w-6/12 flex flex-col sm:flex-row gap-2">
+                                                                                                                    <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره شبا :</span>
+                                                                                                                    <span class="text-[8px] sm:text-xs md:text-base font-bold">IR 584100000005478925784</span>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        <div class="col-span-6  border-1 border-(--color-border) rounded-lg p-2 flex items-center justify-center">
+                                                                                                            <img class="w-[90%] h-50 bg-zinc-300" src="" alt="">
+                                                                                                        </div>
+                                                                                                        <div class="col-span-3 bg-zinc-100 px-2 py-4 rounded-md  flex flex-col sm:flex-row">
+                                                                                                            <span class="text-xs md:text-base text-(--text-secondary-dashboard)">تایید شده توسط :</span>
+                                                                                                            <span class="text-[10px] md:text-base font-bold">محمد رضا عولیا فام</span>
+                                                                                                        </div>
+                                                                                                        <div class="col-span-3 bg-zinc-100 px-1 md:px-2 py-2 md:py-4 rounded-md  flex flex-col sm:flex-row">
+                                                                                                            <span class="text-xs md:text-base text-(--text-secondary-dashboard)">مبلغ :</span>
+                                                                                                            <span>
+                                                                                                                <span class="text-[10px] md:text-base font-bold">500.000.000</span>
+                                                                                                                <span class="text-xs md:text-base text-(--text-secondary-dashboard)">ریال</span>
+                                                                                                            </span>
+                                                                                                        </div>
                                                                                                     </div>
                                                                                                 </div>
-                                                                                            </div>
-                                                                                        </div> -->
+                                                                                            </div> -->
                                     </td>
                                 </tr>
                             @endforeach

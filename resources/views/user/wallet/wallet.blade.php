@@ -187,39 +187,42 @@
         {{--  --}}
     </div>
     <script>
-        let setting = JSON.parse('{!! $setting !!}')
+        let setting = null
+        if ('{!! $setting !!}' != '') {
+            setting = JSON.parse('{!! $setting !!}')
+        }
         let minDeposit
         let maxDeposit
         let minWithdraw
         let maxWithdraw
 
         function checkFee(state, el) {
-            let inputValue = Number(el.children[0].value)
-            el.children[1].innerText = ""
+            let inputValue = Number(el.children[1].value)
+            el.children[2].innerText = ""
             minDeposit = true
             maxDeposit = true
             minWithdraw = true
             maxWithdraw = true
             if (state == 'deposit') {
                 if (inputValue < setting.minDepositAmount) {
-                    el.children[1].innerText =
+                    el.children[2].innerText =
                         `حداقل مبلغ قابل واریز ${parseInt(setting.minDepositAmount).toLocaleString('fa-IR')} تومان است.`
                     minDeposit = false
                 }
                 if (inputValue > setting.maxDepositAmount) {
-                    el.children[1].innerText =
+                    el.children[2].innerText =
                         `حداکثر مبلغ قابل واریز ${parseInt(setting.maxDepositAmount).toLocaleString('fa-IR')} تومان است.`
                     maxDeposit = false
                 }
             }
             if (state == 'withdraw') {
                 if (inputValue < setting.minWithdrawAmount) {
-                    el.children[1].innerText =
+                    el.children[2].innerText =
                         `حداقل مبلغ قابل برداشت ${parseInt(setting.minWithdrawAmount).toLocaleString('fa-IR')} تومان است.`
                     minWithdraw = false
                 }
                 if (inputValue > setting.maxWithdrawAmount) {
-                    el.children[1].innerText =
+                    el.children[2].innerText =
                         `حداکثر مبلغ قابل برداشت ${parseInt(setting.maxWithdrawAmount).toLocaleString('fa-IR')} تومان است.`
                     maxWithdraw = false
                 }
@@ -228,73 +231,75 @@
 
         function transactionMethod(state, el) {
             let transactionMethod = document.getElementById('transactionMethod')
-            if (state == 'deposit') {
-                if (setting.depositIsActive == 0) {
-                    el.parentElement.nextElementSibling.innerText = 'در حال حاضر امکان واریز کردن غیرفعال است'
-                    el.checked = false
-                } else {
-                    transactionMethod.innerHTML = `
-                        <label class="col-span-6 md:col-span-3" for="depositFee" onkeyup="checkFee('deposit', this)">
-                                مبلغ
-                                <span class="text-[10px] text-red-500">(اجباری)</span>
-                                <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa" type="number" name="depositFee" id="depositFee" placeholder="ریال" value="">
-                                <span class="text-xs text-red-500"></span>
-                        </label>
-                        <label class="col-span-6 md:col-span-3" for="receipt">
-                                تصویر فیش واریزی
-                                <span class="text-[10px] text-red-500">(اجباری)</span>
-                                <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)" type="file" name="receipt" id="receipt">
-                        </label>
-                        <label class="col-span-6" for="description">
-                                توضیحات
-                                <textarea class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)" name="description" id="description"></textarea>
-                        </label>
-                `
+            if (setting) {
+                if (state == 'deposit') {
+                    if (setting.depositIsActive == 0) {
+                        el.parentElement.nextElementSibling.innerText = 'در حال حاضر امکان واریز کردن غیرفعال است'
+                        el.checked = false
+                    } else {
+                        transactionMethod.innerHTML = `
+                            <label class="col-span-6 md:col-span-3" for="depositFee" onkeyup="checkFee('deposit', this)">
+                                    مبلغ
+                                    <span class="text-[10px] text-red-500">(اجباری)</span>
+                                    <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa" type="number" name="depositFee" id="depositFee" placeholder="ریال" value="">
+                                    <span class="text-xs text-red-500"></span>
+                            </label>
+                            <label class="col-span-6 md:col-span-3" for="receipt">
+                                    تصویر فیش واریزی
+                                    <span class="text-[10px] text-red-500">(اجباری)</span>
+                                    <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)" type="file" name="receipt" id="receipt">
+                            </label>
+                            <label class="col-span-6" for="description">
+                                    توضیحات
+                                    <textarea class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)" name="description" id="description"></textarea>
+                            </label>
+                    `
+                    }
                 }
-            }
-            if (state == 'withdraw') {
-                if (setting.withdrawIsActive == 0) {
-                    el.parentElement.nextElementSibling.innerText = 'در حال حاضر امکان برداشت کردن غیرفعال است'
-                    el.checked = false
-                } else {
-                    transactionMethod.innerHTML = `
-                        <div id="percents" class="col-span-6 p-4">
-                            <span class="mb-5 block">برداشت از کیف پول به مقدار:</span>
-                            <div class="w-full flex items-center justify-between gap-2">
-                                <div class="">
-                                    <label for="withdrawPercent10" class="in-fa">10%</label>
-                                    <input type="radio" name="withdrawPercent" id="withdrawPercent10" value="10">
-                                </div>
-                                <div class="">
-                                    <label for="withdrawPercent25" class="in-fa">25%</label>
-                                    <input type="radio" name="withdrawPercent" id="withdrawPercent25" value="25">
-                                </div>
-                                <div class="">
-                                    <label for="withdrawPercent50" class="in-fa">50%</label>
-                                    <input type="radio" name="withdrawPercent" id="withdrawPercent50" value="50">
-                                </div>
-                                <div class="">
-                                    <label for="withdrawPercent75" class="in-fa">75%</label>
-                                    <input type="radio" name="withdrawPercent" id="withdrawPercent75" value="75">
-                                </div>
-                                <div class="">
-                                    <label for="withdrawPercent100" class="in-fa">100%</label>
-                                    <input type="radio" name="withdrawPercent" id="withdrawPercent100" value="100">
+                if (state == 'withdraw') {
+                    if (setting.withdrawIsActive == 0) {
+                        el.parentElement.nextElementSibling.innerText = 'در حال حاضر امکان برداشت کردن غیرفعال است'
+                        el.checked = false
+                    } else {
+                        transactionMethod.innerHTML = `
+                            <div id="percents" class="col-span-6 p-4">
+                                <span class="mb-5 block">برداشت از کیف پول به مقدار:</span>
+                                <div class="w-full flex items-center justify-between gap-2">
+                                    <div class="">
+                                        <label for="withdrawPercent10" class="in-fa">10%</label>
+                                        <input type="radio" name="withdrawPercent" id="withdrawPercent10" value="10">
+                                    </div>
+                                    <div class="">
+                                        <label for="withdrawPercent25" class="in-fa">25%</label>
+                                        <input type="radio" name="withdrawPercent" id="withdrawPercent25" value="25">
+                                    </div>
+                                    <div class="">
+                                        <label for="withdrawPercent50" class="in-fa">50%</label>
+                                        <input type="radio" name="withdrawPercent" id="withdrawPercent50" value="50">
+                                    </div>
+                                    <div class="">
+                                        <label for="withdrawPercent75" class="in-fa">75%</label>
+                                        <input type="radio" name="withdrawPercent" id="withdrawPercent75" value="75">
+                                    </div>
+                                    <div class="">
+                                        <label for="withdrawPercent100" class="in-fa">100%</label>
+                                        <input type="radio" name="withdrawPercent" id="withdrawPercent100" value="100">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <label class="col-span-6 md:col-span-3" for="withdrawFee" onkeyup="checkFee('withdraw', this)">
-                            مبلغ
-                            <span class="text-[10px] text-red-500">(اجباری)</span>
-                            <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa" type="number" name="withdrawFee" id="withdrawFee" placeholder="ریال" value="">
-                            <span class="text-xs text-red-500"></span>
-                        </label>
-                        <label class="col-span-6" for="description">
-                            توضیحات
-                            <textarea class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)" name="description" id="description"></textarea>
-                        </label>
-                `
-                    percents()
+                            <label class="col-span-6 md:col-span-3" for="withdrawFee" onkeyup="checkFee('withdraw', this)">
+                                مبلغ
+                                <span class="text-[10px] text-red-500">(اجباری)</span>
+                                <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa" type="number" name="withdrawFee" id="withdrawFee" placeholder="ریال" value="">
+                                <span class="text-xs text-red-500"></span>
+                            </label>
+                            <label class="col-span-6" for="description">
+                                توضیحات
+                                <textarea class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)" name="description" id="description"></textarea>
+                            </label>
+                    `
+                        percents()
+                    }
                 }
             }
         }

@@ -202,7 +202,8 @@
                         </svg>
                         <span class="text-nowrap">مدیریت کارت ها</span>
                     </a>
-                    @can('access', ['admin'])
+                    {{-- @can('access', ['admin']) --}}
+                    @can('access', ['transactionsList'])
                         <a href="{{ route('wallet.transactionsList') }}"
                             class="px-2 py-2 rounded-xl @if (Route::is('wallet.transactionsList')) bg-green-300 @endif flex gap-3 justify-start items-center"
                             title="واریز و برداشت">
@@ -214,6 +215,8 @@
                             </div>
                             <span class="text-nowrap">واریز و برداشت</span>
                         </a>
+                    @endcan
+                    @can('access', ['deal_index'])
                         <a href="{{ route('deal.adminIndex') }}"
                             class="px-2 py-2 rounded-xl @if (Route::is('deal.adminIndex')) bg-green-300 @endif flex gap-3 justify-start items-center"
                             title="معاملات">
@@ -226,6 +229,8 @@
                             </div>
                             <span class="text-nowrap">همه معاملات</span>
                         </a>
+                    @endcan
+                    @can('access', ['user_index'])
                         <a href="{{ route('user.index') }}"
                             class="px-2 py-2 rounded-xl @if (Route::is('user.index')) bg-green-300 @endif flex gap-3 justify-start items-center"
                             title="لیست کاربران">
@@ -237,6 +242,8 @@
                             </div>
                             <span class="text-nowrap">لیست کاربران</span>
                         </a>
+                    @endcan
+                    @can('access', ['category_show'])
                         <a href="{{ route('category.adminIndex') }}"
                             class="px-2 py-2 rounded-xl @if (Route::is('category.adminIndex')) bg-green-300 @endif flex gap-3 justify-start items-center"
                             title="دسته بندی محصولات">
@@ -250,6 +257,8 @@
                             </div>
                             <span class="text-nowrap">دسته بندی محصولات</span>
                         </a>
+                    @endcan
+                    @can('access', ['product_show'])
                         <a href="{{ route('product.adminIndex') }}"
                             class="px-2 py-2 rounded-xl @if (Route::is('product.adminIndex')) bg-green-300 @endif flex gap-3 justify-start items-center"
                             title="مدیریت کالا">
@@ -265,6 +274,8 @@
                             </div>
                             <span class="text-nowrap">مدیریت کالاها</span>
                         </a>
+                    @endcan
+                    @can('access', ['message_create'])
                         <a href="{{ route('Message.insert') }}"
                             class="px-2 py-2 rounded-xl @if (Route::is('Message.insert')) bg-green-300 @endif flex gap-3 justify-start items-center"
                             title="پیام ها">
@@ -276,6 +287,8 @@
                             </div>
                             <span class="text-nowrap">پیام ها</span>
                         </a>
+                    @endcan
+                    @can('access', ['referenceSite_create'])
                         <a href="{{ route('referenceSite.create') }}"
                             class="px-2 py-2 rounded-xl @if (Route::is('referenceSite.create')) bg-green-300 @endif flex gap-3 justify-start items-center"
                             title="سایت های مرجع">
@@ -287,6 +300,8 @@
                             </div>
                             <span class="text-nowrap">سایت های مرجع</span>
                         </a>
+                    @endcan
+                    @can('access', ['transactionSetting'])
                         <a href="{{ route('transactionSetting.create') }}"
                             class="px-2 py-2 rounded-xl @if (Route::is('transactionSetting.create')) bg-green-300 @endif flex gap-3 justify-start items-center"
                             title="تنظیمات تراکنش ها">
@@ -296,6 +311,8 @@
                             </svg>
                             <span class="text-nowrap">تنظیمات تراکنش ها</span>
                         </a>
+                    @endcan
+                    @can('access', ['header'])
                         <a href="{{ route('header.create') }}"
                             class="px-2 py-2 rounded-xl @if (Route::is('header.create')) bg-green-300 @endif flex gap-3 justify-start items-center"
                             title="تنظیمات هدر">
@@ -305,6 +322,8 @@
                             </svg>
                             <span class="text-nowrap">تنظیمات هدر</span>
                         </a>
+                    @endcan
+                    @can('access', ['logo'])
                         <a href="{{ route('logo.create') }}"
                             class="px-2 py-2 rounded-xl @if (Route::is('logo.create')) bg-green-300 @endif flex gap-3 justify-start items-center"
                             title="تنظیمات لوگو">
@@ -314,10 +333,12 @@
                             </svg>
                             <span class="text-nowrap">تنظیمات لوگو</span>
                         </a>
+                    @endcan
+                    @can('access', ['order_show'])
                         <a href="{{ route('order.index') }}"
                             class="px-2 py-2 rounded-xl @if (Route::is('order.index')) bg-green-300 @endif flex gap-3 justify-start items-center"
                             title="لیست سفارشات">
-                            <svg viewBox="0 0 24 24" class="xl:size-4 size-5 fill-white stroke-black" stroke-width="2">
+                            <svg viewBox="0 0 24 24" class="xl:size-4 size-5 fill-none stroke-black" stroke-width="2">
                                 <rect x="5" y="4" width="14" height="17" rx="2" />
                                 <path d="M9 9H15" stroke-linecap="round" />
                                 <path d="M9 13H15" stroke-linecap="round" />
@@ -326,6 +347,32 @@
                             <span class="text-nowrap">لیست سفارشات</span>
                         </a>
                     @endcan
+                    @can('access', ['role_create'])
+                        <a href="{{ route('role.create') }}"
+                            class="px-2 py-2 rounded-xl @if (Route::is('role.create')) bg-green-300 @endif flex gap-3 justify-start items-center"
+                            title="تعیین دسترسی و مجوز ها">
+                            <svg viewBox="0 0 512 512" class="xl:size-4 size-5">
+                                <g>
+                                    <g>
+                                        <g>
+                                            <path
+                                                d="M368.475,68.426H246.688c-5.667,0-10.262,4.594-10.262,10.262s4.596,10.262,10.262,10.262h121.787 c5.667,0,10.262-4.594,10.262-10.262S374.141,68.426,368.475,68.426z" />
+                                            <path
+                                                d="M185.236,88.951h4.105c5.667,0,10.262-4.594,10.262-10.262s-4.596-10.262-10.262-10.262h-4.105 c-5.667,0-10.262,4.594-10.262,10.262S179.569,88.951,185.236,88.951z" />
+                                            <path
+                                                d="M141.621,78.689c0-5.668-4.595-10.262-10.262-10.262H51.312c-5.667,0-10.262,4.594-10.262,10.262 s4.596,10.262,10.262,10.262h80.047C137.025,88.951,141.621,84.356,141.621,78.689z" />
+                                            <path
+                                                d="M324.56,177.482H178.046c-4.768-23.393-25.499-41.049-50.279-41.049c-28.293,0-51.312,23.018-51.312,51.312 c0,28.293,23.018,51.312,51.312,51.312c24.78,0,45.512-17.656,50.279-41.049h97.768v30.787c0,5.668,4.596,10.262,10.262,10.262 s10.262-4.594,10.262-10.262v-30.787h17.959v17.104c0,5.668,4.596,10.262,10.262,10.262s10.262-4.594,10.262-10.262v-27.367 C334.822,182.076,330.227,177.482,324.56,177.482z M127.767,218.531c-16.976,0-30.787-13.811-30.787-30.787 s13.811-30.787,30.787-30.787s30.787,13.811,30.787,30.787S144.743,218.531,127.767,218.531z" />
+                                            <path
+                                                d="M462.737,400.983c10.949-12.361,17.616-28.598,17.616-46.371v-31.2c0-35.405-26.416-64.737-60.571-69.371V72.428 c0-24.842-20.21-45.052-45.051-45.052H45.052C20.21,27.376,0,47.586,0,72.428v215.961c0,24.847,20.21,45.062,45.052,45.062 h105.906c-1.08,20.814-4.832,40.999-11.177,60.222h-26.338c-5.667,0-10.262,4.594-10.262,10.262s4.595,10.262,10.262,10.262 h192.902c5.667,0,10.262-4.594,10.262-10.262s-4.596-10.262-10.262-10.262h-26.337c-6.345-19.224-10.098-39.41-11.177-60.222 h71.47v21.161c0,17.772,6.667,34.01,17.616,46.371c-28.872,11.869-49.263,40.278-49.263,73.379 c0,5.668,4.596,10.262,10.262,10.262h182.822c5.667,0,10.262-4.594,10.262-10.262C512,441.26,491.61,412.852,462.737,400.983z M410.327,273.911c27.295,0,49.502,22.206,49.502,49.501v31.2c0,27.296-22.207,49.502-49.502,49.502 c-27.295,0-49.502-22.206-49.502-49.501v-31.2C360.825,296.117,383.032,273.911,410.327,273.911z M161.309,393.673 c5.793-19.341,9.211-39.513,10.201-60.222h76.766c0.99,20.708,4.407,40.877,10.201,60.222H161.309z M341.087,312.926H45.052 c-13.524,0-24.527-11.007-24.527-24.537v-7.276h334.041C347.63,290.235,342.871,301.098,341.087,312.926z M20.525,260.588V72.428 c0-13.524,11.003-24.527,24.527-24.527H374.73c13.524,0,24.526,11.002,24.526,24.527v181.841 c-7.007,1.118-13.667,3.281-19.824,6.32H20.525z M330.075,464.099c4.271-24.169,23.359-43.287,47.51-47.613 c9.778,5.195,20.92,8.151,32.742,8.151c11.822,0,22.964-2.957,32.742-8.151c24.15,4.326,43.237,23.444,47.51,47.613H330.075z" />
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg>
+                            <span class="text-nowrap">تعیین دسترسی و مجوز ها</span>
+                        </a>
+                    @endcan
+                    {{-- @endcan --}}
                 </div>
                 <!-- item_dashboard -->
             </div>

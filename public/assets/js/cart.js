@@ -4,7 +4,7 @@ let discountEl = document.getElementById('discountEl')
 let addPackToCartBtn = document.getElementById('addPackToCartBtn')
 let cartItemsBlock = document.getElementById('cartItemsBlock')
 let localProducts = JSON.parse(localStorage.getItem('products'))
-if(localProducts){
+if (localProducts) {
     orderBasket.children[1].innerText = localProducts.length
 }
 let popupFlag = false
@@ -17,7 +17,7 @@ function addToCart(btn) {
         dataType: "json",
         success: function (response) {
             let quan = parseInt(orderBasket.children[1].innerText)
-            quan+=1
+            quan += 1
             orderBasket.children[1].innerText = quan
             response.quantity = 1
             btn.innerHTML = `
@@ -40,7 +40,7 @@ function addToCart(btn) {
             localStorage.setItem('products', JSON.stringify(products))
         },
         error: function () {
-            console.log('failed to load data')
+            alert('failed to load data')
         }
     })
 }
@@ -147,7 +147,7 @@ orderBasket.addEventListener('click', () => {
                     parentCart.append(element)
                 })
             }
-           
+
         } else {
             orderBasket.parentElement.children[1].classList.add('invisible')
             orderBasket.parentElement.children[1].classList.add('opacity-0')

@@ -23,8 +23,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Route::model("user", User::class);
-        Gate::define("access", function (User $user, $roles) {
-            return $user->hasRole([$roles]);
+        Gate::define("access", function (User $user, $permission) {
+            return $user->hasAccess([$permission]);
         });
     }
 }
