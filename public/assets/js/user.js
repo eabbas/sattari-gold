@@ -426,7 +426,7 @@ items_2.forEach((item_2) => {
                                                         0
                                                     </span>
                                                     <span class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
-                                                        تومان
+                                                        ریال
                                                     </span>
                                                 </div>
                                             </div>
@@ -546,7 +546,7 @@ items_2.forEach((item_2) => {
                                                         95.478.555
                                                     </span>
                                                     <span class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
-                                                        تومان
+                                                        ریال
                                                     </span>
                                                 </div>
                                             </div>

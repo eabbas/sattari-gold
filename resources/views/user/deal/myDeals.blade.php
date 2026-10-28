@@ -79,7 +79,7 @@
                                 </td>
                                 <td class="flex flex-col items-center gap-2">
                                     <span class="in-fa">{{ number_format($deal->transaction->amount) }}</span>
-                                    <span class="text-xs text-gray-400">تومان</span>
+                                    <span class="text-xs text-gray-400">ریال</span>
                                 </td>
                             </tr>
     @endforeach
@@ -151,7 +151,7 @@
                                                     class="border-1 border-(--color-border) p-3 md:px-3 md:py-2 text-center in-fa">
                                                     <span
                                                         class="in-fa">{{ number_format($deal->transaction->amount) }}</span>
-                                                    <span class="text-xs text-gray-400">تومان</span>
+                                                    <span class="text-xs text-gray-400">ریال</span>
                                                 </td>
                                             </tr>
                                         @endforeach

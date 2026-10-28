@@ -200,7 +200,7 @@ function applyuserFilter(){
                                                                 class="in-fa takebleMoneyAsset"></span>
                                                             <span
                                                                 class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
-                                                                تومان
+                                                                ریال
                                                             </span>
                                                         </div>
                                                     </div>
@@ -276,7 +276,7 @@ function applyuserFilter(){
                                                                 class="in-fa takebleGoldAsset"></span>
                                                             <span
                                                                 class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
-                                                                تومان
+                                                                ریال
                                                             </span>
                                                         </div>
                                                     </div>

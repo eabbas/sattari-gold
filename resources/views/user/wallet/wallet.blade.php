@@ -78,7 +78,7 @@
                                     <span id="withdrawableBalance" data-balance="{{ $user->wallet['asset'] ?? 0 }}"
                                         class="in-fa">{{ number_format($user->wallet['asset'] ?? 0) }}</span>
                                     <span class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
-                                        تومان
+                                        ریال
                                     </span>
                                 </div>
                             </div>
@@ -141,7 +141,7 @@
                                     <span
                                         class="in-fa">{{ number_format(($user->wallet->goldWeight ?? 0) * 25000000) }}</span>
                                     <span class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
-                                        تومان
+                                        ریال
                                     </span>
                                 </div>
                             </div>
@@ -203,24 +203,24 @@
             if (state == 'deposit') {
                 if (inputValue < setting.minDepositAmount) {
                     el.children[1].innerText =
-                        `حداقل مبلغ قابل واریز ${parseInt(setting.minDepositAmount).toLocaleString('fa-IR')} تومان است.`
+                        `حداقل مبلغ قابل واریز ${parseInt(setting.minDepositAmount).toLocaleString('fa-IR')} ریال است.`
                     minDeposit = false
                 }
                 if (inputValue > setting.maxDepositAmount) {
                     el.children[1].innerText =
-                        `حداکثر مبلغ قابل واریز ${parseInt(setting.maxDepositAmount).toLocaleString('fa-IR')} تومان است.`
+                        `حداکثر مبلغ قابل واریز ${parseInt(setting.maxDepositAmount).toLocaleString('fa-IR')} ریال است.`
                     maxDeposit = false
                 }
             }
             if (state == 'withdraw') {
                 if (inputValue < setting.minWithdrawAmount) {
                     el.children[1].innerText =
-                        `حداقل مبلغ قابل برداشت ${parseInt(setting.minWithdrawAmount).toLocaleString('fa-IR')} تومان است.`
+                        `حداقل مبلغ قابل برداشت ${parseInt(setting.minWithdrawAmount).toLocaleString('fa-IR')} ریال است.`
                     minWithdraw = false
                 }
                 if (inputValue > setting.maxWithdrawAmount) {
                     el.children[1].innerText =
-                        `حداکثر مبلغ قابل برداشت ${parseInt(setting.maxWithdrawAmount).toLocaleString('fa-IR')} تومان است.`
+                        `حداکثر مبلغ قابل برداشت ${parseInt(setting.maxWithdrawAmount).toLocaleString('fa-IR')} ریال است.`
                     maxWithdraw = false
                 }
             }

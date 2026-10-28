@@ -405,7 +405,7 @@
                                 </div>
                                 <div class="flex gap-1 relative ${ cart.product.secondary_price ? '' : 'hidden' }">
                                     <span class="text-[10px] text-[#f6911e] font-bold in-fa">${ formatter.format(cart.product.secondary_price) }</span>
-                                    <span class="text-[10px] text-[#f6911e]">تومان</span>
+                                    <span class="text-[10px] text-[#f6911e]">ریال</span>
                                 </div>
                             </div>
                             <p class="text-[10px] text-[#6B7280] mt-0.5">${ cart.product.description ?? "" }</p>
@@ -444,7 +444,7 @@
                                 </div>
                                 <div class="flex gap-1 relative ${ cart.pack.secondary_price ? '' : 'hidden' }">
                                     <span class="text-[10px] text-[#f6911e] font-bold in-fa">${ formatter.format(cart.pack.secondary_price) }</span>
-                                    <span class="text-[10px] text-[#f6911e]">تومان</span>
+                                    <span class="text-[10px] text-[#f6911e]">ریال</span>
                                 </div>
                             </div>
                             <p class="text-[10px] text-[#6B7280] mt-0.5">${ cart.pack.description ?? "" }</p>

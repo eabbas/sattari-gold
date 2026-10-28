@@ -526,7 +526,7 @@
                                                                                         class="in-fa takebleMoneyAsset"></span>
                                                                                     <span
                                                                                         class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
-                                                                                        تومان
+                                                                                        ریال
                                                                                     </span>
                                                                                 </div>
                                                                             </div>
@@ -728,7 +728,7 @@
                                                                                     class="in-fa takebleMoneyAsset"></span>
                                                                                 <span
                                                                                     class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
-                                                                                    تومان
+                                                                                    ریال
                                                                                 </span>
                                                                             </div>
                                                                         </div>
@@ -803,7 +803,7 @@
                                                                                     class="in-fa takebleGoldAsset"></span>
                                                                                 <span
                                                                                     class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
-                                                                                    تومان
+                                                                                    ریال
                                                                                 </span>
                                                                             </div>
                                                                         </div>
@@ -974,7 +974,7 @@
                                                                             </span>
                                                                             <span
                                                                                 class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
-                                                                                تومان
+                                                                                ریال
                                                                             </span>
                                                                         </div>
                                                                     </div>
@@ -1315,24 +1315,24 @@
             if (state == 'deposit') {
                 if (inputValue < setting.minDepositAmount) {
                     el.children[2].innerText =
-                        `حداقل مبلغ قابل واریز ${parseInt(setting.minDepositAmount).toLocaleString('fa-IR')} تومان است.`
+                        `حداقل مبلغ قابل واریز ${parseInt(setting.minDepositAmount).toLocaleString('fa-IR')} ریال است.`
                     minDeposit = false
                 }
                 if (inputValue > setting.maxDepositAmount) {
                     el.children[2].innerText =
-                        `حداکثر مبلغ قابل واریز ${parseInt(setting.maxDepositAmount).toLocaleString('fa-IR')} تومان است.`
+                        `حداکثر مبلغ قابل واریز ${parseInt(setting.maxDepositAmount).toLocaleString('fa-IR')} ریال است.`
                     maxDeposit = false
                 }
             }
             if (state == 'withdraw') {
                 if (inputValue < setting.minWithdrawAmount) {
                     el.children[2].innerText =
-                        `حداقل مبلغ قابل برداشت ${parseInt(setting.minWithdrawAmount).toLocaleString('fa-IR')} تومان است.`
+                        `حداقل مبلغ قابل برداشت ${parseInt(setting.minWithdrawAmount).toLocaleString('fa-IR')} ریال است.`
                     minWithdraw = false
                 }
                 if (inputValue > setting.maxWithdrawAmount) {
                     el.children[2].innerText =
-                        `حداکثر مبلغ قابل برداشت ${parseInt(setting.maxWithdrawAmount).toLocaleString('fa-IR')} تومان است.`
+                        `حداکثر مبلغ قابل برداشت ${parseInt(setting.maxWithdrawAmount).toLocaleString('fa-IR')} ریال است.`
                     maxWithdraw = false
                 }
             }
