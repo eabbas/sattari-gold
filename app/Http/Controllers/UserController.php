@@ -455,21 +455,21 @@ class UserController extends Controller
     {
         $validated = $request->validate(
             [
-                'name' => ['required'],
-                'family' => ['required'],
-                'phoneNumber' => ['required', 'min:11', 'max:11'],
-                'nationalCode' => ['required', 'min:10', 'max:10'],
+                // 'name' => ['required'],
+                // 'family' => ['required'],
+                // 'phoneNumber' => ['required', 'min:11', 'max:11'],
+                // 'nationalCode' => ['required', 'min:10', 'max:10'],
                 // 'mainImage' => ['max:100'],
             ],
             [
-                'name.required' => 'پر کردن این فیلد الزامی است.',
-                'family.required' => 'پر کردن این فیلد الزامی است.',
-                'phoneNumber.required' => 'پر کردن این فیلد الزامی است.',
-                'phoneNumber.max' => 'شماره تلفن باید 11 رقمی باشد.',
-                'phoneNumber.min' => 'شماره تلفن باید 11 رقمی باشد.',
-                'nationalCode.max' => 'کد ملی باید 10 رقمی باشد.',
-                'nationalCode.min' => 'کد ملی باید 10 رقمی باشد.',
-                'nationalCode.required' => 'پر کردن این فیلد الزامی است.',
+                // 'name.required' => 'پر کردن این فیلد الزامی است.',
+                // 'family.required' => 'پر کردن این فیلد الزامی است.',
+                // 'phoneNumber.required' => 'پر کردن این فیلد الزامی است.',
+                // 'phoneNumber.max' => 'شماره تلفن باید 11 رقمی باشد.',
+                // 'phoneNumber.min' => 'شماره تلفن باید 11 رقمی باشد.',
+                // 'nationalCode.max' => 'کد ملی باید 10 رقمی باشد.',
+                // 'nationalCode.min' => 'کد ملی باید 10 رقمی باشد.',
+                // 'nationalCode.required' => 'پر کردن این فیلد الزامی است.',
                 // 'mainImage.max' => 'حجم فایل نباید بیشتر از 100 کیلوبایت باشد.',
             ]
         );
@@ -488,10 +488,12 @@ class UserController extends Controller
         } else {
             $img_path = $user['mainImage'];
         }
-        $user->name = $request->name;
-        $user->family = $request->family;
-        $user->phoneNumber = $request->phoneNumber;
-        $user->nationalCode = $request->nationalCode;
+        // $user->name = $request->name;
+        // $user->family = $request->family;
+        // $user->phoneNumber = $request->phoneNumber;
+        // $user->nationalCode = $request->nationalCode;
+        // $user->birthday = $request->birthday;
+        $user->address = $request->address;
         if ($request->password) {
             $password = Hash::make($request->password);
             $user->password = $password;
