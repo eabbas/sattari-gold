@@ -35,7 +35,7 @@ if (localStorage.getItem('products')) {
                 </div>
                 <div class="text-left shrink-0">
                     <p class="font-bold text-gray-800 text-sm sm:text-base in-fa price">${cart.secondary_price ? cart.secondary_price : cart.primary_price}</p>
-                    <p class="text-xs text-gray-400">تومان</p>
+                    <p class="text-xs text-gray-400">ریال</p>
                 </div>
             </div>
         `
@@ -45,7 +45,7 @@ if (localStorage.getItem('products')) {
             let compare = cart.primary_price - cart.secondary_price
             totalBlock.querySelector('.discountBlock').classList.remove('hidden')
             totalBlock.querySelector('.discountBlock').classList.add('flex')
-            totalBlock.querySelector('#discountEl').innerText = parseInt(totalBlock.querySelector('#discountEl').innerText) + parseInt(compare) + ' تومان '
+            totalBlock.querySelector('#discountEl').innerText = parseInt(totalBlock.querySelector('#discountEl').innerText) + parseInt(compare) + ' ریال '
             priceSum += cart.secondary_price * cart.quantity
         } else {
             priceSum += cart.primary_price * cart.quantity
@@ -84,7 +84,7 @@ if (localStorage.getItem('packs')) {
                 </div>
                 <div class="text-left shrink-0">
                     <p class="font-bold text-gray-800 text-sm sm:text-base in-fa price">${cart.secondary_price ? cart.secondary_price : cart.primary_price}</p>
-                    <p class="text-xs text-gray-400">تومان</p>
+                    <p class="text-xs text-gray-400">ریال</p>
                 </div>
             </div>
         `
@@ -94,7 +94,7 @@ if (localStorage.getItem('packs')) {
             let compare = cart.primary_price - cart.secondary_price
             totalBlock.querySelector('.discountBlock').classList.remove('hidden')
             totalBlock.querySelector('.discountBlock').classList.add('flex')
-            totalBlock.querySelector('#discountEl').innerText = parseInt(totalBlock.querySelector('#discountEl').innerText) + parseInt(compare) + ' تومان '
+            totalBlock.querySelector('#discountEl').innerText = parseInt(totalBlock.querySelector('#discountEl').innerText) + parseInt(compare) + ' ریال '
             priceSum += cart.secondary_price * cart.quantity
         } else {
             priceSum += cart.primary_price * cart.quantity

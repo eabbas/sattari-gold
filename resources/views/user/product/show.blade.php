@@ -100,13 +100,13 @@
                                         class="text-gray-400 font-bold line-through">{{ $product['primary_price'] }}</span>
                                     <div class="text-(--color-primary) font-bold hidden md:flex gap-3">
                                         <span class="cursor-default text-4xl">{{ $product->secondary_price }}</span>
-                                        <span class="cursor-default text-3xl">تومان</span>
+                                        <span class="cursor-default text-3xl">ریال</span>
                                     </div>
                                 </div>
                             @else
                                 <div class="text-(--color-primary) font-bold hidden md:flex gap-3">
                                     <span class="cursor-default text-4xl">{{ $product->primary_price }}</span>
-                                    <span class="cursor-default text-3xl">تومان</span>
+                                    <span class="cursor-default text-3xl">ریال</span>
                                 </div>
                             @endif
                         @else
@@ -126,7 +126,7 @@
                             </span>
                             <span class="text-xl text-(--color-primary) md:text-base md:text-(--color-text-secondary)">
                                 24.230.000 </span>
-                            <span class="">تومان</span>
+                            <span class="">ریال</span>
                         </div>
                         <div class="flex items-center gap-1 px-3 py-1 bg-(--color-success)/10 rounded-full mt-3">
                             <span class="">
@@ -220,7 +220,7 @@
                             </button>
                             <div class="text-(--color-primary) font-bold">
                                 <span class="cursor-default text-lg sm:text-2xl">28.550.000</span>
-                                <span class="cursor-default text-base sm:text-xl">تومان</span>
+                                <span class="cursor-default text-base sm:text-xl">ریال</span>
                             </div>
                         </div>
                     </div>
@@ -464,13 +464,13 @@
                                                         class="text-xs text-gray-400 font-bold line-through">{{ $pro['primary_price'] }}</span>
                                                     <div class="">
                                                         <span class="text-lg font-bold">{{ $pro->secondary_price }}</span>
-                                                        <span class="text-base">تومان</span>
+                                                        <span class="text-base">ریال</span>
                                                     </div>
                                                 </div>
                                             @else
                                                 <div class="">
                                                     <span class="text-lg font-bold">{{ $pro->primary_price }}</span>
-                                                    <span class="text-base">تومان</span>
+                                                    <span class="text-base">ریال</span>
                                                 </div>
                                             @endif
                                         @else

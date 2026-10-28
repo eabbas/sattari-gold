@@ -78,7 +78,7 @@
                                         </td>
                                         <td class="flex flex-col items-center gap-2">
                                             <span class="in-fa">{{ number_format($deal->transaction->amount) }}</span>
-                                            <span class="text-xs text-gray-400">تومان</span>
+                                            <span class="text-xs text-gray-400">ریال</span>
                                         </td>
                                         <td class="flex flex-col items-center gap-2">
                                             <a href="{{ route('user.profile', $deal->user->id) }}"

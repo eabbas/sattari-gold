@@ -118,15 +118,15 @@
                                 @if ($product->secondary_price)
                                     <div class="flex items-center justify-between gap-2">
                                         <strong class="text-[15px] in-fa">{{ $product->secondary_price }}</strong>
-                                        <span class="text-[10px] text-[#71717a]">تومان
+                                        <span class="text-[10px] text-[#71717a]">ریال
                                         </span>
                                     </div>
                                     <div class="line-through text-[#a1a1aa] text-[10px] in-fa">{{ $product->primary_price }}
-                                        تومان</div>
+                                        ریال</div>
                                 @else
                                     <div class="flex items-center justify-between gap-2">
                                         <strong class="text-[15px] in-fa">{{ $product->primary_price }}</strong>
-                                        <span class="text-[10px] text-[#71717a]">تومان
+                                        <span class="text-[10px] text-[#71717a]">ریال
                                         </span>
                                     </div>
                                 @endif

@@ -141,7 +141,7 @@ orderBasket.addEventListener('click', () => {
                         </div>
                         <div class="text-left shrink-0">
                             <p class="font-bold text-gray-800 text-sm sm:text-base in-fa price">${prod.secondary_price ? prod.secondary_price : prod.primary_price}</p>
-                            <p class="text-xs text-gray-400">تومان</p>
+                            <p class="text-xs text-gray-400">ریال</p>
                         </div>`
                     element.innerHTML = html
                     parentCart.append(element)
