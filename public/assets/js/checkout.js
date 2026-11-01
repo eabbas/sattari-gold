@@ -5,15 +5,15 @@ let totalPrice = 0
 let productsInput = document.getElementById('productsInput')
 let packsInput = document.getElementById('packsInput')
 localProducts = JSON.parse(localStorage.getItem('products'))
-if (localStorage.getItem('products') && localProducts.length){
-    localProducts.find(cart=>{
+if (localStorage.getItem('products') && localProducts.length) {
+    localProducts.find(cart => {
         let price = 0
         let discount = 0
-        if(cart.secondary_price){
-            price = cart.secondary_price*cart.quantity
-            discount = (cart.primary_price - cart.secondary_price)*cart.quantity
+        if (cart.secondary_price) {
+            price = cart.secondary_price * cart.quantity
+            discount = (cart.primary_price - cart.secondary_price) * cart.quantity
         } else {
-            price = cart.primary_price*cart.quantity
+            price = cart.primary_price * cart.quantity
         }
         totalPrice = price + totalPrice
         let parent = document.createElement('div')
@@ -26,30 +26,30 @@ if (localStorage.getItem('products') && localProducts.length){
         totalPriceCheckout.innerText = totalPrice.toLocaleString('fa-IR') + ' ریال'
         totalDiscountCheckout.innerText = discount.toLocaleString('fa-IR') + ' ریال'
     })
-    productsInput.value = localStorage.getItem('products')  
+    productsInput.value = localStorage.getItem('products')
 }
 
 let province = document.getElementById('province')
 let city = document.getElementById('city')
-province.addEventListener('change', ()=>{
+province.addEventListener('change', () => {
     $.ajax({
-        url: api +'cities',
+        url: api + 'cities',
         type: "POST",
         dataType: "json",
         data: {
-            'provinceId': province.value 
+            'provinceId': province.value
         },
-        success: function(response){
+        success: function (response) {
             city.innerHTML = ""
-            response.forEach(cityModel=>{
+            response.forEach(cityModel => {
                 let option = document.createElement('option')
                 option.value = cityModel.id
                 option.innerText = cityModel.title
                 city.append(option)
             })
         },
-        error: function(){
-            console.log('failed to load data')
+        error: function () {
+            alert('failed to load data')
         }
     })
 })

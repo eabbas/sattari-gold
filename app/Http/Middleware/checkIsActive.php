@@ -22,7 +22,7 @@ class checkIsActive
                 return redirect()->back()->with('failure', 'در حال حاضر حساب کاربری شما فعال نشده است.');
             }
         } else {
-            return to_route("user.login");
+            return to_route("user.login")->with('failure', 'ابتدا وارد شوید.');
         }
         return $next($request);
     }

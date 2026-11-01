@@ -23,7 +23,9 @@ class MessageController extends Controller
             "message" => $request->message,
             "segment_id" => $request->segment_id
         ]);
-        return to_route('Message.insert');
+        $message = Message::all();
+        $logo = logo::first();
+        return view("admin.Message.insert", ['logo' => $logo, 'message' => $message]);
     }
     public function list()
     {

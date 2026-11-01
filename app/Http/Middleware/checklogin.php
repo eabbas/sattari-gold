@@ -17,7 +17,7 @@ class checklogin
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::user()) {
-            return to_route("user.login");
+            return to_route("user.login")->with('failure', 'ابتدا وارد شوید.');
         }
         return $next($request);
     }

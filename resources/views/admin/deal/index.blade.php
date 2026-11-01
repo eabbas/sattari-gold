@@ -383,7 +383,7 @@
                                     </td>
                                     <td class="border-1 border-(--color-border) p-1 md:px-3 md:py-2 text-center">
                                         @if ($deal->state != 'تایید شده')
-                                            <a href="{{ route('deal.conferm', $deal->id) }}"
+                                            <a href="{{ route('deal.confirm', $deal->id) }}"
                                                 class="px-3 py-1.5 bg-[{{ $deal->color }}]/20 text-[{{ $deal->color }}] rounded-md border-1 border-[[{{ $deal->color }}]] p-1 cursor-default cursor-pointer">
                                                 {{ $deal->state }}
                                             </a>
