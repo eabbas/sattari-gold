@@ -5,7 +5,8 @@ let dealFilters = {
     'fromDate': null,
     'toDate': null,
     'price': null,
-    'transactionId': null
+    'transactionId': null,
+    'sortType': 'desc'
 }
 
 let fullName = document.getElementById('fullName')
@@ -16,6 +17,7 @@ let price = document.getElementById('price')
 let transactionId = document.getElementById('transactionId')
 let type = document.getElementById('type')
 let transactionControl = document.getElementById('transactionControl')
+let showImg = document.getElementById('showImg')
 
 let transactionPopup = document.getElementById('transaction')
 let closeBtn = document.getElementById('closeBtn')
@@ -60,7 +62,7 @@ function applyDealFilters() {
                 parentRow.classList = 'item_fayle text-xs lg:text-base'
                 counter++
                 let html = `
-                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
+                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
                         ${counter}
                     </td>
                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
@@ -164,6 +166,10 @@ document.addEventListener('click', (e) => {
     if (clickedOnCloseBtn || clickedInsidePopup) {
         transactionPopup.classList.add('invisible', 'opacity-0')
     }
+    if (!showImg.children[0].children[0].contains(e.target) && !document.getElementById('transactionPopupReceipt').querySelector('img').contains(e.target)) {
+        closeZoom()
+    }
+   
 })
 
 function transactionAct(isApproved) {
@@ -233,3 +239,29 @@ function transactionAct(isApproved) {
         }
     })
 }
+
+function sort(el){
+    if(el.dataset.sort == 'desc'){
+        el.querySelector('img').src = url+'assets/img/sort/asc.png'
+        el.querySelector('p').innerText = 'صعودی'
+        el.dataset.sort = 'asc'
+        dealFilters.sortType = 'asc'
+    }
+    else{
+        el.querySelector('img').src = url+'assets/img/sort/desc.png'
+        el.querySelector('p').innerText = 'نزولی'
+        el.dataset.sort = 'desc'
+        dealFilters.sortType = 'desc'
+    }
+    applyDealFilters()
+}
+
+function showImage(el){
+    showImg.classList.remove('invisible', 'opacity-0')
+    showImg.querySelector('img').src = el.src
+}
+
+function closeZoom(){
+    showImg.classList.add('invisible', 'opacity-0')
+}
+

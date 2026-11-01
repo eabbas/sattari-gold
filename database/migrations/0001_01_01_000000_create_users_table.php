@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('family');
+            $table->string('birthday');
+            $table->string('address')->nullable();
+            $table->string('mainImage')->nullable();
             $table->string('phoneNumber')->unique();
             $table->string('nationalCode');
             // $table->string('birthDate');

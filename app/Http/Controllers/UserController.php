@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Api\NationalCode;
+use Illuminate\Support\Str;
 use App\Models\logo;
 use App\Models\PhoneCode;
 use App\Models\role;
 use App\Models\User;
+use App\Models\transactionSetting;
 use App\Models\user_role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -212,6 +214,7 @@ class UserController extends Controller
             [
                 'name' => ['required'],
                 'family' => ['required'],
+                'birthday' => ['required'],
                 'phoneNumber' => ['required', 'min:11', 'max:11'],
                 'nationalCode' => ['required', 'min:10', 'max:10'],
                 'code' => ['required', 'min:4', 'max:4'],
@@ -220,6 +223,7 @@ class UserController extends Controller
             [
                 'name.required' => 'پر کردن این فیلد الزامی است.',
                 'family.required' => 'پر کردن این فیلد الزامی است.',
+                'birthday.required' => 'پر کردن این فیلد الزامی است.',
                 'phoneNumber.required' => 'پر کردن این فیلد الزامی است.',
                 'phoneNumber.max' => 'شماره تلفن باید 11 رقمی باشد.',
                 'phoneNumber.min' => 'شماره تلفن باید 11 رقمی باشد.',
@@ -233,12 +237,16 @@ class UserController extends Controller
                 'password.min' => 'رمز عبور حدافل باید 8 رقمی باشد.',
             ]
         );
+        $code = strtoupper(Str::random(10));
         $user = User::create([
             'name' => $request->name,
             'family' => $request->family,
+            'birthday' => $request->birthday,
+            'address' => $request->address,
             'phoneNumber' => $request->phoneNumber,
             'nationalCode' => $request->nationalCode,
             'password' => $request->password,
+            'referral_code' => $code,
         ]);
         return to_route('user.login')->with('success', "$user->name $user->family عزیز با موفقیت ثبت نام شدید لطفا وارد شوید.");
     }
@@ -284,12 +292,14 @@ class UserController extends Controller
         if (!$result['data']) {
             return redirect()->back()->with('failure', 'شماره تلفن و کدملی باهم مطابقت ندارند.');
         }
+        $code = strtoupper(Str::random(10));
         $user = User::create([
             'name' => $request->name,
             'family' => $request->family,
             'phoneNumber' => $request->phoneNumber,
             'nationalCode' => $request->nationalCode,
             'password' => $request->password,
+            'referral_code' => $code,
         ]);
         foreach ($request->roles as $role) {
             user_role::create([
@@ -329,10 +339,12 @@ class UserController extends Controller
                     break;
             }
         }
+        $setting = transactionSetting::first();
         return view('admin.user.index', [
             'users' => $users,
             'logo' => $logo,
             'roles' => $roles,
+            'setting' => $setting,
         ]);
     }
 
@@ -432,6 +444,9 @@ class UserController extends Controller
         }
         $user['persianRoles'] = $roles;
         $logo = logo::first();
+        $dateTime = explode(' ', verta($user->created_at));
+        $user->date = implode('/', explode('-', $dateTime[0]));
+        $user->time = $dateTime[1];
         return view('user.user.profile', [
             'user' => $user,
             'logo' => $logo,
@@ -451,22 +466,22 @@ class UserController extends Controller
     {
         $validated = $request->validate(
             [
-                'name' => ['required'],
-                'family' => ['required'],
-                'phoneNumber' => ['required', 'min:11', 'max:11'],
-                'nationalCode' => ['required', 'min:10', 'max:10'],
-                'mainImage' => ['max:100'],
+                // 'name' => ['required'],
+                // 'family' => ['required'],
+                // 'phoneNumber' => ['required', 'min:11', 'max:11'],
+                // 'nationalCode' => ['required', 'min:10', 'max:10'],
+                // 'mainImage' => ['max:100'],
             ],
             [
-                'name.required' => 'پر کردن این فیلد الزامی است.',
-                'family.required' => 'پر کردن این فیلد الزامی است.',
-                'phoneNumber.required' => 'پر کردن این فیلد الزامی است.',
-                'phoneNumber.max' => 'شماره تلفن باید 11 رقمی باشد.',
-                'phoneNumber.min' => 'شماره تلفن باید 11 رقمی باشد.',
-                'nationalCode.max' => 'کد ملی باید 10 رقمی باشد.',
-                'nationalCode.min' => 'کد ملی باید 10 رقمی باشد.',
-                'nationalCode.required' => 'پر کردن این فیلد الزامی است.',
-                'mainImage.max' => 'حجم فایل نباید بیشتر از 100 کیلوبایت باشد.',
+                // 'name.required' => 'پر کردن این فیلد الزامی است.',
+                // 'family.required' => 'پر کردن این فیلد الزامی است.',
+                // 'phoneNumber.required' => 'پر کردن این فیلد الزامی است.',
+                // 'phoneNumber.max' => 'شماره تلفن باید 11 رقمی باشد.',
+                // 'phoneNumber.min' => 'شماره تلفن باید 11 رقمی باشد.',
+                // 'nationalCode.max' => 'کد ملی باید 10 رقمی باشد.',
+                // 'nationalCode.min' => 'کد ملی باید 10 رقمی باشد.',
+                // 'nationalCode.required' => 'پر کردن این فیلد الزامی است.',
+                // 'mainImage.max' => 'حجم فایل نباید بیشتر از 100 کیلوبایت باشد.',
             ]
         );
         if (isset($request['removedImg'])) {
@@ -484,16 +499,18 @@ class UserController extends Controller
         } else {
             $img_path = $user['mainImage'];
         }
-        $user->name = $request->name;
-        $user->family = $request->family;
-        $user->phoneNumber = $request->phoneNumber;
-        $user->nationalCode = $request->nationalCode;
+        // $user->name = $request->name;
+        // $user->family = $request->family;
+        // $user->phoneNumber = $request->phoneNumber;
+        // $user->nationalCode = $request->nationalCode;
+        // $user->birthday = $request->birthday;
+        $user->address = $request->address;
         if ($request->password) {
             $password = Hash::make($request->password);
             $user->password = $password;
         }
         // ! بعد از افزودن امکان بارگذاری عکس برای کاربر خط زیر باید کار کند
-        // $user->mainImage = $img_path;
+        $user->mainImage = $img_path;
         $user->save();
         return redirect()->back()->with('message', 'پروفایل شما با موفقیت به روزرسانی شد.');
     }

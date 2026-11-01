@@ -50,7 +50,7 @@ class WalletController extends Controller
         //         'transactionType.required' => 'ابتدا نوع تراکنش خود را مشخص کنید.',
         //     ]
         // );
-
+        
         if ($request->transactionType == 'deposit') {
             return $this->depositApi($request);
         }
@@ -74,6 +74,7 @@ class WalletController extends Controller
         //         'receipt.max' => 'حجم فایل نباید بیشتر از 100 کیلوبایت باشد',
         //     ]
         // );
+        Log::info('deposite');
         $userId = $request->userId;
         $dateTime = explode(' ', now());
         $dateJalali = verta($dateTime[0]);

@@ -94,7 +94,7 @@
                                 <td class="p-1 md:px-3 md:py-2 in-fa">
                                     <div class=" flex items-center justify-center gap-2">
                                         <input type="checkbox" name="categories[]" value="{{ $category->id }}" class="check appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
-                                        <span>{{ $i }}</span>
+                                        <span class="in-fa">{{ $i }}</span>
                                     </div>
                                 </td>
                                 <td class="p-1 md:px-3 md:py-2  in-fa">

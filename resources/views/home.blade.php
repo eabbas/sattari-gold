@@ -289,18 +289,18 @@
                                         <div class="space-y-2">
                                             <div class="line-through text-[#a1a1aa] text-xs in-fa">
                                                 {{ $product->primary_price }}
-                                                تومان</div>
+                                                ریال</div>
                                             <div class="flex flex-row items-center gap-1 lg:text-base">
                                                 <span
                                                     class="text-sm lg:text-md font-bold text-gray-800 in-fa">{{ $product->secondary_price }}</span>
-                                                <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">تومان</span>
+                                                <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">ریال</span>
                                             </div>
                                         </div>
                                     @else
                                         <div class="flex flex-row items-center gap-1 lg:text-base">
                                             <span
                                                 class="text-sm lg:text-md font-bold text-gray-800 in-fa">{{ $product->primary_price }}</span>
-                                            <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">تومان</span>
+                                            <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">ریال</span>
                                         </div>
                                     @endif
                                 @else
@@ -345,18 +345,18 @@
                                         <div class="space-y-2">
                                             <div class="line-through text-[#a1a1aa] text-xs in-fa">
                                                 {{ $product->primary_price }}
-                                                تومان</div>
+                                                ریال</div>
                                             <div class="flex flex-row items-center gap-1 lg:text-base">
                                                 <span
                                                     class="text-sm lg:text-md font-bold text-gray-800 in-fa">{{ $product->secondary_price }}</span>
-                                                <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">تومان</span>
+                                                <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">ریال</span>
                                             </div>
                                         </div>
                                     @else
                                         <div class="flex flex-row items-center gap-1 lg:text-base">
                                             <span
                                                 class="text-sm lg:text-md font-bold text-gray-800 in-fa">{{ $product->primary_price }}</span>
-                                            <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">تومان</span>
+                                            <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">ریال</span>
                                         </div>
                                     @endif
                                 @else
@@ -401,18 +401,18 @@
                                         <div class="space-y-2">
                                             <div class="line-through text-[#a1a1aa] text-xs in-fa">
                                                 {{ $product->primary_price }}
-                                                تومان</div>
+                                                ریال</div>
                                             <div class="flex flex-row items-center gap-1 lg:text-base">
                                                 <span
                                                     class="text-sm lg:text-md font-bold text-gray-800 in-fa">{{ $product->secondary_price }}</span>
-                                                <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">تومان</span>
+                                                <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">ریال</span>
                                             </div>
                                         </div>
                                     @else
                                         <div class="flex flex-row items-center gap-1 lg:text-base">
                                             <span
                                                 class="text-sm lg:text-md font-bold text-gray-800 in-fa">{{ $product->primary_price }}</span>
-                                            <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">تومان</span>
+                                            <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">ریال</span>
                                         </div>
                                     @endif
                                 @else

@@ -91,6 +91,21 @@
                             @enderror
                         </div>
                         <div class="w-full flex flex-col gap-2">
+                            <label for="family" class="text-(--color-primary) max-sm:text-sm font-bold">تاریخ تولد</label>
+                            <input id="family" type="text" placeholder="تاریخ تولد" name="birthday"
+                                value="{{ old('birthday') }}"
+                                class="placeholder:text-right placeholder-(--color-zinc-400) max-md:text-sm block w-full rounded-md  sm:border-3 border-2 border-(--color-border-strong) px-3 sm:py-3 py-2 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
+                            @error('family')
+                                <span class="text-xs text-red-500">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="w-full flex flex-col gap-2">
+                            <label for="family" class="text-(--color-primary) max-sm:text-sm font-bold">آدرس</label>
+                            <input id="family" type="text" placeholder="آدرس" name="address"
+                                value="{{ old('address') }}"
+                                class="placeholder:text-right placeholder-(--color-zinc-400) max-md:text-sm block w-full rounded-md  sm:border-3 border-2 border-(--color-border-strong) px-3 sm:py-3 py-2 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
+                        </div>
+                        <div class="w-full flex flex-col gap-2">
                             <label for="phoneNumber" class="text-(--color-primary) max-sm:text-sm font-bold">شماره
                                 تلفن</label>
                             <input id="phoneNumber" type="number" placeholder="شماره تلفن" name="phoneNumber"

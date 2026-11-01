@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->string("message");
+            $table->integer("segment_id");
             $table->string("status")->default(1);
             $table->timestamps();
         });

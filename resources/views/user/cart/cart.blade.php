@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="text-left shrink-0">
                                     <p class="font-bold text-gray-800 text-sm sm:text-base in-fa price">{{ $cart->product->secondary_price ? $cart->product->secondary_price*$cart->quantity : $cart->product->primary_price*$cart->quantity }}</p>
-                                    <p class="text-xs text-gray-400">تومان</p>
+                                    <p class="text-xs text-gray-400">ریال</p>
                                 </div>
                             </div>
                         @endif
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="text-left shrink-0">
                                     <p class="font-bold text-gray-800 text-sm sm:text-base in-fa price">{{ $cart->pack->secondary_price ? $cart->pack->secondary_price*$cart->quantity : $cart->pack->primary_price*$cart->quantity }}</p>
-                                    <p class="text-xs text-gray-400">تومان</p>
+                                    <p class="text-xs text-gray-400">ریال</p>
                                 </div>
                             </div>
                         @endif
@@ -68,11 +68,11 @@
                     <div class="space-y-2.5 text-sm discountBlock">
                         {{-- <div class="flex justify-between text-gray-600">
                                 <span>جمع کالاها</span>
-                                <span class="in-fa">{{ $totalPrice }} تومان</span>
+                                <span class="in-fa">{{ $totalPrice }} ریال</span>
                             </div> 
                             <div class="flex justify-between text-gray-600">
                                 <span>هزینه ارسال</span>
-                                <span>۳۵,۰۰۰ تومان</span>
+                                <span>۳۵,۰۰۰ ریال</span>
                             </div> --}}
                         {{-- @if ($totalDiscount) --}}
                         <div class="justify-between text-emerald-600 hidden">
@@ -88,7 +88,7 @@
                         <span class="font-semibold text-gray-700">مبلغ قابل پرداخت</span>
                         <div class="text-left">
                             <p class="font-bold text-lg text-gray-900 in-fa" id="totalPriceEl">0</p>
-                            <p class="text-xs text-gray-400">تومان</p>
+                            <p class="text-xs text-gray-400">ریال</p>
                         </div>
                     </div>
 
@@ -98,7 +98,7 @@
                     </a>
 
                     <p class="text-xs text-gray-400 text-center mt-3">
-                        ارسال رایگان برای خرید بالای ۵۰۰ هزار تومان
+                        ارسال رایگان برای خرید بالای ۵۰۰ هزار ریال
                     </p>
                 </div>
             </aside>

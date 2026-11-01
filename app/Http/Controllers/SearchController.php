@@ -154,6 +154,7 @@ class SearchController extends Controller
         $fullName = $filters['fullName'] ?? null;
         $price = $filters['price'] ?? null;
         $weight = $filters['weight'] ?? null;
+        $sortType = $filters['sortType'] ?? 'desc';
         if ($number) {
             $dealId = substr($number, 3);
             $deals = deal::find($dealId);
@@ -200,7 +201,7 @@ class SearchController extends Controller
                 $query->where('name', 'like', '%' . $fullName . '%')->orWhere('family', 'like', '%' . $fullName . '%');
             }]);
         }
-        $deals = $deals->orderBy('date', 'desc')->orderBy('time', 'desc')->get();
+        $deals = $deals->orderBy('date', $sortType)->orderBy('time', $sortType)->get();
         foreach ($deals as $deal) {
             switch ($deal->transaction->isApproved) {
                 case -1:
@@ -230,6 +231,7 @@ class SearchController extends Controller
         $toDate = $filters['toDate'] ?? null;
         $price = $filters['price'] ?? null;
         $number = $filters['transactionId'] ?? null;
+        $sortType = $filters['sortType'] ?? 'desc';
         if ($number) {
             $transactionId = substr($number, 3);
             $transactions = transaction::find($transactionId);
@@ -276,7 +278,7 @@ class SearchController extends Controller
                 });
             });
         }
-        $transactions = $transactions->orderBy('created_at', 'desc')->get();
+        $transactions = $transactions->orderBy('date', $sortType)->orderBy('time', $sortType)->get();
         foreach ($transactions as $transaction) {
             $transaction->fullName = $transaction->wallet->user->name . ' ' . $transaction->wallet->user->family;
             $transaction->phoneNumber = $transaction->wallet->user->phoneNumber;
@@ -325,6 +327,7 @@ class SearchController extends Controller
         $nationalCode = $filters['nationalCode'] ?? null;
         $activity = $filters['activity'] ?? ['all'];
         $approve = $filters['approve'] ?? ['all'];
+        $sortType = $filters['sortType'] ?? 'desc';
 
         if ($activity == ['all']) {
             $activity = [];
@@ -347,10 +350,10 @@ class SearchController extends Controller
                 $query->where('users.family', 'like', '%'.$family.'%');
             }
             if ($phoneNumber) {
-                $query->where('users.phoneNumber', $phoneNumber);
+                $query->where('users.phoneNumber', 'like', '%'.$phoneNumber.'%');
             }
             if ($nationalCode) {
-                $query->where('users.nationalCode', $nationalCode);
+                $query->where('users.nationalCode', 'like', '%'.$nationalCode.'%');
             }
             if ($activity) {
                 $query->whereIn('users.isActive', $activity);
@@ -360,16 +363,16 @@ class SearchController extends Controller
             }
         })->with(['wallet', 'roles']);
 
-        $users = $users->orderBy('created_at', 'desc')->get();
+        $users = $users->orderBy('created_at', $sortType)->get();
         foreach($users as $user){
             $roleArr = [];
-            Log::info($user->roles);
+            
             foreach($user->roles as $role){
                 $roleArr[]=$role->id;
             }
             $user->created_at = verta($user->created_at);
+            $user->roleArr = $roleArr;
         }
-
         $roles = role::all();
         foreach($roles as $role){
             switch($role->name){

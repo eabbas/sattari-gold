@@ -26,7 +26,9 @@ use Illuminate\Support\Facades\Schema;
 use App\Models\logo;
 use App\Models\creditCard;
 use App\Models\transactionSetting;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 Route::get('/z', function () {
     $logo = logo::first();
@@ -62,6 +64,15 @@ Route::get('/xyz', function () {
     // Schema::table('orders', function (Blueprint $table) {
     //     $table->string('receipt')->nullable()->after('description');
     // });
+
+    Schema::table('users', function (Blueprint $table) {
+        $table->string('referral_code')->unique()->nullable()->after('id');
+    });
+
+    foreach(User::all() as $user){
+        $code = strtoupper(Str::random(10));
+        $user->update(['referral_code'=>$code]);
+    }
 });
 
 // home routes
@@ -238,6 +249,9 @@ Route::group([
 ], function () {
     Route::get('/create', 'create')->name('create');
     Route::post('/store', 'store')->name('store');
+    Route::post('/edit', 'edit')->name('edit');
+    Route::post('/update', 'update')->name('update');
+    Route::get('/delete/{creditCard}', 'delete')->name('delete');
 });
 
 // reference sites routes
@@ -304,13 +318,14 @@ Route::group([
 Route::group([
     "as" => "Message.",
     "prefix" => "Message",
-    "controller" => MessageController::class
+    "controller" => MessageController::class,
+    'middleware' => checklogin::class,
 ], function () {
     Route::get("insert", 'insert')->middleware(checkAccess::class . ":message_create")->name('insert');
     Route::post("/create", "create")->middleware(checkAccess::class . ":message_create")->name("create");
     Route::get("list", "list")->name("list");
     Route::get("delete/{id}", "delete")->name("delete");
-    Route::get("update/{id}", "update")->name("update");
+    Route::post("/update", "update")->name("update");
     Route::post("edit", "edit")->name("edit");
     Route::post("messageStatus",  "messageStatus")->name("messageStatus");
 });

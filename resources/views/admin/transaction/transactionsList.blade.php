@@ -41,6 +41,19 @@
         <!-- واریز و برداشت / لسیت -->
         <section class="w-full mx-auto rounded-md border-1 border-(--border-dashboard) mt-5 pb-10 overflow-hidden">
             <div class="w-full">
+                <div class="w-full pb-3 px-3 flex flex-row justify-end">
+                    <button onclick="sort(this)" class="flex gap-5 items-center" data-sort="desc">
+                        <span>مرتب سازی  :</span>
+                        <p>نزولی</p>
+                        <img src="{{ asset('assets/img/sort/desc.png') }}" style="
+                            max-width: 30px;
+                            max-height: 30px;
+                            margin-top: 10px;
+                            margin-left: 5px;
+                            cursor: pointer;
+                        " alt="">
+                    </button>
+                </div>
                 <div class="w-full bg-white py-5 px-2 mb-2">
                     <div class="w-full grid grid-cols-2 md:grid-cols-4 justify-items-end gap-2">
                         <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
@@ -107,7 +120,7 @@
                     </div>
                     <div class="w-full flex justify-end">
                         <button
-                            class="w-fit flex items-center justify-center font-bold text-xs md:text-base py-2 md:px-6 mt-5 hover:bg-(--color-blue) hover:text-white transition-all duratoin-300 col-span-1 md:text-right border-1 border-(--color-blue) text-(--color-blue) rounded-md text-center cursor-pointer"
+                            class="w-fit flex items-center justify-center font-bold text-xs md:text-base px-3 py-2 md:px-6 mt-5 hover:bg-(--color-blue) hover:text-white transition-all duratoin-300 col-span-1 md:text-right border-1 border-(--color-blue) text-(--color-blue) rounded-md text-center cursor-pointer"
                             onclick="setDatas()">اعمال</button>
                     </div>
                 </div>
@@ -127,13 +140,13 @@
                                 <th class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     ردیف
                                 </th>
-                                <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                                <th class="min-w-40 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     نام و نام خانوادگی
                                 </th>
                                 <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     شماره موبایل
                                 </th>
-                                <th class="min-w-25 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                                <th class="min-w-32 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     نوع تراکنش
                                 </th>
                                 <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
@@ -142,13 +155,13 @@
                                 <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     وزن
                                 </th>
-                                <th class="min-w-33 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                                <th class="min-w-48 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     زمان | تاریخ
                                 </th>
                                 <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     شماره سند
                                 </th>
-                                <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                                <th class="min-w-36 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     وضعیت
                                 </th>
                                 <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
@@ -158,10 +171,16 @@
                         </thead>
 
                         <tbody>
+                            @php
+                                $i=0;
+                            @endphp
                             @foreach ($transactions as $transaction)
+                            @php
+                                $i++;
+                            @endphp
                                 <tr class="text-xs lg:text-base" data-transaction-id="{{ $transaction->id }}">
-                                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                                        {{ $transaction->id }}
+                                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
+                                        {{ $i }}
                                     </td>
                                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                                         {{ $transaction->wallet->user['name'] }}
@@ -278,7 +297,7 @@
                 </div>
                 <div id="transactionPopupReceipt"
                     class="col-span-6 border-1 border-(--border-dashboard) rounded-lg p-2 items-center justify-center hidden">
-                    <img class="w-[90%] h-50 bg-zinc-300" src="" alt="">
+                    <img class="w-[90%] h-50 bg-zinc-300" onclick="showImage(this)" src="" alt="">
                 </div>
                 <div id="transactionControl" class="w-full grid grid-cols-2 gap-3 col-span-6" data-transaction-id="">
                     <button onclick="transactionAct('1')"
@@ -290,6 +309,17 @@
                         رد تراکنش
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="w-full h-dvh fixed top-0 right-0 bg-black/50 transition-all duration-300 z-999 invisible opacity-0" id='showImg'>
+        <div class="w-full h-full flex justify-center items-center">
+            <div class="relative w-11/12  p-6 rounded-lg bg-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="absolute top-2 right-3 w-4 cursor-pointer" onclick="closeZoom()" viewBox="0 0 384 512">
+                    <path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"/>
+                </svg>
+                <img src="" class="w-full max-h-[calc(100vh-100px)]" alt="">
             </div>
         </div>
     </div>
