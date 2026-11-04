@@ -67,6 +67,9 @@
                             </path>
                         </svg>
                         <span class="text-sm text-[#5b5c75] text-nowrap">حساب کاربری</span>
+                        @if (count(Auth::user()->roles) > 0)
+                            <span class="text-xs text-gray-400">{{ Auth::user()->roles[0]['name'] }}</span>
+                        @endif
                     </a>
                     <a href="{{ route('user.logout') }}"
                         class="w-full rounded-lg cursor-pointer px-4 py-2 hover:bg-[#F9FAFC] flex gap-5 items-center">
@@ -202,7 +205,6 @@
                         </svg>
                         <span class="text-nowrap">مدیریت کارت ها</span>
                     </a>
-                    {{-- @can('access', ['admin']) --}}
                     @can('access', ['transactionsList'])
                         <a href="{{ route('wallet.transactionsList') }}"
                             class="px-2 py-2 rounded-xl @if (Route::is('wallet.transactionsList')) bg-green-300 @endif flex gap-3 justify-start items-center"
@@ -372,7 +374,6 @@
                             <span class="text-nowrap">تعیین دسترسی و مجوز ها</span>
                         </a>
                     @endcan
-                    {{-- @endcan --}}
                 </div>
                 <!-- item_dashboard -->
             </div>

@@ -77,21 +77,35 @@
                     <div class="border border-gray-100 rounded-xl p-3 flex flex-col items-center text-center">
                         <span class="font-bold mb-2">بخرید</span>
                         <span class="text-xs text-gray-500 mb-3">گرم: ۲۴۲,۶۹۳,۴۵۶</span>
-                        <button
-                            class="w-full bg-[#2eb85c] text-white py-2 rounded-lg font-bold text-sm shadow-md hover:bg-green-700 transition cursor-pointer in-fa"
-                            id="buyBox" onclick="openBlock(this)" data-state="buy">
-                            {{ number_format(25200000) }}
-                        </button>
+                        @if (Auth::user()->isActive)
+                            <button
+                                class="w-full bg-[#2eb85c] text-white py-2 rounded-lg font-bold text-sm shadow-md hover:bg-green-700 transition cursor-pointer in-fa"
+                                id="buyBox" onclick="openBlock(this)" data-state="buy">
+                                {{ number_format(25200000) }}
+                            </button>
+                        @else
+                            <button
+                                class="w-full text-gray-100 bg-gray-400 py-2 rounded-lg font-bold text-sm shadow-md transition cursor-pointer in-fa">
+                                پس از فعال سازی حساب کاربری شما توسط مدیریت میتوانید خرید و فروش انجام دهید.
+                            </button>
+                        @endif
                     </div>
 
                     <div class="border border-gray-100 rounded-xl p-3 flex flex-col items-center text-center">
                         <span class="font-bold mb-2">بفروشید</span>
                         <span class="text-xs text-gray-500 mb-3">گرم: ۲۴۲,۱۶۲,۴۹۹</span>
-                        <button
-                            class="w-full bg-[#e53945] text-white py-2 rounded-lg font-bold text-sm shadow-md hover:bg-red-700 transition cursor-pointer in-fa"
-                            id="sellBox" onclick="openBlock(this)" data-state="sell">
-                            {{ number_format(25000000) }}
-                        </button>
+                        @if (Auth::user()->isActive)
+                            <button
+                                class="w-full bg-[#e53945] text-white py-2 rounded-lg font-bold text-sm shadow-md hover:bg-red-700 transition cursor-pointer in-fa"
+                                id="sellBox" onclick="openBlock(this)" data-state="sell">
+                                {{ number_format(25000000) }}
+                            </button>
+                        @else
+                            <button
+                                class="w-full text-gray-100 bg-gray-400 py-2 rounded-lg font-bold text-sm shadow-md transition cursor-pointer in-fa">
+                                پس از فعال سازی حساب کاربری شما توسط مدیریت میتوانید خرید و فروش انجام دهید.
+                            </button>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -45,19 +45,17 @@
             </div>
             <h1 class="mt-6 text-xl sm:text-4xl font-bold text-slate-800">{{ $user->name }} {{ $user->family }}</h1>
             <p class="mt-2 text-sm sm:text-lg text-slate-500">
-                @foreach ($user['persianRoles'] as $index => $role)
-                    @if ($index == count($user['persianRoles']) - 1)
-                        {{ $role }}
-                    @else
-                        {{ $role }} -
-                    @endif
-                @endforeach
+                @if (count($user->roles) > 0)
+                    {{ $user->roles[0]['name'] }}
+                @else
+                    بدون نقش
+                @endif
             </p>
         </div>
         <div class="w-full flex flex-col justify-center items-center lg:items-end mt-5">
             {{-- <h2 class="text-(--primary-color) text-lg font-semibold mb-1">کد معرف شما</h2> --}}
             {{-- <p class="text-slate-400 text-sm mb-4">این کد را با دوستان خود به اشتراک بگذارید</p> --}}
-    
+
             <!-- فیلد کد + دکمه کپی -->
             <div class="flex items-center gap-2">
                 <button id="copyBtn" onclick="copyCode()"
@@ -78,16 +76,16 @@
                 </button>
                 <input id="referralCode" type="text" value="REF-2024-XYZ789" readonly
                     class="flex-1 bg-slate-300 border border-white/10 text-(--primary-text-color) text-center tracking-widest font-mono text-lg rounded-xl px-3 py-2 outline-none focus:ring-2 focus:ring-(--primary-color)" />
-    
+
             </div>
-    
+
             <!-- پیام موفقیت -->
             <p id="toast" class="text-emerald-400 text-xs mt-3 text-center opacity-0 transition-opacity duration-300">
                 ✓ کد با موفقیت کپی شد!
             </p>
         </div>
 
-            
+
 
         <div class="flex flex-col lg:grid grid-cols-3 gap-6 lg:gap-2 mt-5">
             <div class="w-full bg-white border-2 border-slate-300 rounded-2xl p-4 hover:shadow-lg transition duration-300">
@@ -291,7 +289,7 @@
                         <div class="w-full flex flex-col">
                             <label for="address" class="mb-2">
                                 <span>
-                                    آدرس  :
+                                    آدرس :
                                 </span>
                             </label>
                             <input type="text"
@@ -304,7 +302,7 @@
                         <div class="w-full flex flex-col">
                             <label for="birthday" class="mb-2">
                                 <span>
-                                     تارخ تولد :
+                                    تارخ تولد :
                                 </span>
                             </label>
                             <input type="text"

@@ -73,21 +73,27 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                     @foreach ($roles as $role)
                         <div class="bg-slate-100 p-3 rounded-xl flex justify-between">
-                            <label class="flex items-center cursor-pointer" onchange="addRoles({{ $role->id }}, this)">
-                                <input type="checkbox" value="1"
-                                    class="w-4 h-4 text-primary bg-gray-100 border-gray-300 cursor-pointer ml-3">
+                            <div class="flex items-center cursor-pointer" onclick="addRoles({{ $role->id }}, this)">
+                                @can('access', ['setPermissions'])
+                                    @if ($role->id != 1)
+                                        <input type="radio" name="role" value="1"
+                                            class="w-4 h-4 text-primary bg-gray-100 border-gray-300 cursor-pointer ml-3">
+                                    @endif
+                                @endcan
                                 <span class="text-sm text-slate-700">{{ $role->name }}</span>
-                            </label>
+                            </div>
                             @if ($role->name != 'مالک')
-                                <a href="{{ route('role.roleDelete', [$role]) }}"
-                                    class="w-5 h-5 flex flex-row items-center justify-center bg-red-400 hover:bg-red-600 p-1 rounded-sm cursor-pointer"
-                                    title="حذف">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="size-3.5" viewBox="0 0 448 512">
-                                        <path fill="white"
-                                            d="M170.5 51.6L151.5 80h145l-19-28.4c-1.5-2.2-4-3.6-6.7-3.6H177.1c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80H368h48 8c13.3 0 24 10.7 24 24s-10.7 24-24 24h-8V432c0 44.2-35.8 80-80 80H112c-44.2 0-80-35.8-80-80V128H24c-13.3 0-24-10.7-24-24S10.7 80 24 80h8H80 93.8l36.7-55.1C140.9 9.4 158.4 0 177.1 0h93.7c18.7 0 36.2 9.4 46.6 24.9zM80 128V432c0 17.7 14.3 32 32 32H336c17.7 0 32-14.3 32-32V128H80zm80 64V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16z">
-                                        </path>
-                                    </svg>
-                                </a>
+                                @can('access', ['role_delete'])
+                                    <a href="{{ route('role.roleDelete', [$role]) }}"
+                                        class="w-5 h-5 flex flex-row items-center justify-center bg-red-400 hover:bg-red-600 p-1 rounded-sm cursor-pointer"
+                                        title="حذف">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="size-3.5" viewBox="0 0 448 512">
+                                            <path fill="white"
+                                                d="M170.5 51.6L151.5 80h145l-19-28.4c-1.5-2.2-4-3.6-6.7-3.6H177.1c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80H368h48 8c13.3 0 24 10.7 24 24s-10.7 24-24 24h-8V432c0 44.2-35.8 80-80 80H112c-44.2 0-80-35.8-80-80V128H24c-13.3 0-24-10.7-24-24S10.7 80 24 80h8H80 93.8l36.7-55.1C140.9 9.4 158.4 0 177.1 0h93.7c18.7 0 36.2 9.4 46.6 24.9zM80 128V432c0 17.7 14.3 32 32 32H336c17.7 0 32-14.3 32-32V128H80zm80 64V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16z">
+                                            </path>
+                                        </svg>
+                                    </a>
+                                @endcan
                             @endif
                         </div>
                     @endforeach
@@ -95,35 +101,37 @@
             </div>
         </div>
         <!-- لیست دسترسی‌ها (Permissions) -->
-        <div class="lg:col-span-3 bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-            <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">
-                <h2 class="text-lg font-bold text-slate-800">مجوزها </h2>
-            </div>
+        @can('access', ['setPermissions'])
+            <div class="lg:col-span-3 bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-3">
+                    <h2 class="text-lg font-bold text-slate-800">مجوزها </h2>
+                </div>
 
-            <div id="permissionsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                @foreach ($permissions as $permission)
-                    <label
-                        class="flex items-center p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 cursor-pointer transition-colors"
-                        onchange="addPermission({{ $permission->id }}, this)">
-                        <input type="checkbox" value="p1"
-                            class="w-4 h-4 text-primary bg-white border-slate-300 cursor-pointer ml-3">
-                        <span class="text-sm text-slate-700">{{ $permission->fa_title }}</span>
-                    </label>
-                @endforeach
-            </div>
+                <div id="permissionsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                    @foreach ($permissions as $permission)
+                        <label
+                            class="flex items-center p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 cursor-pointer transition-colors"
+                            onchange="addPermission({{ $permission->id }}, this)">
+                            <input type="checkbox" data-permissionId="{{ $permission->id }}"
+                                class="permissions w-4 h-4 text-primary bg-white border-slate-300 cursor-pointer ml-3">
+                            <span class="text-sm text-slate-700">{{ $permission->fa_title }}</span>
+                        </label>
+                    @endforeach
+                </div>
 
-            <div class="mt-6 flex justify-end">
-                <button type="button" onclick="setPermissions()"
-                    class="bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-2.5 px-8 rounded-xl transition-colors shadow-sm shadow-emerald-500/30 flex items-center gap-2 cursor-pointer">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4">
-                        </path>
-                    </svg>
-                    ذخیره تغییرات
-                </button>
+                <div class="mt-6 flex justify-end">
+                    <button type="button" onclick="setPermissions()"
+                        class="bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-2.5 px-8 rounded-xl transition-colors shadow-sm shadow-emerald-500/30 flex items-center gap-2 cursor-pointer">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4">
+                            </path>
+                        </svg>
+                        ذخیره تغییرات
+                    </button>
+                </div>
             </div>
-        </div>
+        @endcan
 
         {{-- دسترسی های درحال حاضر --}}
         <div class="lg:col-span-3 space-y-6">
@@ -136,9 +144,13 @@
                         <p>
                             <span class="font-bold">{{ $role->name }} : </span>
                             <span class="text-xs text-gray-400">
-                                @foreach ($role->permissions as $permission)
-                                    {{ $permission->fa_title }} -
-                                @endforeach
+                                @if ($role->id != 1)
+                                    @foreach ($role->permissions as $permission)
+                                        {{ $permission->fa_title }} -
+                                    @endforeach
+                                @else
+                                    <span>همه دسترسی ها به صورت پیش فرض برای مالک باز هستند.</span>
+                                @endif
                             </span>
                         </p>
                     @endforeach
@@ -187,20 +199,52 @@
             }
         }
         let data = {
-            'roles': [],
+            'role': '',
             'permissions': []
         }
 
         function addRoles(roleId, el) {
-            if (el.children[0].checked) {
-                if (!data.roles.includes(roleId)) {
-                    data.roles.push(roleId)
+            el.children[0].checked = true
+            data.role = roleId
+            let permissions = document.querySelectorAll('.permissions')
+            permissions.forEach(permissionCheckbox => {
+                permissionCheckbox.checked = false
+            });
+            data.permissions = []
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 }
-            } else {
-                if (data.roles.includes(roleId)) {
-                    data.roles = data.roles.filter(role => role != roleId)
+            })
+            $.ajax({
+                url: "{{ route('role.permissionsOfRole') }}",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    'roleId': roleId,
+                },
+                success: function(result) {
+                    permissions.forEach(permissionCheckbox => {
+                        let perId = parseInt(permissionCheckbox.dataset.permissionid)
+                        if (result.includes(perId)) {
+                            permissionCheckbox.checked = true
+                            data.permissions.push(perId)
+                        }
+                    });
+                },
+                error: function() {
+                    loader('close')
+                    showMessage('open')
+                    element.innerHTML = `
+                        <span>❌</span>
+                        <span class="text-shadow-lg">خطا در دریافت اطلاعات!</span>
+                        `
+                    message.children[0].appendChild(element)
+                    setTimeout(() => {
+                        showMessage('close')
+                    }, 5000)
                 }
-            }
+            })
         }
 
         function addPermission(permissionId, el) {
@@ -253,6 +297,7 @@
                     }
                 },
                 error: function() {
+                    loader('close')
                     showMessage('open')
                     element.innerHTML = `
                         <span>❌</span>
