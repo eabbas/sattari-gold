@@ -169,7 +169,7 @@ document.addEventListener('click', (e) => {
     if (!showImg.children[0].children[0].contains(e.target) && !document.getElementById('transactionPopupReceipt').querySelector('img').contains(e.target)) {
         closeZoom()
     }
-   
+
 })
 
 function transactionAct(isApproved) {
@@ -240,15 +240,15 @@ function transactionAct(isApproved) {
     })
 }
 
-function sort(el){
-    if(el.dataset.sort == 'desc'){
-        el.querySelector('img').src = url+'assets/img/sort/asc.png'
+function sort(el) {
+    if (el.dataset.sort == 'desc') {
+        el.querySelector('img').src = url + 'assets/img/sort/asc.png'
         el.querySelector('p').innerText = 'صعودی'
         el.dataset.sort = 'asc'
         dealFilters.sortType = 'asc'
     }
-    else{
-        el.querySelector('img').src = url+'assets/img/sort/desc.png'
+    else {
+        el.querySelector('img').src = url + 'assets/img/sort/desc.png'
         el.querySelector('p').innerText = 'نزولی'
         el.dataset.sort = 'desc'
         dealFilters.sortType = 'desc'
@@ -256,12 +256,12 @@ function sort(el){
     applyDealFilters()
 }
 
-function showImage(el){
+function showImage(el) {
     showImg.classList.remove('invisible', 'opacity-0')
     showImg.querySelector('img').src = el.src
 }
 
-function closeZoom(){
+function closeZoom() {
     showImg.classList.add('invisible', 'opacity-0')
 }
 

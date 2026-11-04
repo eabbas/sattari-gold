@@ -65,14 +65,14 @@ Route::get('/xyz', function () {
     //     $table->string('receipt')->nullable()->after('description');
     // });
 
-    Schema::table('users', function (Blueprint $table) {
-        $table->string('referral_code')->unique()->nullable()->after('id');
-    });
+    // Schema::table('users', function (Blueprint $table) {
+    //     $table->string('referral_code')->unique()->nullable()->after('id');
+    // });
 
-    foreach(User::all() as $user){
-        $code = strtoupper(Str::random(10));
-        $user->update(['referral_code'=>$code]);
-    }
+    // foreach(User::all() as $user){
+    //     $code = strtoupper(Str::random(10));
+    //     $user->update(['referral_code'=>$code]);
+    // }
 });
 
 // home routes
@@ -99,8 +99,7 @@ Route::group([
     Route::post('/store', 'store')->name('store');
     Route::post('/adminStore', 'adminStore')->name('adminStore');
     Route::get('/logout', 'logout')->name('logout');
-    Route::get('/index', 'index')->middleware(checkAccess::class . ":user_idex")->name('index');
-    Route::post('/edit', 'edit')->name('edit');
+    Route::get('/index', 'index')->middleware(checkAccess::class . ":user_index")->name('index');
     Route::post('/profileEdit', 'profileEdit')->name('profileEdit');
     Route::post('/update', 'update')->name('update');
     Route::post('/updateProfile', 'updateProfile')->name('updateProfile');
@@ -204,13 +203,9 @@ Route::group([
         return to_route('missing');
     })->middleware(checklogin::class)->name('wallet');
     Route::post('/transaction/request', 'transactionRequest')->middleware(checkIsActive::class)->name('transactionRequest');
-    Route::post('/transactions', 'transactions')->name('transactions');
+    // Route::post('/transactions', 'transactions')->name('transactions');
     Route::get('/transactions/list', 'transactionsList')->middleware(checkAccess::class . ":transactionsList")->name('transactionsList');
-    Route::get('/transactions/user/{user}', 'transactionsListSingle')->missing(function () {
-        return to_route('missing');
-    })->middleware(checkAccess::class)->name('transactionsListSingle');
-    Route::post('/submitChanges', 'submitChanges')->middleware(checkAccess::class)->name('submitChanges');
-    Route::post('/popupWalletData', 'popupWalletData')->name('popupWalletData');
+    // Route::post('/popupWalletData', 'popupWalletData')->name('popupWalletData');
 });
 
 // search routes
@@ -289,6 +284,7 @@ Route::group([
     Route::post('/store', 'roleStore')->middleware(checkAccess::class . ":role_create")->name('roleStore');
     Route::get('/delete/{role}', 'roleDelete')->middleware(checkAccess::class . ":role_delete")->name('roleDelete');
     Route::post('/setPermissions', 'setPermissions')->middleware(checkAccess::class . ":setPermissions")->name('setPermissions');
+    Route::post('/permissionsOfRole', 'permissionsOfRole')->name('permissionsOfRole');
 });
 
 // order routes

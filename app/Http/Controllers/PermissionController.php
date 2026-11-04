@@ -39,20 +39,21 @@ class PermissionController extends Controller
         }
         return redirect()->back();
     }
+    public function permissionsOfRole(Request $request)
+    {
+        $perIds = role::find($request->roleId)->permissions->pluck('id');
+        return response()->json($perIds);
+    }
     public function setPermissions(Request $request)
     {
         if (isset($request['data'])) {
-            if (isset($request['data']['roles']) && isset($request['data']['permissions'])) {
-                foreach ($request['data']['roles'] as $role) {
-                    role_permission::where('role_id', $role)->delete();
-                }
-                foreach ($request['data']['roles'] as $role) {
-                    foreach ($request['data']['permissions'] as $permission) {
-                        role_permission::create([
-                            'role_id' => $role,
-                            'permission_id' => $permission
-                        ]);
-                    }
+            if (isset($request['data']['role']) && isset($request['data']['permissions'])) {
+                role_permission::where('role_id', $request['data']['role'])->delete();
+                foreach ($request['data']['permissions'] as $permission) {
+                    role_permission::create([
+                        'role_id' => $request['data']['role'],
+                        'permission_id' => $permission
+                    ]);
                 }
                 return response()->json(true);
             } else {

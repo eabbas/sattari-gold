@@ -320,25 +320,17 @@ class UserController extends Controller
     public function index()
     {
         $users = User::paginate(10);
+        foreach ($users as $user) {
+            if ($user->roles->isNotEmpty()) {
+                foreach ($user->roles as $role) {
+                    $user->roleId = $role->id;
+                }
+            } else {
+                $user->roleId = null;
+            }
+        }
         $logo = logo::first();
         $roles = role::all();
-        foreach ($users as $user) {
-            $roleIds = [];
-            foreach ($user->roles as $role) {
-                $roleIds[] = $role->id;
-            }
-            $user->roleIds = $roleIds;
-        }
-        foreach ($roles as $role) {
-            switch ($role->name) {
-                case 'admin':
-                    $role->faTitle = 'ادمین';
-                    break;
-                case 'general_user':
-                    $role->faTitle = 'کاربر عادی';
-                    break;
-            }
-        }
         $setting = transactionSetting::first();
         return view('admin.user.index', [
             'users' => $users,
@@ -433,16 +425,6 @@ class UserController extends Controller
         if (!$user) {
             $user = Auth::user();
         }
-        $roles = [];
-        foreach ($user->roles as $role) {
-            if ($role['name'] == 'admin') {
-                $roles[] = 'ادمین';
-            }
-            if ($role['name'] == 'general_user') {
-                $roles[] = 'کاربر عمومی';
-            }
-        }
-        $user['persianRoles'] = $roles;
         $logo = logo::first();
         $dateTime = explode(' ', verta($user->created_at));
         $user->date = implode('/', explode('-', $dateTime[0]));

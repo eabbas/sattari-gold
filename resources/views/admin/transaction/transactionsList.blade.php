@@ -9,16 +9,16 @@
             class="w-full mx-auto bg-(--secondary-dashboard) flex items-center justify-between border-1 border-(--border-dashboard) p-2 2 rounded-md">
             <h2 class="text-base md:text-xl font-bold">واریز و برداشت</h2>
             <!-- <div id="openPopup-deposit"
-                    class="w-fit bg-(--info-dashboard) text-xs md:text-base text-(--color-surface-dashboard) rounded-md px-3 py-2 cursor-pointer flex items-center justify-center">
-                    <span class="">
-                        <svg class="size-3 md:size-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                            <path
-                                d="M248 72c0-13.3-10.7-24-24-24s-24 10.7-24 24V232H40c-13.3 0-24 10.7-24 24s10.7 24 24 24H200V440c0 13.3 10.7 24 24 24s24-10.7 24-24V280H408c13.3 0 24-10.7 24-24s-10.7-24-24-24H248V72z">
-                            </path>
-                        </svg>
-                    </span>
-                    <div class="">خروجی اکسل</div>
-                </div> -->
+                            class="w-fit bg-(--info-dashboard) text-xs md:text-base text-(--color-surface-dashboard) rounded-md px-3 py-2 cursor-pointer flex items-center justify-center">
+                            <span class="">
+                                <svg class="size-3 md:size-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                    <path
+                                        d="M248 72c0-13.3-10.7-24-24-24s-24 10.7-24 24V232H40c-13.3 0-24 10.7-24 24s10.7 24 24 24H200V440c0 13.3 10.7 24 24 24s24-10.7 24-24V280H408c13.3 0 24-10.7 24-24s-10.7-24-24-24H248V72z">
+                                    </path>
+                                </svg>
+                            </span>
+                            <div class="">خروجی اکسل</div>
+                        </div> -->
             <div id="popup-deposit"
                 class="fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2 invisible opacity-0 transition-all flex items-center justify-center">
                 <div id="closePopup-deposit2" class="absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2">
@@ -43,15 +43,17 @@
             <div class="w-full">
                 <div class="w-full pb-3 px-3 flex flex-row justify-end">
                     <button onclick="sort(this)" class="flex gap-5 items-center" data-sort="desc">
-                        <span>مرتب سازی  :</span>
+                        <span>مرتب سازی :</span>
                         <p>نزولی</p>
-                        <img src="{{ asset('assets/img/sort/desc.png') }}" style="
+                        <img src="{{ asset('assets/img/sort/desc.png') }}"
+                            style="
                             max-width: 30px;
                             max-height: 30px;
                             margin-top: 10px;
                             margin-left: 5px;
                             cursor: pointer;
-                        " alt="">
+                        "
+                            alt="">
                     </button>
                 </div>
                 <div class="w-full bg-white py-5 px-2 mb-2">
@@ -164,20 +166,22 @@
                                 <th class="min-w-36 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                     وضعیت
                                 </th>
-                                <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
-                                    ابزار
-                                </th>
+                                @can('access', 'transactionDetail')
+                                    <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                                        ابزار
+                                    </th>
+                                @endcan
                             </tr>
                         </thead>
 
                         <tbody>
                             @php
-                                $i=0;
+                                $i = 0;
                             @endphp
                             @foreach ($transactions as $transaction)
-                            @php
-                                $i++;
-                            @endphp
+                                @php
+                                    $i++;
+                                @endphp
                                 <tr class="text-xs lg:text-base" data-transaction-id="{{ $transaction->id }}">
                                     <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
                                         {{ $i }}
@@ -216,13 +220,15 @@
                                             {{ $transaction->stateTitle }}
                                         </div>
                                     </td>
-                                    <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
-                                        <button
-                                            onclick="showTransaction('{{ $transaction->wallet->user->name . ' ' . $transaction->wallet->user->family }}', '{{ $transaction->wallet->user->phoneNumber }}', '{{ $transaction->time . ' | ' . $transaction->date }}', '{{ $transaction->stateColor }}', '{{ $transaction->stateTitle }}', '{{ $transaction->type }}', '{{ $transaction->amount }}', '{{ $transaction->isApproved }}', '{{ $transaction->id }}', '{{ $transaction->receipt }}')"
-                                            class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer openPopup">
-                                            مشاهده
-                                        </button>
-                                    </td>
+                                    @can('access', 'transactionDetail')
+                                        <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
+                                            <button
+                                                onclick="showTransaction('{{ $transaction->wallet->user->name . ' ' . $transaction->wallet->user->family }}', '{{ $transaction->wallet->user->phoneNumber }}', '{{ $transaction->time . ' | ' . $transaction->date }}', '{{ $transaction->stateColor }}', '{{ $transaction->stateTitle }}', '{{ $transaction->type }}', '{{ $transaction->amount }}', '{{ $transaction->isApproved }}', '{{ $transaction->id }}', '{{ $transaction->receipt }}')"
+                                                class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer openPopup">
+                                                مشاهده
+                                            </button>
+                                        </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                         </tbody>
@@ -313,11 +319,14 @@
         </div>
     </div>
 
-    <div class="w-full h-dvh fixed top-0 right-0 bg-black/50 transition-all duration-300 z-999 invisible opacity-0" id='showImg'>
+    <div class="w-full h-dvh fixed top-0 right-0 bg-black/50 transition-all duration-300 z-999 invisible opacity-0"
+        id='showImg'>
         <div class="w-full h-full flex justify-center items-center">
             <div class="relative w-11/12  p-6 rounded-lg bg-white">
-                <svg xmlns="http://www.w3.org/2000/svg" class="absolute top-2 right-3 w-4 cursor-pointer" onclick="closeZoom()" viewBox="0 0 384 512">
-                    <path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"/>
+                <svg xmlns="http://www.w3.org/2000/svg" class="absolute top-2 right-3 w-4 cursor-pointer"
+                    onclick="closeZoom()" viewBox="0 0 384 512">
+                    <path
+                        d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z" />
                 </svg>
                 <img src="" class="w-full max-h-[calc(100vh-100px)]" alt="">
             </div>

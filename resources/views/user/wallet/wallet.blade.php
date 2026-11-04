@@ -176,11 +176,18 @@
                     <div id="transactionMethod" class="col-span-6 grid grid-cols-6 gap-4 ">
 
                     </div>
-                    <button type="submit" onclick="submitBtn(event)"
-                        class="col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold cursor-pointer">ثبت</button>
-                    <button type="reset"
-                        class="col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold cursor-pointer">
-                        لغو</button>
+                    @if (Auth::user()->isActive)
+                        <button type="submit" onclick="submitBtn(event)"
+                            class="col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold cursor-pointer">ثبت</button>
+                        <button type="reset"
+                            class="col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold cursor-pointer">
+                            لغو</button>
+                    @else
+                        <div
+                            class="col-span-6 border-1 border-(--warning-dashboard) text-(--warning-dashboard) py-4 rounded-md font-bold text-center">
+                            پس از فعال سازی حساب کاربری شما توسط مدیریت میتوانید واریز و برداشت انجام دهید.
+                        </div>
+                    @endif
                 </div>
             </form>
         </div>
@@ -205,24 +212,24 @@
             maxWithdraw = true
             if (state == 'deposit') {
                 if (inputValue < setting.minDepositAmount) {
-                    el.children[1].innerText =
+                    el.children[2].innerText =
                         `حداقل مبلغ قابل واریز ${parseInt(setting.minDepositAmount).toLocaleString('fa-IR')} ریال است.`
                     minDeposit = false
                 }
                 if (inputValue > setting.maxDepositAmount) {
-                    el.children[1].innerText =
+                    el.children[2].innerText =
                         `حداکثر مبلغ قابل واریز ${parseInt(setting.maxDepositAmount).toLocaleString('fa-IR')} ریال است.`
                     maxDeposit = false
                 }
             }
             if (state == 'withdraw') {
                 if (inputValue < setting.minWithdrawAmount) {
-                    el.children[1].innerText =
+                    el.children[2].innerText =
                         `حداقل مبلغ قابل برداشت ${parseInt(setting.minWithdrawAmount).toLocaleString('fa-IR')} ریال است.`
                     minWithdraw = false
                 }
                 if (inputValue > setting.maxWithdrawAmount) {
-                    el.children[1].innerText =
+                    el.children[2].innerText =
                         `حداکثر مبلغ قابل برداشت ${parseInt(setting.maxWithdrawAmount).toLocaleString('fa-IR')} ریال است.`
                     maxWithdraw = false
                 }

@@ -20,10 +20,10 @@ class checkAccess
         if (Auth::check()) {
             if ($permission) {
                 if (!Gate::allows('access', [$permission])) {
-                    return to_route("home")->with('failure', 'شما به این صفحه دسترسی ندارید.');
+                    return redirect()->back()->with('failure', 'شما به این صفحه دسترسی ندارید.');
                 }
             } else {
-                return to_route("home")->with('failure', 'شما به این صفحه دسترسی ندارید.');
+                return redirect()->back()->with('failure', 'شما به این صفحه دسترسی ندارید.');
             }
         } else {
             return to_route("user.login")->with('failure', 'ابتدا وارد شوید.');
