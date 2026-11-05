@@ -4,13 +4,15 @@
     <main class="w-11/12 max-w-[1700px] mx-auto my-4 md:my-6">
         <div class="text-[#71717a] text-xs mb-[18px]">خانه / <b class="text-[#333]">جستجو</b></div>
 
-        <div class="flex items-end justify-between gap-2.5 mb-[18px]">
-            <div>
-                <h1 id="title" class="m-0 text-[18px] md:text-[22px]">نتایج جستجو برای "{{ isset($title) ? $title : '' }}"
-                </h1>
-                <div id="resultCount" class="text-[#71717a] text-[13px]"></div>
+        @if (Route::is('search'))
+            <div class="flex items-end justify-between gap-2.5 mb-[18px]">
+                <div>
+                    <h1 id="title" class="m-0 text-[18px] md:text-[22px]">نتایج جستجو برای "{{ isset($title) ? $title : '' }}"
+                    </h1>
+                    <div id="resultCount" class="text-[#71717a] text-[13px]"></div>
+                </div>
             </div>
-        </div>
+        @endif
 
         <div class="grid grid-cols-1 md:grid-cols-10 lg:gap-7 gap-4">
             <div class="fixed w-full h-dvh bg-black/50 z-99 top-0 right-0 md:hidden invisible opacity-0 transition-all duration-300"
