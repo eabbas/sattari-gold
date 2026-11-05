@@ -9,6 +9,14 @@
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
     <script src="{{ asset('assets/js/filters.js') }}"></script>
     <title>@yield('title')</title>
+    <style>
+        .ellipsis-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
     <script>
         let url = "{{ url('/') }}/"
         let api = "{{ url('api/') }}/"

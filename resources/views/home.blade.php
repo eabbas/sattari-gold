@@ -268,7 +268,7 @@
                         style="box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);">
                         @if ($product->percent)
                             <span
-                                class="absolute top-4 right-4 bg-[#c3924d] text-white rounded-[5px] text-[10px] px-[7px] py-1 in-fa">{{ $product->percent }}
+                                class="absolute top-4 right-4 bg-[#c3924d] text-white rounded-[5px] text-[10px] px-[7px] py-1 in-fa">{{ number_format($product->percent) }}
                                 %</span>
                         @endif
                         <a href="{{ route('product.show', [$product]) }}" class="block w-full rounded-md">
@@ -280,6 +280,11 @@
                                 <h3 class="text-gray-800 font-bold max-xl:text-sm max-sm:text-xs">{{ $product['title'] }}
                                 </h3>
                             </a>
+                            @if($product->summary)
+                            <p class="text-sm text-gray-400 h-10 max-h-10 ellipsis-2">
+                               {{ $product->summary }}
+                            </p>
+                            @endif
                             {{-- @foreach ($product->categories as $category)
                                 <span class="text-gray-500 text-xs font-bold">{{ $category->title }}</span>
                             @endforeach --}}
@@ -292,14 +297,14 @@
                                                 ریال</div>
                                             <div class="flex flex-row items-center gap-1 lg:text-base">
                                                 <span
-                                                    class="text-sm lg:text-md font-bold text-gray-800 in-fa">{{ $product->secondary_price }}</span>
+                                                    class="text-sm lg:text-md font-bold text-gray-800 in-fa">{{ number_format($product->secondary_price) }}</span>
                                                 <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">ریال</span>
                                             </div>
                                         </div>
                                     @else
                                         <div class="flex flex-row items-center gap-1 lg:text-base">
                                             <span
-                                                class="text-sm lg:text-md font-bold text-gray-800 in-fa">{{ $product->primary_price }}</span>
+                                                class="text-sm lg:text-md font-bold text-gray-800 in-fa">{{ number_format($product->primary_price) }}</span>
                                             <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">ریال</span>
                                         </div>
                                     @endif
@@ -324,7 +329,7 @@
                         style="box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);">
                         @if ($product->percent)
                             <span
-                                class="absolute top-4 right-4 bg-[#c3924d] text-white rounded-[5px] text-[10px] px-[7px] py-1 in-fa">{{ $product->percent }}
+                                class="absolute top-4 right-4 bg-[#c3924d] text-white rounded-[5px] text-[10px] px-[7px] py-1 in-fa">{{ number_format($product->percent) }}
                                 %</span>
                         @endif
                         <a href="{{ route('product.show', [$product]) }}" class="block w-full rounded-md">
@@ -336,6 +341,11 @@
                                 <h3 class="text-gray-800 font-bold max-xl:text-sm max-sm:text-xs">{{ $product['title'] }}
                                 </h3>
                             </a>
+                            @if($product->summary)
+                            <p class="text-sm text-gray-400 h-10 max-h-10 ellipsis-2">
+                               {{ $product->summary }}
+                            </p>
+                            @endif
                             {{-- @foreach ($product->categories as $category)
                                 <span class="text-gray-500 text-xs font-bold">{{ $category->title }}</span>
                             @endforeach --}}
@@ -348,14 +358,14 @@
                                                 ریال</div>
                                             <div class="flex flex-row items-center gap-1 lg:text-base">
                                                 <span
-                                                    class="text-sm lg:text-md font-bold text-gray-800 in-fa">{{ $product->secondary_price }}</span>
+                                                    class="text-sm lg:text-md font-bold text-gray-800 in-fa">{{ number_format($product->secondary_price) }}</span>
                                                 <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">ریال</span>
                                             </div>
                                         </div>
                                     @else
                                         <div class="flex flex-row items-center gap-1 lg:text-base">
                                             <span
-                                                class="text-sm lg:text-md font-bold text-gray-800 in-fa">{{ $product->primary_price }}</span>
+                                                class="text-sm lg:text-md font-bold text-gray-800 in-fa">{{ number_format($product->primary_price) }}</span>
                                             <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">ریال</span>
                                         </div>
                                     @endif
@@ -380,7 +390,7 @@
                         style="box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);">
                         @if ($product->percent)
                             <span
-                                class="absolute top-4 right-4 bg-[#c3924d] text-white rounded-[5px] text-[10px] px-[7px] py-1 in-fa">{{ $product->percent }}
+                                class="absolute top-4 right-4 bg-[#c3924d] text-white rounded-[5px] text-[10px] px-[7px] py-1 in-fa">{{ number_format($product->percent) }}
                                 %</span>
                         @endif
                         <a href="{{ route('product.show', [$product]) }}" class="block w-full rounded-md">
@@ -392,6 +402,11 @@
                                 <h3 class="text-gray-800 font-bold max-xl:text-sm max-sm:text-xs">{{ $product['title'] }}
                                 </h3>
                             </a>
+                            @if($product->summary)
+                            <p class="text-sm text-gray-400 h-10 max-h-10 ellipsis-2">
+                               {{ $product->summary }}
+                            </p>
+                            @endif
                             {{-- @foreach ($product->categories as $category)
                                 <span class="text-gray-500 text-xs font-bold">{{ $category->title }}</span>
                             @endforeach --}}
@@ -404,14 +419,14 @@
                                                 ریال</div>
                                             <div class="flex flex-row items-center gap-1 lg:text-base">
                                                 <span
-                                                    class="text-sm lg:text-md font-bold text-gray-800 in-fa">{{ $product->secondary_price }}</span>
+                                                    class="text-sm lg:text-md font-bold text-gray-800 in-fa">{{ number_format($product->secondary_price) }}</span>
                                                 <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">ریال</span>
                                             </div>
                                         </div>
                                     @else
                                         <div class="flex flex-row items-center gap-1 lg:text-base">
                                             <span
-                                                class="text-sm lg:text-md font-bold text-gray-800 in-fa">{{ $product->primary_price }}</span>
+                                                class="text-sm lg:text-md font-bold text-gray-800 in-fa">{{ number_format($product->primary_price) }}</span>
                                             <span class="text-xs lg:text-sm font-bold text-[#e1a84f]">ریال</span>
                                         </div>
                                     @endif

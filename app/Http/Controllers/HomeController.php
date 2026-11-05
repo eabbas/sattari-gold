@@ -15,6 +15,7 @@ class HomeController extends Controller
     {
         return view('404');
     }
+
     public function index()
     {
         $header = header::first();
@@ -23,11 +24,14 @@ class HomeController extends Controller
         $categories = category::with('products')->has('products')->get();
         // $categories = category::all();
         $logo = logo::first();
-        foreach ($products as $product) {
+        foreach ($products as $key => $product) {
+            if (count(explode(' ', $product->summary)) > 100) {
+                $products[$key]->summary = implode(' ', array_slice(explode(' ', $product->summary), 0, 100)) . ' ... ';
+            }
             if ($product->media->isNotEmpty()) {
                 foreach ($product->media as $media) {
                     if ($media['is_main']) {
-                        $product['mainImg']  = $media['media_path'];
+                        $product['mainImg'] = $media['media_path'];
                         break;
                     } else {
                         $product['mainImg'] = 'default.jpg';
