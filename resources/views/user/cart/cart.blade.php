@@ -41,9 +41,6 @@
                         تکمیل خرید
                     </a>
 
-                    <p class="text-xs text-gray-400 text-center mt-3">
-                        ارسال رایگان برای خرید بالای ۵۰۰ هزار ریال
-                    </p>
                 </div>
             </aside>
             {{-- @endif --}}

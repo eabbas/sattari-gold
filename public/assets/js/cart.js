@@ -271,9 +271,9 @@ addToCartBtns.forEach(product => {
             if (cartPro.id == (product.closest('.products') && product.closest('.products').dataset.productId)) {
                 product.innerHTML = `
                 <div class="w-full p-2 h-full transition-all duration-300 hover:bg-(--green-btn) group cursor-pointer bg-(--light-green-btn) flex gap-2 justify-center items-center rounded-xl">
-                    <button onclick="setCount(this)" class="w-1/3 transition-all duration-300 text-(--primary-text-color) group-hover:text-white flex justify-center items-center text-lg font-bold ${cartPro.count == cartPro.quantity ? 'cursor-no-drop' : 'cursor-pointer'}" ${cartPro.count == cartPro.quantity ? 'disabled' : ''} data-state="+">+</button>
-                    <input type="number" class="w-1/3 transition-all duration-300 text-(--primary-text-color) group-hover:text-white text-sm text-center outline-none in-fa" readonly value="${cartPro.quantity}">
-                    <button onclick="setCount(this)" class="w-1/3 transition-all duration-300 text-(--primary-text-color) group-hover:text-white flex justify-center items-center text-lg font-bold cursor-pointer" data-state="-">-</button>
+                    <button onclick="setCount(this)" class="w-1/3 transition-all duration-300 text-white group-hover:text-white flex justify-center items-center text-lg font-bold ${cartPro.count == cartPro.quantity ? 'cursor-no-drop' : 'cursor-pointer'}" ${cartPro.count == cartPro.quantity ? 'disabled' : ''} data-state="+">+</button>
+                    <input type="number" class="w-1/3 transition-all duration-300 text-white group-hover:text-white text-sm text-center outline-none in-fa" readonly value="${cartPro.quantity}">
+                    <button onclick="setCount(this)" class="w-1/3 transition-all duration-300 text-white group-hover:text-white flex justify-center items-center text-lg font-bold cursor-pointer" data-state="-">-</button>
                 </div>`
                 if (cartPro.count == 0) {
                     product.innerHTML = `
@@ -281,9 +281,6 @@ addToCartBtns.forEach(product => {
                         <span class="lg:text-sm text-[10px] text-white font-bold transition-all duration-300">عدم موجودی</span>
                     </button>`
                 }
-            }
-            if(cartPro.id == productId){
-                document.getElementById('add-to-cart-main').removeAttribute('onclick')
             }
         })
     }

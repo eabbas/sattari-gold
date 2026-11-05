@@ -23,7 +23,7 @@ if (localStorage.getItem('products')) {
         parentDiv.dataset.productId = cart.id
         let html = ''
         html += `
-            <div class="bg-white rounded-2xl p-4 flex gap-4 items-center shadow-sm border border-gray-100 parentItem">
+            <a href="${ url+'product/show/'+cart.id }" class="bg-white rounded-2xl p-4 flex gap-4 items-center shadow-sm border border-gray-100 parentItem">
                 <div
                     class="w-16 h-20 sm:w-20 sm:h-24 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-xl flex items-center justify-center text-2xl shrink-0">
                     <img src="${imgPath + cart.mainImg}" class="size-full object-cover" alt="">
@@ -31,7 +31,7 @@ if (localStorage.getItem('products')) {
                 <div class="flex-1 min-w-0">
                     <h3 class="font-semibold text-gray-800 text-sm sm:text-base truncate">${cart.title}</h3>
                     <p class="text-xs text-gray-500 mt-0.5 mb-5">${cart.summary ? cart.summary : ''}</p>
-                    <div class="w-full lg:w-1/4 p-2 flex gap-2 justify-center items-center bg-[image:var(--gradient-gold)] rounded-xl addToCartBtns" data-product-id="${cart.id}">
+                    <div class="w-full lg:w-1/4 flex gap-2 justify-center items-center bg-[image:var(--gradient-gold)] rounded-xl addToCartBtns" data-product-id="${cart.id}">
                         <button onclick="setCount(this)" class="w-1/3 text-lg font-bold text-white flex justify-center items-center cursor-pointer" data-state="+">+</button>
                         <input type="number" class="w-1/3 text-sm text-center outline-none text-white in-fa" readonly value="${cart.quantity}">
                         <button onclick="setCount(this)" class="w-1/3 text-lg font-bold text-white flex justify-center items-center cursor-pointer" data-state="-">-</button>
@@ -41,7 +41,7 @@ if (localStorage.getItem('products')) {
                     <p class="font-bold text-gray-800 text-sm sm:text-base in-fa price">${priceText}</p>
                     <p class="text-xs text-gray-400">${rawPrice ? 'ریال' : ''}</p>
                 </div>
-            </div>
+            </a>
         `
         parentDiv.innerHTML = html
         cartItemsBlock.append(parentDiv)
