@@ -226,7 +226,7 @@
                                 </g>
                             </svg>
                             <span class="text-xs text-(--color-text-secondary)">{{ $attribute->attribute_key }}</span>
-                            <span class="text-sm font-bold text-(--color-primary)">
+                            <span class="text-sm font-bold text-(--color-primary) in-fa">
                                 {{ $attribute->attribute_value }}
                             </span>
                         </div>
