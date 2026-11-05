@@ -4,13 +4,18 @@ let discountEl = document.getElementById('discountEl')
 let addPackToCartBtn = document.getElementById('addPackToCartBtn')
 let cartItemsBlock = document.getElementById('cartItemsBlock')
 let localProducts = JSON.parse(localStorage.getItem('products'))
-if (localProducts) {
-    orderBasket.children[1].innerText = localProducts.length
-}
+addToCartBtns = document.querySelectorAll('.addToCartBtns')
+localProducts = JSON.parse(localStorage.getItem('products'))
+localPacks = JSON.parse(localStorage.getItem('packs'))
+orderBasket = document.getElementById('orderBasket')
+let totalCartQuantity = 0
+// if (localProducts) {
+//     orderBasket.children[1].innerText = localProducts.length
+// }
 let popupFlag = false
 function addToCart(btn) {
     btn.removeAttribute('onclick')
-    btn.innerHTML = `<div class="w-5 h-5 border-2 border-white border-t-(--primary-text-color) rounded-full animate-spin"></div>`
+    btn.innerHTML = `<div class="w-5 h-5 border-2 border-white border-t-white rounded-full animate-spin"></div>`
     $.ajax({
         url: api + 'findProduct/' + btn.closest('.addToCartBtns').dataset.productId,
         type: "GET",
@@ -18,14 +23,41 @@ function addToCart(btn) {
         success: function (response) {
             let quan = parseInt(orderBasket.children[1].innerText)
             quan += 1
+            totalCartQuantity++
+            orderBasket.children[1].innerText = totalCartQuantity
             orderBasket.children[1].innerText = quan
             response.quantity = 1
-            btn.innerHTML = `
-            <div class="w-full h-full transition-all duration-300 group cursor-pointer bg-[image:var(--gradient-gold)] flex gap-2 justify-center items-center rounded-xl" data-product-id="${response.product_id}">
-                <button onclick="setCount(this)" class="w-1/3 transition-all duration-300 text-gray-200 group-hover:text-white flex justify-center items-center text-lg font-bold cursor-pointer" data-state="+">+</button>
-                <input type="number" class="w-1/3 transition-all duration-300 text-gray-200 group-hover:text-white text-sm text-center outline-none in-fa" readonly value="${response.quantity}">
-                <button onclick="setCount(this)" class="w-1/3 transition-all duration-300 text-gray-200 group-hover:text-white flex justify-center items-center text-lg font-bold cursor-pointer" data-state="-">-</button>
-            </div>`
+            // btn.innerHTML = `
+            // <div class="w-full h-full transition-all duration-300 group cursor-pointer bg-[image:var(--gradient-gold)] flex gap-2 justify-center items-center rounded-xl" data-product-id="${response.product_id}">
+            //     <button onclick="setCount(this)" class="w-1/3 transition-all duration-300 text-gray-200 group-hover:text-white flex justify-center items-center text-lg font-bold cursor-pointer" data-state="+">+</button>
+            //     <input type="number" class="w-1/3 transition-all duration-300 text-gray-200 group-hover:text-white text-sm text-center outline-none in-fa" readonly value="${response.quantity}">
+            //     <button onclick="setCount(this)" class="w-1/3 transition-all duration-300 text-gray-200 group-hover:text-white flex justify-center items-center text-lg font-bold cursor-pointer" data-state="-">-</button>
+            // </div>`
+            document.querySelectorAll('.addToCartBtns').forEach(button => {
+                if (button.dataset.productId != productId) return
+
+                let input = button.querySelector('input[type=number]')
+                if (input) {
+                    input.value = response.quantity
+                } else {
+                    button.innerHTML = `
+                        <div class="w-full p-2 h-full transition-all duration-300 hover:bg-(--green-btn) group cursor-pointer bg-(--light-green-btn) flex gap-2 justify-center items-center rounded-xl">
+                            <button onclick="setCount(this)" class="w-1/3 transition-all duration-300 text-white group-hover:text-white flex justify-center items-center text-lg font-bold cursor-pointer" data-state="+">+</button>
+                            <input type="number" class="w-1/3 transition-all duration-300 text-white group-hover:text-white text-sm text-center outline-none in-fa" readonly value="${response.quantity}">
+                            <button onclick="setCount(this)" class="w-1/3 transition-all duration-300 text-white group-hover:text-white flex justify-center items-center text-lg font-bold cursor-pointer" data-state="-">-</button>
+                        </div>
+                    `
+                }
+                if (response.quantity == response.count) {
+                    button.children[0].children[0].disabled = true
+                    button.children[0].children[0].classList.remove('cursor-pointer')
+                    button.children[0].children[0].classList.add('cursor-no-drop')
+                } else {
+                    button.children[0].children[0].disabled = false
+                    button.children[0].children[0].classList.remove('cursor-no-drop')
+                    button.children[0].children[0].classList.add('cursor-pointer')
+                }
+            })
             let products = []
             if (localStorage.getItem('products')) {
                 products = JSON.parse(localStorage.getItem('products'))
@@ -45,83 +77,128 @@ function addToCart(btn) {
     })
 }
 function setCount(btn) {
-    localProducts = JSON.parse(localStorage.getItem('products'))
-    productId = btn.closest('.addToCartBtns').dataset.productId
-    localProducts.find(product => {
-        let finalPrice = 0
-        if (product.secondary_price) {
-            finalPrice = product.secondary_price
-        } else {
-            finalPrice = product.primary_price
+    let container = btn.closest('.addToCartBtns')
+    if (!container) return
+
+    let productId = container.dataset.productId
+    if (!productId) return
+
+    localProducts = JSON.parse(localStorage.getItem('products')) || []
+
+    let product = localProducts.find(p => String(p.id) === String(productId))
+    if (!product) return
+
+    let finalPrice = product.secondary_price ? product.secondary_price : product.primary_price
+
+    if (btn.dataset.state === '+') {
+        btn.parentElement.children[1].value++
+        product.quantity++
+        totalCartQuantity++
+        if (totalPriceEl) {
+            let currentPrice = parseInt(totalPriceEl.innerText) || 0
+            totalPriceEl.innerText = currentPrice + finalPrice
         }
-        if (product.id == productId) {
-            if (btn.dataset.state == "+") {
-                btn.parentElement.children[1].value++
-                product.quantity++
-                if (totalPriceEl) {
-                    // let currentPrice = parseInt(totalPriceEl.innerText)
-                    // totalPriceEl.innerText = currentPrice += finalPrice
-                    let currentPrice = Number(
-                        totalPriceEl.dataset.price || 0
-                    )
+    }
 
-                    currentPrice += finalPrice
+    if (btn.dataset.state === '-') {
+        btn.parentElement.children[1].value--
+        product.quantity--
+        totalCartQuantity--
+        if (totalPriceEl) {
+            let currentPrice = parseInt(totalPriceEl.innerText) || 0
+            totalPriceEl.innerText = currentPrice - finalPrice
+        }
+    }
 
-                    totalPriceEl.dataset.price = currentPrice
+    if (product.quantity == product.count) {
+        btn.disabled = true
+        btn.classList.remove('cursor-pointer')
+        btn.classList.add('cursor-no-drop')
+    } else {
+        btn.parentElement.children[0].disabled = false
+        btn.parentElement.children[0].classList.remove('cursor-no-drop')
+        btn.parentElement.children[0].classList.add('cursor-pointer')
+    }
 
-                    totalPriceEl.innerText = currentPrice.toLocaleString('fa-IR')
-                }
-            }
-            if (btn.dataset.state == "-") {
-                btn.parentElement.children[1].value--
-                product.quantity--
-                if (totalPriceEl) {
-                    // let currentPrice = parseInt(totalPriceEl.innerText)
-                    // totalPriceEl.innerText = currentPrice -= finalPrice
+    document.querySelectorAll('.addToCartBtns').forEach(button => {
+        if (button === container) return
+        if (String(button.dataset.productId) !== String(productId)) return
 
-                    let currentPrice = Number(
-                        totalPriceEl.dataset.price || 0
-                    )
-
-                    currentPrice -= finalPrice
-
-                    totalPriceEl.dataset.price = currentPrice
-
-                    totalPriceEl.innerText = currentPrice.toLocaleString('fa-IR')
-                }
-            }
+        let input = button.querySelector('input[type=number]')
+        if (input) {
+            input.value = btn.parentElement.children[1].value
         }
     })
-    let newItems = JSON.stringify(localProducts)
-    localStorage.removeItem('products')
-    localStorage.setItem('products', newItems)
+
+    localStorage.setItem('products', JSON.stringify(localProducts))
+
     if (btn.parentElement.children[1].value == 0) {
-        orderBasket.children[1].innerText--
-        if (totalPriceEl) {
-            btn.closest('.parentItem').parentElement.remove()
-        }
-        localProducts = localProducts.filter(cart => cart.id != productId)
-        let newItems = JSON.stringify(localProducts)
-        localStorage.removeItem('products')
-        localStorage.setItem('products', newItems)
+        // if (orderBasket && orderBasket.children[1]) {
+        //     orderBasket.children[1].innerText = Math.max(0, (parseInt(orderBasket.children[1].innerText) || 1) - 1)
+        // }
+
+        localProducts = localProducts.filter(cart => String(cart.id) !== String(productId))
+        localStorage.setItem('products', JSON.stringify(localProducts))
+
         if (!popupFlag) {
-            btn.closest('.addToCartBtns').innerHTML = `
-                <button onclick="addToCart(this)" class="w-full px-4 h-full bg-[image:var(--gradient-gold)] flex gap-2 justify-center items-center rounded-xl cursor-pointer transition-all duration-300 hover:bg-(--green-btn) group">
+            let initialHtml = `
+                <button onclick="addToCart(this)" class="w-full px-4 h-full bg-(--light-green-btn) flex gap-2 justify-center items-center rounded-xl cursor-pointer transition-all duration-300 hover:bg-(--green-btn) group">
                     <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="lg:size-4 size-3 fill-gray-200 transition-all duration-300 group-hover:fill-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="lg:size-4 size-3 fill-white transition-all duration-300 group-hover:fill-white">
                             <path d="M16 0H0V32H16 67.2l77.2 339.5 2.8 12.5H160 496h16V352H496 172.8l-14.5-64H496L566 64l10-32H542.5 100L95.6 12.5 92.8 0H80 16zm91.3 64H532.5l-60 192H151L107.3 64zM184 432a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm0 80a56 56 0 1 0 0-112 56 56 0 1 0 0 112zm248-56a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm80 0a56 56 0 1 0 -112 0 56 56 0 1 0 112 0z">
                             </path>
                         </svg>
                     </div>
-                    <span class="lg:text-sm text-[10px] text-gray-200 font-bold transition-all duration-300 group-hover:text-white">افزودن به سبد خرید</span>
-                </button>`
+                    <span class="lg:text-sm text-[10px] text-white font-bold transition-all duration-300 group-hover:text-white">افزودن به سبد خرید</span>
+                </button>
+            `
+
+            document.querySelectorAll('.addToCartBtns').forEach(button => {
+                if (String(button.dataset.productId) === String(productId)) {
+                    button.innerHTML = initialHtml
+                }
+            })
+            if (window.currentPage == 'cart') {
+                document.querySelectorAll('.cartPages').forEach(item => {
+                    if (item.dataset.productId == productId) {
+                        item.remove()
+                    }
+                })
+            }
         } else {
-            btn.closest('.parentItem').remove()
+            let parentItem = btn.closest('.parentItem')
+            if (parentItem) {
+                parentItem.remove()
+            }
+
+            if (window.currentPage == 'cart') {
+                document.querySelectorAll('.cartPages').forEach(item => {
+                    if (item.dataset.productId == productId) {
+                        item.remove()
+                    }
+                })
+            }
+            let initialHtml = `
+                <button onclick="addToCart(this)" class="w-full px-4 h-full flex gap-2 justify-center items-center rounded-xl cursor-pointer transition-all duration-300 hover:bg-(--green-btn) group">
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="lg:size-4 size-3 fill-white transition-all duration-300 group-hover:fill-white">
+                            <path d="M16 0H0V32H16 67.2l77.2 339.5 2.8 12.5H160 496h16V352H496 172.8l-14.5-64H496L566 64l10-32H542.5 100L95.6 12.5 92.8 0H80 16zm91.3 64H532.5l-60 192H151L107.3 64zM184 432a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm0 80a56 56 0 1 0 0-112 56 56 0 1 0 0 112zm248-56a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm80 0a56 56 0 1 0 -112 0 56 56 0 1 0 112 0z">
+                            </path>
+                        </svg>
+                    </div>
+                    <span class="lg:text-sm text-[10px] text-white font-bold transition-all duration-300 group-hover:text-white">افزودن به سبد خرید</span>
+                </button>
+            `
+
+            document.querySelectorAll('.addToCartBtns').forEach(button => {
+                if (String(button.dataset.productId) === String(productId) && !button.closest('.parentItem')) {
+                    button.innerHTML = initialHtml
+                }
+            })
         }
-
     }
+    orderBasket.children[1].innerText = totalCartQuantity
 }
-
 orderBasket.addEventListener('click', () => {
     if ((localStorage.getItem('products') && JSON.parse(localStorage.getItem('products')).length) || localStorage.getItem('packs') && JSON.parse(localStorage.getItem('packs')).length) {
         if (orderBasket.parentElement.children[1].classList.contains('invisible')) {
@@ -185,3 +262,37 @@ document.addEventListener('click', (e) => {
         orderBasket.parentElement.children[1].classList.add('opacity-0')
     }
 })
+
+
+
+addToCartBtns.forEach(product => {
+    if (localProducts) {
+        localProducts.find(cartPro => {
+            if (cartPro.id == (product.closest('.products') && product.closest('.products').dataset.productId)) {
+                product.innerHTML = `
+                <div class="w-full p-2 h-full transition-all duration-300 hover:bg-(--green-btn) group cursor-pointer bg-(--light-green-btn) flex gap-2 justify-center items-center rounded-xl">
+                    <button onclick="setCount(this)" class="w-1/3 transition-all duration-300 text-(--primary-text-color) group-hover:text-white flex justify-center items-center text-lg font-bold ${cartPro.count == cartPro.quantity ? 'cursor-no-drop' : 'cursor-pointer'}" ${cartPro.count == cartPro.quantity ? 'disabled' : ''} data-state="+">+</button>
+                    <input type="number" class="w-1/3 transition-all duration-300 text-(--primary-text-color) group-hover:text-white text-sm text-center outline-none in-fa" readonly value="${cartPro.quantity}">
+                    <button onclick="setCount(this)" class="w-1/3 transition-all duration-300 text-(--primary-text-color) group-hover:text-white flex justify-center items-center text-lg font-bold cursor-pointer" data-state="-">-</button>
+                </div>`
+                if (cartPro.count == 0) {
+                    product.innerHTML = `
+                    <button class="w-full px-4 h-full bg-(--pastel-pink) flex gap-2 justify-center items-center rounded-xl relative after:absolute after:w-full after:h-full after:content-[''] after:top-0 after:right-0 after:bg-white/30 after:rounded-xl transition-all duration-300 hover:bg-(--discount-color) cursor-no-drop group">
+                        <span class="lg:text-sm text-[10px] text-white font-bold transition-all duration-300">عدم موجودی</span>
+                    </button>`
+                }
+            }
+            if(cartPro.id == productId){
+                document.getElementById('add-to-cart-main').removeAttribute('onclick')
+            }
+        })
+    }
+})
+if (localProducts) {
+    localProducts.forEach(item => {
+        totalCartQuantity += item.quantity
+    })
+    cartLink.classList.remove('hidden')
+}
+
+orderBasket.children[1].innerText = totalCartQuantity

@@ -24,7 +24,9 @@ if (localStorage.getItem('products') && localProducts.length) {
         `
         parentCheckout.append(parent)
         totalPriceCheckout.innerText = totalPrice.toLocaleString('fa-IR') + ' ریال'
-        totalDiscountCheckout.innerText = discount.toLocaleString('fa-IR') + ' ریال'
+        if (totalDiscountCheckout){
+            totalDiscountCheckout.innerText = discount.toLocaleString('fa-IR') + ' ریال'
+        }
     })
     productsInput.value = localStorage.getItem('products')
 }

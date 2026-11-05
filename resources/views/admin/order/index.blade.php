@@ -50,136 +50,7 @@
                 <span class="text-xs font-bold text-(--primary-text-color)">فیلتر</span>
             </button>
         </div>
-        {{-- <div class="w-full grid grid-cols-1 gap-3" id="parentOrdersBlock">
-            @if (isset($orders))
-                @foreach ($orders as $order)
-                  
-                        <div class="w-full p-3 bg-white rounded-md flex flex-col shadow-[0px_0px_2px_1px_#e7e7ef] orders"
-                             >
-                            <div class="w-full flex flex-row items-center justify-between pb-3 border-b border-[#e4e5ea]">
-                                <div class="flex flex-row items-center gap-2">
-                                    <div class="size-8 bg-[#f4f4f6] rounded-full flex justify-center items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                             class="size-6"
-                                             viewBox="0 0 48 48"
-                                             fill="none"
-                                             stroke="currentColor"
-                                             stroke-width="2"
-                                             stroke-linecap="round"
-                                             stroke-linejoin="round">
-                                            <!-- Table -->
-                                            <path d="M19 10H29"/>
-                                            <path d="M19 10V16"/>
-                                            <path d="M29 10V16"/>
-                                            <!-- Left chair -->
-                                            <path d="M10 10V36"/>
-                                            <path d="M10 24H20"/>
-                                            <path d="M20 24V36"/>
-                                            <!-- Right chair -->
-                                            <path d="M38 10V36"/>
-                                            <path d="M28 24H38"/>
-                                            <path d="M28 24V36"/>
-                                        </svg>
-                                    </div>
-                                    <span class="font-bold text-xs text-(--primary-text-color) in-fa order-table">{{ $order->user->name.' '.$order->user->family.' | '.$order->user->phoneNumber }}</span>
-                                    <span class="text-[10px] px-2 py-0.5 bg-[{{ $order->state->color }}]/20 font-bold text-[{{ $order->state->color }}] rounded-full border-1 border-[{{ $order->state->color }}] order-status">{{ $order->state->title }}</span>
-                                </div>
-                                <div class="flex flex-col gap-1.5 items-end">
-                                    <span class="text-[10px] text-(--secondary-text-color)">شماره سفارش</span>
-                                    <span class="text-xs font-bold text-(--primary-text-color) order-code">#{{ $order->order_code }}</span>
-                                </div>
-                            </div>
-                            <div class="pt-3 w-full flex flex-col gap-3.5">
-                                <div class="w-full flex flex-row items-center">
-                                    <div class="w-1/3 flex flex-col items-center justify-center gap-1.5 border-l-1 border-[#e4e5ea]">
-                                        <div class="flex flex-row items-center gap-0.5">
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                 class="size-5"
-                                                 viewBox="0 0 24 24"
-                                                 fill="none"
-                                                 stroke="black"
-                                                 stroke-width="1.7"
-                                                 stroke-linecap="round"
-                                                 stroke-linejoin="round">
-                                                <!-- Bag body -->
-                                                <path d="M6 8H18L19 20H5L6 8Z"/>
-                                                <!-- Handle -->
-                                                <path d="M8.5 8V6.8
-                                     C8.5 4.7 10 3.5 12 3.5
-                                     C14 3.5 15.5 4.7 15.5 6.8V8"/>
-                                            </svg>
-                                            <span class="text-[10px] text-(--secondary-text-color)">تعداد آیتم</span>
-                                        </div>
-                                        <span class="text-xs font-bold text-(--primary-text-color) in-fa order-item-count">{{ count($order->carts) }} آیتم</span>
-                                    </div>
-                                    <div class="w-1/3 flex flex-col items-center justify-center gap-1.5 border-l-1 border-[#e4e5ea]">
-                                        <div class="flex flex-row items-center gap-1.5">
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                 class="size-4 fill-(--secondary-text-color)" viewBox="0 0 448 512">
-                                                <path d="M112 0c8.8 0 16 7.2 16 16V64H320V16c0-8.8 7.2-16 16-16s16 7.2 16 16V64h32c35.3 0 64 28.7 64 64v32 32V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V192 160 128C0 92.7 28.7 64 64 64H96V16c0-8.8 7.2-16 16-16zM416 192H312v72H416V192zm0 104H312v80H416V296zm0 112H312v72h72c17.7 0 32-14.3 32-32V408zM280 376V296H168v80H280zM168 408v72H280V408H168zm-32-32V296H32v80H136zM32 408v40c0 17.7 14.3 32 32 32h72V408H32zm0-144H136V192H32v72zm136 0H280V192H168v72zM384 96H64c-17.7 0-32 14.3-32 32v32H416V128c0-17.7-14.3-32-32-32z"/>
-                                            </svg>
-                                            <span class="text-[10px] text-(--secondary-text-color)">تاریخ</span>
-                                        </div>
-                                        <span class="text-xs font-bold text-(--primary-text-color) in-fa order-date">{{ $order->date }}</span>
-                                    </div>
-                                    <div class="w-1/3 flex flex-col items-center justify-center gap-1.5">
-                                        <div class="flex flex-row items-center gap-1.5">
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                 class="size-5"
-                                                 viewBox="0 0 24 24"
-                                                 fill="none"
-                                                 stroke="black"
-                                                 stroke-width="1.6"
-                                                 stroke-linecap="round"
-                                                 stroke-linejoin="round">
-                                                <circle cx="12" cy="12" r="6.8"/>
-                                                <path d="M12 8.5V12"/>
-                                                <path d="M12 12L14.8 13.8"/>
-                                            </svg>
-                                            <span class="text-[10px] text-(--secondary-text-color)">زمان ثبت</span>
-                                        </div>
-                                        <span class="text-xs font-bold text-(--primary-text-color) in-fa order-time">{{ $order->time }}</span>
-                                    </div>
-                                </div>
-                                <div class="w-full flex flex-col gap-1">
-
-                                    <div class="w-full flex flex-row items-center gap-2">
-                                        <button class="w-1/2 flex flex-row gap-1 items-center justify-center py-1.5 rounded-md border-1 border-[{{ $order->state->color }}] bg-[{{ $order->state->color }}]/20 text-[{{ $order->state->color }}] text-xs cursor-pointer order-show-btn" onclick="showItems(this, {{ $order->id }})">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="size-4 fill-[{{ $order->state->color }}]"
-                                                 viewBox="0 0 576 512">
-                                                <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"/>
-                                            </svg>
-                                            مشاهده آیتم ها
-                                        </button>
-                                        <button class="w-[25%] flex flex-row gap-1 items-center justify-center py-1.5 rounded-md border-1 border-[#e4e5ea] text-(--secondary-text-color) text-xs cursor-pointer">
-                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                 class="size-4"
-                                                 viewBox="0 0 24 24"
-                                                 fill="none"
-                                                 stroke="black"
-                                                 stroke-width="1.4"
-                                                 stroke-linecap="round"
-                                                 stroke-linejoin="round">
-                                                <rect x="8.2" y="4" width="7.6" height="3.8" rx="0.4"/>
-                                                <rect x="4.8" y="8" width="14.4" height="6.8" rx="0.8"/>
-                                                <rect x="8.2" y="13.2" width="7.6" height="6.8" rx="0.4"/>
-                                                <circle cx="17" cy="11.2" r="0.5" fill="currentColor" stroke="none"/>
-                                            </svg>
-                                            مشاهده فیش
-                                        </button>
-                                        <button class="w-[20%] flex flex-row gap-1 items-center justify-center py-1.5 rounded-md border-1 border-[{{ $order->state->color }}] text-[{{ $order->state->color }}] text-xs cursor-pointer order-accept-btn"
-                                                onclick='accept("{{ $order->id }}", this, 1)'>
-                                            {{ $order->state->admin_title }}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    
-                @endforeach
-            @endif
-        </div> --}}
-
+  
         <table class="w-full border-collapse border-1 border-(--border-dashboard) text-sm">
             <thead>
                 <tr class="bg-gray-100 text-xs lg:text-base">
@@ -288,7 +159,7 @@
                     <h4 class="text-xs text-(--primary-text-color) mb-2">آدرس :</h4>
                     <p class="text-xs text-(--secondary-text-color) text-center my-2 in-fa" id="address"></p>
                 </div>
-                <div class="w-full flex flex-col gap-2 max-h-[500px] overflow-y-auto p-3 mt-3 border-t-1 border-gray-200"
+                <div class="w-full flex flex-col gap-2 max-h-[calc(100vh-100px)] overflow-y-auto p-3 mt-3 border-t-1 border-gray-200"
                     style="scrollbar-width: thin;" id="itemList"></div>
             </div>
         </div>
@@ -308,7 +179,7 @@
 
     <div id="receiptBlock"
         class="fixed w-full h-dvh bg-black/50 top-0 right-0 flex justify-center items-center z-9 invisible opacity-0 transition-all duration-300">
-        <div class="w-11/12 lg:w-1/2 p-5 flex justify-center items-center rounded-lg bg-white relative">
+        <div class="w-11/12 lg:w-1/2 p-5 flex justify-center items-center rounded-lg bg-white relative max-h-[calc(100vh-100px)] overflow-y-auto">
             <span class="absolute top-3 right-6 cursor-pointer" onclick="closeReceipt()">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 fill-gray-600" viewBox="0 0 384 512">
                     <path
@@ -485,10 +356,6 @@
         function hideItems() {
             orderBlock.classList.add('invisible')
             orderBlock.classList.add('opacity-0')
-            // orderStatus.innerText = ''
-            // orderCode.innerText = ''
-            // tableName.innerText = ''
-            // address.innerText = ''
         }
 
         function showMessage(state) {
