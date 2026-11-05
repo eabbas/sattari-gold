@@ -29,7 +29,7 @@
                     <div class="border-t border-dashed border-gray-200 my-4"></div>
 
                     <div class="flex justify-between items-center mb-5">
-                        <span class="font-semibold text-gray-700">مبلغ قابل پرداخت</span>
+                        <span class="font-bold text-gray-700">مبلغ قابل پرداخت</span>
                         <div class="text-left">
                             <p class="font-bold text-lg text-gray-900 in-fa" id="totalPriceEl">0</p>
                             <p class="text-xs text-gray-400">ریال</p>

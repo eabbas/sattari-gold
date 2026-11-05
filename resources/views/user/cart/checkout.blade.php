@@ -178,7 +178,7 @@
                                                     alt="">
                                             </span>
                                         </div>
-                                        <span class="text-sm font-semibold tracking-wide text-white/90">بانک مهر
+                                        <span class="text-sm font-bold tracking-wide text-white/90">بانک مهر
                                             ایران</span>
                                     </div>
                                     <div
