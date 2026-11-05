@@ -29,7 +29,7 @@ if (localStorage.getItem('products')) {
                     <img src="${imgPath + cart.mainImg}" class="size-full object-cover" alt="">
                 </div>
                 <div class="flex-1 min-w-0">
-                    <h3 class="font-bold text-gray-800 text-sm sm:text-base truncate">${cart.title}</h3>
+                    <h3 class="font-bold text-gray-800 text-sm sm:text-base truncate in-fa">${cart.title}</h3>
                     <p class="text-xs text-gray-500 mt-0.5 mb-5">${cart.summary ? cart.summary : ''}</p>
                     <div class="w-full lg:w-1/4 flex gap-2 justify-center items-center bg-[image:var(--gradient-gold)] rounded-xl addToCartBtns" data-product-id="${cart.id}">
                         <button onclick="setCount(this)" class="w-1/3 text-lg font-bold text-white flex justify-center items-center cursor-pointer" data-state="+">+</button>
