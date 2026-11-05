@@ -59,16 +59,35 @@ function setCount(btn) {
                 btn.parentElement.children[1].value++
                 product.quantity++
                 if (totalPriceEl) {
-                    let currentPrice = parseInt(totalPriceEl.innerText)
-                    totalPriceEl.innerText = currentPrice += finalPrice
+                    // let currentPrice = parseInt(totalPriceEl.innerText)
+                    // totalPriceEl.innerText = currentPrice += finalPrice
+                    let currentPrice = Number(
+                        totalPriceEl.dataset.price || 0
+                    )
+
+                    currentPrice += finalPrice
+
+                    totalPriceEl.dataset.price = currentPrice
+
+                    totalPriceEl.innerText = currentPrice.toLocaleString('fa-IR')
                 }
             }
             if (btn.dataset.state == "-") {
                 btn.parentElement.children[1].value--
                 product.quantity--
                 if (totalPriceEl) {
-                    let currentPrice = parseInt(totalPriceEl.innerText)
-                    totalPriceEl.innerText = currentPrice -= finalPrice
+                    // let currentPrice = parseInt(totalPriceEl.innerText)
+                    // totalPriceEl.innerText = currentPrice -= finalPrice
+
+                    let currentPrice = Number(
+                        totalPriceEl.dataset.price || 0
+                    )
+
+                    currentPrice -= finalPrice
+
+                    totalPriceEl.dataset.price = currentPrice
+
+                    totalPriceEl.innerText = currentPrice.toLocaleString('fa-IR')
                 }
             }
         }
