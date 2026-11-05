@@ -6,19 +6,23 @@ use App\Models\address;
 use App\Models\carts;
 use App\Models\category;
 use App\Models\logo;
+use App\Models\order_status;
 use App\Models\orders;
 use App\Models\product;
 use App\Models\User;
-use App\Models\order_status;
+use App\Models\user_role;
 use Hekmatinasser\Verta\Verta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Log;
+
 class OrdersController extends Controller
 {
     public function store(Request $request)
     {
-        // dd($request->all());
+        $receipt = $request->file('receipt')->getClientOriginalName();
+        $path = $request->file('receipt')->storeAs('receipts', $receipt, 'public');
         $name = $request->input('name');
         $family = $request->input('family');
         $cityId = $request->input('cityId');
@@ -26,21 +30,36 @@ class OrdersController extends Controller
         $postalCode = $request->input('postalCode');
         $phoneNumber = $request->input('phoneNumber');
         $nationalCode = $request->input('nationalCode');
-        $description = $request->input('description');
-        // $onlinePayment = $request->input('onlinePayment');
+        $descriptoin = $request->input('descriptoin');
+        $password = $request->input('password');
+        $password = isset($password) ? Hash::make($password) : false;
         $products = json_decode($request->products);
-        $packs = json_decode($request->packs);
-        $receiptImgName = $request->file('receipt')->getClientOriginalName();
-        $receipt = $request->file('receipt')->storeAs('receipt', $receiptImgName, 'public');
 
-        User::upsert([
-            'name' => $name,
-            'family' => $family,
-            'phoneNumber' => $phoneNumber,
-            'nationalCode' => $nationalCode,
-        ], ['phoneNumber'], ['name', 'family', 'nationalCode']);
+        if ($password) {
+            User::upsert([
+                'name' => $name,
+                'family' => $family,
+                'phoneNumber' => $phoneNumber,
+                'nationalCode' => $nationalCode,
+                'password' => $password,
+            ], ['phoneNumber'], ['name', 'family', 'nationalCode', 'password']);
+        } else {
+            User::upsert([
+                'name' => $name,
+                'family' => $family,
+                'phoneNumber' => $phoneNumber,
+                'nationalCode' => $nationalCode,
+            ], ['phoneNumber'], ['name', 'family', 'nationalCode', 'password']);
+        }
 
         $user = User::where('phoneNumber', $phoneNumber)->first();
+
+        if (count($user->roles) > 0) {
+            $userRoleIds = $user->roles->pluck('id')->toArray();
+            if (!in_array(1, $userRoleIds)) {
+                user_role::create(['role_id' => 2, 'user_id' => $user->id]);
+            }
+        }
 
         $address = address::firstOrCreate([
             'user_id' => $user->id,
@@ -57,9 +76,9 @@ class OrdersController extends Controller
 
         $order = orders::create([
             'user_id' => $user->id,
-            'description' => $description,
-            'receipt' => $receipt,
-            // 'onlinePayment' => $onlinePayment,
+            'description' => $descriptoin,
+            'receipt' => $path,
+            'onlinePayment' => 0,
             'address_id' => $address->id,
             'order_status_id' => 1,
             'date' => $date,
@@ -77,21 +96,15 @@ class OrdersController extends Controller
                     'order_id' => $order->id,
                     'quantity' => $product->quantity
                 ]);
+                $finalQuantity = $product->count - $product->quantity;
+                product::where('id', $product->id)->update(['count' => $finalQuantity]);
             }
         }
-        if ($packs) {
-            foreach ($packs as $pack) {
-                carts::create([
-                    'pack_id' => $pack->id,
-                    'user_id' => $user->id,
-                    'order_id' => $order->id,
-                    'quantity' => $pack->quantity
-                ]);
-            }
-        }
+       
 
         return redirect('/')->with('clearStorage', true);
     }
+
     public function index()
     {
         $orders = orders::orderBy('date', 'desc')->orderBy('time', 'desc')->get();
@@ -120,6 +133,7 @@ class OrdersController extends Controller
             'logo' => $logo,
         ]);
     }
+
     public function showItems(orders $order)
     {
         $order->load(['carts' => function ($query) {
@@ -128,16 +142,17 @@ class OrdersController extends Controller
                     $qr->where('is_main', 1)->get();
                 }]);
             }]);
-            
         }]);
         $order->state;
         return response()->json($order);
     }
+
     public function cancelAll(User $user)
     {
         carts::where('user_id', $user->id)->whereNull('order_id')->delete();
         return response()->json('ok');
     }
+
     public function acceptOrder(Request $request)
     {
         $order = orders::with(['state', 'carts.product'])->find($request->order_id);
@@ -170,10 +185,10 @@ class OrdersController extends Controller
 
         $order->load('state');
 
-
         // return response()->json([$order, $request->all()]);
         return response()->json($order);
     }
+
     public function userOrders()
     {
         $orders = Auth::user()->orders()->orderBy('date', 'desc')->orderBy('time', 'desc')->get();

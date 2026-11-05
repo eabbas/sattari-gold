@@ -3,525 +3,416 @@
     ستاری گلد | {{ $product['title'] }}
 @endsection
 @section('content')
-    <main class="max-w-[1700px] mx-auto mb-50">
-        <!-- ادرس -->
-        <section class="w-11/12 mx-auto mt-20">
-            <a href="" class="cursor-pointer text-sm text-(--color-text-muted)">خانه</a>
-            <span class="cursor-pointer text-sm text-(--color-text-muted)">/</span>
-            <a href="" class="cursor-pointer text-sm text-(--color-text-muted)">محصولات</a>
-            <span class="cursor-pointer text-sm text-(--color-text-muted)">/</span>
-            <a href="" class="cursor-pointer text-sm text-(--color-text-muted)">{{ $product->title }}</a>
+    @php
+        // محاسبه درصد تخفیف (قیمت اصلی = primary_price ، قیمت با تخفیف = secondary_price)
+        $p1 = (int) preg_replace('/\D/', '', (string) $product->primary_price);
+        $p2 = (int) preg_replace('/\D/', '', (string) $product->secondary_price);
+        $discount = $p1 && $p2 && $p1 > $p2 ? round((1 - $p2 / $p1) * 100) : null;
+        $mediaCount = $product->media->count();
+    @endphp
+
+    <main class="max-w-[1280px] mx-auto mb-32">
+
+        <!-- آدرس -->
+        <section class="w-11/12 mx-auto mt-8 flex items-center gap-2 text-xs md:text-sm text-(--color-text-muted)">
+            <a href="{{ route('home') }}" class="flex items-center gap-2.5 hover:text-(--color-primary)">
+                <svg class="size-4 fill-(--color-text)" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" />
+                </svg>
+                خانه
+            </a>
+            <span>/</span>
+            <a href="{{ route('product.index') }}" class="hover:text-(--color-primary)">محصولات</a>
+            <span>/</span>
+            <span class="text-(--color-text) in-fa">{{ $product->title }}</span>
         </section>
-        <!-- عکس و قسمت -->
-        <section class="w-11/12 mx-auto flex flex-col lg:flex-row items-center justify-between mt-10">
-            <!-- عکس محصول -->
-            <div class="w-full lg:w-4/12">
-                <div class="flex flex-col items-center">
-                    <div class="relative w-full flex items-center justify-center">
-                        {{-- <div
-                            class="absolute top-5 right-3 w-46 bg-white rounded-full flex items-center justify-center px-3 py-2 shadow-lg">
-                            <span class="">
-                                <svg class="size-5 fill-(--color-primary)" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 512 512">
-                                    <path
-                                        d="M256 0c4.6 0 9.2 1 13.4 2.9L457.7 82.8c22 9.3 38.4 31 38.3 57.2c-.5 99.2-41.3 280.7-213.6 363.2c-16.7 8-36.1 8-52.8 0C57.3 420.7 16.5 239.2 16 140c-.1-26.2 16.3-47.9 38.3-57.2L242.7 2.9C246.8 1 251.4 0 256 0z" />
-                                </svg>
-                            </span>
-                            <span class="text-sm font-extrabold">اصالت کالا تضمین شده</span>
-                        </div> --}}
-                        <img id="product-image" src="{{ asset('storage/' . $product->mainImg) }}" alt=""
-                            class="w-full min-h-60 sm:min-h-115 md:max-w-120 max-h-88 sm:max-h-100 md:max-h-120 object-cover rounded-lg">
-                    </div>
-                    <div
-                        class="flex justify-start gap-x-3 mt-4 pb-4 overflow-x-auto [&::-webkit-scrollbar]:w-[2px] [&::-webkit-scrollbar-thumb]:bg-(--color-primary-500) [&::-webkit-scrollbar-thumb]:rounded-full">
-                        @foreach ($product->media as $media)
-                            <img onclick="changeImage('{{ asset('storage/' . $media->media_path) }}')"
-                                src="{{ asset('storage/' . $media->media_path) }}"
-                                class="w-17 md:w-20 h-17 md:h-20 border-2 border-(--color-zinc-200) rounded-md opacity-70 hover:opacity-100 hover:border-(--color-zinc-300)"
-                                alt="img product">
-                        @endforeach
-                    </div>
+
+        <!-- گالری + اطلاعات محصول -->
+        <section class="w-11/12 mx-auto mt-6 flex flex-col lg:flex-row gap-4 items-stretch">
+
+            <!-- گالری -->
+            <div class="w-full lg:w-7/12 flex flex-col lg:flex-row gap-3">
+                <!-- تصاویر کوچک -->
+                <div
+                    class="order-2 lg:order-1 flex lg:flex-col gap-3 overflow-x-auto lg:overflow-y-auto lg:w-16 lg:max-h-[380px] shrink-0 pb-2 [&::-webkit-scrollbar]:w-[2px] [&::-webkit-scrollbar]:h-[2px] [&::-webkit-scrollbar-thumb]:bg-(--color-primary-500) [&::-webkit-scrollbar-thumb]:rounded-full">
+                    @foreach ($product->media as $i => $media)
+                        <img onclick="changeImage('{{ asset('storage/' . $media->media_path) }}', {{ $i + 1 }})"
+                            src="{{ asset('storage/' . $media->media_path) }}" alt="img product"
+                            class="thumb-img size-16 shrink-0 object-cover rounded-lg cursor-pointer border-2 {{ $i === 0 ? 'border-(--color-primary) opacity-100' : 'border-transparent opacity-70' }} hover:opacity-100 transition">
+                    @endforeach
+                </div>
+                <!-- تصویر اصلی -->
+                <div id="gallery-box"
+                    class="order-1 lg:order-2 relative flex-1 rounded-2xl overflow-hidden bg-white min-h-60 lg:h-[380px]">
+                    <img id="product-image" src="{{ asset('storage/' . $product->mainImg) }}" alt="{{ $product->title }}"
+                        class="w-full h-full object-cover">
+                    <button type="button" onclick="toggleFullscreen()" aria-label="تمام صفحه"
+                        class="absolute top-3 left-3 size-9 rounded-lg bg-black/30 backdrop-blur flex items-center justify-center cursor-pointer hover:bg-black/50 transition">
+                        <svg class="size-4 fill-none stroke-white" viewBox="0 0 24 24" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" />
+                        </svg>
+                    </button>
+                    @if ($mediaCount)
+                        <span id="image-counter"
+                            class="absolute in-fa bottom-3 right-3 px-2.5 py-0.5 rounded-full bg-black/40 backdrop-blur text-white text-xs">
+                            1 / {{ $mediaCount }}
+                        </span>
+                    @endif
                 </div>
             </div>
-            <!-- توضیحات و قیمت -->
-            <div class="w-full lg:w-8/12 flex items-start justify-between gap-5 lg:gap-1 py-11">
-                <div class="w-full lg:w-7/12 lg:px-8 py-6">
-                    <!-- عنوان -->
-                    <div class="w-full flex flex-col items-center justify-center gap-2">
-                        <!-- عنوان اصلی -->
-                        <h2 class="text-3xl md:text-5xl text-(--color-text) font-bold cursor-default mb-8">
-                            {{ $product->title }}</h2>
-                        <!-- توضیح عنوان -->
-                        <h5 class="text-sm md:text-base text-(--color-text-secondary) cursor-default">عیار999.9 | بانکی و
-                            استاندارد جهانی</h5>
-                        <!-- نظر -->
-                        <div class="flex items-center justify-center gap-3 cursor-default">
-                            <span class="flex gap-[1px]">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
-                                    class="size-3 md:size-4 fill-(--color-primary)">
-                                    <path class="fa-secondary"
-                                        d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                                    <path class="fa-primary" d="" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
-                                    class="size-3 md:size-4 fill-(--color-primary)">
-                                    <path class="fa-secondary"
-                                        d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                                    <path class="fa-primary" d="" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
-                                    class="size-3 md:size-4 fill-(--color-primary)">
-                                    <path class="fa-secondary"
-                                        d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                                    <path class="fa-primary" d="" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
-                                    class="size-3 md:size-4 fill-(--color-primary)">
-                                    <path class="fa-secondary"
-                                        d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                                    <path class="fa-primary" d="" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
-                                    class="size-3 md:size-4 fill-(--color-primary)">
-                                    <path class="fa-secondary"
-                                        d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-                                    <path class="fa-primary" d="" />
-                                </svg>
-                            </span>
-                            <span class="text-sm text-(--color-text-secondary)">|</span>
-                            <span class="text-xs text-(--color-text-secondary)">(4.8) 555.254</span>
-                        </div>
-                    </div>
-                    <div class="w-full flex flex-col items-start justify-start mt-5 cursor-default gap-5">
-                        @if ($product['primary_price'])
-                            @if ($product['secondary_price'])
-                                <div class="flex flex-col items-start gap-2 text-end">
-                                    <span
-                                        class="text-gray-400 font-bold line-through">{{ $product['primary_price'] }}</span>
-                                    <div class="text-(--color-primary) font-bold hidden md:flex gap-3">
-                                        <span class="cursor-default text-4xl">{{ $product->secondary_price }}</span>
-                                        <span class="cursor-default text-3xl">ریال</span>
-                                    </div>
-                                </div>
-                            @else
-                                <div class="text-(--color-primary) font-bold hidden md:flex gap-3">
-                                    <span class="cursor-default text-4xl">{{ $product->primary_price }}</span>
-                                    <span class="cursor-default text-3xl">ریال</span>
-                                </div>
-                            @endif
-                        @else
-                            <span class="text-(--color-primary) font-bold text-xl">برای استعلام قیمت تماس
-                                بگیرید</span>
-                        @endif
-                        <div class="text-base text-(--color-text-secondary) flex gap-1">
-                            <span class="flex items-center gap-1">
-                                <span>
-                                    <svg class="size-4 fill-(--color-success)" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 512 512">
-                                        <path
-                                            d="M244 130.6l-12-13.5-4.2-4.7c-26-29.2-65.3-42.8-103.8-35.8c-53.3 9.7-92 56.1-92 110.3v3.5c0 32.3 13.4 63.1 37.1 85.1L253 446.8c.8 .7 1.9 1.2 3 1.2s2.2-.4 3-1.2L443 275.5c23.6-22 37-52.8 37-85.1v-3.5c0-54.2-38.7-100.6-92-110.3c-38.5-7-77.8 6.6-103.8 35.8l-4.2 4.7-12 13.5c-3 3.4-7.4 5.4-12 5.4s-8.9-2-12-5.4zm34.9-57.1C311 48.4 352.7 37.7 393.7 45.1C462.2 57.6 512 117.3 512 186.9v3.5c0 36-13.1 70.6-36.6 97.5c-3.4 3.8-6.9 7.5-10.7 11l-184 171.3c-.8 .8-1.7 1.5-2.6 2.2c-6.3 4.9-14.1 7.5-22.1 7.5c-9.2 0-18-3.5-24.8-9.7L47.2 299c-3.8-3.5-7.3-7.2-10.7-11C13.1 261 0 226.4 0 190.4v-3.5C0 117.3 49.8 57.6 118.3 45.1c40.9-7.4 82.6 3.2 114.7 28.4c6.7 5.3 13 11.1 18.7 17.6l4.2 4.7 4.2-4.7c4.2-4.7 8.6-9.1 13.3-13.1c1.8-1.5 3.6-3 5.4-4.5z" />
-                                    </svg>
-                                </span>
-                                <span>قیمت هر گرم : </span>
-                            </span>
-                            <span class="text-xl text-(--color-primary) md:text-base md:text-(--color-text-secondary)">
-                                24.230.000 </span>
-                            <span class="">ریال</span>
-                        </div>
-                        <div class="flex items-center gap-1 px-3 py-1 bg-(--color-success)/10 rounded-full mt-3">
-                            <span class="">
-                                <svg class="size-3 fill-(--color-success)" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 512 512">
-                                    <path
-                                        d="M244 130.6l-12-13.5-4.2-4.7c-26-29.2-65.3-42.8-103.8-35.8c-53.3 9.7-92 56.1-92 110.3v3.5c0 32.3 13.4 63.1 37.1 85.1L253 446.8c.8 .7 1.9 1.2 3 1.2s2.2-.4 3-1.2L443 275.5c23.6-22 37-52.8 37-85.1v-3.5c0-54.2-38.7-100.6-92-110.3c-38.5-7-77.8 6.6-103.8 35.8l-4.2 4.7-12 13.5c-3 3.4-7.4 5.4-12 5.4s-8.9-2-12-5.4zm34.9-57.1C311 48.4 352.7 37.7 393.7 45.1C462.2 57.6 512 117.3 512 186.9v3.5c0 36-13.1 70.6-36.6 97.5c-3.4 3.8-6.9 7.5-10.7 11l-184 171.3c-.8 .8-1.7 1.5-2.6 2.2c-6.3 4.9-14.1 7.5-22.1 7.5c-9.2 0-18-3.5-24.8-9.7L47.2 299c-3.8-3.5-7.3-7.2-10.7-11C13.1 261 0 226.4 0 190.4v-3.5C0 117.3 49.8 57.6 118.3 45.1c40.9-7.4 82.6 3.2 114.7 28.4c6.7 5.3 13 11.1 18.7 17.6l4.2 4.7 4.2-4.7c4.2-4.7 8.6-9.1 13.3-13.1c1.8-1.5 3.6-3 5.4-4.5z" />
-                                </svg>
-                            </span>
-                            <span class="text-sm text-(--color-success)">قیمت لحظه‌ ای</span>
-                        </div>
-                        <div class="flex items-center gap-1">
-                            <span class="flex items-center gap-1">
-                                <span class="">
-                                    <svg class="size-3 fill-(--color-success)" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 512 512">
-                                        <path
-                                            d="M244 130.6l-12-13.5-4.2-4.7c-26-29.2-65.3-42.8-103.8-35.8c-53.3 9.7-92 56.1-92 110.3v3.5c0 32.3 13.4 63.1 37.1 85.1L253 446.8c.8 .7 1.9 1.2 3 1.2s2.2-.4 3-1.2L443 275.5c23.6-22 37-52.8 37-85.1v-3.5c0-54.2-38.7-100.6-92-110.3c-38.5-7-77.8 6.6-103.8 35.8l-4.2 4.7-12 13.5c-3 3.4-7.4 5.4-12 5.4s-8.9-2-12-5.4zm34.9-57.1C311 48.4 352.7 37.7 393.7 45.1C462.2 57.6 512 117.3 512 186.9v3.5c0 36-13.1 70.6-36.6 97.5c-3.4 3.8-6.9 7.5-10.7 11l-184 171.3c-.8 .8-1.7 1.5-2.6 2.2c-6.3 4.9-14.1 7.5-22.1 7.5c-9.2 0-18-3.5-24.8-9.7L47.2 299c-3.8-3.5-7.3-7.2-10.7-11C13.1 261 0 226.4 0 190.4v-3.5C0 117.3 49.8 57.6 118.3 45.1c40.9-7.4 82.6 3.2 114.7 28.4c6.7 5.3 13 11.1 18.7 17.6l4.2 4.7 4.2-4.7c4.2-4.7 8.6-9.1 13.3-13.1c1.8-1.5 3.6-3 5.4-4.5z" />
-                                    </svg>
-                                </span>
-                                <span class="text-(--color-text-secondary) text-sm">اخرین بروزرسانی : </span>
-                            </span>
-                            <span class="text-(--color-text-secondary) text-sm">1404/7/7_14:32</span>
-                        </div>
-                        {{-- <div class="w-full flex items-center justify-between mt-3">
-                            <div class="">تعداد : </div>
-                            <div
-                                class="w-38 flex items-center justify-between border-1 border-(--color-border-gold) rounded-xl shadow-1">
-                                <button onclick="increaseValue()"
-                                    class="w-10 h-10 rounded-full bg-(--color-primary-light)/30 flex items-center justify-center shadow">
-                                    <svg class="size-5 fill-(--color-primary)" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 448 512">
-                                        <path
-                                            d="M248 72c0-13.3-10.7-24-24-24s-24 10.7-24 24V232H40c-13.3 0-24 10.7-24 24s10.7 24 24 24H200V440c0 13.3 10.7 24 24 24s24-10.7 24-24V280H408c13.3 0 24-10.7 24-24s-10.7-24-24-24H248V72z">
-                                        </path>
-                                    </svg>
-                                </button>
-                                <input class="w-13" maxlength="10" minlength="0" type="number" name=""
-                                    id="numberInput" disabled value="0">
-                                <button onclick="decreaseValue()"
-                                    class="w-10 h-10 rounded-full bg-(--color-primary-light)/30 flex items-center justify-center shadow">
-                                    <svg class="size-5 fill-(--color-primary)" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 448 512">
-                                        <path
-                                            d="M432 256c0 13.3-10.7 24-24 24L40 280c-13.3 0-24-10.7-24-24s10.7-24 24-24l368 0c13.3 0 24 10.7 24 24z">
-                                        </path>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div> --}}
-                        {{-- <button
-                            class="w-full bg-[image:var(--gradient-gold)] cursor-pointer hidden md:flex items-center justify-between px-5 py-3 rounded-md">
-                            <span></span>
-                            <span class="text-(--color-text-inverse)">افزودن به سبد خرید</span>
-                            <span></span>
-                        </button> --}}
-                        <button onclick="addToCart(this)"
-                            class="w-full p-3 h-full transition-all duration-300 group cursor-pointer bg-[image:var(--gradient-gold)] flex gap-2 justify-center items-center rounded-md addToCartBtns"
-                            data-product-id="{{ $product->id }}">
-                            <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
-                                    class="lg:size-4 size-3 fill-gray-200 group-hover:fill-white transition-all duration-300">
-                                    <path
-                                        d="M16 0H0V32H16 67.2l77.2 339.5 2.8 12.5H160 496h16V352H496 172.8l-14.5-64H496L566 64l10-32H542.5 100L95.6 12.5 92.8 0H80 16zm91.3 64H532.5l-60 192H151L107.3 64zM184 432a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm0 80a56 56 0 1 0 0-112 56 56 0 1 0 0 112zm248-56a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm80 0a56 56 0 1 0 -112 0 56 56 0 1 0 112 0z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <span
-                                class="lg:text-sm text-[10px] text-gray-200 font-bold transition-all duration-300 group-hover:text-white">افزودن
-                                به سبد خرید</span>
-                        </button>
-                        <div class="w-full cursor-pointer">
-                            <input type="checkbox" name="love" id="1" class="hidden peer" required>
-                            <label for="1"
-                                class="flex items-center justify-center gap-3 py-3 px-2 border-2 border-(--color-zinc-300) rounded-2xl cursor-pointer peer-checked:bg-(--color-danger)/10 peer-checked:border-(--color-danger) peer-checked:text-(--color-danger)">
-                                <svg class="size-4" stroke="currentColor" fill="currentColor"
-                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                    <path stroke="currentColor" fill="currentColor"
-                                        d="M244 130.6l-12-13.5-4.2-4.7c-26-29.2-65.3-42.8-103.8-35.8c-53.3 9.7-92 56.1-92 110.3v3.5c0 32.3 13.4 63.1 37.1 85.1L253 446.8c.8 .7 1.9 1.2 3 1.2s2.2-.4 3-1.2L443 275.5c23.6-22 37-52.8 37-85.1v-3.5c0-54.2-38.7-100.6-92-110.3c-38.5-7-77.8 6.6-103.8 35.8l-4.2 4.7-12 13.5c-3 3.4-7.4 5.4-12 5.4s-8.9-2-12-5.4zm34.9-57.1C311 48.4 352.7 37.7 393.7 45.1C462.2 57.6 512 117.3 512 186.9v3.5c0 36-13.1 70.6-36.6 97.5c-3.4 3.8-6.9 7.5-10.7 11l-184 171.3c-.8 .8-1.7 1.5-2.6 2.2c-6.3 4.9-14.1 7.5-22.1 7.5c-9.2 0-18-3.5-24.8-9.7L47.2 299c-3.8-3.5-7.3-7.2-10.7-11C13.1 261 0 226.4 0 190.4v-3.5C0 117.3 49.8 57.6 118.3 45.1c40.9-7.4 82.6 3.2 114.7 28.4c6.7 5.3 13 11.1 18.7 17.6l4.2 4.7 4.2-4.7c4.2-4.7 8.6-9.1 13.3-13.1c1.8-1.5 3.6-3 5.4-4.5z" />
-                                </svg>
-                                <span class="text-(--color-text) text-base">افزودن به علاقه مندی</span>
-                            </label>
-                        </div>
-                        <div
-                            class="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between md:hidden bg-white w-full h-20 px-5 gap-2">
-                            <button
-                                class="w-[50%] bg-[image:var(--gradient-gold)] cursor-pointer flex items-center justify-between py-3 rounded-md">
-                                <span></span>
-                                <span class="text-(--color-text-inverse)">افزودن به سبد خرید</span>
-                                <span></span>
-                            </button>
-                            <div class="text-(--color-primary) font-bold">
-                                <span class="cursor-default text-lg sm:text-2xl">28.550.000</span>
-                                <span class="cursor-default text-base sm:text-xl">ریال</span>
-                            </div>
-                        </div>
-                    </div>
+
+            <!-- کارت اطلاعات -->
+            <div class="w-full lg:w-5/12 bg-white rounded-2xl shadow-sm p-5 flex flex-col">
+                <div class="flex items-start justify-between gap-3">
+                    <h1 class="text-xl md:text-2xl font-bold text-(--color-text) order-1 in-fa">{{ $product->title }}</h1>
                 </div>
-                <div
-                    class="w-full h-full lg:w-5/12 bg-zinc-100/60 border-1 border-(--color-border-gold) rounded-lg md:sticky top-30 hidden md:flex flex-col items-center overflow-hidden">
-                    <div class="w-full flex flex-col items-center gap-3 bg-zinc-200/30 via-inherit px-8 py-10">
-                        <span class="text-lg font-bold">چرا شمش طلای 10 گرمی؟</span>
-                        <span class="text-[14px] text-(--color-text-secondary) line-clamp-2">طلا مطمعن برای سرمایه
-                            گذاری و پس‌انداز</span>
+
+                <p class="mt-2 text-(--color-text-secondary) text-sm in-fa">
+                    {{ $product->summary ?? 'سرمایه‌ای مطمئن، ارزشمند و ماندگار' }}
+                </p>
+                <span class="w-full h-px bg-(--color-border-gold) mt-4"></span>
+
+                <!-- قیمت -->
+                <div class="mt-4 flex items-center justify-between gap-3 flex-wrap">
+                    @if ($product->primary_price)
+                        @if ($product->secondary_price)
+                            <div class="flex items-center gap-3">
+                                @if ($discount)
+                                    <span
+                                        class="px-3 py-1.5 rounded-xl bg-(--color-danger)/10 text-(--color-danger) font-bold text-xs in-fa">
+                                        %{{ number_format($discount) }}
+                                    </span>
+                                @endif
+                                <span class="text-xs text-gray-400 font-bold line-through">
+                                    {{ $product->primary_price }} ریال
+                                </span>
+                            </div>
+                            <div class="text-(--color-primary) font-bold flex items-baseline gap-2">
+                                <span class="text-xl md:text-2xl in-fa">{{ number_format($product->secondary_price) }}</span>
+                                <span class="text-sm">ریال</span>
+                            </div>
+                        @else
+                            <div class="text-(--color-primary) font-bold flex items-baseline gap-2 mr-auto">
+                                <span class="text-xl md:text-2xl in-fa">{{ number_format($product->primary_price) }}</span>
+                                <span class="text-sm">ریال</span>
+                            </div>
+                        @endif
+                    @else
+                        <span class="text-(--color-primary) font-bold text-base">برای استعلام قیمت تماس بگیرید</span>
+                    @endif
+                </div>
+
+                <!-- انتخاب وزن -->
+                {{-- <div class="mt-5">
+                    <span class="text-sm font-bold text-(--color-text)">انتخاب وزن:</span>
+                    <div class="mt-2 grid grid-cols-5 gap-2" id="weight-options">
+                        @foreach ([1, 5, 10, 20, 50] as $w)
+                            <button type="button" data-weight="{{ $w }}"
+                                class="weight-btn py-1.5 rounded-full border text-xs cursor-pointer transition-all
+                                {{ $w === 10 ? 'bg-[image:var(--gradient-gold)] text-white border-transparent font-bold' : 'bg-white text-(--color-text) border-(--color-zinc-200) hover:border-(--color-primary)' }}">
+                                {{ $w }} گرم
+                            </button>
+                        @endforeach
                     </div>
-                    <span class="w-full h-[1px] bg-gradient-to-r via-(--color-primary) to-(--color-primary)"></span>
-                    <div class="w-full px-8 py-8 flex items-center justify-between">
-                        <div class="flex flex-col gap-3">
-                            <span class="text-lg font-bold">عیار999.9</span>
-                            <span class="text-[14px] text-(--color-text-secondary) line-clamp-2">طلای خاص با
-                                استاندارد</span>
+                </div> --}}
+
+                <!-- افزودن به سبد + علاقه‌مندی -->
+                <div class="mt-5 flex items-center gap-2.5">
+                    <button onclick="addToCart(this)" id="add-to-cart-main" data-weight="10"
+                        data-product-id="{{ $product->id }}"
+                        class="addToCartBtns group flex-1 h-11 flex items-center justify-center gap-2 rounded-full bg-[image:var(--gradient-gold)] shadow-md cursor-pointer transition-all duration-300 hover:shadow-lg">
+                        <svg class="size-4 fill-white" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M16 0H0V32H16 67.2l77.2 339.5 2.8 12.5H160 496h16V352H496 172.8l-14.5-64H496L566 64l10-32H542.5 100L95.6 12.5 92.8 0H80 16zm91.3 64H532.5l-60 192H151L107.3 64zM184 432a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm0 80a56 56 0 1 0 0-112 56 56 0 1 0 0 112zm248-56a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm80 0a56 56 0 1 0 -112 0 56 56 0 1 0 112 0z" />
+                        </svg>
+                        <span class="text-white font-bold text-sm">افزودن به سبد خرید</span>
+                    </button>
+
+                </div>
+
+                <!-- ویژگی‌های اعتماد -->
+                <div class="mt-auto pt-5">
+                    <div
+                        class="grid grid-cols-3 divide-x divide-x-reverse divide-zinc-200 rounded-xl bg-zinc-100/70 py-3 text-[10px] md:text-[11px] text-(--color-text-secondary)">
+                        <div class="flex items-center justify-center gap-2 px-2">
+                            <svg class="size-5 shrink-0 fill-(--color-primary)" viewBox="0 0 640 512"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M48 0C21.5 0 0 21.5 0 48V368c0 26.5 21.5 48 48 48H64c0 53 43 96 96 96s96-43 96-96H384c0 53 43 96 96 96s96-43 96-96h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V288 256 237.3c0-17-6.7-33.3-18.7-45.3L512 114.7c-12-12-28.3-18.7-45.3-18.7H416V48c0-26.5-21.5-48-48-48H48zM416 160h50.7L544 237.3V256H416V160zM112 416a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm368-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" />
+                            </svg>
+                            <span>ارسال سریع به سراسر کشور</span>
                         </div>
-                        <div
-                            class="w-14 h-14 flex items-center justify-center shadow text-(--color-primary) rounded-full bg-(--color-bg)">
-                            <svg class="size-9" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                viewBox="0 0 512 512">
+                        <div class="flex items-center justify-center gap-2 px-2">
+                            <svg class="size-5 shrink-0 fill-(--color-primary)" viewBox="0 0 512 512"
+                                xmlns="http://www.w3.org/2000/svg">
                                 <path
                                     d="M73 127L256 49.4 439 127c5.9 2.5 9.1 7.8 9 12.8c-.4 91.4-38.4 249.3-186.3 320.1c-3.6 1.7-7.8 1.7-11.3 0C102.4 389 64.5 231.2 64 139.7c0-5 3.1-10.2 9-12.8zM457.7 82.8L269.4 2.9C265.2 1 260.7 0 256 0s-9.2 1-13.4 2.9L54.3 82.8c-22 9.3-38.4 31-38.3 57.2c.5 99.2 41.3 280.7 213.6 363.2c16.7 8 36.1 8 52.8 0C454.8 420.7 495.5 239.2 496 140c.1-26.2-16.3-47.9-38.3-57.2zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
                             </svg>
+                            <span>پرداخت امن و مطمئن</span>
                         </div>
-                    </div>
-                    <span class="w-full h-[1px] bg-gradient-to-r via-(--color-primary)"></span>
-                    <div class="w-full px-8 py-8 flex items-center justify-between">
-                        <div class="flex flex-col gap-3">
-                            <span class="text-lg font-bold">وزن استاندارد 10 گرم</span>
-                            <span class="text-[14px] text-(--color-text-secondary) line-clamp-2">مناسب برای خرید در مقیاس
-                                کوچک</span>
-                        </div>
-                        <div
-                            class="w-14 h-14 flex items-center justify-center shadow text-(--color-primary) rounded-full bg-(--color-bg)">
-                            <svg class="size-9" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 640 512">
-                                <path
-                                    d="M520 48H393.3C381 19.7 352.8 0 320 0s-61 19.7-73.3 48H120c-13.3 0-24 10.7-24 24s10.7 24 24 24H241.6c5.8 28.6 26.9 51.7 54.4 60.3V464H120c-13.3 0-24 10.7-24 24s10.7 24 24 24H320 520c13.3 0 24-10.7 24-24s-10.7-24-24-24H344V156.3c27.5-8.6 48.6-31.7 54.4-60.3H520c13.3 0 24-10.7 24-24s-10.7-24-24-24zm-8 147.8L584.4 320H439.6L512 195.8zM386 337.1C396.8 382 449.1 416 512 416s115.2-34 126-78.9c2.6-11-1-22.3-6.7-32.1L536.1 141.8c-5-8.6-14.2-13.8-24.1-13.8s-19.1 5.3-24.1 13.8L392.7 305.1c-5.7 9.8-9.3 21.1-6.7 32.1zM54.4 320l72.4-124.2L199.3 320H54.4zm72.4 96c62.9 0 115.2-34 126-78.9c2.6-11-1-22.3-6.7-32.1L150.9 141.8c-5-8.6-14.2-13.8-24.1-13.8s-19.1 5.3-24.1 13.8L7.6 305.1c-5.7 9.8-9.3 21.1-6.7 32.1C11.7 382 64 416 126.8 416zM320 48a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
+                        <div class="flex items-center justify-center gap-2 px-2">
+                            <svg class="size-6 text-(--color-primary)" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="m8.032 12 1.984 1.984 4.96-4.96m4.55 5.272.893-.893a1.984 1.984 0 0 0 0-2.806l-.893-.893a1.984 1.984 0 0 1-.581-1.403V7.04a1.984 1.984 0 0 0-1.984-1.984h-1.262a1.983 1.983 0 0 1-1.403-.581l-.893-.893a1.984 1.984 0 0 0-2.806 0l-.893.893a1.984 1.984 0 0 1-1.403.581H7.04A1.984 1.984 0 0 0 5.055 7.04v1.262c0 .527-.209 1.031-.581 1.403l-.893.893a1.984 1.984 0 0 0 0 2.806l.893.893c.372.372.581.876.581 1.403v1.262a1.984 1.984 0 0 0 1.984 1.984h1.262c.527 0 1.031.209 1.403.581l.893.893a1.984 1.984 0 0 0 2.806 0l.893-.893a1.985 1.985 0 0 1 1.403-.581h1.262a1.984 1.984 0 0 0 1.984-1.984V15.7c0-.527.209-1.031.581-1.403Z" />
                             </svg>
-                        </div>
-                    </div>
-                    <span class="w-full h-[1px] bg-gradient-to-r via-(--color-primary)"></span>
-                    <div class="w-full px-8 py-8 flex items-center justify-between">
-                        <div class="flex flex-col gap-3">
-                            <span class="text-lg font-bold">عیار999.9</span>
-                            <span class="text-[14px] text-(--color-text-secondary) line-clamp-2">طلای خاص با
-                                استاندارد</span>
-                        </div>
-                        <div
-                            class="w-14 h-14 flex items-center justify-center shadow text-(--color-primary) rounded-full bg-(--color-bg)">
-                            <svg class="size-9" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 512 512">
-                                <path
-                                    d="M24 32c13.3 0 24 10.7 24 24V408c0 13.3 10.7 24 24 24H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H72c-39.8 0-72-32.2-72-72V56C0 42.7 10.7 32 24 32zM168 224c13.3 0 24 10.7 24 24v80c0 13.3-10.7 24-24 24s-24-10.7-24-24V248c0-13.3 10.7-24 24-24zm120-72V328c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24s24 10.7 24 24zm72 40c13.3 0 24 10.7 24 24V328c0 13.3-10.7 24-24 24s-24-10.7-24-24V216c0-13.3 10.7-24 24-24zM480 88V328c0 13.3-10.7 24-24 24s-24-10.7-24-24V88c0-13.3 10.7-24 24-24s24 10.7 24 24z" />
-                            </svg>
+
+                            <span>ضمانت اصالت کالا</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- توضیحات ، مشخصات -->
-        <section class="w-11/12 mx-auto mt-24 flex flex-col">
-            <ul
-                class="w-full sm:w-fit flex items-center justify-start text-xs sm:text-sm md:text-lg gap-5 border-b-1 border-(--color-border-strong) sm:px-1 md:px-4">
-                <li class="text-(--color-primary) border-b-2 border-(--color-primary) md:p-2">
-                    <a href="">مشخصات محصول</a>
-                </li>
-                <li
-                    class="text-(--color-text-secondary) md:p-2 cursor-pointer hover:text-(--color-primary) hover:border-b-2 border-(--color-primary) transition-all">
-                    <a href="">نحوه خرید و تحویل</a>
-                </li>
-                <li
-                    class="text-(--color-text-secondary) md:p-2 cursor-pointer hover:text-(--color-primary) hover:border-b-2 border-(--color-primary) transition-all">
-                    <a href="">سوالات متداول</a>
-                </li>
-                <li
-                    class="text-(--color-text-secondary) md:p-2 cursor-pointer hover:text-(--color-primary) hover:border-b-2 border-(--color-primary) transition-all">
-                    <a href="">نظرات کاربران</a>
-                </li>
-            </ul>
-            <div class="w-full flex gap-5 cursor-default">
-                <div class="w-full md:w-7/12 text-gray-500 text-sm divide-y divide-zinc-200">
-                    <p class="lg:text-lg font-bold mt-10 pb-5">مشخصات کلی</p>
+
+        <!-- بنر + مشخصات -->
+        <section class="w-11/12 mx-auto mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <!-- مشخصات محصول -->
+            <div class="bg-white rounded-2xl shadow-sm p-5 order-1 lg:order-1">
+                <div class="flex items-center gap-3 pb-3 border-b border-zinc-200">
+                    <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                    <svg class='w-6' viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"
+                        stroke-width="3" stroke="var(--color-primary)" fill="none">
+                        <ellipse cx="23.07" cy="14.99" rx="15.22" ry="5.24" stroke-linecap="round" />
+                        <path d="M38.3,21.8c0,2.89-6.82,5.24-15.23,5.24S7.85,24.69,7.85,21.8" stroke-linecap="round" />
+                        <path d="M27.38,33.43c-.4,0-3.9,0-4.31,0-8.41,0-15.22-2.35-15.22-5.24" stroke-linecap="round" />
+                        <path d="M24.91,40c-.6,0-1.22,0-1.84,0-8.41,0-15.22-2.34-15.22-5.24" stroke-linecap="round" />
+                        <path d="M25.7,46.53a22.48,22.48,0,0,1-2.63.08c-8.41,0-15.22-2.35-15.22-5.24"
+                            stroke-linecap="round" />
+                        <line x1="7.85" y1="41.42" x2="7.85" y2="15.01" stroke-linecap="round" />
+                        <line x1="38.3" y1="30.01" x2="38.3" y2="14.99" stroke-linecap="round" />
+                        <ellipse cx="40.93" cy="35.82" rx="15.22" ry="5.24" stroke-linecap="round" />
+                        <path d="M56.15,42.63c0,2.9-6.81,5.24-15.22,5.24S25.7,45.53,25.7,42.63" stroke-linecap="round" />
+                        <path d="M56.15,49c0,2.9-6.81,5.25-15.22,5.25S25.7,51.91,25.7,49" stroke-linecap="round" />
+                        <line x1="25.7" y1="48.92" x2="25.7" y2="35.07" stroke-linecap="round" />
+                        <line x1="56.15" y1="49.21" x2="56.15" y2="35.64" stroke-linecap="round" />
+                    </svg>
+                    <h3 class="text-base font-bold text-(--color-text)">مشخصات محصول</h3>
+                </div>
+                <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-y-4 divide-x divide-x-reverse divide-zinc-200">
                     @foreach ($product->attributes as $attribute)
-                        <div class="flex items-center justify-start p-3 pb-6 w-full my-4">
-                            <div class="text-sm w-3/12 font-bold">{{ $attribute->attribute_key }} : </div>
-                            <div class="md:text-lg text-(--color-zinc-600) w-9/12 font-bold">
-                                {{ $attribute->attribute_value }}</div>
+                        <div class="flex flex-col items-center gap-1.5 px-2 text-center">
+                            <?xml version="1.0" encoding="utf-8"?>
+
+                            <!DOCTYPE svg
+                                PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+                            <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                            <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" class="w-6" viewBox="0 0 512 512"
+                                xml:space="preserve">
+                                <style type="text/css">
+                                    <![CDATA[
+                                    .st0 {
+                                        fill: var(--color-primary);
+                                    }
+                                    ]]>
+                                </style>
+                                <g>
+                                    <polygon class="st0"
+                                        points="509.344,159.094 509.344,159.078 428.906,76.625 375.906,159.094 	" />
+                                    <polygon class="st0" points="188.531,192.547 256,445.063 323.484,192.547 	" />
+                                    <polygon class="st0"
+                                        points="198.953,159.094 312.453,159.094 312.453,159.078 254.797,79.625 198.953,159.078 	" />
+                                    <polygon class="st0"
+                                        points="344.422,146.188 395.375,66.938 286.906,66.938 344.406,146.188 	" />
+                                    <polygon class="st0" points="222.844,66.938 116.625,66.938 167.375,145.844 	" />
+                                    <polygon class="st0"
+                                        points="83.094,76.625 2.656,159.078 2.656,159.094 136.125,159.094 	" />
+                                    <polygon class="st0"
+                                        points="0,192.547 220.313,441.094 220.328,441.125 153.906,192.547 	" />
+                                    <polygon class="st0"
+                                        points="358.094,192.547 291.688,441.125 291.703,441.094 512,192.547 	" />
+                                </g>
+                            </svg>
+                            <span class="text-xs text-(--color-text-secondary)">{{ $attribute->attribute_key }}</span>
+                            <span class="text-sm font-bold text-(--color-primary) in-fa">
+                                {{ $attribute->attribute_value }}
+                            </span>
                         </div>
                     @endforeach
                 </div>
-                <div
-                    class="w-full md:w-5/12 bg-(--color-primary)/10 bg-gradient-to-br from-(--color-primary-light) via-inherit border-2 border-(--color-border-gold) rounded-lg px-5 py-3 hidden md:flex flex-col items-center overflow-hidden">
-                    <div class="w-full flex items-center justify-between gap-1">
-                        <div class="flex flex-col gap-3">
-                            <span class="text-lg font-bold">سرمایه گذاری مطمعن با طلا</span>
-                            <span class="text-[14px] text-(--color-text-secondary) line-clamp-3">شمش های طلا با بالاترین
-                                استاندارد های بین‍‌المللی و تحت نظارت پارلمان ;با برسو با اططمینان سرمایه کذاری کنید</span>
-                        </div>
-                        <img class="w-23 lg:w-33" src="{{ asset('assets/img/gold.webp') }}" alt="">
-                    </div>
-                    <div class="w-full py-4 flex items-center gap-5">
-                        <div
-                            class="w-10 lg:w-14 h-10 lg:h-14 flex items-center justify-center shadow text-(--color-primary) rounded-full bg-(--color-bg)">
-                            <svg class="size-6 lg:size-9" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                viewBox="0 0 512 512">
-                                <path
-                                    d="M73 127L256 49.4 439 127c5.9 2.5 9.1 7.8 9 12.8c-.4 91.4-38.4 249.3-186.3 320.1c-3.6 1.7-7.8 1.7-11.3 0C102.4 389 64.5 231.2 64 139.7c0-5 3.1-10.2 9-12.8zM457.7 82.8L269.4 2.9C265.2 1 260.7 0 256 0s-9.2 1-13.4 2.9L54.3 82.8c-22 9.3-38.4 31-38.3 57.2c.5 99.2 41.3 280.7 213.6 363.2c16.7 8 36.1 8 52.8 0C454.8 420.7 495.5 239.2 496 140c.1-26.2-16.3-47.9-38.3-57.2zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
-                            </svg>
-                        </div>
-                        <div class="flex flex-col gap-3">
-                            <span class="text-lg font-bold">عیار999.9</span>
-                            <span class="text-[14px] text-(--color-text-secondary) line-clamp-2">طلای خاص با
-                                استاندارد</span>
-                        </div>
-                    </div>
-                    <div class="w-full py-4 flex items-center gap-5">
-                        <div
-                            class="w-10 lg:w-14 h-10 lg:h-14 flex items-center justify-center shadow text-(--color-primary) rounded-full bg-(--color-bg)">
-                            <svg class="size-6 lg:size-9" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 640 512">
-                                <path
-                                    d="M520 48H393.3C381 19.7 352.8 0 320 0s-61 19.7-73.3 48H120c-13.3 0-24 10.7-24 24s10.7 24 24 24H241.6c5.8 28.6 26.9 51.7 54.4 60.3V464H120c-13.3 0-24 10.7-24 24s10.7 24 24 24H320 520c13.3 0 24-10.7 24-24s-10.7-24-24-24H344V156.3c27.5-8.6 48.6-31.7 54.4-60.3H520c13.3 0 24-10.7 24-24s-10.7-24-24-24zm-8 147.8L584.4 320H439.6L512 195.8zM386 337.1C396.8 382 449.1 416 512 416s115.2-34 126-78.9c2.6-11-1-22.3-6.7-32.1L536.1 141.8c-5-8.6-14.2-13.8-24.1-13.8s-19.1 5.3-24.1 13.8L392.7 305.1c-5.7 9.8-9.3 21.1-6.7 32.1zM54.4 320l72.4-124.2L199.3 320H54.4zm72.4 96c62.9 0 115.2-34 126-78.9c2.6-11-1-22.3-6.7-32.1L150.9 141.8c-5-8.6-14.2-13.8-24.1-13.8s-19.1 5.3-24.1 13.8L7.6 305.1c-5.7 9.8-9.3 21.1-6.7 32.1C11.7 382 64 416 126.8 416zM320 48a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
-                            </svg>
-                        </div>
-                        <div class="flex flex-col gap-3">
-                            <span class="text-lg font-bold">وزن استاندارد 10 گرم</span>
-                            <span class="text-[14px] text-(--color-text-secondary) line-clamp-2">مناسب برای خرید در مقیاس
-                                کوچک</span>
-                        </div>
-                    </div>
-                    <div class="w-full py-4 flex items-center gap-5">
-                        <div
-                            class="w-10 lg:w-14 h-10 lg:h-14 flex items-center justify-center shadow text-(--color-primary) rounded-full bg-(--color-bg)">
-                            <svg class="size-6 lg:size-9" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 512 512">
-                                <path
-                                    d="M24 32c13.3 0 24 10.7 24 24V408c0 13.3 10.7 24 24 24H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H72c-39.8 0-72-32.2-72-72V56C0 42.7 10.7 32 24 32zM168 224c13.3 0 24 10.7 24 24v80c0 13.3-10.7 24-24 24s-24-10.7-24-24V248c0-13.3 10.7-24 24-24zm120-72V328c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24s24 10.7 24 24zm72 40c13.3 0 24 10.7 24 24V328c0 13.3-10.7 24-24 24s-24-10.7-24-24V216c0-13.3 10.7-24 24-24zM480 88V328c0 13.3-10.7 24-24 24s-24-10.7-24-24V88c0-13.3 10.7-24 24-24s24 10.7 24 24z" />
-                            </svg>
-                        </div>
-                        <div class="flex flex-col gap-3">
-                            <span class="text-lg font-bold">عیار999.9</span>
-                            <span class="text-[14px] text-(--color-text-secondary) line-clamp-2">طلای خاص با
-                                استاندارد</span>
-                        </div>
-                    </div>
-                    <div class="w-full bg-(--color-primary)/15 border-2 border-(--color-border-gold) rounded-lg px-5 py-3">
-                        <div class="flex items-center justify-between mb-3">
-                            <div class="">
-                                <div class="text-lg">نیاز به <span class="text-(--color-primary)">مشاوره دارید</span>؟
-                                </div>
-                                <div class="text-sm text-(--color-text-secondary) mt-3">کارشناسان ما آماده پاسخگویی هستند
-                                </div>
-                            </div>
-                            <div
-                                class="w-10 lg:w-14 h-10 lg:h-14 flex items-center justify-center shadow text-(--color-primary) rounded-full bg-(--color-bg)">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    viewBox="0 0 24 24" class="size-6 lg:size-9 fill-white">
-                                    <path stroke="currentColor"
-                                        d="M3 18V12C3 9.61305 3.94821 7.32387 5.63604 5.63604C7.32387 3.94821 9.61305 3 12 3C14.3869 3 16.6761 3.94821 18.364 5.63604C20.0518 7.32387 21 9.61305 21 12V18"
-                                        stroke="#52525c" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"></path>
-                                    <path stroke="currentColor"
-                                        d="M21 19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H18C17.4696 21 16.9609 20.7893 16.5858 20.4142C16.2107 20.0391 16 19.5304 16 19V16C16 15.4696 16.2107 14.9609 16.5858 14.5858C16.9609 14.2107 17.4696 14 18 14H21V19ZM3 19C3 19.5304 3.21071 20.0391 3.58579 20.4142C3.96086 20.7893 4.46957 21 5 21H6C6.53043 21 7.03914 20.7893 7.41421 20.4142C7.78929 20.0391 8 19.5304 8 19V16C8 15.4696 7.78929 14.9609 7.41421 14.5858C7.03914 14.2107 6.53043 14 6 14H3V19Z"
-                                        stroke="#52525c" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round"></path>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-end pt-3 ">
-                            <button class="bg-[image:var(--gradient-gold)] text-white px-5 py-2 rounded-full">تماس با
-                                ما</button>
-                        </div>
-                    </div>
-                </div>
             </div>
-        </section>
-        <!-- محصولات مرتبط -->
-        <section class="w-11/12 mx-auto mt-24">
-            <div class="w-full flex justify-between items-center mx-auto">
-                <span class="w-48 min-w-fit text-xl cursor-default">محصولات مرتبط</span>
-                <!-- <span class="h-[1px] w-full bg-gradient-to-r from-white via-(--color-zinc-500) to-white "></span> -->
-                <div class="w-32 min-w-fit flex items-center justify-end">
-                    <a href="" class="text-base text-(--color-primary) flex fle items-center gap-x-1 group">
-                        مشاهده همه
-                        <svg fill="currentColor" class="group-hover:-translate-x-1 transition size-2.5 md:size-3"
-                            xmlns="http://www.w3.org/2000/svg" width="" height="" fill=""
-                            viewBox="0 0 256 256">
+
+            <!-- بنر سرمایه‌گذاری -->
+            <div
+                class="relative rounded-2xl overflow-hidden bg-gradient-to-l from-[#0f1a2e] via-[#16233b] to-[#0b1424] p-6 flex items-center justify-between min-h-40 order-2 lg:order-2">
+                <div class="relative z-10 flex flex-col items-start gap-3">
+                    <h3 class="text-lg md:text-xl font-bold text-(--color-primary)">سرمایه‌گذاری هوشمندانه</h3>
+                    <p class="text-white text-sm">با طلای اصل و استاندارد</p>
+                    <a href=""
+                        class="mt-2 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[image:var(--gradient-gold)] text-white font-bold text-xs">
+                        چرا طلا؟
+                        <svg class="size-3 fill-white" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
                             <path
-                                d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z">
-                            </path>
+                                d="M224,128a8,8,0,0,1-8,8H59.31l58.35,58.34a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72a8,8,0,0,1,11.32,11.32L59.31,120H216A8,8,0,0,1,224,128Z" />
                         </svg>
                     </a>
                 </div>
+                <img class="absolute left-0 bottom-0 h-full w-1/2 object-contain object-left-bottom opacity-90"
+                    src="{{ asset('assets/img/gold.webp') }}" alt="">
             </div>
-            <div class="w-full flex flex-row gap-10 p-5 ">
-                @foreach ($product['categories'] as $category)
-                    @foreach ($category['products'] as $pro)
-                        @if ($pro['id'] != $product['id'])
-                            <a href="{{ route('product.show', [$pro]) }}"
-                                class="min-w-60 max-w-60 border-1 border-(--color-border-gold) p-1 rounded-md hover:shadow-lg hover:-translate-y-1 transition-all ease-out">
-                                <div class="w-full relative">
-                                    @if ($pro['media']->isNotEmpty())
-                                        @foreach ($pro['media'] as $media)
-                                            @if ($media['is_main'])
-                                                @php
-                                                    $imgSrc = asset('storage/' . $media['media_path']);
-                                                @endphp
-                                                @break
+        </section>
 
-                                            @else
-                                                @php
-                                                    $imgSrc = asset('storage/default.jpg');
-                                                @endphp
-                                            @endif
-                                        @endforeach
-                                    @else
-                                        @php
-                                            $imgSrc = asset('storage/default.jpg');
-                                        @endphp
-                                    @endif
-                                    <img class="rounded-md min-w-57 max-w-57 max-h-30" src="{{ $imgSrc }}"
-                                        alt="">
-                                    <svg class="absolute top-2 left-3 size-4 fill-red-500"
-                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                        <path
-                                            d="M244 130.6l-12-13.5-4.2-4.7c-26-29.2-65.3-42.8-103.8-35.8c-53.3 9.7-92 56.1-92 110.3v3.5c0 32.3 13.4 63.1 37.1 85.1L253 446.8c.8 .7 1.9 1.2 3 1.2s2.2-.4 3-1.2L443 275.5c23.6-22 37-52.8 37-85.1v-3.5c0-54.2-38.7-100.6-92-110.3c-38.5-7-77.8 6.6-103.8 35.8l-4.2 4.7-12 13.5c-3 3.4-7.4 5.4-12 5.4s-8.9-2-12-5.4zm34.9-57.1C311 48.4 352.7 37.7 393.7 45.1C462.2 57.6 512 117.3 512 186.9v3.5c0 36-13.1 70.6-36.6 97.5c-3.4 3.8-6.9 7.5-10.7 11l-184 171.3c-.8 .8-1.7 1.5-2.6 2.2c-6.3 4.9-14.1 7.5-22.1 7.5c-9.2 0-18-3.5-24.8-9.7L47.2 299c-3.8-3.5-7.3-7.2-10.7-11C13.1 261 0 226.4 0 190.4v-3.5C0 117.3 49.8 57.6 118.3 45.1c40.9-7.4 82.6 3.2 114.7 28.4c6.7 5.3 13 11.1 18.7 17.6l4.2 4.7 4.2-4.7c4.2-4.7 8.6-9.1 13.3-13.1c1.8-1.5 3.6-3 5.4-4.5z">
-                                        </path>
-                                    </svg>
-                                </div>
-                                <div class=" flex flex-col gap-3 mt-3">
-                                    <div class="font-bold text-xl">{{ $pro->title }}</div>
-                                    <div class="font-bold text-(--color-text-secondary)">{{ $pro->summary }}</div>
-                                    <div class="text-(--color-primary) flex items-center justify-between px-3 pb-2">
-                                        @if ($pro['primary_price'])
-                                            @if ($pro['secondary_price'])
-                                                <div class="flex flex-col items-start gap-2 text-end">
-                                                    <span
-                                                        class="text-xs text-gray-400 font-bold line-through">{{ $pro['primary_price'] }}</span>
-                                                    <div class="">
-                                                        <span class="text-lg font-bold">{{ $pro->secondary_price }}</span>
-                                                        <span class="text-base">ریال</span>
-                                                    </div>
-                                                </div>
-                                            @else
-                                                <div class="">
-                                                    <span class="text-lg font-bold">{{ $pro->primary_price }}</span>
-                                                    <span class="text-base">ریال</span>
-                                                </div>
-                                            @endif
+        <!-- محصولات مرتبط -->
+        <section class="w-11/12 mx-auto mt-10">
+            <div class="flex items-center gap-2 mb-3">
+                <?xml version="1.0" encoding="utf-8"?>
+
+                <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+                <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" class="w-6" viewBox="0 0 512 512"
+                    xml:space="preserve">
+                    <style type="text/css">
+                        <![CDATA[
+                        .st0 {
+                            fill: var(--color-primary);
+                        }
+                        ]]>
+                    </style>
+                    <g>
+                        <polygon class="st0"
+                            points="509.344,159.094 509.344,159.078 428.906,76.625 375.906,159.094 	" />
+                        <polygon class="st0" points="188.531,192.547 256,445.063 323.484,192.547 	" />
+                        <polygon class="st0"
+                            points="198.953,159.094 312.453,159.094 312.453,159.078 254.797,79.625 198.953,159.078 	" />
+                        <polygon class="st0"
+                            points="344.422,146.188 395.375,66.938 286.906,66.938 344.406,146.188 	" />
+                        <polygon class="st0" points="222.844,66.938 116.625,66.938 167.375,145.844 	" />
+                        <polygon class="st0" points="83.094,76.625 2.656,159.078 2.656,159.094 136.125,159.094 	" />
+                        <polygon class="st0" points="0,192.547 220.313,441.094 220.328,441.125 153.906,192.547 	" />
+                        <polygon class="st0" points="358.094,192.547 291.688,441.125 291.703,441.094 512,192.547 	" />
+                    </g>
+                </svg>
+                <h3 class="text-base md:text-lg font-bold text-(--color-text)">محصولات مرتبط</h3>
+            </div>
+
+            <div class="relative">
+                <button type="button" onclick="slideRelated(1)" aria-label="بعدی"
+                    class="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 size-9 rounded-full bg-white shadow-md items-center justify-center cursor-pointer hover:bg-zinc-50">
+                    <svg class="size-4 fill-(--color-text)" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z" />
+                    </svg>
+                </button>
+                <button type="button" onclick="slideRelated(-1)" aria-label="قبلی"
+                    class="hidden md:flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 size-9 rounded-full bg-white shadow-md items-center justify-center cursor-pointer hover:bg-zinc-50">
+                    <svg class="size-4 fill-(--color-text)" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z" />
+                    </svg>
+                </button>
+
+                <div id="related-slider"
+                    class="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth py-3 px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                    @foreach ($product['categories'] as $category)
+                        @foreach ($category['products'] as $pro)
+                            @if ($pro['id'] != $product['id'])
+                                <div
+                                    class="snap-start shrink-0 w-48 bg-white rounded-xl shadow-sm hover:shadow-md transition-all p-3 flex flex-col items-center">
+                                    <a href="{{ route('product.show', [$pro]) }}"
+                                        class="w-full flex flex-col items-center">
+                                        <img class="w-24 h-24 object-contain"
+                                            src="{{ $pro->mainImg ? asset('storage/' . $pro->mainImg) : asset('storage/default.jpg') }}"
+                                            alt="{{ $pro->title }}">
+                                        <span
+                                            class="mt-2 text-sm font-bold text-(--color-text)">{{ $pro->title }}</span>
+                                    </a>
+                                    <div class="w-full mt-3 flex items-center justify-between">
+                                        @if ($pro->primary_price)
+                                            <div class="text-(--color-primary) font-bold flex items-baseline gap-1">
+                                                <span class="text-xs text-(--color-text)">ریال</span>
+                                                <span
+                                                    class="text-sm in-fa">{{ number_format($pro->secondary_price) ?: number_format($pro->primary_price) }}</span>
+                                            </div>
                                         @else
-                                            <span class="text-[var(--gold)] w-full text-[10px]">برای استعلام قیمت
+                                            <span class="text-(--color-primary) text-[11px] font-bold">برای استعلام قیمت
                                                 تماس بگیرید</span>
                                         @endif
-                                        <div
-                                            class="w-10 h-10 flex items-center justify-center shadow text-(--color-primary) rounded-full bg-(--color-bg)">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" class="size-6"
-                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                <path fill="currentColor" clip-rule="evenodd"
-                                                    d="M3.03998 2.292C2.85221 2.22609 2.64595 2.23748 2.46657 2.32365C2.28719 2.40982 2.14939 2.56373 2.08348 2.7515C2.01758 2.93927 2.02896 3.14554 2.11513 3.32491C2.20131 3.50429 2.35521 3.64209 2.54298 3.708L2.80398 3.799C3.47198 4.034 3.91098 4.189 4.23398 4.348C4.53698 4.497 4.66998 4.618 4.75798 4.746C4.84798 4.878 4.91798 5.06 4.95798 5.423C4.99798 5.803 4.99998 6.298 4.99998 7.038V9.64C4.99998 12.582 5.06298 13.552 5.92998 14.466C6.79598 15.38 8.18998 15.38 10.98 15.38H16.282C17.843 15.38 18.624 15.38 19.175 14.93C19.727 14.48 19.885 13.716 20.2 12.188L20.7 9.763C21.047 8.023 21.22 7.154 20.776 6.577C20.332 6 18.816 6 17.131 6H6.49198C6.48776 5.75351 6.47342 5.50731 6.44898 5.262C6.39498 4.765 6.27898 4.312 5.99698 3.9C5.71298 3.484 5.33498 3.218 4.89398 3.001C4.48198 2.799 3.95798 2.615 3.34198 2.398L3.03998 2.292ZM15.517 8.457C15.817 8.743 15.829 9.217 15.543 9.517L12.686 12.517C12.6159 12.5905 12.5317 12.649 12.4384 12.689C12.345 12.729 12.2445 12.7496 12.143 12.7496C12.0414 12.7496 11.9409 12.729 11.8476 12.689C11.7543 12.649 11.67 12.5905 11.6 12.517L10.457 11.317C10.3861 11.2463 10.3302 11.1621 10.2924 11.0694C10.2546 10.9767 10.2357 10.8774 10.2369 10.7773C10.2381 10.6773 10.2593 10.5784 10.2993 10.4867C10.3393 10.3949 10.3972 10.3121 10.4697 10.243C10.5422 10.174 10.6278 10.1202 10.7214 10.0848C10.815 10.0494 10.9147 10.033 11.0148 10.0367C11.1148 10.0405 11.2131 10.0642 11.3038 10.1065C11.3945 10.1488 11.4758 10.2088 11.543 10.283L12.143 10.913L14.457 8.483C14.5941 8.33904 14.7828 8.25544 14.9816 8.25057C15.1804 8.24569 15.3729 8.31994 15.517 8.457Z"
-                                                    fill="black"></path>
-                                                <path fill="currentColor"
-                                                    d="M7.5 18C7.89782 18 8.27936 18.158 8.56066 18.4393C8.84196 18.7206 9 19.1022 9 19.5C9 19.8978 8.84196 20.2794 8.56066 20.5607C8.27936 20.842 7.89782 21 7.5 21C7.10218 21 6.72064 20.842 6.43934 20.5607C6.15804 20.2794 6 19.8978 6 19.5C6 19.1022 6.15804 18.7206 6.43934 18.4393C6.72064 18.158 7.10218 18 7.5 18ZM16.5 18C16.8978 18 17.2794 18.158 17.5607 18.4393C17.842 18.7206 18 19.1022 18 19.5C18 19.8978 17.842 20.2794 17.5607 20.5607C17.2794 20.842 16.8978 21 16.5 21C16.1022 21 15.7206 20.842 15.4393 20.5607C15.158 20.2794 15 19.8978 15 19.5C15 19.1022 15.158 18.7206 15.4393 18.4393C15.7206 18.158 16.1022 18 16.5 18Z"
-                                                    fill="black"></path>
-                                                <path stroke="currentColor"
-                                                    d="M15.0742 8.8568C14.9303 8.87118 14.8255 9.10815 14.7562 9.22021C14.6354 9.41529 14.5162 9.57762 14.3665 9.75099C14.0074 10.1667 13.4839 10.4894 13.0467 10.8173C12.7359 11.0504 12.3724 11.3453 12.0162 11.5011C11.6944 11.6419 11.3865 11.1364 11.244 10.9225"
-                                                    stroke="black" stroke-width="3" stroke-linecap="round"></path>
+                                        <button onclick="addToCart(this)" data-product-id="{{ $pro->id }}"
+                                            class="addToCartBtns size-9 rounded-full bg-(--color-primary)/15 text-(--color-primary) flex items-center justify-center cursor-pointer hover:bg-(--color-primary)/25 transition"
+                                            aria-label="افزودن به سبد خرید">
+                                            <svg class="size-4" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg"
+                                                style="fill: currentColor">
+                                                <path
+                                                    d="M16 0H0V32H16 67.2l77.2 339.5 2.8 12.5H160 496h16V352H496 172.8l-14.5-64H496L566 64l10-32H542.5 100L95.6 12.5 92.8 0H80 16zm91.3 64H532.5l-60 192H151L107.3 64zM184 432a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm0 80a56 56 0 1 0 0-112 56 56 0 1 0 0 112zm248-56a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm80 0a56 56 0 1 0 -112 0 56 56 0 1 0 112 0z" />
                                             </svg>
-                                        </div>
+                                        </button>
                                     </div>
                                 </div>
-                            </a>
-                        @endif
+                            @endif
+                        @endforeach
                     @endforeach
-                @endforeach
+                </div>
             </div>
         </section>
     </main>
+
+    <!-- نوار سبد خرید موبایل -->
+    <div
+        class="fixed bottom-0 inset-x-0 z-50 md:hidden bg-white shadow-[0_-4px_16px_rgba(0,0,0,.08)] h-16 px-4 flex items-center justify-between gap-3">
+        <button onclick="addToCart(this)" data-product-id="{{ $product->id }}"
+            class="addToCartBtns w-1/2 h-10 rounded-full bg-[image:var(--gradient-gold)] text-white font-bold text-sm cursor-pointer">
+            افزودن به سبد خرید
+        </button>
+        <div class="text-(--color-primary) font-bold">
+            <span class="text-base sm:text-xl in-fa">{{ number_format($product->secondary_price) ?: number_format($product->primary_price) }}</span>
+            <span class="text-sm">ریال</span>
+        </div>
+    </div>
+
     <script>
-        function changeImage(imageSrc) {
+        const mediaTotal = {{ $mediaCount }};
+
+        function changeImage(imageSrc, index) {
             document.getElementById("product-image").src = imageSrc;
+            const counter = document.getElementById("image-counter");
+            if (counter && index) counter.textContent = index + " / " + mediaTotal;
+            document.querySelectorAll(".thumb-img").forEach((el, i) => {
+                const active = index ? i === index - 1 : false;
+                el.classList.toggle("border-(--color-primary)", active);
+                el.classList.toggle("opacity-100", active);
+                el.classList.toggle("border-transparent", !active);
+                el.classList.toggle("opacity-70", !active);
+            });
         }
 
-        function increaseValue() {
-            var input = document.getElementById("numberInput");
-            input.value = parseInt(input.value) + 1;
+        function toggleFullscreen() {
+            const box = document.getElementById("gallery-box");
+            if (!document.fullscreenElement) box.requestFullscreen?.();
+            else document.exitFullscreen?.();
         }
 
-        function decreaseValue() {
-            var input = document.getElementById("numberInput");
-            input.value = parseInt(input.value) - 1;
+        // انتخاب وزن
+        document.querySelectorAll(".weight-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".weight-btn").forEach(b => {
+                    b.classList.remove("bg-[image:var(--gradient-gold)]", "text-white",
+                        "border-transparent", "font-bold");
+                    b.classList.add("bg-white", "text-(--color-text)", "border-(--color-zinc-200)");
+                });
+                btn.classList.add("bg-[image:var(--gradient-gold)]", "text-white", "border-transparent",
+                    "font-bold");
+                btn.classList.remove("bg-white", "text-(--color-text)", "border-(--color-zinc-200)");
+                // وزن انتخاب‌شده روی دکمه سبد خرید ذخیره می‌شود تا در addToCart قابل خواندن باشد
+                document.getElementById("add-to-cart-main").dataset.weight = btn.dataset.weight;
+            });
+        });
+
+        // اسلایدر محصولات مرتبط (RTL)
+        function slideRelated(dir) {
+            const s = document.getElementById("related-slider");
+            s.scrollBy({
+                left: -dir * 280,
+                behavior: "smooth"
+            });
         }
-        
     </script>
 
-     <script>
+    <script>
         let proId = "{{ $product->id }}"
         let productId = "{{ $product->id }}"
     </script>
     <script src="{{ asset('assets/js/singleProduct.js') }}"></script>
-    
 @endsection

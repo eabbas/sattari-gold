@@ -53,7 +53,7 @@
             </p>
         </div>
         <div class="w-full flex flex-col justify-center items-center lg:items-end mt-5">
-            {{-- <h2 class="text-(--primary-color) text-lg font-semibold mb-1">کد معرف شما</h2> --}}
+            {{-- <h2 class="text-(--primary-color) text-lg font-bold mb-1">کد معرف شما</h2> --}}
             {{-- <p class="text-slate-400 text-sm mb-4">این کد را با دوستان خود به اشتراک بگذارید</p> --}}
 
             <!-- فیلد کد + دکمه کپی -->
