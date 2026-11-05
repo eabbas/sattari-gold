@@ -114,6 +114,10 @@ orderBasket.addEventListener('click', () => {
             localProducts = JSON.parse(localStorage.getItem('products'))
             if (localProducts && localProducts.length) {
                 localProducts.find((prod) => {
+                    const rawPrice = prod.secondary_price || prod.primary_price
+                    const priceText = rawPrice
+                        ? Number(String(rawPrice).replace(/\D/g, '')).toLocaleString('fa-IR')
+                        : 'تماس بگیرید'
                     let element = document.createElement('div')
                     element.classList = 'bg-white rounded-2xl p-4 flex gap-4 items-center shadow-sm border border-gray-100 parentItem'
                     let html = `
@@ -123,7 +127,7 @@ orderBasket.addEventListener('click', () => {
                                 class="size-full object-cover" alt="">
                         </div>
                         <div class="flex-1 min-w-0">
-                            <h3 class="font-semibold text-gray-800 text-sm sm:text-base truncate">${prod.title}</h3>
+                            <h3 class="font-semibold text-gray-800 text-sm sm:text-base truncate in-fa">${prod.title}</h3>
                             <p
                                 class="text-xs text-gray-500 mt-0.5 mb-5 max-w-full h-8 max-h-8 overflow-hidden ellipsis-2">${prod.summary ? prod.summary : ''}</p>
                             <div class="w-full p-2 bg-[image:var(--gradient-gold)] transition-all duration-300 group flex gap-2 justify-center items-center rounded-xl addToCartBtns"
@@ -140,8 +144,8 @@ orderBasket.addEventListener('click', () => {
                             </div>
                         </div>
                         <div class="text-left shrink-0">
-                            <p class="font-bold text-gray-800 text-sm sm:text-base in-fa price">${prod.secondary_price ? prod.secondary_price : prod.primary_price}</p>
-                            <p class="text-xs text-gray-400">ریال</p>
+                            <p class="font-bold text-gray-800 text-sm sm:text-base in-fa price">${priceText}</p>
+                            <p class="text-xs text-gray-400">${rawPrice ? 'ریال' : ''}</p>
                         </div>`
                     element.innerHTML = html
                     parentCart.append(element)
