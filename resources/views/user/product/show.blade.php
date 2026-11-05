@@ -324,7 +324,7 @@
                                             <div class="text-(--color-primary) font-bold flex items-baseline gap-1">
                                                 <span class="text-xs text-(--color-text)">ریال</span>
                                                 <span
-                                                    class="text-sm">{{ $pro->secondary_price ?: $pro->primary_price }}</span>
+                                                    class="text-sm in-fa">{{ number_format($pro->secondary_price) ?: number_format($pro->primary_price) }}</span>
                                             </div>
                                         @else
                                             <span class="text-(--color-primary) text-[11px] font-bold">برای استعلام قیمت
@@ -357,7 +357,7 @@
             افزودن به سبد خرید
         </button>
         <div class="text-(--color-primary) font-bold">
-            <span class="text-base sm:text-xl">{{ $product->secondary_price ?: $product->primary_price }}</span>
+            <span class="text-base sm:text-xl in-fa">{{ number_format($product->secondary_price) ?: number_format($product->primary_price) }}</span>
             <span class="text-sm">ریال</span>
         </div>
     </div>
