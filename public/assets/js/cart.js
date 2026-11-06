@@ -27,12 +27,6 @@ function addToCart(btn) {
             orderBasket.children[1].innerText = totalCartQuantity
             orderBasket.children[1].innerText = quan
             response.quantity = 1
-            // btn.innerHTML = `
-            // <div class="w-full h-full transition-all duration-300 group cursor-pointer bg-[image:var(--gradient-gold)] flex gap-2 justify-center items-center rounded-xl" data-product-id="${response.product_id}">
-            //     <button onclick="setCount(this)" class="w-1/3 transition-all duration-300 text-gray-200 group-hover:text-white flex justify-center items-center text-lg font-bold cursor-pointer" data-state="+">+</button>
-            //     <input type="number" class="w-1/3 transition-all duration-300 text-gray-200 group-hover:text-white text-sm text-center outline-none in-fa" readonly value="${response.quantity}">
-            //     <button onclick="setCount(this)" class="w-1/3 transition-all duration-300 text-gray-200 group-hover:text-white flex justify-center items-center text-lg font-bold cursor-pointer" data-state="-">-</button>
-            // </div>`
             document.querySelectorAll('.addToCartBtns').forEach(button => {
                 if (button.dataset.productId != productId) return
 
@@ -140,12 +134,12 @@ function setCount(btn) {
             let initialHtml = `
                 <button onclick="addToCart(this)" class="w-full px-4 h-full bg-(--light-green-btn) flex gap-2 justify-center items-center rounded-xl cursor-pointer transition-all duration-300 hover:bg-(--green-btn) group">
                     <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="lg:size-4 size-3 fill-white transition-all duration-300 group-hover:fill-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="lg:size-4 size-3 fill-(--primary-text-color) transition-all duration-300 group-hover:fill-white">
                             <path d="M16 0H0V32H16 67.2l77.2 339.5 2.8 12.5H160 496h16V352H496 172.8l-14.5-64H496L566 64l10-32H542.5 100L95.6 12.5 92.8 0H80 16zm91.3 64H532.5l-60 192H151L107.3 64zM184 432a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm0 80a56 56 0 1 0 0-112 56 56 0 1 0 0 112zm248-56a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm80 0a56 56 0 1 0 -112 0 56 56 0 1 0 112 0z">
                             </path>
                         </svg>
                     </div>
-                    <span class="lg:text-sm text-[10px] text-white font-bold transition-all duration-300 group-hover:text-white">افزودن به سبد خرید</span>
+                    <span class="lg:text-sm text-[10px] text-(--primary-text-color) font-bold transition-all duration-300 group-hover:text-white">افزودن به سبد خرید</span>
                 </button>
             `
 
@@ -155,9 +149,12 @@ function setCount(btn) {
                 }
             })
             if (window.currentPage == 'cart') {
+                console.log('first-condition')
                 document.querySelectorAll('.cartPages').forEach(item => {
                     if (item.dataset.productId == productId) {
+                        console.log('second-condition')
                         item.remove()
+                        location.assign(url+"home")
                     }
                 })
             }
@@ -175,14 +172,14 @@ function setCount(btn) {
                 })
             }
             let initialHtml = `
-                <button onclick="addToCart(this)" class="w-full px-4 h-full flex gap-2 justify-center items-center rounded-xl cursor-pointer transition-all duration-300 hover:bg-(--green-btn) group">
+                <button onclick="addToCart(this)" class="w-full px-4 h-full bg-(--light-green-btn) flex gap-2 justify-center items-center rounded-xl cursor-pointer transition-all duration-300 hover:bg-(--green-btn) group">
                     <div>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="lg:size-4 size-3 fill-white transition-all duration-300 group-hover:fill-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="lg:size-4 size-3 fill-(--primary-text-color) transition-all duration-300 group-hover:fill-white">
                             <path d="M16 0H0V32H16 67.2l77.2 339.5 2.8 12.5H160 496h16V352H496 172.8l-14.5-64H496L566 64l10-32H542.5 100L95.6 12.5 92.8 0H80 16zm91.3 64H532.5l-60 192H151L107.3 64zM184 432a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm0 80a56 56 0 1 0 0-112 56 56 0 1 0 0 112zm248-56a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm80 0a56 56 0 1 0 -112 0 56 56 0 1 0 112 0z">
                             </path>
                         </svg>
                     </div>
-                    <span class="lg:text-sm text-[10px] text-white font-bold transition-all duration-300 group-hover:text-white">افزودن به سبد خرید</span>
+                    <span class="lg:text-sm text-[10px] text-(--primary-text-color) font-bold transition-all duration-300 group-hover:text-white">افزودن به سبد خرید</span>
                 </button>
             `
 
@@ -260,9 +257,6 @@ document.addEventListener('click', (e) => {
         orderBasket.parentElement.children[1].classList.add('opacity-0')
     }
 })
-
-
-
 addToCartBtns.forEach(product => {
     if (localProducts) {
         localProducts.find(cartPro => {
@@ -284,10 +278,11 @@ addToCartBtns.forEach(product => {
     }
 })
 if (localProducts) {
+    cartLink.classList.remove('hidden')
     localProducts.forEach(item => {
         totalCartQuantity += item.quantity
     })
-    cartLink.classList.remove('hidden')
+    
 }
 
 orderBasket.children[1].innerText = totalCartQuantity
