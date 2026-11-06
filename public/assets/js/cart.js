@@ -222,14 +222,18 @@ orderBasket.addEventListener('click', () => {
                             <img src="${imgPath + prod.mainImg}"
                                 class="size-full object-cover" alt="">
                         </div>
-                        <div class="flex-1 min-w-0">
+                        <div class="w-full flex flex-col gap-2">
                             <h3 class="font-bold text-gray-800 text-sm sm:text-base truncate in-fa">${prod.title}</h3>
-                            <p
-                                class="text-xs text-gray-500 mt-0.5 mb-5 max-w-full h-8 max-h-8 overflow-hidden ellipsis-2">${prod.summary ? prod.summary : ''}</p>
+                            <div>
+
+                                <p class="font-bold text-gray-800 text-sm sm:text-base in-fa price">${priceText}</p>
+                                <p class="text-xs text-gray-400">${rawPrice ? 'ریال' : ''}</p>
+                            </div>
+                            
                             <div class="w-full p-2 bg-[image:var(--gradient-gold)] transition-all duration-300 group flex gap-2 justify-center items-center rounded-xl addToCartBtns"
                                 data-product-id="${prod.id}">
                                 <button onclick="setCount(this)"
-                                    class="w-1/3 text-lg font-bold text-gray-200 transition-all duration-300 group-hover:text-white flex justify-center items-center cursor-pointer"
+                                    class="w-1/3 text-lg font-bold text-gray-200 transition-all duration-300 group-hover:text-white flex justify-center items-center ${ prod.count == prod.quantity ? 'cursor-no-drop' : 'cursor-pointer' }" ${ prod.count == prod.quantity ? 'disabled' : '' }
                                     data-state="+">+</button>
                                 <input type="number"
                                     class="w-1/3 text-sm text-center outline-none text-gray-200 transition-all duration-300 group-hover:text-white in-fa"
@@ -238,10 +242,8 @@ orderBasket.addEventListener('click', () => {
                                     class="w-1/3 text-lg font-bold text-gray-200 transition-all duration-300 group-hover:text-white flex justify-center items-center cursor-pointer"
                                     data-state="-">-</button>
                             </div>
-                        </div>
-                        <div class="text-left shrink-0">
-                            <p class="font-bold text-gray-800 text-sm sm:text-base in-fa price">${priceText}</p>
-                            <p class="text-xs text-gray-400">${rawPrice ? 'ریال' : ''}</p>
+                       
+                            
                         </div>`
                     element.innerHTML = html
                     parentCart.append(element)
