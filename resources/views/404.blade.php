@@ -81,9 +81,9 @@
                 </div>
             </a>
 
-            <a href="/"
+            <a href="{{ route('home') }}"
                class="hidden sm:flex items-center gap-2 text-sm text-[#82765f] hover:text-[#a77c35] transition">
-                <span>بازگشت به فروشگاه</span>
+                <span>بازگشت به خانه</span>
                 <span>←</span>
             </a>
 
@@ -185,7 +185,7 @@
 
                 <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 mt-9">
 
-                    <a href="/"
+                    <a href="{{ route('home') }}"
                        class="w-full sm:w-auto px-8 py-4 rounded-xl bg-[#a9823e] text-white text-sm font-medium hover:bg-[#89662e] transition shadow-lg shadow-[#a9823e]/20 flex items-center justify-center gap-3">
                         <span>بازگشت به صفحه اصلی</span>
                         <span>←</span>
