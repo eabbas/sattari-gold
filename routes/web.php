@@ -331,6 +331,7 @@ Route::group([
 });
 
 Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('aboutUs');
+Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('contactUs');
 
 // fallback and missing
 Route::fallback([HomeController::class, 'pageNotFound'])->name('fallback');

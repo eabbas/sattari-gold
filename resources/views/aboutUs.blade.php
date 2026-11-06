@@ -10,8 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        * { font-family: 'Vazirmatn', sans-serif; }
-
+        
         body {
             background: #faf8f3;
         }
@@ -61,7 +60,7 @@
 
             <div>
                 <span class="text-xs tracking-widest text-[#a9823e] font-medium">
-                    OUR STORY · SATARI GOLD
+                    درباره ما | ستاری گلد
                 </span>
 
                 <h2 class="text-4xl md:text-6xl font-bold leading-[1.5] mt-6 flex flex-col gap-3">
@@ -78,12 +77,12 @@
                 </p>
 
                 <div class="flex flex-wrap gap-4 mt-9">
-                    <a href="/shop"
+                    <a href="{{ route('product.index') }}"
                        class="px-7 py-4 rounded-xl bg-[#a9823e] text-white text-sm hover:bg-[#89662e] transition">
                         دیدن محصولات
                     </a>
 
-                    <a href="/contact"
+                    <a href="{{ route('contactUs') }}"
                        class="px-7 py-4 rounded-xl border border-[#d7c59f] text-[#92733c] text-sm hover:bg-white transition">
                         ارتباط با ما
                     </a>
@@ -94,7 +93,7 @@
             <div class="relative">
                 <div class="absolute -top-5 -right-5 w-28 h-28 border border-[#d6bc87] rounded-full"></div>
 
-                <div class="relative rounded-[32px] overflow-hidden aspect-[4/5] max-h-[540px] shadow-2xl shadow-[#8c6b36]/10">
+                <div class="relative rounded-[32px] overflow-hidden aspect-[4/5] max-h-[540px] shadow-2xl shadow-[#8c6b36]/10 float-end">
                     <img
                         src="{{ asset('assets/img/404bg.jpg') }}"
                         alt="زیورآلات طلای لوکس"
@@ -110,10 +109,7 @@
                     </div>
                 </div>
 
-                <div class="absolute -bottom-7 -left-5 bg-white p-5 rounded-2xl shadow-xl hidden sm:block">
-                    <span class="gold-text text-3xl">✦</span>
-                    <p class="text-xs text-[#766d5d] mt-2">زیبایی در انتخاب</p>
-                </div>
+                
             </div>
 
         </div>
@@ -280,37 +276,6 @@
     </div>
 </section>
 
-
-<!-- CTA -->
-<section class="px-5 pb-24">
-    <div class="max-w-7xl mx-auto rounded-[30px] overflow-hidden gold-gradient relative">
-
-        <div class="absolute -left-20 -top-32 w-80 h-80 rounded-full border border-white/20"></div>
-        <div class="absolute -left-10 -top-20 w-60 h-60 rounded-full border border-white/20"></div>
-
-        <div class="relative text-center py-16 px-6 md:py-20">
-
-            <span class="text-white/80 text-xs tracking-widest">
-                YOUR JOURNEY STARTS HERE
-            </span>
-
-            <h2 class="text-3xl md:text-4xl font-bold text-white mt-5">
-                زیبایی انتخاب شما، افتخار ماست
-            </h2>
-
-            <p class="text-sm text-white/80 mt-5 leading-8">
-                مجموعه محصولات طلای ستاری را مشاهده کنید و انتخاب خود را آغاز کنید.
-            </p>
-
-            <button  onclick="history.back()"
-               class="inline-flex mt-8 bg-white text-[#98732f] px-9 py-4 rounded-xl text-sm font-bold hover:bg-[#faf4e8] transition">
-                بازگشت 
-                <span class="mr-3">←</span>
-            </button>
-
-        </div>
-    </div>
-</section>
 
 
 

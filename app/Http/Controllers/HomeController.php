@@ -23,6 +23,12 @@ class HomeController extends Controller
         $categories = category::with('products')->has('products')->get();
         return view('aboutUs', ['logo'=>$logo, 'categories'=>$categories]);
     }
+    public function contactUs()
+    {
+        $logo = logo::first();
+        $categories = category::with('products')->has('products')->get();
+        return view('contactUs', ['logo'=>$logo, 'categories'=>$categories]);
+    }
 
     public function index()
     {
