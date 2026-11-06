@@ -67,7 +67,7 @@
                 </p>
                 <span class="w-full h-px bg-(--color-border-gold) mt-4"></span>
                 <!-- قیمت -->
-                @if($product->count <= 5)
+                @if($product->count <= 5 && $product->count != 0)
                     <div class="w-full flex items-center gap-1.5 mt-3 pr-5">
 
                         <div class="text-gray-600 text-sm">

@@ -109,6 +109,12 @@
                                 </div>
                             <h3 class="mb-2 text-[13px] leading-[1.9] overflow-hidden">{{ $product->title }}
                             </h3>
+                            
+                            {{-- @if ($product->count == 0)
+                                <div class="my-2 text-red-500 text-xs">
+                                   ناموجود
+                                </div>
+                            @endif --}}
                             @if ($product->summary)
                                 <p class="ellipsis-2 max-h-10 h-10 text-sm text-gray-400">
                                     {{ $product->summery }}
@@ -134,9 +140,17 @@
                                 <span class="text-[10px] text-gray-500">برای استعلام قیمت تماس
                                     بگیرید</span>
                             @endif
-                            @if ($product->count > 0)
+                            @if ($product->count <= 5 && $product->count != 0)
+                                <div class="text-gray-600 text-xs">
+                                    تنها
+                                    <span class="text-[#a31616]">{{ $product->count }}</span>
+                                    عدد موجود در انبار
+                                </div>
+                            @endif
+                            @if ($product->count > 5)
                                 <div class="text-[10px] text-[#16a34a]">● موجود در انبار</div>
-                            @else
+                            @endif
+                            @if($product->count == 0)
                                 <div class="text-[10px] text-[#a31616]">● ناموجود</div>
                             @endif
                         </a>
