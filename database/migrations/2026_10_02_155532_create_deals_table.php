@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('time');
             $table->text('description')->nullable();
             $table->integer('isApproved')->default(0);
+            $table->text('message')->nullable();
             $table->timestamps();
         });
     }

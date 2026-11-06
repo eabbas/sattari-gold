@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('action');
             $table->string('calcBy');
             $table->integer('userInput');
-            $table->integer('resultOutput');
+            $table->decimal('resultOutput', 10, 5)->default(0);
             $table->timestamps();
         });
     }

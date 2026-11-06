@@ -233,4 +233,16 @@ class DealController extends Controller
         $dealTemporary = dealTemporary::where('deal_id', $deal->id)->delete();
         return to_route('deal.adminIndex');
     }
+    public function cancel(Request $request){
+        $deal=deal::find($request->id);
+        $deal->isApproved=-1;
+        $deal->message=$request->message;
+        $trancsavtion=transaction::find($deal->transaction_id);
+        $trancsavtion->isApproved=-1;
+        $trancsavtion->save();
+        $deal->save();
+        dealTemporary::where('deal_id', $request->id)->delete();
+        return to_route('deal.adminIndex');
+
+    }
 }

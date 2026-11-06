@@ -149,6 +149,9 @@
                                 <th class="min-w-30 border-1 border-(--color-border) p-1 md:px-3 md:py-2">
                                     مبلغ
                                 </th>
+                                <th class="min-w-30 border-1 border-(--color-border) p-1 md:px-3 md:py-2">
+                                    علت رد
+                                </th>
                                 <th class="min-w-24 border-1 border-(--color-border) p-1 md:px-3 md:py-2">
                                     شماره سند
                                 </th>
@@ -193,6 +196,9 @@
                                     <td class="border-1 border-(--color-border) p-1 md:px-3 md:py-2 text-center in-fa">
                                         {{ $deal->buyPrice ? number_format($deal->buyPrice) : '-' }}
                                     </td>
+                                    <td class="border-1 border-(--color-border) p-1 md:px-3 md:py-2 text-center text-red-500 in-fa">
+                                        {{ $deal->message ? $deal->message : '-' }}
+                                    </td>
                                     <td class="border-1 border-(--color-border) p-1 md:px-3 md:py-2 text-center">
                                         <span
                                             class="px-3 py-1.5 text-(--color-warning) rounded-md border-1 border-(--color-warning) p-1 cursor-pointer in-fa">
@@ -207,10 +213,10 @@
                                     <td class="border-1 border-(--color-border) p-1 md:px-3 md:py-2 text-center">
                                         @if ($deal->state != 'تایید شده')
                                             @can('access', 'deal_confirm')
-                                                <a href="{{ route('deal.confirm', $deal->id) }}"
+                                                <span href="{{ route('deal.confirm', $deal->id) }}" onclick="deal('open' , {{$deal}})"
                                                     class="px-3 py-1.5 bg-[{{ $deal->color }}]/20 text-[{{ $deal->color }}] rounded-md border-1 border-[[{{ $deal->color }}]] p-1 cursor-default cursor-pointer">
                                                     {{ $deal->state }}
-                                                </a>
+                                                </span>
                                             @endcan
                                         @else
                                             <span
@@ -227,6 +233,52 @@
                 </div>
             </div>
         </section>
+    </div>
+    <div id="popup"
+        class="fixed w-full h-dvh bg-black/50 top-0 right-0 z-999999 transition-all duration-300 flex opacity-0 invisible justify-center items-center">
+        <div class="w-full h-full flex justify-center items-center lg:w-[calc(100%-265px)]">
+            <div class="w-full flex flex-col gap-2 bg-zinc-100 p-4 rounded-2xl">
+                <div class="w-full flex items-center justify-between">
+                    <div class="text-center">
+                        <span>خرید آبشده نقدی</span>
+                    </div>
+                    <div onclick="deal('clos')" class="cursor-pointer">
+                        ✖
+                    </div>
+                </div>
+                <table class="mt-2">
+                    <thead class="border-1 border-(--color-border)">
+                        <tr class="bg-gray-100 text-xs lg:text-base">
+                            <th class="border-1 border-(--color-border) p-2 text-start">مشتری</th>
+                            <th class="border-1 border-(--color-border) p-2 text-start">وزن(گرم)</th>
+                            <th class="border-1 border-(--color-border) p-2 text-start">مظنه(ریال)</th>
+                            <th class="border-1 border-(--color-border) p-2 text-start">مبلغه کل(ریال)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="border-1 border-(--color-border) p-2 text-start text-lg font-bold" id="name"></td>
+                            <td class="border-1 border-(--color-border) p-2 text-start text-lg font-bold" id="goldweight"></td>
+                            <td class="border-1 border-(--color-border) p-2 text-start text-lg font-bold" id="goldprice"></td>
+                            <td class="border-1 border-(--color-border) p-2 text-start text-lg font-bold" id="fullprice"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="w-full px-2 mt-2 flex justify-between items-center gap-3">
+                    <a href="" class="w-5/12 bg-green-500 text-white text-center py-3 rounded-2xl cursor-pointer" id="check">
+                        تاًیید
+                    </a>
+                    <form class="w-7/12 flex justify-between items-center gap-3" action="{{route('deal.cancel')}}">
+                        @csrf
+                        <input type="hidden" name="id" id="deal_id">
+                    <button class="w-8/12 bg-red-500 text-white text-center py-3 rounded-2xl cursor-pointer">
+                        عدم تاًیید
+                    </button>
+                    <input class="border-1 border-red-500 w-4/12 py-3 px-2 rounded-2xl" type="text" name="message" placeholder="دلیل عدم تاًیید را بنویسید">
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- آرشیو معاملات -->
 
@@ -257,6 +309,32 @@
             popup_report.classList.remove("opacity-100");
             popup_report.classList.remove("visible");
         });
+        
+        function deal(door , deal){
+            let popup = document.getElementById("popup");
+            let name = document.getElementById("name");            
+            let goldweight = document.getElementById("goldweight");            
+            let goldprice = document.getElementById("goldprice");            
+            let fullprice = document.getElementById("fullprice");            
+            let check = document.getElementById("check");            
+            let deal_id = document.getElementById("deal_id");            
+            if(door=="open"){
+                popup.classList.remove('opacity-0')
+                popup.classList.remove('invisible')
+                // console.log(deal)
+                // console.log(deal_id)
+                deal_id.value=deal.id
+                name.innerText=deal.user.name +' '+ deal.user.family
+                goldweight.innerText=deal.goldWeight
+                goldprice.innerText=deal.goldPrice
+                fullprice.innerText=deal.buyPrice
+                check.setAttribute('href' , '{{url('deal/confirm/deal.id')}}')
+            }
+            if(door=="clos"){
+                popup.classList.add('opacity-0')
+                popup.classList.add('invisible')
+            }
+        }
     </script>
     <script src="{{ asset('assets/js/adminDeal.js') }}"></script>
 

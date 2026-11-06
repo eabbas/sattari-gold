@@ -233,6 +233,7 @@ Route::group([
 ], function () {
     Route::get('/create', 'create')->middleware(checkIsApproved::class)->name('create');
     Route::get('/confirm/{deal}', 'confirm')->middleware(checkAccess::class . ":deal_confirm")->name('confirm');
+    Route::get('/cancel', 'cancel')->middleware(checkAccess::class . ":deal_confirm")->name('cancel');
     Route::post('/store', 'store')->middleware(checkIsActive::class)->name('store');
     Route::post('/storeTemporary', 'storeTemporary')->middleware(checkIsActive::class)->name('storeTemporary');
     Route::get('/list', 'list')->middleware(checkIsApproved::class)->name('list');
