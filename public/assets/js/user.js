@@ -267,6 +267,10 @@ function submitBtn(el) {
                 ${ data.user.phoneNumber }
             </td>
             <td
+                class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa phoneNumberList">
+                ${data.user.roles.length > 0 ? data.user.roles[0].name : 'بدون نقش'}
+            </td>
+            <td
                 class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                 -
             </td>

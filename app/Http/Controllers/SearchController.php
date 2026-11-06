@@ -384,7 +384,6 @@ class SearchController extends Controller
                     break;
             }
         }
-
         
 
         return response()->json(['users'=>$users, 'roles'=>$roles]);

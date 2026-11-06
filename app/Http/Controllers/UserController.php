@@ -411,6 +411,7 @@ class UserController extends Controller
             }
         }
         $user->wallet;
+        $user->roles;
         $roleIds = [];
         foreach ($user->roles as $role) {
             $roleIds[] = $role->id;

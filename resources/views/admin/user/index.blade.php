@@ -256,6 +256,9 @@
                                         شماره موبایل
                                     </th>
                                     <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
+                                       نقش
+                                    </th>
+                                    <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
                                         آخرین بازدید
                                     </th>
                                     <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
@@ -302,6 +305,10 @@
                                             <td
                                                 class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa phoneNumberList">
                                                 {{ $user->phoneNumber }}
+                                            </td>
+                                            <td
+                                                class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa phoneNumberList">
+                                                {{ count($user->roles) ? $user->roles[0]->name : 'بدون نقش' }}
                                             </td>
                                             <td
                                                 class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
@@ -401,7 +408,7 @@
                                                                                 </div>
                                                                                 <div class="font-bold pt-2">
                                                                                     <span id="withdrawableBalance"
-                                                                                        data-balance="{{ $user->wallet ? $user->wallet['asset'] ?? 0 : 0}}"
+                                                                                        data-balance="{{ $user->wallet ? number_format($user->wallet['asset']) ?? 0 : 0}}"
                                                                                         class="in-fa takebleMoneyAsset"></span>
                                                                                     <span
                                                                                         class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
@@ -461,7 +468,7 @@
                                                                                 </div>
                                                                                 <div class="font-bold pt-2">
                                                                                     <span
-                                                                                        class="in-fa">{{ $user->wallet ? $user->wallet->goldWeight ?? 0 : 0 }}</span>
+                                                                                        class="in-fa">{{ $user->wallet ? number_format($user->wallet->goldWeight) ?? 0 : 0 }}</span>
                                                                                     <span
                                                                                         class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
                                                                                         گرم
