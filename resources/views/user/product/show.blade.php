@@ -9,9 +9,7 @@
         $discount = $p1 && $p2 && $p1 > $p2 ? round((1 - $p2 / $p1) * 100) : null;
         $mediaCount = $product->media->count();
     @endphp
-
     <main class="max-w-[1280px] mx-auto mb-32">
-
         <!-- آدرس -->
         <section class="w-11/12 mx-auto mt-8 flex items-center gap-2 text-xs md:text-sm text-(--color-text-muted)">
             <a href="{{ route('home') }}" class="flex items-center gap-2.5 hover:text-(--color-primary)">
@@ -26,10 +24,8 @@
             <span>/</span>
             <span class="text-(--color-text) in-fa">{{ $product->title }}</span>
         </section>
-
         <!-- گالری + اطلاعات محصول -->
         <section class="w-11/12 mx-auto mt-6 flex flex-col lg:flex-row gap-4 items-stretch">
-
             <!-- گالری -->
             <div class="w-full lg:w-7/12 flex flex-col lg:flex-row gap-3">
                 <!-- تصاویر کوچک -->
@@ -61,19 +57,21 @@
                     @endif
                 </div>
             </div>
-
             <!-- کارت اطلاعات -->
             <div class="w-full lg:w-5/12 bg-white rounded-2xl shadow-sm p-5 flex flex-col">
                 <div class="flex items-start justify-between gap-3">
                     <h1 class="text-xl md:text-2xl font-bold text-(--color-text) order-1 in-fa">{{ $product->title }}</h1>
                 </div>
-
                 <p class="mt-2 text-(--color-text-secondary) text-sm in-fa">
                     {{ $product->summary ?? 'سرمایه‌ای مطمئن، ارزشمند و ماندگار' }}
                 </p>
                 <span class="w-full h-px bg-(--color-border-gold) mt-4"></span>
-
                 <!-- قیمت -->
+                @if ($product->summary)
+                    <p class="mt-3 max-h-10 h-10 ellipsis-2 text-sm text-gray-400">
+                        {{ $product->summary }}
+                    </p>
+                @endif
                 <div class="mt-4 flex items-center justify-between gap-3 flex-wrap">
                     @if ($product->primary_price)
                         @if ($product->secondary_price)
@@ -102,8 +100,7 @@
                         <span class="text-(--color-primary) font-bold text-base">برای استعلام قیمت تماس بگیرید</span>
                     @endif
                 </div>
-
-       
+              
                 <div class="mt-5 flex items-center gap-2.5">
                     @if ($product->count == 0)
                         <button data-weight="10"
@@ -122,9 +119,8 @@
                             <span class="text-white font-bold text-sm">افزودن به سبد خرید</span>
                         </button>
                     @endif
-
                 </div>
-
+                
                 <!-- ویژگی‌های اعتماد -->
                 <div class="mt-auto pt-5">
                     <div
@@ -135,7 +131,7 @@
                                 <path
                                     d="M48 0C21.5 0 0 21.5 0 48V368c0 26.5 21.5 48 48 48H64c0 53 43 96 96 96s96-43 96-96H384c0 53 43 96 96 96s96-43 96-96h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V288 256 237.3c0-17-6.7-33.3-18.7-45.3L512 114.7c-12-12-28.3-18.7-45.3-18.7H416V48c0-26.5-21.5-48-48-48H48zM416 160h50.7L544 237.3V256H416V160zM112 416a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm368-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" />
                             </svg>
-                            <span>ارسال سریع به سراسر کشور</span>
+                            <span>ارسال به سراسر کشور</span>
                         </div>
                         <div class="flex items-center justify-center gap-2 px-2">
                             <svg class="size-5 shrink-0 fill-(--color-primary)" viewBox="0 0 512 512"
@@ -158,11 +154,11 @@
                 </div>
             </div>
         </section>
-
         <!-- بنر + مشخصات -->
         <section class="w-11/12 mx-auto mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
             <!-- مشخصات محصول -->
             <div class="bg-white rounded-2xl shadow-sm p-5 order-1 lg:order-1">
+                
                 <div class="flex items-center gap-3 pb-3 border-b border-zinc-200">
                     <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
                     <svg class='w-6' viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"
@@ -183,6 +179,7 @@
                     </svg>
                     <h3 class="text-base font-bold text-(--color-text)">مشخصات محصول</h3>
                 </div>
+                @if (count($product->attributes) > 0)
                 <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-y-4 divide-x divide-x-reverse divide-zinc-200">
                     @foreach ($product->attributes as $attribute)
                         <div class="flex flex-col items-center gap-1.5 px-2 text-center">
@@ -190,7 +187,6 @@
 
                             <!DOCTYPE svg
                                 PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-                            <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
                             <svg version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg"
                                 xmlns:xlink="http://www.w3.org/1999/xlink" class="w-6" viewBox="0 0 512 512"
                                 xml:space="preserve">
@@ -225,8 +221,8 @@
                         </div>
                     @endforeach
                 </div>
+                @endif
             </div>
-
             <!-- بنر سرمایه‌گذاری -->
             <div
                 class="relative rounded-2xl overflow-hidden bg-gradient-to-l from-[#0f1a2e] via-[#16233b] to-[#0b1424] p-6 flex items-center justify-between min-h-40 order-2 lg:order-2">
@@ -246,7 +242,7 @@
                     src="{{ asset('assets/img/gold.webp') }}" alt="">
             </div>
         </section>
-
+        @if (count($product['categories']) > 1)
         <!-- محصولات مرتبط -->
         <section class="w-11/12 mx-auto mt-10">
             <div class="flex items-center gap-2 mb-3">
@@ -339,6 +335,13 @@
                     @endforeach
                 </div>
             </div>
+        </section>
+        @endif
+
+        <section class="w-11/12 mx-auto mt-4 lg:mt-8">
+            <p class="text-sm text-justify leading-[1.5] text-gray-600">
+                {{ $product->description }}
+            </p>
         </section>
     </main>
 
