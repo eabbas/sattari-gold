@@ -389,6 +389,7 @@ class UserController extends Controller
         $user->phoneNumber = $request->popupPhoneNumber;
         $user->nationalCode = $request->popupNationalCode;
         $user->isActive = $request->isActive ?? 0;
+        $user->sendNotif = $request->sendNotif ?? 0;
         $user->isApproved = $request->approvingStatus;
         if (isset($request['roles'])) {
             user_role::where('user_id', $user->id)->delete();
@@ -418,6 +419,7 @@ class UserController extends Controller
         if ($request->flag) {
             return response()->json(['user' => $user, 'roles' => $roles]);
         }
+        $user->wallet;
         return response()->json($user);
         // return to_route('user.index')->with('message',  $name . ' به روزرسانی شد .');
     }

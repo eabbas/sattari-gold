@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('nationalCode');
             $table->tinyInteger('isApproved')->default(0);
             $table->tinyInteger('isActive')->default(0);
+            $table->tinyInteger('sendNotif')->default(0);
             // $table->string('accountingCode')->nullable();
             // $table->string('referralCode')->unique()->nullable();
             // $table->text('note')->nullable();

@@ -46,8 +46,9 @@ class DealController extends Controller
         $output = $request->resultOutput;
         $description = $request->description;
         $goldPrice = $request->goldPrice;
+        $userId = $request->input('userId', Auth::id());
 
-        $wallet = Wallet::where('user_id', Auth::id())->first();
+        $wallet = Wallet::where('user_id', $userId)->first();
 
         if (!$wallet) {
             return redirect()->back()->with('failure', 'کیف پول یافت نشد.');
@@ -88,7 +89,7 @@ class DealController extends Controller
             ]);
 
             $id_deal = deal::insertGetId([
-                'user_id' => Auth::id(),
+                'user_id' => $userId,
                 'transaction_id' => $transaction->id,
                 'goldWeight' => $weight,
                 'goldPrice' => $goldPrice,
@@ -99,7 +100,7 @@ class DealController extends Controller
             ]);
             //حسین
             dealTemporary::create([
-                'user_id' => Auth::id(),
+                'user_id' => $userId,
                 'deal_id' => $id_deal,
                 'goldPrice' => $request->goldPrice,
                 'action' => $request->action,
@@ -137,7 +138,7 @@ class DealController extends Controller
             $newPrice = explode(',', $output);
             $newPrice = implode('', $newPrice);
             deal::create([
-                'user_id' => Auth::id(),
+                'user_id' => $userId,
                 'transaction_id' => $transaction->id,
                 'goldWeight' => $weight,
                 'goldPrice' => $goldPrice,
@@ -167,7 +168,6 @@ class DealController extends Controller
     public function adminIndex()
     {
         $deals = deal::orderBy('date', 'desc')->orderBy('time', 'desc')->get();
-        // dd($deals[0]->transaction);
         foreach ($deals as $deal) {
             switch ($deal->transaction->isApproved) {
                 case -1:

@@ -155,7 +155,7 @@
                     <div class="w-full pb-3 px-3 flex flex-row justify-end">
                         <button onclick="sort(this)" class="flex gap-5 items-center" data-sort="desc">
                             <span>مرتب سازی :</span>
-                            <p>نزولی</p>
+                            <p>جدید به قدیمی</p>
                             <img src="{{ asset('assets/img/sort/desc.png') }}"
                                 style=" max-width: 30px; max-height: 30px; margin-top: 10px; margin-left: 5px; cursor: pointer;"
                                 alt="">
@@ -401,7 +401,7 @@
                                                                                 </div>
                                                                                 <div class="font-bold pt-2">
                                                                                     <span id="withdrawableBalance"
-                                                                                        data-balance="{{ $user->wallet['asset'] ?? 0 }}"
+                                                                                        data-balance="{{ $user->wallet ? $user->wallet['asset'] ?? 0 : 0}}"
                                                                                         class="in-fa takebleMoneyAsset"></span>
                                                                                     <span
                                                                                         class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
@@ -461,7 +461,7 @@
                                                                                 </div>
                                                                                 <div class="font-bold pt-2">
                                                                                     <span
-                                                                                        class="in-fa">{{ $user->wallet->goldWeight ?? 0 }}</span>
+                                                                                        class="in-fa">{{ $user->wallet ? $user->wallet->goldWeight ?? 0 : 0 }}</span>
                                                                                     <span
                                                                                         class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
                                                                                         گرم
@@ -636,7 +636,26 @@
                                                                         </label>
                                                                     </div>
                                                                 </div>
-
+                                                                <div
+                                                                    class="border-1 border-(--border-dashboard) h-fit rounded-md hover:shadow-sm transition-all col-span-2 md:col-span-2 flex items-center justify-between w-full py-2 px-4 mt-5">
+                                                                    <div class="w-full flex justify-between items-center">
+                                                                        <label for="AsendNotif{{ $user->id }}"
+                                                                            class="w-[calc(100%-50px)] text-start cursor-pointer">نوتیف ارسال شود
+                                                                            : </label>
+                                                                        <label for="AsendNotif{{ $user->id }}"
+                                                                            class="w-[50px] h-[28px] flex rounded-full cursor-pointer relative">
+                                                                            <input type="checkbox" name="isActive"
+                                                                                value="1"
+                                                                                id="AsendNotif{{ $user->id }}"
+                                                                                hidden="" class="peer cursor-pointer">
+                                                                            <span
+                                                                                class="size-full bg-gray-300 shadow-inner rounded-full peer-checked:bg-[#1B84FF] transition-all duration-300"></span>
+                                                                            <span
+                                                                                class="size-[20px] rounded-full bg-white absolute top-1 left-1 peer-checked:translate-x-[22px] transition-all duration-300 shadow-md"></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="hidden lg:block lg:col-span-4"></div>
                                                                 <button
                                                                     class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold submitBtn cursor-pointer transition-all duration-300 hover:bg-(--primary-dashboard) hover:text-white"
                                                                     onclick="submitEditUser(this)">ثبت</button>
@@ -814,7 +833,27 @@
                                                                         </label>
                                                                     </div>
                                                                 </div>
-                                                                <button
+                                                                <div
+                                                                    class="border-1 border-(--border-dashboard) h-fit rounded-md hover:shadow-sm transition-all col-span-2 md:col-span-2 flex items-center justify-between w-full py-2 px-4 mt-5">
+                                                                    <div class="w-full flex justify-between items-center">
+                                                                        <label for="sendNotif{{ $user->id }}"
+                                                                            class="w-[calc(100%-50px)] text-start cursor-pointer">نوتیف ارسال شود
+                                                                            : </label>
+                                                                        <label for="sendNotif{{ $user->id }}"
+                                                                            class="w-[50px] h-[28px] flex rounded-full cursor-pointer relative">
+                                                                            <input type="checkbox" name="sendNotif"
+                                                                                value="1"
+                                                                                id="sendNotif{{ $user->id }}" hidden
+                                                                                class="peer cursor-pointer">
+                                                                            <span
+                                                                                class="size-full bg-gray-300 shadow-inner rounded-full peer-checked:bg-[#1B84FF] transition-all duration-300"></span>
+                                                                            <span
+                                                                                class="size-[20px] rounded-full bg-white absolute top-1 left-1 peer-checked:translate-x-[22px] transition-all duration-300 shadow-md"></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="hidden lg:block lg:col-span-4"></div>
+                                                                <button onclick="submitBtn(this)"
                                                                     class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold submitBtn cursor-pointer transition-all duration-300 hover:bg-(--primary-dashboard) hover:text-white">ثبت</button>
                                                                 <button
                                                                     class="col-span-1 md:col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold closeBtn cursor-pointer transition-all duration-300 hover:bg-(--danger-dashboard) hover:text-white">لغو</button>
@@ -982,11 +1021,11 @@
             })
         }
 
-        function submitBtn(e) {
-            e.preventDefault()
-            if (minDeposit && maxDeposit && minWithdraw && maxWithdraw) {
-                document.forms[0].submit()
-            }
-        }
+        // function submitBtn(e) {
+        //     e.preventDefault()
+        //     if (minDeposit && maxDeposit && minWithdraw && maxWithdraw) {
+        //         document.forms[0].submit()
+        //     }
+        // }
     </script>
 @endsection

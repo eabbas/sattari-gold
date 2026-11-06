@@ -402,7 +402,7 @@ function applyuserFilter(){
                                             
                                                     data.roles.forEach(role => {
                                                         let isSelected = user.roleArr.includes(role.id) ? 'selected' : ''
-                                                        html += `<option value="${role.id}" ${isSelected}>${role.faTitle}</option>`
+                                                        html += `<option value="${role.id}" ${isSelected}>${role.name}</option>`
                                                     })
                                               
                                             html+=`</select>
@@ -514,12 +514,12 @@ function applyuserFilter(){
                     if(user.roleArr){
                         data.roles.forEach(role => {
                             let isSelected = user.roleArr.includes(role.id) ? 'selected' : ''
-                            html += `<option value="${role.id}" ${isSelected}>${role.faTitle}</option>`
+                            html += `<option value="${role.id}" ${isSelected}>${role.name}</option>`
                         })
                     } else {
                         data.roles.forEach(role => {
                             html += `
-                                <option value="${role.id}">${role.faTitle}</option>
+                                <option value="${role.id}">${role.name}</option>
                             `
                         })
                     }

@@ -350,7 +350,8 @@ class WalletController extends Controller
 
     public function popupWalletData(Request $request)
     {
-        $user = User::find($request->userId)->load('wallet');
+        $user = User::find($request->userId);
+        $user->wallet;
         return response()->json($user);
     }
 }

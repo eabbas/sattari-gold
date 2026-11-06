@@ -31,6 +31,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
+
 Route::get('/z', function () {
     $logo = logo::first();
     return view('user.user.account', ['logo' => $logo]);
@@ -66,9 +67,11 @@ Route::get('/xyz', function () {
     //     $table->string('receipt')->nullable()->after('description');
     // });
 
-    // Schema::table('users', function (Blueprint $table) {
-    //     $table->string('referral_code')->unique()->nullable()->after('id');
-    // });
+    Schema::table('users', function (Blueprint $table) {
+        $table->tinyInteger('sendNotif')->default(0)->after('isActive');
+    });
+
+    User::where('id', '>', 0)->update(['sendNotif'=>0]);
 
     // foreach(User::all() as $user){
     //     $code = strtoupper(Str::random(10));
