@@ -133,10 +133,6 @@ function setCount(btn) {
     localStorage.setItem('products', JSON.stringify(localProducts))
 
     if (btn.parentElement.children[1].value == 0) {
-        // if (orderBasket && orderBasket.children[1]) {
-        //     orderBasket.children[1].innerText = Math.max(0, (parseInt(orderBasket.children[1].innerText) || 1) - 1)
-        // }
-
         localProducts = localProducts.filter(cart => String(cart.id) !== String(productId))
         localStorage.setItem('products', JSON.stringify(localProducts))
 

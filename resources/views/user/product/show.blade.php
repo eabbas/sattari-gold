@@ -62,15 +62,22 @@
                 <div class="flex items-start justify-between gap-3">
                     <h1 class="text-xl md:text-2xl font-bold text-(--color-text) order-1 in-fa">{{ $product->title }}</h1>
                 </div>
-                <p class="mt-2 text-(--color-text-secondary) text-sm in-fa">
+                <p class="mt-2 text-(--color-text-secondary) text-sm in-fa max-h-10 h-10 ellipsis-2">
                     {{ $product->summary ?? 'سرمایه‌ای مطمئن، ارزشمند و ماندگار' }}
                 </p>
                 <span class="w-full h-px bg-(--color-border-gold) mt-4"></span>
                 <!-- قیمت -->
-                @if ($product->summary)
-                    <p class="mt-3 max-h-10 h-10 ellipsis-2 text-sm text-gray-400">
-                        {{ $product->summary }}
-                    </p>
+                @if($product->count <= 5)
+                    <div class="w-full flex items-center gap-1.5 mt-3 pr-5">
+
+                        <div class="text-gray-600 text-sm">
+                          تنها
+                        </div>
+                        <div class=" text-red-500 in-fa text-sm">{{ $product->count }}</div>
+                        <div class="text-gray-600 text-sm">
+                        عدد موجود در انبار
+                        </div>
+                    </div>
                 @endif
                 <div class="mt-4 flex items-center justify-between gap-3 flex-wrap">
                     @if ($product->primary_price)
@@ -289,15 +296,6 @@
                                             <span class="text-(--color-primary) text-[11px] font-bold">برای استعلام قیمت
                                                 تماس بگیرید</span>
                                         @endif
-                                        <button onclick="addToCart(this)" data-product-id="{{ $pro->id }}"
-                                            class="addToCartBtns size-9 rounded-full bg-(--color-primary)/15 text-(--color-primary) flex items-center justify-center cursor-pointer hover:bg-(--color-primary)/25 transition"
-                                            aria-label="افزودن به سبد خرید">
-                                            <svg class="size-4" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg"
-                                                style="fill: currentColor">
-                                                <path
-                                                    d="M16 0H0V32H16 67.2l77.2 339.5 2.8 12.5H160 496h16V352H496 172.8l-14.5-64H496L566 64l10-32H542.5 100L95.6 12.5 92.8 0H80 16zm91.3 64H532.5l-60 192H151L107.3 64zM184 432a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm0 80a56 56 0 1 0 0-112 56 56 0 1 0 0 112zm248-56a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm80 0a56 56 0 1 0 -112 0 56 56 0 1 0 112 0z" />
-                                            </svg>
-                                        </button>
                                     </div>
                                 </div>
                             @endif
@@ -309,7 +307,7 @@
         @endif
 
         <section class="w-11/12 mx-auto mt-4 lg:mt-8">
-            <p class="text-sm text-justify leading-[1.5] text-gray-600">
+            <p class="text-sm text-justify leading-[1.5] text-gray-600 in-fa">
                 {{ $product->description }}
             </p>
         </section>
