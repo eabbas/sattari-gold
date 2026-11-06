@@ -19,6 +19,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ReferenceSitesController;
 use App\Http\Controllers\TransactionSettingController;
 use App\Http\Middleware\checkIsActive;
+use App\Http\Middleware\checkIsApproved;
 use App\Http\Middleware\checklogin;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Schema\Blueprint;
@@ -105,9 +106,10 @@ Route::group([
     Route::post('/updateProfile', 'updateProfile')->name('updateProfile');
     Route::post('/removeActivationCode', 'removeActivationCode')->name('removeActivationCode');
     Route::post('/checkAuth', 'checkAuth')->name('checkAuth');
-    Route::get('/profile/{user?}', 'profile')->middleware(checklogin::class)->missing(function () {
+    Route::get('/profile/{user?}', 'profile')->middleware(checkIsApproved::class)->missing(function () {
         return to_route('missing');
     })->name('profile');
+    Route::get('/notApproved', 'notApproved')->middleware(checklogin::class)->name('notApproved');
 });
 
 // header routes
@@ -201,7 +203,7 @@ Route::group([
 ], function () {
     Route::get('/user/{user?}', 'wallet')->missing(function () {
         return to_route('missing');
-    })->middleware(checklogin::class)->name('wallet');
+    })->middleware(checkIsApproved::class)->name('wallet');
     Route::post('/transaction/request', 'transactionRequest')->middleware(checkIsActive::class)->name('transactionRequest');
     // Route::post('/transactions', 'transactions')->name('transactions');
     Route::get('/transactions/list', 'transactionsList')->middleware(checkAccess::class . ":transactionsList")->name('transactionsList');
@@ -224,14 +226,13 @@ Route::group([
 Route::group([
     'prefix' => 'deal',
     'controller' => DealController::class,
-    'middleware' => [checklogin::class],
     'as' => 'deal.'
 ], function () {
-    Route::get('/create', 'create')->name('create');
-    Route::get('/confirm/{deal}', 'confirm')->name('confirm');
+    Route::get('/create', 'create')->middleware(checkIsApproved::class)->name('create');
+    Route::get('/confirm/{deal}', 'confirm')->middleware(checkAccess::class . ":deal_confirm")->name('confirm');
     Route::post('/store', 'store')->middleware(checkIsActive::class)->name('store');
     Route::post('/storeTemporary', 'storeTemporary')->middleware(checkIsActive::class)->name('storeTemporary');
-    Route::get('/list', 'list')->name('list');
+    Route::get('/list', 'list')->middleware(checkIsApproved::class)->name('list');
     Route::get('/adminIndex', 'adminIndex')->middleware(checkAccess::class . ":deal_index")->name('adminIndex');
 });
 
@@ -239,7 +240,7 @@ Route::group([
 Route::group([
     'prefix' => 'creditCard',
     'controller' => CreditCardController::class,
-    'middleware' => checklogin::class,
+    'middleware' => checkIsApproved::class,
     'as' => 'creditCard.'
 ], function () {
     Route::get('/create', 'create')->name('create');
@@ -297,7 +298,7 @@ Route::group([
     Route::get('/create', 'create')->name('create');
     Route::post('/store', 'store')->name('store')->withoutMiddleware([checklogin::class]);
     Route::get('/index', 'index')->middleware(checkAccess::class . ":order_show")->name('index');
-    Route::get('/userOrders', 'userOrders')->name('userOrders');
+    Route::get('/userOrders', 'userOrders')->middleware(checkIsApproved::class)->name('userOrders');
 });
 
 // cart routes

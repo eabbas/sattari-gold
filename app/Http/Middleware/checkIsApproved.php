@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
+
+class checkIsApproved
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  Closure(Request): (Response)  $next
+     */
+    public function handle(Request $request, Closure $next): Response
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            if (!$user->isApproved) {
+                return to_route('user.notApproved');
+            }
+        } else {
+            return to_route("user.login")->with('failure', 'ابتدا وارد شوید.');
+        }
+        return $next($request);
+    }
+}
