@@ -100,7 +100,7 @@
                     </li>
                     <li>
                         <a href="{{ route('aboutUs') }}"
-                            class="relative py-2 px-2 xl:text-lg font-bold after:absolute after:content-[''] after:min-w-0 after:transition-all after:duration-300 after:h-0.75 after:rounded-full after:bg-[#c3924d] after:bottom-0 after:right-0 hover:after:min-w-full transition-all duration-300 hover:text-[#C3924D]">درباره
+                            class="relative py-2 px-2 xl:text-lg font-bold @if (Route::is('aboutUs') || Route::is('aboutUs')) after:absolute after:content-[''] after:min-w-full after:transition-all after:duration-300 after:h-0.75 after:rounded-full after:bg-[#c3924d] after:bottom-0 after:right-0 transition-all duration-300 hover:text-[#C3924D] text-[#c3924d] @endif">درباره
                             ما</a>
                     </li>
                 </ul>
@@ -252,7 +252,7 @@
                     </li>
                     <li class="w-full">
                         <a href="{{ route('aboutUs') }}"
-                            class="sm:text-lg font-bold py-3 block border-b-1 border-[#c3924d]/30">درباره
+                            class="@if (Route::is('aboutUs') || Route::is('aboutUs')) text-[#c3924d] @endif sm:text-lg font-bold py-3 block border-b-1 border-[#c3924d]/30">درباره
                             ما</a>
                     </li>
                 </ul>
