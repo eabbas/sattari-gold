@@ -154,8 +154,8 @@
                     </div>
                     <div>
                         <p class="text-slate-800 font-bold mt-1 text-sm sm:text-lg in-fa">
-                            @if (isset($user->birthday))
-                                {{ $user->birthday }}
+                            @if (isset($user->birthDate))
+                                {{ $user->birthDate }}
                             @else
                                 ثبت نشده
                             @endif
@@ -300,14 +300,14 @@
                             @enderror
                         </div>
                         <div class="w-full flex flex-col">
-                            <label for="birthday" class="mb-2">
+                            <label for="birthDate" class="mb-2">
                                 <span>
                                     تارخ تولد :
                                 </span>
                             </label>
                             <input type="text"
                                 class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]"
-                                name="birthday" id="birthday" placeholder="تاریخ تولد خود را وارد کنید" disabled>
+                                name="birthDate" id="birthDate" placeholder="تاریخ تولد خود را وارد کنید" disabled>
                             @error('password')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
                             @enderror
@@ -362,7 +362,7 @@
                 let phoneNumber = document.getElementById('phoneNumber')
                 let nationalCode = document.getElementById('nationalCode')
                 let imgContainer = document.getElementById('imgContainer')
-                let birthday = document.getElementById('birthday')
+                let birthDate = document.getElementById('birthDate')
                 let address = document.getElementById('address')
                 $.ajaxSetup({
                     headers: {
@@ -384,7 +384,7 @@
                         phoneNumber.value = data.phoneNumber
                         nationalCode.value = data.nationalCode
                         address.value = data.address
-                        birthday.value = data.birthday
+                        birthDate.value = data.birthDate
                         imgContainer.innerHTML = ''
                         if (data.mainImage) {
                             let div = document.createElement('div')

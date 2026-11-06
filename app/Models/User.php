@@ -23,7 +23,7 @@ class User extends Authenticatable
         'name',
         'family',
         'address',
-        'birthday',
+        'birthDate',
         'phoneNumber',
         'nationalCode',
         // 'birthDate',
