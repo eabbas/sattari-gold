@@ -1,14 +1,12 @@
 
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفحه پیدا نشد | طلای ستاری</title>
 
-    <script src="{{ asset('assets/js/tailwind.js') }}"></script>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+ 
+@extends('app.document')
+@section('title')
+    طلای ستاری | صفحه یافت نشد    
+@endsection
+@section('content')
+       <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -61,34 +59,10 @@
     </style>
 </head>
 
-<body class="min-h-screen flex flex-col text-[#34302a]">
+<div class="min-h-screen flex flex-col text-[#34302a]">
 
     <!-- Header -->
-    <header class="w-full border-b border-[#eae3d5] bg-white/70">
-        <div class="max-w-7xl mx-auto px-5 md:px-10 h-20 flex items-center justify-between">
-
-            <a href="/" class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-full gold-circle flex items-center justify-center">
-                    <svg class="w-6 h-6 text-[#806027]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M12 2L3 9l9 13 9-13-9-7Z"/>
-                        <path d="M3 9h18M12 2l-3 7 3 13 3-13-3-7Z"/>
-                    </svg>
-                </div>
-
-                <div>
-                    <h1 class="font-bold text-lg tracking-tight">طلای ستاری</h1>
-                    <p class="text-[10px] text-[#a18b63] tracking-widest">SATARI GOLD</p>
-                </div>
-            </a>
-
-            <a href="{{ route('home') }}"
-               class="hidden sm:flex items-center gap-2 text-sm text-[#82765f] hover:text-[#a77c35] transition">
-                <span>بازگشت به خانه</span>
-                <span>←</span>
-            </a>
-
-        </div>
-    </header>
+    @include('app.header')
 
 
     <!-- Main -->
@@ -209,15 +183,5 @@
         </div>
 
     </main>
-
-
-    <!-- Footer -->
-    <footer class="border-t border-[#eae3d5] py-6 px-5">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#a39a89]">
-            <span>© تمامی حقوق برای طلای ستاری محفوظ است.</span>
-            <span>طراحی شده با ظرافت و عشق ✦</span>
-        </div>
-    </footer>
-
-</body>
-</html>
+</div>
+@endsection
