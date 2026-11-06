@@ -200,7 +200,7 @@ function applyuserFilter(){
                                                         </div>
                                                         <div class="font-bold pt-2">
                                                             <span id="withdrawableBalance"
-                                                                data-balance="${user.wallet.asset ?? 0}"
+                                                                data-balance="${user.wallet ? user.wallet.asset ?? 0 : 0}"
                                                                 class="in-fa takebleMoneyAsset"></span>
                                                             <span
                                                                 class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
@@ -260,7 +260,7 @@ function applyuserFilter(){
                                                         </div>
                                                         <div class="font-bold pt-2">
                                                             <span
-                                                                class="in-fa">${user.wallet.goldWeight}</span>
+                                                                class="in-fa">${user.wallet ? user.wallet.goldWeight : 0}</span>
                                                             <span
                                                                 class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
                                                                 گرم
