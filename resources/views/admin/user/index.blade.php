@@ -224,8 +224,8 @@
                     </div>
                 </div>
                 {{-- filters --}}
-                <form action="{{ route("approvedUsersUpdate") }}" method="POST">
-                    @csrf
+                {{-- <form action="{{ route("approvedUsersUpdate") }}" method="POST"> --}}
+                    {{-- @csrf --}}
                     <div id="confirmed" class="w-full">
                         <div class="w-full h-5 bg-zinc-200"></div>
                         <div class="w-full overflow-x-auto">
@@ -677,7 +677,7 @@
                             </table>
                         </div>
                     </div>
-                </form>
+                {{-- </form> --}}
                 <div id="pending" class="w-full hidden">
                     <div class="w-full h-5 bg-zinc-200"></div>
                     <div class="w-full overflow-x-auto">
