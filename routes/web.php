@@ -327,6 +327,8 @@ Route::group([
     Route::post("messageStatus",  "messageStatus")->name("messageStatus");
 });
 
+Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('aboutUs');
+
 // fallback and missing
 Route::fallback([HomeController::class, 'pageNotFound'])->name('fallback');
 Route::get('/missing', [HomeController::class, 'pageNotFound'])->name('missing');

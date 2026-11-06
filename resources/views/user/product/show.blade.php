@@ -4,7 +4,6 @@
 @endsection
 @section('content')
     @php
-        // محاسبه درصد تخفیف (قیمت اصلی = primary_price ، قیمت با تخفیف = secondary_price)
         $p1 = (int) preg_replace('/\D/', '', (string) $product->primary_price);
         $p2 = (int) preg_replace('/\D/', '', (string) $product->secondary_price);
         $discount = $p1 && $p2 && $p1 > $p2 ? round((1 - $p2 / $p1) * 100) : null;
@@ -104,31 +103,25 @@
                     @endif
                 </div>
 
-                <!-- انتخاب وزن -->
-                {{-- <div class="mt-5">
-                    <span class="text-sm font-bold text-(--color-text)">انتخاب وزن:</span>
-                    <div class="mt-2 grid grid-cols-5 gap-2" id="weight-options">
-                        @foreach ([1, 5, 10, 20, 50] as $w)
-                            <button type="button" data-weight="{{ $w }}"
-                                class="weight-btn py-1.5 rounded-full border text-xs cursor-pointer transition-all
-                                {{ $w === 10 ? 'bg-[image:var(--gradient-gold)] text-white border-transparent font-bold' : 'bg-white text-(--color-text) border-(--color-zinc-200) hover:border-(--color-primary)' }}">
-                                {{ $w }} گرم
-                            </button>
-                        @endforeach
-                    </div>
-                </div> --}}
-
-                <!-- افزودن به سبد + علاقه‌مندی -->
+       
                 <div class="mt-5 flex items-center gap-2.5">
-                    <button onclick="addToCart(this)" id="add-to-cart-main" data-weight="10"
-                        data-product-id="{{ $product->id }}"
-                        class="addToCartBtns group flex-1 h-11 flex items-center justify-center gap-2 rounded-full bg-[image:var(--gradient-gold)] shadow-md cursor-pointer transition-all duration-300 hover:shadow-lg">
-                        <svg class="size-4 fill-white" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M16 0H0V32H16 67.2l77.2 339.5 2.8 12.5H160 496h16V352H496 172.8l-14.5-64H496L566 64l10-32H542.5 100L95.6 12.5 92.8 0H80 16zm91.3 64H532.5l-60 192H151L107.3 64zM184 432a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm0 80a56 56 0 1 0 0-112 56 56 0 1 0 0 112zm248-56a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm80 0a56 56 0 1 0 -112 0 56 56 0 1 0 112 0z" />
-                        </svg>
-                        <span class="text-white font-bold text-sm">افزودن به سبد خرید</span>
-                    </button>
+                    @if ($product->count == 0)
+                        <button data-weight="10"
+                            data-product-id="{{ $product->id }}"
+                            class="addToCartBtns group flex-1 h-11 flex items-center justify-center gap-2 rounded-full bg-[image:var(--gradient-gold)] shadow-md cursor-no-drop transition-all duration-300 hover:shadow-lg" disabled>
+                            <span class="text-white font-bold text-sm">ناموجود</span>
+                        </button>
+                    @else
+                        <button onclick="addToCart(this)" id="add-to-cart-main" data-weight="10"
+                            data-product-id="{{ $product->id }}"
+                            class="addToCartBtns group flex-1 h-11 flex items-center justify-center gap-2 rounded-full bg-[image:var(--gradient-gold)] shadow-md cursor-pointer transition-all duration-300 hover:shadow-lg">
+                            <svg class="size-4 fill-white" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M16 0H0V32H16 67.2l77.2 339.5 2.8 12.5H160 496h16V352H496 172.8l-14.5-64H496L566 64l10-32H542.5 100L95.6 12.5 92.8 0H80 16zm91.3 64H532.5l-60 192H151L107.3 64zM184 432a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm0 80a56 56 0 1 0 0-112 56 56 0 1 0 0 112zm248-56a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm80 0a56 56 0 1 0 -112 0 56 56 0 1 0 112 0z" />
+                            </svg>
+                            <span class="text-white font-bold text-sm">افزودن به سبد خرید</span>
+                        </button>
+                    @endif
 
                 </div>
 
@@ -352,10 +345,17 @@
     <!-- نوار سبد خرید موبایل -->
     <div
         class="fixed bottom-0 inset-x-0 z-50 md:hidden bg-white shadow-[0_-4px_16px_rgba(0,0,0,.08)] h-16 px-4 flex items-center justify-between gap-3">
-        <button onclick="addToCart(this)" data-product-id="{{ $product->id }}"
-            class="addToCartBtns w-1/2 h-10 rounded-full bg-[image:var(--gradient-gold)] text-white font-bold text-sm cursor-pointer">
-            افزودن به سبد خرید
-        </button>
+        @if ($product->count == 0)
+            <butto data-product-id="{{ $product->id }}"
+                class="addToCartBtns w-1/2 h-10 rounded-full bg-[image:var(--gradient-gold)] text-white font-bold text-sm cursor-no-drop" disabled>
+              ناموجود
+            </butto>
+        @else
+            <button onclick="addToCart(this)" data-product-id="{{ $product->id }}"
+                class="addToCartBtns w-1/2 h-10 rounded-full bg-[image:var(--gradient-gold)] text-white font-bold text-sm cursor-pointer">
+                افزودن به سبد خرید
+            </button>
+        @endif
         <div class="text-(--color-primary) font-bold">
             <span class="text-base sm:text-xl in-fa">{{ number_format($product->secondary_price) ?: number_format($product->primary_price) }}</span>
             <span class="text-sm">ریال</span>

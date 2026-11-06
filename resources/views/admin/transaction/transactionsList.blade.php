@@ -44,7 +44,7 @@
                 <div class="w-full pb-3 px-3 flex flex-row justify-end">
                     <button onclick="sort(this)" class="flex gap-5 items-center" data-sort="desc">
                         <span>مرتب سازی :</span>
-                        <p>نزولی</p>
+                        <p>جدید به قدیمی</p>
                         <img src="{{ asset('assets/img/sort/desc.png') }}"
                             style="
                             max-width: 30px;

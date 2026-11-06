@@ -151,89 +151,7 @@
                     مشتریان در انتظار تایید</div>
             </div>
             <div>
-                {{-- filters --}}
                 <div class="w-full my-10 px-5">
-
-
-
-
-
-                    {{-- <form action="{{ route('user.search') }}" method="post"
-                        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
-                        @csrf
-                        <div class="w-full flex flex-col">
-                            <label for="name" class="mb-2">
-                                <span>
-                                    نام :
-                                </span>
-                            </label>
-                            <input type="text"
-                                class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]" name="name"
-                                id="name">
-                        </div>
-                        <div class="w-full flex flex-col">
-                            <label for="family" class="mb-2">
-                                <span>
-                                    نام خانوادگی :
-                                </span>
-                            </label>
-                            <input type="text"
-                                class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]" name="family"
-                                id="family">
-                        </div>
-                        <div class="w-full flex flex-col">
-                            <label for="phoneNumber" class="mb-2">
-                                <span>
-                                    شماره تلفن :
-                                </span>
-                            </label>
-                            <input type="tel"
-                                class="text-right outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]"
-                                name="phoneNumber" id="phoneNumber">
-                        </div>
-                        <div class="w-full flex flex-col">
-                            <label for="nationalCode" class="mb-2">
-                                <span>
-                                    کد ملی :
-                                </span>
-                            </label>
-                            <input type="number"
-                                class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]"
-                                name="nationalCode" id="nationalCode">
-                        </div>
-                        <div class="w-full flex flex-col gap-3 mt-5">
-                            <label for="approve" class="mb-2">
-                                <span>وضعیت تایید : </span>
-                            </label>
-                            <select name="approve" id="approve" class="w-full bg-[#F9F9F9] py-3 pr-5 rounded-[10px]">
-                                <option value="all">همه</option>
-                                <option value="-1">رد شده</option>
-                                <option value="0">در انتظار تایید</option>
-                                <option value="1">تایید شده</option>
-                            </select>
-                        </div>
-                        <div class="w-full flex flex-col gap-3 mt-5">
-                            <label for="activity" class="mb-2">
-                                <span>وضعیت فعالیت : </span>
-                            </label>
-                            <select name="activity" id="activity" class="w-full bg-[#F9F9F9] py-3 pr-5 rounded-[10px]">
-                                <option value="all">همه</option>
-                                <option value="1">فعال</option>
-                                <option value="0">غیر فعال</option>
-                            </select>
-                        </div>
-                        <div class="w-full flex items-center justify-center mt-5 text-center">
-                            <button type="submit"
-                                class="py-3 px-10 rounded-[10px] text-gray-700 border-1 border-gray-700 cursor-pointer">اعمال</button>
-                        </div>
-                        <div class="w-full flex items-center justify-center mt-5 text-center">
-                            <a href="{{ route('user.index') }}"
-                                class="py-3 px-10 rounded-[10px] text-gray-700 border-1 border-gray-700 cursor-pointer">حذف
-                                فیلتر</a>
-                        </div>
-                    </form> --}}
-
-
                     <div class="w-full pb-3 px-3 flex flex-row justify-end">
                         <button onclick="sort(this)" class="flex gap-5 items-center" data-sort="desc">
                             <span>مرتب سازی :</span>
@@ -297,20 +215,6 @@
                                     <option value="01">رد شده</option>
                                 </select>
                             </fieldset>
-                            {{-- <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
-                                <legend class="px-2 text-(--text-secondary-dashboard) text-[10px] md:text-sm">
-                                    از تاریخ
-                                </legend>
-                                <input class="w-full outline-none text-xs md:text-base in-fa" dir="ltr" type="text"
-                                    name="fromDate" id="fromDate" placeholder="از تاریخ">
-                            </fieldset>
-                            <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
-                                <legend class="px-2 text-(--text-secondary-dashboard) text-[10px] md:text-sm">
-                                    تا تاریخ
-                                </legend>
-                                <input class="w-full outline-none text-xs md:text-base in-fa" dir="ltr" type="text"
-                                    name="toDate" id="toDate" placeholder="تا تاریخ">
-                            </fieldset> --}}
                         </div>
                         <div class="w-full flex justify-end">
                             <button
@@ -439,227 +343,15 @@
                                                         class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer walletBtn">
                                                         کیف پول
                                                     </button>
-                                                    {{-- <a href="{{ route('wallet.wallet', $user->id) }}" 
-                                                    class="w-3/6 text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer walletBtn">
-                                                    کیف پول
-                                                </a> --}}
                                                     <div id=""
                                                         class="fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2 invisible opacity-0 transition-all flex items-center justify-center popup-wallet">
                                                         <div onclick="wallet(this, 'close')"
                                                             class="absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2 cursour-pointer">
                                                         </div>
-                                                        {{-- <div class="w-2/3 mx-auto bg-white relative z-51 rounded-md">
-                                                        <div
-                                                            class="w-full bg-white p-3 border-b-1 border-b-gray-300 rounded-t-md">
-                                                            <svg xmlns="http://www.w3.org/2000/svg"
-                                                                class="w-5 fill-gray-500 transition-all duration-300 hover:fill-red-600 cursor-pointer closeWalletBtn"
-                                                                viewBox="0 0 384 512">
-                                                                <path
-                                                                    d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z" />
-                                                            </svg>
-                                                        </div>
-                                                        <div
-                                                            class="w-full px-3 py-2 lg:max-h-[calc(100vh-100px)] overflow-y-auto">
-                                                            <div>
-                                                                <div class="grid grid-cols-6 gap-5 mt-5">
-                                                                    <div
-                                                                        class="col-span-6 flex items-center border-1 border-(--border-dashboard) rounded-lg divide-x-1 divide-(--border-dashboard) px-1 md:px-2 py-2 md:py-3 gap-2">
-                                                                        <div class="w-6/12">
-                                                                            <span
-                                                                                class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">نام
-                                                                                :</span>
-                                                                            <span
-                                                                                class="text-xs md:text-base font-bold fullName"></span>
-                                                                        </div>
-                                                                        <div class="w-6/12">
-                                                                            <span
-                                                                                class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره
-                                                                                :</span>
-                                                                            <span
-                                                                                class="text-[10px] md:text-base font-bold in-fa phoneNumber"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
-                                                                        <div
-                                                                            class="w-full bg-white divide-y-1 divide-(--border-dashboard) p-2 rounded-lg">
-                                                                            <div class="flex items-center justify-between">
-                                                                                <div class="flex items-center gap-3 pb-2">
-                                                                                    <span class="">
-                                                                                        <svg class="size-5 fill-(--primary-dashboard)"
-                                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                                            viewBox="0 0 576 512">
-                                                                                            <path
-                                                                                                d="M276.1 405.2l5.6-1.4 0 0c55.2-14.1 117.5-30 182.8-28.1c4.1-31.4 30.9-55.7 63.5-55.7V144c-35.3 0-63.9-28.6-64-63.9c-49.9-1.8-103.1 11.1-164.1 26.6l-5.6 1.4c-55.2 14.1-117.5 30-182.8 28.1C107.4 167.7 80.5 192 48 192V368c35.3 0 63.9 28.6 64 63.9c49.9 1.8 103.1-11.1 164.1-26.6zM0 60.3c16 8.2 32 14.3 48 18.7c80 22.1 160 1.7 240-18.7c96-24.5 192-48.9 288 0V398.9v52.8c-16-8.2-32-14.3-48-18.7c-80-22.1-160-1.7-240 18.7c-96 24.5-192 48.9-288 0V113.1 60.3zM384 256c0 61.9-43 112-96 112s-96-50.1-96-112s43-112 96-112s96 50.1 96 112zM256 192v32h16v64h-8H248v32h16 8 32 8 16V288H312h-8V208 192H288 272 256z">
-                                                                                            </path>
-                                                                                        </svg>
-                                                                                    </span>
-                                                                                    <span
-                                                                                        class="text-xs md:text-base text-(--text-secondary-dashboard) font-bold">
-                                                                                        موجودی ریال
-                                                                                    </span>
-                                                                                </div>
-                                                                                <div
-                                                                                    class="font-bold pb-2 in-fa moneyAsset">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="flex items-center justify-between">
-                                                                                <div class="flex items-center gap-3 pt-2">
-                                                                                    <span
-                                                                                        class="text-(--text-secondary-dashboard) text-xs md:text-sm">
-                                                                                        موجودی قابل برداشت
-                                                                                    </span>
-                                                                                </div>
-                                                                                <div class="font-bold pt-2">
-                                                                                    <span
-                                                                                        class="in-fa takebleMoneyAsset"></span>
-                                                                                    <span
-                                                                                        class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
-                                                                                        ریال
-                                                                                    </span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
-                                                                        <div
-                                                                            class="w-full bg-white divide-y-1 divide-(--border-dashboard) p-2 rounded-lg">
-                                                                            <div class="flex items-center justify-between">
-                                                                                <div class="flex items-center gap-2 pb-2">
-                                                                                    <span class="">
-
-                                                                                        <svg height="30px" width="30px"
-                                                                                            version="1.1" id="Layer_1"
-                                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                                            viewBox="0 0 511.882 511.882"
-                                                                                            xml:space="preserve">
-                                                                                            <polygon style="fill:#F6BB42;"
-                                                                                                points="350.216,176.572 278.374,158.615 37.038,264.123 0,338.207 125.753,374.324 386.13,258.531 ">
-                                                                                            </polygon>
-                                                                                            <polygon style="fill:#FFCE54;"
-                                                                                                points="350.216,176.572 107.756,284.345 125.753,374.324 386.13,258.531 ">
-                                                                                            </polygon>
-                                                                                            <polygon style="fill:#E8AA3D;"
-                                                                                                points="107.756,284.345 37.038,264.123 0.015,338.207 125.753,374.324 ">
-                                                                                            </polygon>
-                                                                                            <polygon style="fill:#F6BB42;"
-                                                                                                points="475.969,212.682 404.127,194.717 162.791,300.232 125.753,374.324 251.504,410.41 511.882,294.625 ">
-                                                                                            </polygon>
-                                                                                            <polygon style="fill:#FFCE54;"
-                                                                                                points="475.969,212.682 233.508,320.431 251.504,410.41 511.882,294.625 ">
-                                                                                            </polygon>
-                                                                                            <polygon style="fill:#E8AA3D;"
-                                                                                                points="233.508,320.431 162.791,300.232 125.753,374.324 251.504,410.41 ">
-                                                                                            </polygon>
-                                                                                            <polygon style="fill:#F6BB42;"
-                                                                                                points="396.316,119.429 324.488,101.473 103.867,198.435 66.843,272.519 192.596,308.621 432.245,201.379 ">
-                                                                                            </polygon>
-                                                                                            <polygon style="fill:#FFCE54;"
-                                                                                                points="396.316,119.429 174.6,218.641 192.596,308.621 432.245,201.379 ">
-                                                                                            </polygon>
-                                                                                            <polygon style="fill:#E8AA3D;"
-                                                                                                points="174.6,218.641 103.867,198.435 66.843,272.519 192.596,308.621 ">
-                                                                                            </polygon>
-                                                                                        </svg>
-                                                                                    </span>
-                                                                                    <span
-                                                                                        class="text-xs md:text-base text-(--text-secondary-dashboard) font-bold">
-                                                                                        موجودی طلا
-                                                                                    </span>
-                                                                                </div>
-                                                                                <div
-                                                                                    class="font-bold pb-2 in-fa goldAsset">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="flex items-center justify-between">
-                                                                                <div class="flex items-center gap-3 pt-2">
-                                                                                    <span
-                                                                                        class="text-(--text-secondary-dashboard) text-xs md:text-sm">
-                                                                                        موجودی قابل برداشت
-                                                                                    </span>
-                                                                                </div>
-                                                                                <div class="font-bold pt-2">
-                                                                                    <span
-                                                                                        class="in-fa takebleGoldAsset"></span>
-                                                                                    <span
-                                                                                        class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
-                                                                                        گرم
-                                                                                    </span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-span-6">
-                                                                        <div
-                                                                            class="flex items-center border-1 border-(--border-dashboard) rounded-lg divide-x-1 divide-(--border-dashboard) px-2 py-3 gap-2">
-                                                                            <label for="deposit{{ $user->id }}"
-                                                                                class="w-6/12 flex items-center gap-1 md:gap-3">
-                                                                                <input
-                                                                                    class="accent-(--primary-dashboard) size-4 md:size-5 deposit"
-                                                                                    type="radio"
-                                                                                    name="transactionType{{ $user->id }}"
-                                                                                    checked value="deposit"
-                                                                                    id="deposit{{ $user->id }}"
-                                                                                    onchange="sendReceipt(this, 'deposit', {{ $user->id }})">
-                                                                                <span
-                                                                                    class="text-xs text-green-400 md:text-base font-bold">واریز</span>
-                                                                            </label>
-                                                                            <label for="withdraw{{ $user->id }}"
-                                                                                class="w-6/12 flex items-center gap-1 md:gap-3">
-                                                                                <input
-                                                                                    class="accent-(--primary-dashboard) size-4 md:size-5 withdraw"
-                                                                                    type="radio"
-                                                                                    name="transactionType{{ $user->id }}"
-                                                                                    value="withdraw"
-                                                                                    id="withdraw{{ $user->id }}"
-                                                                                    onchange="sendReceipt(this, 'withdraw', {{ $user->id }})">
-                                                                                <span
-                                                                                    class="text-xs text-red-400 md:text-base font-bold">برداشت</span>
-                                                                            </label>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <label class="col-span-3"
-                                                                        for="fee{{ $user->id }}">
-                                                                        مبلغ
-                                                                        <input
-                                                                            class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa fee"
-                                                                            type="number" name="fee{{ $user->id }}"
-                                                                            id="fee{{ $user->id }}"
-                                                                            placeholder="ریال" value="">
-                                                                    </label>
-                                                                    <label class="col-span-3"
-                                                                        for="receipt{{ $user->id }}">
-                                                                        تصویر فیش واریزی
-                                                                        <input
-                                                                            class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) receipt"
-                                                                            type="file"
-                                                                            name="receipt{{ $user->id }}"
-                                                                            id="receipt{{ $user->id }}">
-                                                                    </label>
-                                                                    <label class="col-span-6"
-                                                                        for="description{{ $user->id }}">
-                                                                        توضیحات
-                                                                        <textarea
-                                                                            class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) description"
-                                                                            name="description{{ $user->id }}" id="description{{ $user->id }}"></textarea>
-                                                                    </label>
-                                                                    <button type="submit"
-                                                                        class="col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold cursor-pointer transition-all duratoin-300 hover:text-white hover:bg-(--primary-dashboard) submitWallet">ثبت</button>
-                                                                    <button type="reset"
-                                                                        class="col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) transition-all duration-300 hover:text-white hover:bg-(--danger-dashboard) py-4 rounded-md font-bold cursor-pointer closeWalletBtn">
-                                                                        لغو</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div> --}}
+                                                     
                                                         <div
                                                             class="px-3 py-2 w-2/3 mx-auto bg-white relative z-51 rounded-md max-h-[500px] overflow-y-auto">
-                                                            {{-- action="{{ route('wallet.transactionRequest') }}" --}}
-                                                            {{-- method="POST" enctype="multipart/form-data" --}}
                                                             <div>
-                                                                {{-- @csrf --}}
                                                                 <div class="grid grid-cols-6 gap-5 mt-5">
                                                                     <div
                                                                         class="col-span-6 flex flex-col md:flex-row items-center border-1 border-(--border-dashboard) rounded-lg md:divide-x-1 divide-(--border-dashboard) px-1 md:px-2 py-2 md:py-3 gap-2">
@@ -784,7 +476,7 @@
                                                                                     </span>
                                                                                 </div>
                                                                                 <div class="font-bold pt-2">
-                                                                                    <span {{-- {{ number_format(($user->wallet->goldWeight ?? 0) * 25000000) }} --}}
+                                                                                    <span
                                                                                         class="in-fa takebleGoldAsset"></span>
                                                                                     <span
                                                                                         class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
@@ -826,18 +518,13 @@
                                                                                 <span class="text-xs text-red-400"></span>
                                                                             </div>
                                                                         </div>
-                                                                        {{-- @error('transactionType')
-                                                                        <span
-                                                                            class="text-xs text-red-400">{{ $message }}</span>
-                                                                    @enderror --}}
                                                                     </div>
                                                                     <div id="transactionMethod{{ $user->id }}"
                                                                         class="col-span-6 grid grid-cols-6 gap-4">
-                                                                        {{--  onclick="submitBtn(event)" --}}
                                                                     </div>
                                                                     <button type="submit"
                                                                         class="col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold cursor-pointer submitWallet"
-                                                                        onclick="submitWallet(this)">ثبت</button>
+                                                                        onclick="submitWallet(this, {{ $user->id }})">ثبت</button>
                                                                     <button type="reset"
                                                                         class="col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold cursor-pointer closeWalletBtn"
                                                                         onclick="closeWalletBtn(this)">
@@ -847,128 +534,7 @@
                                                         </div>
                                                     </div>
                                                 @endcan
-                                                {{-- <button
-                                                    class="open-popup-look w-2/6 text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-2 py-2 cursor-pointer">
-                                                    بیشتر
-                                                </button>
-                                                <div
-                                                    class="popup-look fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2  invisible opacity-0 transition-all flex items-center justify-center">
-                                                    <div
-                                                        class="close-popup-look2 absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2">
-                                                    </div>
-                                                    <div
-                                                        class="relative z-51 w-[80%] lg:w-200 bg-white rounded-md px-3 py-2">
-                                                        <div
-                                                            class="w-full flex items-center justify-between border-b-1 border-(--border-dashboard) pb-2">
-                                                            <div class="font-bold text-sm md:text-xl">اطلاعات بیشتر</div>
-                                                            <div class="close-popup-look">
-                                                                <svg class="size-4 md:size-6" fill="currentColor"
-                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                    viewBox="0 0 384 512">
-                                                                    <path
-                                                                        d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z">
-                                                                    </path>
-                                                                </svg>
-                                                            </div>
-                                                        </div>
-                                                        <div class="grid grid-cols-6 gap-5 mt-5">
-                                                            <div class="col-span-6 flex items-center justify-between">
-                                                                <div class="font-bold text-sm md:text-lg">مشخصات کاربر
-                                                                </div>
-                                                                <div
-                                                                    class="open-popup-look-edit w-fit text-(--primary-dashboard) font-bold border-1 border-(--primary-dashboard) rounded-md p-2 cursor-pointer">
-                                                                    ویرایش</div>
-                                                            </div>
-                                                            <div
-                                                                class="col-span-3 bg-zinc-100 px-1 py-2 md:px-2 md:py-3 rounded-lg flex items-center gap-1 md:gap-2">
-                                                                <span
-                                                                    class="text-xs md:text-base text-(--text-secondary-dashboard)">نام
-                                                                    :</span>
-                                                                <span class="text-xs md:text-base font-bold">حسین
-                                                                    ستاره</span>
-                                                            </div>
-                                                            <div
-                                                                class="col-span-3 bg-zinc-100 px-1 py-2 md:px-2 md:py-3 rounded-lg flex items-center gap-1 md:gap-2">
-                                                                <span
-                                                                    class="text-[10px] md:text-base text-(--text-secondary-dashboard)">شماره
-                                                                    موبایل :</span>
-                                                                <span
-                                                                    class="text-xs md:text-base font-bold">09123456789</span>
-                                                            </div>
-                                                            <div
-                                                                class="col-span-3 md:col-span-2 bg-zinc-100 px-2 py-3 rounded-lg flex items-center gap-2">
-                                                                <span
-                                                                    class="text-[10px] md:text-base text-(--text-secondary-dashboard)">معرف
-                                                                    :</span>
-                                                                <span class="text-xs md:text-base font-bold">محمد رضا
-                                                                    عولیافان</span>
-                                                            </div>
-                                                            <div
-                                                                class="col-span-3 md:col-span-2 bg-zinc-100 px-2 py-3 rounded-lg flex items-center gap-2">
-                                                                <span
-                                                                    class="text-[10px] md:text-base text-(--text-secondary-dashboard)">کد
-                                                                    حساب داری :</span>
-                                                                <span class="text-xs md:text-base font-bold">-</span>
-                                                            </div>
-                                                            <div
-                                                                class="col-span-3 md:col-span-2 bg-zinc-100 px-2 py-3 rounded-lg flex items-center gap-2">
-                                                                <span
-                                                                    class="text-[10px] md:text-base text-(--text-secondary-dashboard)">نام
-                                                                    دستع بندی :</span>
-                                                                <span class="text-xs md:text-base font-bold">-</span>
-                                                            </div>
-                                                            <div
-                                                                class="col-span-6 bg-zinc-100 p-3 rounded-lg flex items-center justify-between gap-2">
-                                                                <span
-                                                                    class="text-[10px] md:text-base text-(--text-secondary-dashboard)">ارسال
-                                                                    اطلاعات ورود از طریق پیامک به مشتری</span>
-                                                                <button
-                                                                    class="bg-(--primary-dashboard) text-sm md:text-base text-white font-bold rounded-lg px-5 md:px-10 py-1 md:py-3 cursor-pointer">ارسال</button>
-                                                            </div>
-                                                            <div class="col-span-6 text-sm  md:text-lg font-bold">کیف پول
-                                                            </div>
-                                                            <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
-                                                                <div
-                                                                    class="w-full bg-white divide-y-1 divide-(--border-dashboard) p-2 rounded-lg">
-                                                                    <div class="flex items-center justify-between">
-                                                                        <div class="flex items-center gap-3 pb-2">
-                                                                            <span class="">
-                                                                                <svg class="size-5 fill-(--primary-dashboard)"
-                                                                                    xmlns="http://www.w3.org/2000/svg"
-                                                                                    viewBox="0 0 576 512">
-                                                                                    <path
-                                                                                        d="M276.1 405.2l5.6-1.4 0 0c55.2-14.1 117.5-30 182.8-28.1c4.1-31.4 30.9-55.7 63.5-55.7V144c-35.3 0-63.9-28.6-64-63.9c-49.9-1.8-103.1 11.1-164.1 26.6l-5.6 1.4c-55.2 14.1-117.5 30-182.8 28.1C107.4 167.7 80.5 192 48 192V368c35.3 0 63.9 28.6 64 63.9c49.9 1.8 103.1-11.1 164.1-26.6zM0 60.3c16 8.2 32 14.3 48 18.7c80 22.1 160 1.7 240-18.7c96-24.5 192-48.9 288 0V398.9v52.8c-16-8.2-32-14.3-48-18.7c-80-22.1-160-1.7-240 18.7c-96 24.5-192 48.9-288 0V113.1 60.3zM384 256c0 61.9-43 112-96 112s-96-50.1-96-112s43-112 96-112s96 50.1 96 112zM256 192v32h16v64h-8H248v32h16 8 32 8 16V288H312h-8V208 192H288 272 256z" />
-                                                                                </svg>
-                                                                            </span>
-                                                                            <span
-                                                                                class="text-xs md:text-base text-(--text-secondary-dashboard) font-bold">
-                                                                                موجودی ریال
-                                                                            </span>
-                                                                        </div>
-                                                                        <div class="font-bold pb-2">95.478.555</div>
-                                                                    </div>
-                                                                    <div class="flex items-center justify-between">
-                                                                        <div class="flex items-center gap-3 pt-2">
-                                                                            <span
-                                                                                class="text-(--text-secondary-dashboard) text-xs md:text-sm">
-                                                                                موجودی قابل برداشت
-                                                                            </span>
-                                                                        </div>
-                                                                        <div class="font-bold pt-2">
-                                                                            <span class="">
-                                                                                95.478.555
-                                                                            </span>
-                                                                            <span
-                                                                                class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
-                                                                                ریال
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div> --}}
+                                               
                                                 @can('access', 'user_edit')
                                                     <button
                                                         class="open-popup-edited w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-1 py-2 cursor-pointer flex items-center justify-center"
@@ -1248,7 +814,6 @@
                                                                         </label>
                                                                     </div>
                                                                 </div>
-
                                                                 <button
                                                                     class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold submitBtn cursor-pointer transition-all duration-300 hover:bg-(--primary-dashboard) hover:text-white">ثبت</button>
                                                                 <button

@@ -3,12 +3,10 @@
 @section('content')
     <main class="w-11/12 max-w-[1700px] mx-auto my-4 md:my-6">
         <div class="text-[#71717a] text-xs mb-[18px]">خانه / <b class="text-[#333]">جستجو</b></div>
-
-        @if (Route::is('search'))
-            <div class="flex items-end justify-between gap-2.5 mb-[18px]">
+        @if (Route::is('search.page'))
+            <div class="items-end justify-between gap-2.5 mb-[18px] @if(!$title) hidden @else flex @endif">
                 <div>
-                    <h1 id="title" class="m-0 text-[18px] md:text-[22px]">نتایج جستجو برای "{{ isset($title) ? $title : '' }}"
-                    </h1>
+                    <h1 id="title" class="m-0 text-[18px] md:text-[22px]">نتایج جستجو برای " {{ $title }} "</h1>
                     <div id="resultCount" class="text-[#71717a] text-[13px]"></div>
                 </div>
             </div>
@@ -80,8 +78,6 @@
                             class="sort-btn text-xs border-0 bg-transparent text-[#52525b] px-2.5 py-2 rounded-[7px] cursor-pointer"
                             data-sort-by="primary_price" data-sort-type="desc">گران‌ترین</button>
                     </div>
-                    {{-- <button id="viewToggle"
-                        class="border border-[#e4e4e7] bg-white rounded-[7px] w-9 h-[34px] self-end md:self-auto">▦</button> --}}
                 </div>
 
                 <div id="chips" class="block lg:hidden mb-3.5">
@@ -104,8 +100,6 @@
                                     class="absolute top-[25px] right-[25px] z-10 bg-[#c3924d] text-white rounded-[5px] text-[10px] px-[7px] py-1 in-fa">{{ $product->percent }}
                                     %</span>
                             @endif
-                            {{-- <button
-                                class="absolute top-[22px] left-5 z-10 border-0 bg-white text-xl text-[#aaa]">♡</button> --}}
                                 <div class="w-full h-2/3 bg-[#f8f8f8] flex justify-center items-center">
                                     <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->title }}" loading="lazy"
                                         class="min-w-9/12 min-h-9/12 max-w-full max-md:max-h-50 aspect-square rounded-lg">

@@ -34,7 +34,6 @@ class OrdersController extends Controller
         $password = $request->input('password');
         $password = isset($password) ? Hash::make($password) : false;
         $products = json_decode($request->products);
-
         if ($password) {
             User::upsert([
                 'name' => $name,
