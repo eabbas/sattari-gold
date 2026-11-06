@@ -120,6 +120,11 @@ maxPrice.addEventListener('keyup', () => {
 searchInp.addEventListener('keyup', () => {
     clearTimeout(timeout)
     timeout = setTimeout(() => {
+        if (searchInp.value !== ''){
+            title.parentElement.parentElement.classList.remove('hidden')
+        } else {
+            title.parentElement.parentElement.classList.add('hidden')
+        }
         title.innerText = 'نتایج جستجو برای "' + searchInp.value + '"'
         filters.keyword = searchInp.value
         getFilters()

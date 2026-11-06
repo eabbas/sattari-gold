@@ -198,7 +198,7 @@
                 <div
                     class="w-11/12 lg:w-10/12 mx-auto flex items-center gap-2 lg:gap-3.5 border-1 py-1.5 px-3 border-gray-200 rounded-full">
                     <input type="text" name="title" class="w-full py-1 outline-none" placeholder="جستجو ..."
-                        id="" required>
+                        id="">
                     <button>
                         <svg xmlns="http://www.w3.org/2000/svg" class="fill-gray-400 w-4 lg:w-6" viewBox="0 0 512 512">
                             <path

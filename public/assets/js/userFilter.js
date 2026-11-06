@@ -563,13 +563,13 @@ function applyuserFilter(){
 function sort(el) {
     if (el.dataset.sort == 'desc') {
         el.querySelector('img').src = url + 'assets/img/sort/asc.png'
-        el.querySelector('p').innerText = 'صعودی'
+        el.querySelector('p').innerText = 'قدیمی به جدید'
         el.dataset.sort = 'asc'
         userFilter.sortType = 'asc'
     }
     else {
         el.querySelector('img').src = url + 'assets/img/sort/desc.png'
-        el.querySelector('p').innerText = 'نزولی'
+        el.querySelector('p').innerText = 'جدید به قدیمی'
         el.dataset.sort = 'desc'
         userFilter.sortType = 'desc'
     }
