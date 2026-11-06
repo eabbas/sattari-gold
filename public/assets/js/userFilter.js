@@ -319,7 +319,7 @@ function applyuserFilter(){
                                             
                                             </div>
                                             <button type="submit"
-                                                class="col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold cursor-pointer submitWallet" onclick="submitWallet(this)">ثبت</button>
+                                                class="col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold cursor-pointer submitWallet" onclick="submitWallet(this, ${user.id})">ثبت</button>
                                             <button type="reset"
                                                 class="col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold cursor-pointer closeWalletBtn" onclick="closeWalletBtn(this)">
                                                 لغو</button>

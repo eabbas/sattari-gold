@@ -69,7 +69,7 @@ function wallet(el, state, userId) {
     }
 }
 
-function submitWallet(el){
+function submitWallet(el, userId){
     let deposit = el.closest('.popup-wallet').querySelector('.deposit')
     let withdraw = el.closest('.popup-wallet').querySelector('.withdraw')
     let receipt = el.closest('.popup-wallet').querySelector('.receipt')
