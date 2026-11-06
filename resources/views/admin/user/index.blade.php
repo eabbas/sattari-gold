@@ -407,7 +407,7 @@
                                                                                     </span>
                                                                                 </div>
                                                                                 <div class="font-bold pt-2">
-                                                                                    <span id="withdrawableBalance"
+                                                                                    <span id="withdrawableBalance{{ $user->id }}"
                                                                                         data-balance="{{ $user->wallet ? number_format($user->wallet['asset']) ?? 0 : 0}}"
                                                                                         class="in-fa takebleMoneyAsset"></span>
                                                                                     <span
@@ -910,117 +910,131 @@
 
         function checkFee(state, el) {
             let inputValue = Number(el.children[1].value)
-            el.children[2].innerText = ""
+            el.querySelector('div').children[1].innerText = ""
             minDeposit = true
             maxDeposit = true
             minWithdraw = true
             maxWithdraw = true
             if (state == 'deposit') {
                 if (inputValue < setting.minDepositAmount) {
-                    el.children[2].innerText =
+                    el.querySelector('div').children[1].innerText =
                         `حداقل مبلغ قابل واریز ${parseInt(setting.minDepositAmount).toLocaleString('fa-IR')} ریال است.`
                     minDeposit = false
                 }
                 if (inputValue > setting.maxDepositAmount) {
-                    el.children[2].innerText =
+                    el.querySelector('div').children[1].innerText =
                         `حداکثر مبلغ قابل واریز ${parseInt(setting.maxDepositAmount).toLocaleString('fa-IR')} ریال است.`
                     maxDeposit = false
                 }
             }
             if (state == 'withdraw') {
                 if (inputValue < setting.minWithdrawAmount) {
-                    el.children[2].innerText =
+                    el.querySelector('div').children[1].innerText =
                         `حداقل مبلغ قابل برداشت ${parseInt(setting.minWithdrawAmount).toLocaleString('fa-IR')} ریال است.`
                     minWithdraw = false
                 }
                 if (inputValue > setting.maxWithdrawAmount) {
-                    el.children[2].innerText =
+                    el.querySelector('div').children[1].innerText =
                         `حداکثر مبلغ قابل برداشت ${parseInt(setting.maxWithdrawAmount).toLocaleString('fa-IR')} ریال است.`
                     maxWithdraw = false
                 }
             }
+            let tomanPrice = Math.floor(parseInt(el.querySelector('input').value) / 10)
+            if(tomanPrice != 0 && tomanPrice != NaN && el.querySelector('input').value !== ''){
+                el.querySelector('div').children[0].innerText ='معادل ' + tomanPrice.toLocaleString('fa-IR') +  ' تومان'
+            } else {
+                el.querySelector('div').children[0].innerText = ''
+            }
         }
 
         function transactionMethod(state, el, userId) {
-            let transactionMethod = document.getElementById('transactionMethod' + userId)
-            if (state == 'deposit') {
-                if (setting.depositIsActive == 0) {
-                    el.parentElement.nextElementSibling.innerText = 'در حال حاضر امکان واریز کردن غیرفعال است'
-                    el.checked = false
-                } else {
-                    transactionMethod.innerHTML = `
-                        <label class="col-span-6 md:col-span-3" for="depositFee" onkeyup="checkFee('deposit', this)">
-                                مبلغ
-                                <span class="text-[10px] text-red-500">(اجباری)</span>
-                                <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa fee" type="number" name="depositFee" id="depositFee" placeholder="ریال" value="">
-                                <span class="text-xs text-red-500"></span>
-                        </label>
-                        <label class="col-span-6 md:col-span-3" for="receipt">
-                                تصویر فیش واریزی
-                                <span class="text-[10px] text-red-500">(اجباری)</span>
-                                <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) receipt" type="file" name="receipt" id="receipt">
-                        </label>
-                        <label class="col-span-6" for="description">
-                                توضیحات
-                                <textarea class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) description" name="description" id="description"></textarea>
-                        </label>
-                `
+            let transactionMethod = document.getElementById('transactionMethod'+userId)
+            if (setting) {
+                if (state == 'deposit') {
+                    if (setting.depositIsActive == 0) {
+                        el.parentElement.nextElementSibling.innerText = 'در حال حاضر امکان واریز کردن غیرفعال است'
+                        el.checked = false
+                    } else {
+                        transactionMethod.innerHTML = `
+                            <label class="col-span-6 md:col-span-3" for="depositFee" onkeyup="checkFee('deposit', this)">
+                                    مبلغ
+                                    <span class="text-[10px] text-red-500">(اجباری)</span>
+                                    <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa" type="number" name="depositFee" id="depositFee" placeholder="ریال" value="">
+                                    <div class="my-1 flex flex-col gap-1">
+                                        <span class="text-xs text-gray-500"></span>
+                                        <span class="text-xs text-red-500"></span>
+                                    </div>
+                            </label>
+                            <label class="col-span-6 md:col-span-3" for="receipt">
+                                    تصویر فیش واریزی
+                                    <span class="text-[10px] text-red-500">(اجباری)</span>
+                                    <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)" type="file" name="receipt" id="receipt">
+                            </label>
+                            <label class="col-span-6" for="description">
+                                    توضیحات
+                                    <textarea class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)" name="description" id="description"></textarea>
+                            </label>
+                    `
+                    }
                 }
-            }
-            if (state == 'withdraw') {
-                if (setting.withdrawIsActive == 0) {
-                    el.parentElement.nextElementSibling.innerText = 'در حال حاضر امکان برداشت کردن غیرفعال است'
-                    el.checked = false
-                } else {
-                    transactionMethod.innerHTML = `
-                        <div id="percents" class="col-span-6 p-4">
-                            <span class="mb-5 block">برداشت از کیف پول به مقدار:</span>
-                            <div class="w-full flex items-center justify-between gap-2">
-                                <div class="">
-                                    <label for="withdrawPercent10" class="in-fa">10%</label>
-                                    <input type="radio" name="withdrawPercent" id="withdrawPercent10" value="10">
-                                </div>
-                                <div class="">
-                                    <label for="withdrawPercent25" class="in-fa">25%</label>
-                                    <input type="radio" name="withdrawPercent" id="withdrawPercent25" value="25">
-                                </div>
-                                <div class="">
-                                    <label for="withdrawPercent50" class="in-fa">50%</label>
-                                    <input type="radio" name="withdrawPercent" id="withdrawPercent50" value="50">
-                                </div>
-                                <div class="">
-                                    <label for="withdrawPercent75" class="in-fa">75%</label>
-                                    <input type="radio" name="withdrawPercent" id="withdrawPercent75" value="75">
-                                </div>
-                                <div class="">
-                                    <label for="withdrawPercent100" class="in-fa">100%</label>
-                                    <input type="radio" name="withdrawPercent" id="withdrawPercent100" value="100">
+                if (state == 'withdraw') {
+                    if (setting.withdrawIsActive == 0) {
+                        el.parentElement.nextElementSibling.innerText = 'در حال حاضر امکان برداشت کردن غیرفعال است'
+                        el.checked = false
+                    } else {
+                        transactionMethod.innerHTML = `
+                            <div id="percents" class="col-span-6 p-4">
+                                <span class="mb-5 block">برداشت از کیف پول به مقدار:</span>
+                                <div class="w-full flex items-center justify-between gap-2">
+                                    <div class="">
+                                        <label for="withdrawPercent10" class="in-fa">10%</label>
+                                        <input type="radio" name="withdrawPercent" id="withdrawPercent10" value="10">
+                                    </div>
+                                    <div class="">
+                                        <label for="withdrawPercent25" class="in-fa">25%</label>
+                                        <input type="radio" name="withdrawPercent" id="withdrawPercent25" value="25">
+                                    </div>
+                                    <div class="">
+                                        <label for="withdrawPercent50" class="in-fa">50%</label>
+                                        <input type="radio" name="withdrawPercent" id="withdrawPercent50" value="50">
+                                    </div>
+                                    <div class="">
+                                        <label for="withdrawPercent75" class="in-fa">75%</label>
+                                        <input type="radio" name="withdrawPercent" id="withdrawPercent75" value="75">
+                                    </div>
+                                    <div class="">
+                                        <label for="withdrawPercent100" class="in-fa">100%</label>
+                                        <input type="radio" name="withdrawPercent" id="withdrawPercent100" value="100">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <label class="col-span-6 md:col-span-3" for="withdrawFee" onkeyup="checkFee('withdraw', this)">
-                            مبلغ
-                            <span class="text-[10px] text-red-500">(اجباری)</span>
-                            <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa fee" type="number" name="withdrawFee" id="withdrawFee" placeholder="ریال" value="">
-                            <span class="text-xs text-red-500"></span>
-                        </label>
-                        <label class="col-span-6" for="description">
-                            توضیحات
-                            <textarea class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) description" name="description" id="description"></textarea>
-                        </label>
-                `
-                    percents()
+                            <label class="col-span-6 md:col-span-3" for="withdrawFee" onkeyup="checkFee('withdraw', this)">
+                                مبلغ
+                                <span class="text-[10px] text-red-500">(اجباری)</span>
+                                <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa" type="number" name="withdrawFee" id="withdrawFee" placeholder="ریال" value="">
+                                <div class="my-1 flex flex-col gap-1">
+                                        <span class="text-xs text-gray-500"></span>
+                                        <span class="text-xs text-red-500"></span>
+                                    </div>
+                            </label>
+                            <label class="col-span-6" for="description">
+                                توضیحات
+                                <textarea class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)" name="description" id="description"></textarea>
+                            </label>
+                    `
+                        percents(userId)
+                    }
                 }
             }
         }
 
-        function percents() {
+        function percents(userId) {
             let withdrawPercents = document.querySelectorAll('input[name="withdrawPercent"]')
-            let withdrawableBalance = document.getElementById('withdrawableBalance').dataset.balance
+            let withdrawableBalance = document.getElementById('withdrawableBalance'+userId).dataset.balance
             let feeInput = document.getElementById('withdrawFee')
             withdrawPercents.forEach(percent => {
                 percent.addEventListener('change', function() {
-                    let result = (parseInt(percent.value) / 100) * parseInt(withdrawableBalance)
+                    let result = (parseInt(percent.value) / 100) * +withdrawableBalance.replaceAll(',', '')
                     let value = Math.round(result)
                     feeInput.value = value
                     checkFee('withdraw', feeInput.parentElement)

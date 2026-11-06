@@ -205,34 +205,40 @@
 
         function checkFee(state, el) {
             let inputValue = Number(el.children[1].value)
-            el.children[2].innerText = ""
+            el.querySelector('div').children[1].innerText = ""
             minDeposit = true
             maxDeposit = true
             minWithdraw = true
             maxWithdraw = true
             if (state == 'deposit') {
                 if (inputValue < setting.minDepositAmount) {
-                    el.children[2].innerText =
+                    el.querySelector('div').children[1].innerText =
                         `حداقل مبلغ قابل واریز ${parseInt(setting.minDepositAmount).toLocaleString('fa-IR')} ریال است.`
                     minDeposit = false
                 }
                 if (inputValue > setting.maxDepositAmount) {
-                    el.children[2].innerText =
+                    el.querySelector('div').children[1].innerText =
                         `حداکثر مبلغ قابل واریز ${parseInt(setting.maxDepositAmount).toLocaleString('fa-IR')} ریال است.`
                     maxDeposit = false
                 }
             }
             if (state == 'withdraw') {
                 if (inputValue < setting.minWithdrawAmount) {
-                    el.children[2].innerText =
+                    el.querySelector('div').children[1].innerText =
                         `حداقل مبلغ قابل برداشت ${parseInt(setting.minWithdrawAmount).toLocaleString('fa-IR')} ریال است.`
                     minWithdraw = false
                 }
                 if (inputValue > setting.maxWithdrawAmount) {
-                    el.children[2].innerText =
+                    el.querySelector('div').children[1].innerText =
                         `حداکثر مبلغ قابل برداشت ${parseInt(setting.maxWithdrawAmount).toLocaleString('fa-IR')} ریال است.`
                     maxWithdraw = false
                 }
+            }
+            let tomanPrice = Math.floor(parseInt(el.querySelector('input').value) / 10)
+            if(tomanPrice != 0 && tomanPrice != NaN && el.querySelector('input').value !== ''){
+                el.querySelector('div').children[0].innerText ='معادل ' + tomanPrice.toLocaleString('fa-IR') +  ' تومان'
+            } else {
+                el.querySelector('div').children[0].innerText = ''
             }
         }
 
@@ -249,7 +255,10 @@
                                     مبلغ
                                     <span class="text-[10px] text-red-500">(اجباری)</span>
                                     <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa" type="number" name="depositFee" id="depositFee" placeholder="ریال" value="">
-                                    <span class="text-xs text-red-500"></span>
+                                    <div class="my-1 flex flex-col gap-1">
+                                        <span class="text-xs text-gray-500"></span>
+                                        <span class="text-xs text-red-500"></span>
+                                    </div>
                             </label>
                             <label class="col-span-6 md:col-span-3" for="receipt">
                                     تصویر فیش واریزی
@@ -298,7 +307,10 @@
                                 مبلغ
                                 <span class="text-[10px] text-red-500">(اجباری)</span>
                                 <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa" type="number" name="withdrawFee" id="withdrawFee" placeholder="ریال" value="">
-                                <span class="text-xs text-red-500"></span>
+                                <div class="my-1 flex flex-col gap-1">
+                                        <span class="text-xs text-gray-500"></span>
+                                        <span class="text-xs text-red-500"></span>
+                                    </div>
                             </label>
                             <label class="col-span-6" for="description">
                                 توضیحات

@@ -367,7 +367,7 @@ function submitBtn(el) {
                                                     </span>
                                                 </div>
                                                 <div class="font-bold pt-2">
-                                                    <span id="withdrawableBalance"
+                                                    <span id="withdrawableBalance${data.user.id}"
                                                         data-balance="${ data.user.wallet ? data.user.wallet.asset.toLocaleString('fa-IR') ?? 0 : 0 }"
                                                         class="in-fa takebleMoneyAsset"></span>
                                                     <span

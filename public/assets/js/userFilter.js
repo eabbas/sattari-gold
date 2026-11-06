@@ -199,7 +199,7 @@ function applyuserFilter(){
                                                             </span>
                                                         </div>
                                                         <div class="font-bold pt-2">
-                                                            <span id="withdrawableBalance"
+                                                            <span id="withdrawableBalance${user.id}"
                                                                 data-balance="${user.wallet ? user.wallet.asset ?? 0 : 0}"
                                                                 class="in-fa takebleMoneyAsset"></span>
                                                             <span
