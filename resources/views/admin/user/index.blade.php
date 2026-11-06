@@ -814,7 +814,6 @@
                                                                         </label>
                                                                     </div>
                                                                 </div>
-
                                                                 <button
                                                                     class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold submitBtn cursor-pointer transition-all duration-300 hover:bg-(--primary-dashboard) hover:text-white">ثبت</button>
                                                                 <button
