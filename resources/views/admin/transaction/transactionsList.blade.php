@@ -223,7 +223,7 @@
                                     @can('access', 'transactionDetail')
                                         <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
                                             <button
-                                                onclick="showTransaction('{{ $transaction->wallet->user->name . ' ' . $transaction->wallet->user->family }}', '{{ $transaction->wallet->user->phoneNumber }}', '{{ $transaction->time . ' | ' . $transaction->date }}', '{{ $transaction->stateColor }}', '{{ $transaction->stateTitle }}', '{{ $transaction->type }}', '{{ $transaction->amount }}', '{{ $transaction->isApproved }}', '{{ $transaction->id }}', '{{ $transaction->receipt }}')"
+                                                onclick="showTransaction('{{ $transaction->wallet->user->name . ' ' . $transaction->wallet->user->family }}', '{{ $transaction->wallet->user->phoneNumber }}', '{{ $transaction->time . ' | ' . $transaction->date }}', '{{ $transaction->stateColor }}', '{{ $transaction->stateTitle }}', '{{ $transaction->type }}', '{{ $transaction->amount }}', '{{ $transaction->isApproved }}', '{{ $transaction->id }}', '{{ $transaction->card }}', '{{ $transaction->shaba }}', '{{ $transaction->receipt }}')"
                                                 class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer openPopup">
                                                 مشاهده
                                             </button>
@@ -292,12 +292,12 @@
                         <div class="w-6/12 flex flex-col sm:flex-row gap-2">
                             <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1 in-fa">شماره
                                 کارت :</span>
-                            <span class="text-[8px] sm:text-xs md:text-base font-bold"></span>
+                            <span class="text-[8px] sm:text-xs md:text-base font-bold in-fa" id="cardNumber">هنوز شماره کارت وارد نشده</span>
                         </div>
                         <div class="w-6/12 flex flex-col sm:flex-row gap-2">
                             <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1 in-fa">شماره
                                 شبا :</span>
-                            <span class="text-[8px] sm:text-xs md:text-base font-bold"></span>
+                            <span class="text-[8px] sm:text-xs md:text-base font-bold in-fa" id="shabaNumber">هنوز شماره شبا وارد نشده</span>
                         </div>
                     </div>
                 </div>

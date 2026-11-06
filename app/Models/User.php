@@ -32,6 +32,7 @@ class User extends Authenticatable
         // 'referralCode',
         // 'note',
         'isActive',
+        'sendNotif',
         // 'loginWithPass',
         'password',
     ];
@@ -100,5 +101,9 @@ class User extends Authenticatable
     public function addresses()
     {
         return $this->hasMany(address::class);
+    }
+
+    public function creditCards(){
+        return $this->hasMany(creditCard::class);
     }
 }

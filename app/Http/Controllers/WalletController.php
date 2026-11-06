@@ -219,6 +219,7 @@ class WalletController extends Controller
         $transactions = transaction::orderBy('date', 'desc')->orderBy('time', 'desc')->get();
         $logo = logo::first();
         foreach ($transactions as $transaction) {
+            
             switch ($transaction->type) {
                 case 'deposit':
                     $transaction->type = 'واریز';
@@ -250,6 +251,14 @@ class WalletController extends Controller
                     $transaction->stateTitle = 'تایید شده';
                     $transaction->stateColor = '#3aae3f';
                     break;
+            }
+            if(count($transaction->wallet->user->creditCards)>0){
+                foreach($transaction->wallet->user->creditCards as $creditCard){
+                    if($creditCard->default == 1){
+                        $transaction->card = implode(' ', str_split($creditCard->card_number, 4));
+                        $transaction->shaba = implode(' ', str_split($creditCard->shaba_number, 4));
+                    }
+                }
             }
         }
         return view('admin.transaction.transactionsList', ['logo' => $logo, 'transactions' => $transactions]);
@@ -350,7 +359,8 @@ class WalletController extends Controller
 
     public function popupWalletData(Request $request)
     {
-        $user = User::find($request->userId)->load('wallet');
+        $user = User::find($request->userId);
+        $user->wallet;
         return response()->json($user);
     }
 }

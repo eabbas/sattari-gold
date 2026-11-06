@@ -314,6 +314,14 @@ class SearchController extends Controller
                     $transaction->stateColor = '#3aae3f';
                     break;
             }
+            if(count($transaction->wallet->user->creditCards)>0){
+                foreach($transaction->wallet->user->creditCards as $creditCard){
+                    if($creditCard->default == 1){
+                        $transaction->card = implode(' ', str_split($creditCard->card_number, 4));
+                        $transaction->shaba = implode(' ', str_split($creditCard->shaba_number, 4));
+                    }
+                }
+            }
         }
         return response()->json($transactions);
     }
@@ -384,7 +392,6 @@ class SearchController extends Controller
                     break;
             }
         }
-
         
 
         return response()->json(['users'=>$users, 'roles'=>$roles]);

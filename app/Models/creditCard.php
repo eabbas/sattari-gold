@@ -14,4 +14,8 @@ class creditCard extends Model
         'shaba_number',
         'default',
     ];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

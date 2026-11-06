@@ -18,6 +18,8 @@ let transactionId = document.getElementById('transactionId')
 let type = document.getElementById('type')
 let transactionControl = document.getElementById('transactionControl')
 let showImg = document.getElementById('showImg')
+let cardNumber = document.getElementById('cardNumber')
+let shabaNumber = document.getElementById('shabaNumber')
 
 let transactionPopup = document.getElementById('transaction')
 let closeBtn = document.getElementById('closeBtn')
@@ -53,6 +55,7 @@ function applyDealFilters() {
             'filters': dealFilters
         },
         success: function (data) {
+            console.log(data)
             let counter = 0;
             let bodyTable = document.querySelector('tbody');
             bodyTable.innerHTML = ''
@@ -96,7 +99,7 @@ function applyDealFilters() {
                         </div>
                     </td>
                     <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
-                        <button onclick="showTransaction('${row.wallet.user.name + ' ' + row.wallet.user.family}', '${row.wallet.user.phoneNumber}', '${row.time + ' | ' + row.date}', '${row.stateColor}', '${row.stateTitle}', '${row.type}', '${row.amount}', '${row.isApproved}', '${row.id}', '${row.receipt}')" 
+                        <button onclick="showTransaction('${row.wallet.user.name + ' ' + row.wallet.user.family}', '${row.wallet.user.phoneNumber}', '${row.time + ' | ' + row.date}', '${row.stateColor}', '${row.stateTitle}', '${row.type}', '${row.amount}', '${row.isApproved}', '${row.id}', '${row.card}', '${row.shaba}', '${row.receipt}')" 
                         class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer">
                             مشاهده
                         </button>
@@ -126,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 100)
 })
 
-function showTransaction(user, phoneNumber, dateTime, stateColor, stateTitle, type, amount, isApproved, transactionId, receipt = null) {
+function showTransaction(user, phoneNumber, dateTime, stateColor, stateTitle, type, amount, isApproved, transactionId ,card, shaba, receipt = null) {
     transactionPopup.classList.remove('invisible', 'opacity-0')
     transactionControl.classList.remove('hidden')
     transactionControl.dataset.transactionId = transactionId
@@ -139,7 +142,9 @@ function showTransaction(user, phoneNumber, dateTime, stateColor, stateTitle, ty
     document.getElementById('transactionPopupStatus').innerText = stateTitle
     document.getElementById('transactionPopupStatus').classList.add('text-[' + stateColor + ']')
     document.getElementById('transactionPopupType').innerText = type
-    document.getElementById('transactionPopupFee').innerText = amount
+    document.getElementById('transactionPopupFee').innerText = parseInt(amount).toLocaleString('fa-IR')
+    cardNumber.innerText = card !== "" ? card :'هنوز شماره کارت وارد نشده'
+    shabaNumber.innerText = shaba !== "" ? shaba :'هنوز شماره شبا وارد نشده'
     let transactionPopupReceipt = document.getElementById('transactionPopupReceipt')
     if (type == 'واریز') {
         transactionPopupReceipt.classList.remove('hidden')
@@ -223,7 +228,7 @@ function transactionAct(isApproved) {
                             </div>
                         </td>
                         <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
-                            <button onclick="showTransaction('${response.fullName}', '${response.wallet.user.phoneNumber}', '${response.time + ' | ' + response.date}', '${response.stateColor}', '${response.stateTitle}', '${response.type}', '${response.amount}', '${response.isApproved}', '${response.id}', '${response.receipt}')" 
+                            <button onclick="showTransaction('${response.fullName}', '${response.wallet.user.phoneNumber}', '${response.time + ' | ' + response.date}', '${response.stateColor}', '${response.stateTitle}', '${response.type}', '${response.amount}', '${response.isApproved}', '${response.id}', '${response.card}', '${response.shaba}', '${response.receipt}')" 
                             class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer">
                                 مشاهده
                             </button>

@@ -6,14 +6,8 @@
     طلای ستاری | صفحه یافت نشد    
 @endsection
 @section('content')
-       <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        * {
-            font-family: 'Vazirmatn', sans-serif;
-        }
 
         body {
             background: #faf8f3;
@@ -57,16 +51,14 @@
             50% { transform: translateY(-12px); }
         }
     </style>
-</head>
+
 
 <div class="min-h-screen flex flex-col text-[#34302a]">
 
-    <!-- Header -->
-    @include('app.header')
 
 
     <!-- Main -->
-    <main class="flex-1 flex items-center justify-center px-5 py-14 bg-[url('{{ asset('assets/img/404bg.jpg') }}')] bg-cover bg-no-repeat bg-center">
+    <main class="flex-1 flex items-center justify-center px-5 py-14 bg-[url('{{ asset('assets/img/404bg.jpg') }}')] bg-cover bg-no-repeat bg-left">
 
         <div class="max-w-5xl w-full grid md:grid-cols-2 gap-12 items-center">
 
@@ -137,24 +129,18 @@
             <!-- Text -->
             <div class="order-2 md:order-1 text-center md:text-right">
 
-                <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#f2ead9] text-[#9b783c] text-xs mb-7">
-                    <span class="w-1.5 h-1.5 rounded-full bg-[#b58b43]"></span>
-                    صفحه مورد نظر پیدا نشد
-                </span>
-
                 <h2 class="text-8xl sm:text-9xl font-extrabold gold-text leading-none mb-5">
                     404
                 </h2>
 
                 <h3 class="text-xl md:text-2xl font-bold mb-4">
-                    انگار این قطعه از ویترین ما گم شده!
+                    صفحه مورد نظر پیدا نشد!
                 </h3>
 
                 <p class="text-sm md:text-base text-[#8d8679] leading-8 max-w-md mx-auto md:mx-0">
                     صفحه‌ای که دنبالش هستید وجود ندارد،
                     ممکن است آدرس آن تغییر کرده باشد یا
                     به اشتباه وارد شده باشد.
-                    نگران نباشید، زیبایی هنوز در انتظار شماست!
                 </p>
 
                 <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 mt-9">
@@ -164,11 +150,6 @@
                         <span>بازگشت به صفحه اصلی</span>
                         <span>←</span>
                     </a>
-
-                    <button onclick="history.back()"
-                            class="w-full sm:w-auto px-8 py-4 rounded-xl gold-border text-[#92733c] text-sm font-medium hover:bg-[#f3ead8] transition">
-                        بازگشت به صفحه قبل
-                    </button>
 
                 </div>
 

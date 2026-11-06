@@ -96,6 +96,10 @@ function applyuserFilter(){
                             ${user.phoneNumber}
                         </td>
                         <td
+                            class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa phoneNumberList">
+                            ${user.roles.length>0 ? user.roles[0].name : 'بدون نقش'}
+                        </td>
+                        <td
                             class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                             -
                         </td>
@@ -195,8 +199,8 @@ function applyuserFilter(){
                                                             </span>
                                                         </div>
                                                         <div class="font-bold pt-2">
-                                                            <span id="withdrawableBalance"
-                                                                data-balance="${user.wallet.asset ?? 0}"
+                                                            <span id="withdrawableBalance${user.id}"
+                                                                data-balance="${user.wallet ? user.wallet.asset ?? 0 : 0}"
                                                                 class="in-fa takebleMoneyAsset"></span>
                                                             <span
                                                                 class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
@@ -256,7 +260,7 @@ function applyuserFilter(){
                                                         </div>
                                                         <div class="font-bold pt-2">
                                                             <span
-                                                                class="in-fa">${user.wallet.goldWeight}</span>
+                                                                class="in-fa">${user.wallet ? user.wallet.goldWeight : 0}</span>
                                                             <span
                                                                 class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
                                                                 گرم
@@ -397,12 +401,12 @@ function applyuserFilter(){
                                             نقش
                                             <select
                                                 class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) roles"
-                                                name="" id="" multiple
+                                                name="" id=""
                                                 size="1">`
                                             
                                                     data.roles.forEach(role => {
                                                         let isSelected = user.roleArr.includes(role.id) ? 'selected' : ''
-                                                        html += `<option value="${role.id}" ${isSelected}>${role.faTitle}</option>`
+                                                        html += `<option value="${role.id}" ${isSelected}>${role.name}</option>`
                                                     })
                                               
                                             html+=`</select>
@@ -427,6 +431,27 @@ function applyuserFilter(){
                                                 </label>
                                             </div>
                                         </div>
+
+                                        <div
+                                            class="border-1 border-(--border-dashboard) h-fit rounded-md hover:shadow-sm transition-all col-span-2 md:col-span-2 flex items-center justify-between w-full py-2 px-4 mt-5">
+                                            <div class="w-full flex justify-between items-center">
+                                                <label for="AsendNotif${user.id}"
+                                                    class="w-[calc(100%-50px)] text-start cursor-pointer">نوتیف ارسال شود
+                                                    : </label>
+                                                <label for="AsendNotif${user.id}"
+                                                    class="w-[50px] h-[28px] flex rounded-full cursor-pointer relative">
+                                                    <input type="checkbox" name="isActive"
+                                                        value="1"
+                                                        id="AsendNotif${user.id}"
+                                                        hidden="" class="peer cursor-pointer">
+                                                    <span
+                                                        class="size-full bg-gray-300 shadow-inner rounded-full peer-checked:bg-[#1B84FF] transition-all duration-300"></span>
+                                                    <span
+                                                        class="size-[20px] rounded-full bg-white absolute top-1 left-1 peer-checked:translate-x-[22px] transition-all duration-300 shadow-md"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="hidden lg:block lg:col-span-4"></div>
 
                                         <button
                                             class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold submitBtn cursor-pointer transition-all duration-300 hover:bg-(--primary-dashboard) hover:text-white" onclick="submitEditUser(this)">ثبت</button>
@@ -514,12 +539,12 @@ function applyuserFilter(){
                     if(user.roleArr){
                         data.roles.forEach(role => {
                             let isSelected = user.roleArr.includes(role.id) ? 'selected' : ''
-                            html += `<option value="${role.id}" ${isSelected}>${role.faTitle}</option>`
+                            html += `<option value="${role.id}" ${isSelected}>${role.name}</option>`
                         })
                     } else {
                         data.roles.forEach(role => {
                             html += `
-                                <option value="${role.id}">${role.faTitle}</option>
+                                <option value="${role.id}">${role.name}</option>
                             `
                         })
                     }
@@ -540,7 +565,7 @@ function applyuserFilter(){
                                             </div>
                                         </div>
 
-                                        <button class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold submitBtn cursor-pointer transition-all duration-300 hover:bg-(--primary-dashboard) hover:text-white">ثبت</button>
+                                        <button onclick="submitBtn(this)" class="col-span-1 md:col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold submitBtn cursor-pointer transition-all duration-300 hover:bg-(--primary-dashboard) hover:text-white">ثبت</button>
                                         <button class="col-span-1 md:col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold closeBtn cursor-pointer transition-all duration-300 hover:bg-(--danger-dashboard) hover:text-white">لغو</button>
                                     </div>
                                 </div>

@@ -56,14 +56,16 @@
             </aside>
 
             <section class="min-w-0 lg:col-span-8 col-span-7">
-                <div class="w-full flex items-center gap-3 border-1 bg-white border-gray-200 rounded-xl mb-3">
-                    <input type="text" class="w-full px-3.5 py-3 outline-none" id="searchInp">
-                    <svg class="w-6 h-6 text-gray-600 ml-2.5 cursor-pointer" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
-                            d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
-                    </svg>
-                </div>
+                @if (Route::is('serarch.page'))
+                    <div class="w-full flex items-center gap-3 border-1 bg-white border-gray-200 rounded-xl mb-3">
+                        <input type="text" class="w-full px-3.5 py-3 outline-none" id="searchInp">
+                        <svg class="w-6 h-6 text-gray-600 ml-2.5 cursor-pointer" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                                d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </div>
+                @endif
                 <div
                     class="bg-white border border-[#e4e4e7] rounded-xl p-3 md:px-[15px] flex flex-col md:flex-row md:items-center justify-between gap-3 mb-3.5">
                     <div class="flex items-center gap-2 flex-wrap">
@@ -107,21 +109,29 @@
                                 </div>
                             <h3 class="mb-2 text-[13px] leading-[1.9] overflow-hidden">{{ $product->title }}
                             </h3>
-                            <div class="flex justify-between items-center text-[11px]">
-                                <span>۴٫۹ ⭐</span><span class="text-[#f59e0b]">★★★★★</span>
-                            </div>
+                            
+                            {{-- @if ($product->count == 0)
+                                <div class="my-2 text-red-500 text-xs">
+                                   ناموجود
+                                </div>
+                            @endif --}}
+                            @if ($product->summary)
+                                <p class="ellipsis-2 max-h-10 h-10 text-sm text-gray-400">
+                                    {{ $product->summery }}
+                                </p>
+                            @endif
                             @if ($product->primary_price)
                                 @if ($product->secondary_price)
                                     <div class="flex items-center justify-between gap-2">
-                                        <strong class="text-[15px] in-fa">{{ $product->secondary_price }}</strong>
+                                        <strong class="text-[15px] in-fa">{{ number_format($product->secondary_price) }}</strong>
                                         <span class="text-[10px] text-[#71717a]">ریال
                                         </span>
                                     </div>
-                                    <div class="line-through text-[#a1a1aa] text-[10px] in-fa">{{ $product->primary_price }}
+                                    <div class="line-through text-[#a1a1aa] text-[10px] in-fa">{{ number_format($product->primary_price) }}
                                         ریال</div>
                                 @else
                                     <div class="flex items-center justify-between gap-2">
-                                        <strong class="text-[15px] in-fa">{{ $product->primary_price }}</strong>
+                                        <strong class="text-[15px] in-fa">{{ number_format($product->primary_price) }}</strong>
                                         <span class="text-[10px] text-[#71717a]">ریال
                                         </span>
                                     </div>
@@ -130,9 +140,17 @@
                                 <span class="text-[10px] text-gray-500">برای استعلام قیمت تماس
                                     بگیرید</span>
                             @endif
-                            @if ($product->count > 0)
+                            @if ($product->count <= 5 && $product->count != 0)
+                                <div class="text-gray-600 text-xs">
+                                    تنها
+                                    <span class="text-[#a31616]">{{ $product->count }}</span>
+                                    عدد موجود در انبار
+                                </div>
+                            @endif
+                            @if ($product->count > 5)
                                 <div class="text-[10px] text-[#16a34a]">● موجود در انبار</div>
-                            @else
+                            @endif
+                            @if($product->count == 0)
                                 <div class="text-[10px] text-[#a31616]">● ناموجود</div>
                             @endif
                         </a>
