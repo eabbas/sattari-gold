@@ -17,6 +17,12 @@ class HomeController extends Controller
         $categories = category::with('products')->has('products')->get();
         return view('404', ['logo'=>$logo, 'categories'=>$categories]);
     }
+    public function aboutUs()
+    {
+        $logo = logo::first();
+        $categories = category::with('products')->has('products')->get();
+        return view('aboutUs', ['logo'=>$logo, 'categories'=>$categories]);
+    }
 
     public function index()
     {
