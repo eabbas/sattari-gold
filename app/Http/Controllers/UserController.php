@@ -60,9 +60,9 @@ class UserController extends Controller
     public function checkUser(Request $request)
     {
         $user = User::where('phoneNumber', $request['phoneNumber'])->first();
-        if ($user->isApproved == 0 || $user->isApproved == -1) {
-            return redirect()->back()->with('failure', "$user->name $user->family عزیز پس از تایید شدن حسابتان توسط مدیر میتوانید وارد شوید.");
-        }
+        // if ($user->isApproved == 0 || $user->isApproved == -1) {
+        //     return redirect()->back()->with('failure', "$user->name $user->family عزیز پس از تایید شدن حسابتان توسط مدیر میتوانید وارد شوید.");
+        // }
         Auth::login($user);
         return to_route('home')->with('success', "$user->name $user->family عزیز خوش آمدید.");
     }
@@ -210,11 +210,12 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $validated = $request->validate(
             [
                 'name' => ['required'],
                 'family' => ['required'],
-                'birthday' => ['required'],
+                'birthDate' => ['required'],
                 'phoneNumber' => ['required', 'min:11', 'max:11'],
                 'nationalCode' => ['required', 'min:10', 'max:10'],
                 'code' => ['required', 'min:4', 'max:4'],
@@ -223,7 +224,7 @@ class UserController extends Controller
             [
                 'name.required' => 'پر کردن این فیلد الزامی است.',
                 'family.required' => 'پر کردن این فیلد الزامی است.',
-                'birthday.required' => 'پر کردن این فیلد الزامی است.',
+                'birthDate.required' => 'پر کردن این فیلد الزامی است.',
                 'phoneNumber.required' => 'پر کردن این فیلد الزامی است.',
                 'phoneNumber.max' => 'شماره تلفن باید 11 رقمی باشد.',
                 'phoneNumber.min' => 'شماره تلفن باید 11 رقمی باشد.',
@@ -241,14 +242,15 @@ class UserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'family' => $request->family,
-            'birthday' => $request->birthday,
+            'birthDate' => $request->birthDate,
             'address' => $request->address,
             'phoneNumber' => $request->phoneNumber,
             'nationalCode' => $request->nationalCode,
             'password' => $request->password,
             'referral_code' => $code,
         ]);
-        return to_route('user.login')->with('success', "$user->name $user->family عزیز با موفقیت ثبت نام شدید لطفا وارد شوید.");
+        Auth::login($user);
+        return to_route('home')->with('success', "$user->name $user->family عزیز با موفقیت ثبت نام شدید لطفا منتظر تایید حسابتان از طرف مدیریت باشید.");
     }
 
     public function adminSignup()
@@ -485,13 +487,12 @@ class UserController extends Controller
         // $user->family = $request->family;
         // $user->phoneNumber = $request->phoneNumber;
         // $user->nationalCode = $request->nationalCode;
-        // $user->birthday = $request->birthday;
+        // $user->birthDate = $request->birthDate;
         $user->address = $request->address;
         if ($request->password) {
             $password = Hash::make($request->password);
             $user->password = $password;
         }
-        // ! بعد از افزودن امکان بارگذاری عکس برای کاربر خط زیر باید کار کند
         $user->mainImage = $img_path;
         $user->save();
         return redirect()->back()->with('message', 'پروفایل شما با موفقیت به روزرسانی شد.');
@@ -531,5 +532,15 @@ class UserController extends Controller
     public function userDetail(User $user)
     {
         return response()->json($user);
+    }
+
+    public function notApproved()
+    {
+        $user = Auth::user();
+        $dateTime = explode(' ', verta($user->created_at));
+        $user->date = implode('/', explode('-', $dateTime[0]));
+        $user->time = $dateTime[1];
+        $logo = logo::first();
+        return view('notApproved', ['logo' => $logo, 'user' => $user]);
     }
 }

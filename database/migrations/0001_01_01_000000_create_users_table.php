@@ -16,12 +16,11 @@ return new class extends Migration
             $table->string('referral_code')->unique()->nullable();
             $table->string('name');
             $table->string('family');
-            $table->string('birthday');
+            $table->string('birthDate');
             $table->string('address')->nullable();
             $table->string('mainImage')->nullable();
             $table->string('phoneNumber')->unique();
             $table->string('nationalCode');
-            // $table->string('birthDate');
             $table->tinyInteger('isApproved')->default(0);
             $table->tinyInteger('isActive')->default(0);
             // $table->string('accountingCode')->nullable();

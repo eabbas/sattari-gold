@@ -43,9 +43,9 @@
                             margin-left: 5px;
                             cursor: pointer;
                         "
-                                alt="">
-                        </button>
-                    </div>
+                            alt="">
+                    </button>
+                </div>
                 <div class="w-full bg-white py-5 px-2 mb-2">
                     <div class="w-full grid grid-cols-2 md:grid-cols-4 justify-items-end gap-2">
                         <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
@@ -206,10 +206,12 @@
                                     </td>
                                     <td class="border-1 border-(--color-border) p-1 md:px-3 md:py-2 text-center">
                                         @if ($deal->state != 'تایید شده')
-                                            <a href="{{ route('deal.confirm', $deal->id) }}"
-                                                class="px-3 py-1.5 bg-[{{ $deal->color }}]/20 text-[{{ $deal->color }}] rounded-md border-1 border-[[{{ $deal->color }}]] p-1 cursor-default cursor-pointer">
-                                                {{ $deal->state }}
-                                            </a>
+                                            @can('access', 'deal_confirm')
+                                                <a href="{{ route('deal.confirm', $deal->id) }}"
+                                                    class="px-3 py-1.5 bg-[{{ $deal->color }}]/20 text-[{{ $deal->color }}] rounded-md border-1 border-[[{{ $deal->color }}]] p-1 cursor-default cursor-pointer">
+                                                    {{ $deal->state }}
+                                                </a>
+                                            @endcan
                                         @else
                                             <span
                                                 class="px-3 py-1.5 bg-[{{ $deal->color }}]/20 text-[{{ $deal->color }}] rounded-md border-1 border-[[{{ $deal->color }}]] p-1 cursor-default">
