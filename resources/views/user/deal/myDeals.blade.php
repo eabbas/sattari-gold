@@ -102,6 +102,9 @@
                                                 وضعیت
                                             </th>
                                             <th class="border-1 border-(--color-border) p-1 md:px-3 md:py-2">
+                                                علت رد
+                                            </th>
+                                            <th class="border-1 border-(--color-border) p-1 md:px-3 md:py-2">
                                                 قیمت وقت طلا
                                             </th>
                                             <th class="border-1 border-(--color-border) p-1 md:px-3 md:py-2">
@@ -136,6 +139,9 @@
                                                     @elseif ($deal->transaction->isApproved == 0)
                                                         <span class="text-gray-500">در انتظار تایید</span>
                                                     @endif
+                                                </td>
+                                                <td class="border-1 border-(--color-border) p-1 md:px-3 md:py-2 text-center in-fa text-red-500">
+                                                    {{ $deal->message ? $deal->message : '-' }}
                                                 </td>
                                                 <td
                                                     class="border-1 border-(--color-border) p-3 md:px-3 md:py-2 text-center in-fa">
