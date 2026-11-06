@@ -8,9 +8,6 @@
 @section('content')
 
     <style>
-        * {
-            font-family: 'Vazirmatn', sans-serif;
-        }
 
         body {
             background: #faf8f3;
