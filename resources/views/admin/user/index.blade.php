@@ -229,14 +229,68 @@
                 <div id="confirmed" class="w-full">
                     <div class="w-full h-5 bg-zinc-200"></div>
                     <div class="w-full overflow-x-auto">
-                        <div class="w-full flex items-center justify-between gap-2 px-2 py-3">
-                            <div class="min-w-23 md:min-w-28  flex items-center justify-center gap-2">
-                                <input
-                                    class="appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer"
-                                    type="checkbox" name="" id="selectAll">
-                                <label class="text-xs md:text-base" for="selectAll">
-                                    انتخاب همه
+                        <div class="mx-5 mt-5 rounded-xl border-1 border-(--border-dashboard) bg-zinc-50 p-4">
+
+                            <div class="flex items-center justify-between pb-4 border-b-1 border-(--border-dashboard)">
+                                <label for="selectAllConfirmed"
+                                    class="flex items-center gap-2 cursor-pointer select-none">
+                                    <input
+                                        class="appearance-none size-5 rounded-md border-1 border-(--border-dashboard) bg-white checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] indeterminate:bg-(--primary-dark-dashboard) indeterminate:after:content-['−'] text-white flex items-center justify-center text-sm cursor-pointer"
+                                        type="checkbox" id="selectAllConfirmed">
+                                    <span class="text-xs md:text-base font-medium">انتخاب همه</span>
                                 </label>
+
+                                <span class="text-xs md:text-sm text-gray-500">
+                                    <span id="confirmedSelectedCount"
+                                        class="font-bold text-(--primary-dashboard)">0</span>
+                                    کاربر انتخاب شده
+                                </span>
+                            </div>
+
+                            <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4 pt-4 items-end">
+                                <div class="flex flex-col gap-1.5">
+                                    <label for="confirmedUserIsApproved" class="text-xs text-gray-500">وضعیت تایید</label>
+                                    <select id="confirmedUserIsApproved"
+                                        class="w-full h-10 px-3 rounded-lg border-1 border-gray-300 bg-white text-sm cursor-pointer transition-all hover:border-gray-400 focus:outline-none focus:border-(--primary-dashboard) focus:ring-2 focus:ring-(--primary-dashboard)/20">
+                                        <option value="1">تایید</option>
+                                        <option value="0">در انتظار</option>
+                                        <option value="-1">رد</option>
+                                    </select>
+                                </div>
+
+                                <div class="flex flex-col gap-1.5">
+                                    <label for="confirmedUserRoles" class="text-xs text-gray-500">تعیین نقش</label>
+                                    <select id="confirmedUserRoles"
+                                        class="w-full h-10 px-3 rounded-lg border-1 border-gray-300 bg-white text-sm cursor-pointer transition-all hover:border-gray-400 focus:outline-none focus:border-(--primary-dashboard) focus:ring-2 focus:ring-(--primary-dashboard)/20">
+                                        <option value="0">بدون نقش</option>
+                                        @foreach ($roles as $role)
+                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="flex flex-col gap-1.5">
+                                    <label for="confirmedUserIsActive" class="text-xs text-gray-500">وضعیت حساب</label>
+                                    <select id="confirmedUserIsActive"
+                                        class="w-full h-10 px-3 rounded-lg border-1 border-gray-300 bg-white text-sm cursor-pointer transition-all hover:border-gray-400 focus:outline-none focus:border-(--primary-dashboard) focus:ring-2 focus:ring-(--primary-dashboard)/20">
+                                        <option value="1">فعال</option>
+                                        <option value="0">غیر فعال</option>
+                                    </select>
+                                </div>
+
+                                <div class="flex flex-col gap-1.5">
+                                    <label for="confirmedUserSendNotif" class="text-xs text-gray-500">ارسال نوتیف</label>
+                                    <select id="confirmedUserSendNotif"
+                                        class="w-full h-10 px-3 rounded-lg border-1 border-gray-300 bg-white text-sm cursor-pointer transition-all hover:border-gray-400 focus:outline-none focus:border-(--primary-dashboard) focus:ring-2 focus:ring-(--primary-dashboard)/20">
+                                        <option value="0">غیر فعال</option>
+                                        <option value="1">فعال</option>
+                                    </select>
+                                </div>
+
+                                <button type="button" id="applyConfirmedBulk" disabled data-status="confirm"
+                                    class="col-span-2 lg:col-span-1 h-10 rounded-lg bg-(--primary-dashboard) text-white text-sm font-bold cursor-pointer transition-all duration-300 hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed">
+                                    اعمال روی انتخاب‌شده‌ها
+                                </button>
                             </div>
                         </div>
                         <table class="w-full border-collapse border-1 border-(--border-dashboard) text-sm">
@@ -283,15 +337,15 @@
                                     $i = 0;
                                 @endphp
                                 @foreach ($users as $user)
-                                    @php
+                                    @if ($user->isApproved)
+                                     @php
                                         $i++;
                                     @endphp
-                                    @if ($user->isApproved)
                                         <tr class="item_list text-xs lg:text-base approvedUsers"
                                             data-user-id="{{ $user->id }}">
                                             <td class="p-1 md:px-3 md:py-2 flex items-center justify-center gap-2 in-fa">
-                                                <input type="checkbox" name="approvedUsers[]"
-                                                    class="row-checkbox appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
+                                                <input type="checkbox" name="approvedUsers[]" value="{{ $user->id }}"
+                                                    class="row-checkbox-confirmed appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
                                                 {{ $i }}
                                             </td>
                                             <td
@@ -743,7 +797,7 @@
                                     </select>
                                 </div>
 
-                                <button type="button" id="applyPendingBulk"
+                                <button type="button" id="applyPendingBulk" data-status="pending"
                                     class="col-span-2 lg:col-span-1 h-10 rounded-lg bg-(--primary-dashboard) text-white text-sm font-bold cursor-pointer transition-all duration-300 hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
                                     disabled>
                                     اعمال روی انتخاب‌شده‌ها
