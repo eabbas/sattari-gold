@@ -540,6 +540,9 @@ class UserController extends Controller
     public function notApproved()
     {
         $user = Auth::user();
+        if ($user->isApproved) {
+            return to_route('user.profile');
+        }
         $dateTime = explode(' ', verta($user->created_at));
         $user->date = implode('/', explode('-', $dateTime[0]));
         $user->time = $dateTime[1];
