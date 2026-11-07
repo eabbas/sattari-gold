@@ -27,6 +27,7 @@ Route::post('/transactionRequestApi', [WalletController::class, 'transactionRequ
 Route::get('/userDetail/{user}', [UserController::class, 'userDetail']);
 Route::post('/updateUser', [UserController::class, 'update']);
 Route::get('/deleteUser/{user}', [UserController::class, 'delete']);
+Route::post('/applyPendingBulk', [UserController::class, 'applyPendingBulk'])->name('applyPendingBulk');
 
 Route::post('/cities', [CartsController::class, 'showCities']);
 Route::post('/cart/store', [CartsController::class, 'store']);

@@ -2,6 +2,13 @@ let message = document.getElementById('message')
 let element = document.createElement('div')
 element.classList = "text-sm font-bold flex flex-row items-center justify-center py-3 gap-2 lg:gap-3"
 
+
+let pendingUserIsApproved = document.getElementById('pendingUserIsApproved')
+let pendingUserRoles = document.getElementById('pendingUserRoles')
+let pendingUserIsActive = document.getElementById('pendingUserIsActive')
+let pendingUserSendNotif = document.getElementById('pendingUserSendNotif')
+
+
 function showMessage(state) {
     if (state == 'open') {
         message.classList.remove('top-0')
@@ -690,6 +697,22 @@ rowCheckboxes.forEach((checkbox) => {
     })
 })
 
+const selectAllPending = document.querySelector("#selectAllPending")
+const pendingRowCheckboxes = document.querySelectorAll(".row-checkbox-pending")
+
+selectAllPending.addEventListener("change", () => {
+    pendingRowCheckboxes.forEach((checkbox) => {
+        checkbox.checked = selectAllPending.checked
+    })
+})
+
+rowCheckboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", () => {
+        const allSelected = [...rowCheckboxes].every((checkbox) => checkbox.checked)
+        selectAll.checked = allSelected
+    })
+})
+
 const item_list = document.querySelectorAll(".item_list")
 
 item_list.forEach((item_list) => {
@@ -824,3 +847,94 @@ function closePopupLookCont(el) {
         box.classList.add('invisible', 'opacity-0')
     })
 }
+
+
+function initBulkSelect({ selectAllId, rowSelector, countId, applyBtnId }) {
+    const selectAll = document.getElementById(selectAllId)
+    if (!selectAll) return
+
+    const countEl = countId ? document.getElementById(countId) : null
+    const applyBtn = applyBtnId ? document.getElementById(applyBtnId) : null
+
+    const getRows = () => [...document.querySelectorAll(rowSelector)]
+
+    const sync = () => {
+        const rows = getRows()
+        const checked = rows.filter((c) => c.checked).length
+
+        selectAll.checked = rows.length > 0 && checked === rows.length
+        selectAll.indeterminate = checked > 0 && checked < rows.length
+
+        if (countEl) countEl.textContent = checked.toLocaleString("fa-IR")
+        if (applyBtn) applyBtn.disabled = checked === 0
+    }
+
+    // انتخاب همه
+    selectAll.addEventListener("change", () => {
+        getRows().forEach((c) => (c.checked = selectAll.checked))
+        sync()
+    })
+
+    // تغییر تک‌تک ردیف‌ها (delegation، برای ردیف‌های داینامیک هم کار می‌کنه)
+    document.addEventListener("change", (e) => {
+        if (e.target.matches(rowSelector)) sync()
+    })
+
+    sync()
+
+    return {
+        sync,
+        getSelectedIds: () => getRows().filter((c) => c.checked).map((c) => c.value),
+        reset: () => {
+            getRows().forEach((c) => (c.checked = false))
+            sync()
+        },
+    }
+}
+
+// تب در انتظار
+const pendingBulk = initBulkSelect({
+    selectAllId: "selectAllPending",
+    rowSelector: ".row-checkbox-pending",
+    countId: "pendingSelectedCount",
+    applyBtnId: "applyPendingBulk",
+})
+
+document.querySelector('#applyPendingBulk').addEventListener('click', ()=>{
+
+    let userIds = pendingBulk.getSelectedIds()
+    if (userIds.length === 0) return
+    loader('open')
+    $.ajax({
+        url: api +'applyPendingBulk',
+        type: "POST",
+        dataType: "json",
+        data: {
+            'isApproved': pendingUserIsApproved.value,
+            'role': pendingUserRoles.value,
+            'isActive': pendingUserIsActive.value,
+            'sendNotif': pendingUserSendNotif.value,
+            'userIds': userIds,
+        },
+        success: function(data){
+            console.log(data)
+            loader("close")
+            userIds.forEach((id) => {
+                document.querySelector(`#pending .item_2[data-user-id="${id}"]`)?.remove()
+            })
+            pendingBulk.reset()
+            location.assign(url+'user/index')
+        },
+        error: function(){
+            console.log('error')
+        }
+    })
+})
+
+// تب تایید شده‌ها (اسم‌ها رو با HTML خودت هماهنگ کن)
+// const confirmedBulk = initBulkSelect({
+//     selectAllId: "selectAllConfirmed",
+//     rowSelector: ".row-checkbox-confirmed",
+//     countId: "confirmedSelectedCount",
+//     applyBtnId: "applyConfirmedBulk",
+// })

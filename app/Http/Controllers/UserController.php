@@ -549,4 +549,19 @@ class UserController extends Controller
         $logo = logo::first();
         return view('notApproved', ['logo' => $logo, 'user' => $user]);
     }
+
+    public function applyPendingBulk(Request $request){
+        User::whereIn('id', $request->userIds)->update([
+            'isApproved'=>$request->isApproved,
+            'isActive'=>$request->isActive,
+            'sendNotif'=>$request->sendNotif,
+        ]);
+        foreach($request->userIds as $userId){
+            user_role::create([
+                'user_id'=>$userId,
+                'role_id'=>$request->role
+            ]);
+        }
+        return response()->json(['success' => true, 'userIds' => $request->userIds]);
+    }
 }
