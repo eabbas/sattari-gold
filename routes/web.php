@@ -68,7 +68,8 @@ Route::get('/xyz', function () {
     // });
 
     Schema::table('users', function (Blueprint $table) {
-        $table->tinyInteger('sendNotif')->default(0)->after('isActive');
+        $table->string('mainImage')->nullable()->after('password');
+        // $table->tinyInteger('sendNotif')->default(0)->after('isActive');
     });
 
     User::where('id', '>', 0)->update(['sendNotif'=>0]);
