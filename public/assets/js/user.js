@@ -2,6 +2,13 @@ let message = document.getElementById('message')
 let element = document.createElement('div')
 element.classList = "text-sm font-bold flex flex-row items-center justify-center py-3 gap-2 lg:gap-3"
 
+
+let pendingUserIsApproved = document.getElementById('pendingUserIsApproved')
+let pendingUserRoles = document.getElementById('pendingUserRoles')
+let pendingUserIsActive = document.getElementById('pendingUserIsActive')
+let pendingUserSendNotif = document.getElementById('pendingUserSendNotif')
+
+
 function showMessage(state) {
     if (state == 'open') {
         message.classList.remove('top-0')
@@ -254,7 +261,7 @@ function submitBtn(el) {
             rowTable.dataset.userId = data.user.id
             inner = `
             <td class="p-1 md:px-3 md:py-2 flex items-center justify-center gap-2 in-fa">
-                <input type="checkbox" name=""
+                <input type="checkbox" name="" value="${data.user.id}"
                     class="row-checkbox appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
                 ${data.user.id}
             </td>
@@ -640,7 +647,8 @@ function submitBtn(el) {
             </td>
             `
             rowTable.innerHTML = inner
-            parentTable.prepend(rowTable)
+            
+            confirmedBulk?.sync()
 
         },
         error: function () {
@@ -674,21 +682,37 @@ function conpen(state, el) {
     }
 }
 
-const selectAll = document.querySelector("#selectAll")
-const rowCheckboxes = document.querySelectorAll(".row-checkbox")
+// const selectAll = document.querySelector("#selectAll")
+// const rowCheckboxes = document.querySelectorAll(".row-checkbox")
 
-selectAll.addEventListener("change", () => {
-    rowCheckboxes.forEach((checkbox) => {
-        checkbox.checked = selectAll.checked
-    })
-})
+// selectAll.addEventListener("change", () => {
+//     rowCheckboxes.forEach((checkbox) => {
+//         checkbox.checked = selectAll.checked
+//     })
+// })
 
-rowCheckboxes.forEach((checkbox) => {
-    checkbox.addEventListener("change", () => {
-        const allSelected = [...rowCheckboxes].every((checkbox) => checkbox.checked)
-        selectAll.checked = allSelected
-    })
-})
+// rowCheckboxes.forEach((checkbox) => {
+//     checkbox.addEventListener("change", () => {
+//         const allSelected = [...rowCheckboxes].every((checkbox) => checkbox.checked)
+//         selectAll.checked = allSelected
+//     })
+// })
+
+// const selectAllPending = document.querySelector("#selectAllPending")
+// const pendingRowCheckboxes = document.querySelectorAll(".row-checkbox-pending")
+
+// selectAllPending.addEventListener("change", () => {
+//     pendingRowCheckboxes.forEach((checkbox) => {
+//         checkbox.checked = selectAllPending.checked
+//     })
+// })
+
+// rowCheckboxes.forEach((checkbox) => {
+//     checkbox.addEventListener("change", () => {
+//         const allSelected = [...rowCheckboxes].every((checkbox) => checkbox.checked)
+//         selectAll.checked = allSelected
+//     })
+// })
 
 const item_list = document.querySelectorAll(".item_list")
 
@@ -824,3 +848,96 @@ function closePopupLookCont(el) {
         box.classList.add('invisible', 'opacity-0')
     })
 }
+
+
+function initBulkSelect({ selectAllId, rowSelector, countId, applyBtnId }) {
+    const selectAll = document.getElementById(selectAllId)
+    if (!selectAll) return
+
+    const countEl = countId ? document.getElementById(countId) : null
+    const applyBtn = applyBtnId ? document.getElementById(applyBtnId) : null
+
+    const getRows = () => [...document.querySelectorAll(rowSelector)]
+
+    const sync = () => {
+        const rows = getRows()
+        const checked = rows.filter((c) => c.checked).length
+
+        selectAll.checked = rows.length > 0 && checked === rows.length
+        selectAll.indeterminate = checked > 0 && checked < rows.length
+
+        if (countEl) countEl.textContent = checked.toLocaleString("fa-IR")
+        if (applyBtn) applyBtn.disabled = checked === 0
+    }
+
+    // انتخاب همه
+    selectAll.addEventListener("change", () => {
+        getRows().forEach((c) => (c.checked = selectAll.checked))
+        sync()
+    })
+
+    // تغییر تک‌تک ردیف‌ها (delegation، برای ردیف‌های داینامیک هم کار می‌کنه)
+    document.addEventListener("change", (e) => {
+        if (e.target.matches(rowSelector)) sync()
+    })
+
+    sync()
+
+    return {
+        sync,
+        getSelectedIds: () => getRows().filter((c) => c.checked).map((c) => c.value),
+        reset: () => {
+            getRows().forEach((c) => (c.checked = false))
+            sync()
+        },
+    }
+}
+
+function setupBulk(prefix, rowSelector) {
+    const cap = prefix.charAt(0).toUpperCase() + prefix.slice(1)
+
+    const bulk = initBulkSelect({
+        selectAllId: `selectAll${cap}`,
+        rowSelector,
+        countId: `${prefix}SelectedCount`,
+        applyBtnId: `apply${cap}Bulk`,
+    })
+
+    const applyBtn = document.getElementById(`apply${cap}Bulk`)
+    if (!bulk || !applyBtn) return bulk
+
+    applyBtn.addEventListener('click', () => {
+        const userIds = bulk.getSelectedIds()
+        if (userIds.length === 0) return
+
+        loader('open')
+        $.ajax({
+            url: api + 'applyBulk',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                status: applyBtn.dataset.status,
+                isApproved: document.getElementById(`${prefix}UserIsApproved`).value,
+                role: document.getElementById(`${prefix}UserRoles`).value,
+                isActive: document.getElementById(`${prefix}UserIsActive`).value,
+                sendNotif: document.getElementById(`${prefix}UserSendNotif`).value,
+                userIds: userIds,
+            },
+            success: function (data) {
+                console.log(data)
+                loader('close')
+                // چون ممکنه کاربر بین دو تب جابه‌جا بشه، ساده‌ترین راه رفرشه
+                location.reload()
+            },
+            error: function () {
+                loader('close')
+                console.log('error')
+            },
+        })
+    })
+
+    return bulk
+}
+
+const pendingBulk = setupBulk('pending', '.row-checkbox-pending')
+const confirmedBulk = setupBulk('confirmed', '.row-checkbox-confirmed')

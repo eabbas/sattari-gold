@@ -549,4 +549,26 @@ class UserController extends Controller
         $logo = logo::first();
         return view('notApproved', ['logo' => $logo, 'user' => $user]);
     }
+    public function applyBulk(Request $request){
+
+        User::whereIn('id', $request->userIds)->update([
+            'isApproved'=>$request->isApproved,
+            'isActive'=>$request->isActive,
+            'sendNotif'=>$request->sendNotif,
+        ]);
+        $flag = 'salam';
+        if($request->status == 'pending'){
+            $flag = 'if';
+            foreach($request->userIds as $userId){
+                user_role::create([
+                    'user_id'=>$userId,
+                    'role_id'=>$request->role
+                ]);
+            }
+        } else {
+            $flag = 'else';
+            user_role::whereIn('user_id', $request->userIds)->update(['role_id'=>$request->role]);
+        }
+        return response()->json(['success' => true, 'userIds' => $request->userIds, 'flag'=>$flag]);
+    }
 }
