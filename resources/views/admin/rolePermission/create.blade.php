@@ -66,14 +66,13 @@
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
                 <h2 class="text-lg font-bold text-slate-800 mb-4 border-b border-slate-100 pb-3">انتخاب نقش برای تنظیم
                     دسترسی</h2>
-                <p class="text-sm text-slate-500 mb-4">می‌توانید یک یا چند نقش را انتخاب کنید تا دسترسی‌های آن‌ها را
-                    مدیریت کنید.</p>
-
+                <p class="text-sm text-slate-500 mb-4">برای مدیریت دسترسی ها یکی از نقش ها را انتخاب کنید.</p>
                 <!-- سلکت باکس مالتی (Multi-Select) با چک‌باکس‌های شیک -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                     @foreach ($roles as $role)
                         <div class="bg-slate-100 p-3 rounded-xl flex justify-between">
-                            <div class="flex items-center cursor-pointer" onclick="addRoles({{ $role->id }}, this)">
+                            <div class="flex items-center cursor-pointer"
+                                @if ($role->id != 1) onclick="addRoles({{ $role->id }}, this)" @endif>
                                 @can('access', ['setPermissions'])
                                     @if ($role->id != 1)
                                         <input type="radio" name="role" value="1"
@@ -137,8 +136,7 @@
         <div class="lg:col-span-3 space-y-6">
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
                 <h2 class="text-lg font-bold text-slate-800 mb-2 border-b border-slate-100 pb-3">نقش ها و دسترسی هایشان</h2>
-                <p class="text-sm text-slate-500 mb-10">در صورت تمایل به تغییر هر یک از نقش ها و دسترسی ها کافیست تغییرات
-                    مورد نظر را دوباره اعمال کنید.</p>
+                <p class="text-sm text-slate-500 mb-10">در صورت تمایل به تغییر دسترسی ها کافیست یک نقش را انتخاب کنید.</p>
                 <div class="grid grid-cols-1 gap-3">
                     @foreach ($roles as $role)
                         <p>
