@@ -34,6 +34,7 @@ class OrdersController extends Controller
         $password = $request->input('password');
         $password = isset($password) ? Hash::make($password) : false;
         $products = json_decode($request->products);
+        // dd($request->all(), $password);
         if ($password) {
             User::upsert([
                 'name' => $name,
@@ -48,7 +49,7 @@ class OrdersController extends Controller
                 'family' => $family,
                 'phoneNumber' => $phoneNumber,
                 'nationalCode' => $nationalCode,
-            ], ['phoneNumber'], ['name', 'family', 'nationalCode', 'password']);
+            ], ['phoneNumber'], ['name', 'family', 'nationalCode']);
         }
 
         $user = User::where('phoneNumber', $phoneNumber)->first();
