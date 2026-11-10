@@ -60,11 +60,12 @@ class UserController extends Controller
     public function checkUser(Request $request)
     {
         $user = User::where('phoneNumber', $request['phoneNumber'])->first();
-        // if ($user->isApproved == 0 || $user->isApproved == -1) {
-        //     return redirect()->back()->with('failure', "$user->name $user->family عزیز پس از تایید شدن حسابتان توسط مدیر میتوانید وارد شوید.");
-        // }
-        Auth::login($user);
-        return to_route('home')->with('success', "$user->name $user->family عزیز خوش آمدید.");
+        if ($user) {
+            Auth::login($user);
+            return to_route('home')->with('success', "$user->name $user->family عزیز خوش آمدید.");
+        } else {
+            return to_route('user.signup');
+        }
     }
 
     public function checkUserPopup(Request $request)
@@ -89,9 +90,8 @@ class UserController extends Controller
         }
     }
 
-    public function validate(Request $request)
+    public function validateNewPass(Request $request)
     {
-        // return response()->json($request->all());
         $data['validate'] = false;
         $data['pass'] = false;
         $data['match'] = false;
@@ -113,6 +113,31 @@ class UserController extends Controller
             }
             if ($user->nationalCode == $request->nationalCode) {
                 $data['match'] = true;
+            }
+        }
+        return response()->json($data);
+    }
+
+    public function validate(Request $request)
+    {
+        // return response()->json($request->all());
+        $data['validate'] = false;
+        $data['pass'] = false;
+        $user = User::where('phoneNumber', $request->phoneNumber)->first();
+        if ($user) {
+            $data['validate'] = true;
+            if (isset($request['password'])) {
+                if (Hash::check($request->password, $user->password)) {
+                    $data['pass'] = true;
+                }
+            }
+            if (isset($request['code'])) {
+                $phoneCode = PhoneCode::where('phoneNumber', $request->phoneNumber)->first();
+                if ($phoneCode) {
+                    if ($request->code == $phoneCode->code) {
+                        $data['pass'] = true;
+                    }
+                }
             }
         }
         return response()->json($data);
@@ -549,26 +574,27 @@ class UserController extends Controller
         $logo = logo::first();
         return view('notApproved', ['logo' => $logo, 'user' => $user]);
     }
-    public function applyBulk(Request $request){
+    public function applyBulk(Request $request)
+    {
 
         User::whereIn('id', $request->userIds)->update([
-            'isApproved'=>$request->isApproved,
-            'isActive'=>$request->isActive,
-            'sendNotif'=>$request->sendNotif,
+            'isApproved' => $request->isApproved,
+            'isActive' => $request->isActive,
+            'sendNotif' => $request->sendNotif,
         ]);
         $flag = 'salam';
-        if($request->status == 'pending'){
+        if ($request->status == 'pending') {
             $flag = 'if';
-            foreach($request->userIds as $userId){
+            foreach ($request->userIds as $userId) {
                 user_role::create([
-                    'user_id'=>$userId,
-                    'role_id'=>$request->role
+                    'user_id' => $userId,
+                    'role_id' => $request->role
                 ]);
             }
         } else {
             $flag = 'else';
-            user_role::whereIn('user_id', $request->userIds)->update(['role_id'=>$request->role]);
+            user_role::whereIn('user_id', $request->userIds)->update(['role_id' => $request->role]);
         }
-        return response()->json(['success' => true, 'userIds' => $request->userIds, 'flag'=>$flag]);
+        return response()->json(['success' => true, 'userIds' => $request->userIds, 'flag' => $flag]);
     }
 }

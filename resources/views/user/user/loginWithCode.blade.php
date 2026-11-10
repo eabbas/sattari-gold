@@ -83,16 +83,6 @@
                             @enderror
                         </div>
                         <div class="w-full flex flex-col gap-2">
-                            <label for="nationalCode" class="text-(--color-primary) max-sm:text-sm font-bold">کد
-                                ملی</label>
-                            <input id="nationalCode" type="number" placeholder="کد ملی" name="nationalCode"
-                                value="{{ old('nationalCode') }}"
-                                class="placeholder:text-right placeholder-(--color-zinc-400) max-md:text-sm block w-full rounded-md sm:border-3 border-2 border-(--color-border-strong) px-3 sm:py-3 py-2 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
-                            @error('nationalCode')
-                                <span class="text-xs text-red-500">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="w-full flex flex-col gap-2">
                             <label for="code" class="text-(--color-primary) max-sm:text-sm font-bold">کد ارسال
                                 شده</label>
                             <div class="w-full flex items-center justify-between gap-2">
@@ -153,7 +143,6 @@
     <script>
         let code = document.getElementById('code')
         let phoneNumber = document.getElementById('phoneNumber')
-        let nationalCode = document.getElementById('nationalCode')
         let message = document.getElementById('message')
         let element = document.createElement('div')
         element.classList = "text-sm font-bold flex flex-row items-center justify-center py-3 gap-2 lg:gap-3"
@@ -228,7 +217,7 @@
 
         function checkAuth(e) {
             e.preventDefault()
-            if (phoneNumber.value == "" || code.value == "" || nationalCode.value == "") {
+            if (phoneNumber.value == "" || code.value == "") {
                 showMessage('open')
                 element.innerHTML = `
                         <span class="text-red-500">!</span>
@@ -251,7 +240,6 @@
                     dataType: "json",
                     data: {
                         'phoneNumber': phoneNumber.value,
-                        'nationalCode': nationalCode.value,
                         'code': code.value
                     },
                     success: function(user) {
@@ -276,20 +264,8 @@
                                 setTimeout(() => {
                                     showMessage('close')
                                 }, 5000)
-                                return
                             }
-                            if (!user.match) {
-                                showMessage('open')
-                                element.innerHTML = `
-                                <span class="text-shadow-lg">شماره تلفن و کد ملی وارد شده باهم مطابقت ندارند</span>
-                                `
-                                message.children[0].appendChild(element)
-                                setTimeout(() => {
-                                    showMessage('close')
-                                }, 5000)
-                                return
-                            }
-                            if (user.pass && user.match) {
+                            if (user.pass) {
                                 setPassForm.submit()
                             }
                         }
@@ -303,7 +279,7 @@
                         message.children[0].appendChild(element)
                         setTimeout(() => {
                             showMessage('close')
-                        }, 2500)
+                        }, 5000)
                     }
                 })
             }

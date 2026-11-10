@@ -81,6 +81,7 @@ Route::group([
     Route::post('/checkUser', 'checkUser')->name('checkUser');
     Route::post('/checkUserPopup', 'checkUserPopup')->name('checkUserPopup');
     Route::post('/validate', 'validate')->name('validate');
+    Route::post('/validateNewPass', 'validateNewPass')->name('validateNewPass');
     Route::post('/search', 'search')->name('search');
     Route::get('/forgetPassword', 'forgetPassword')->name('forgetPassword');
     Route::post('/sendCode', 'send_sms')->name('sendCode');

@@ -183,7 +183,7 @@
 
                     <!-- Submit -->
                     <button type="submit"
-                        class="w-full gold-gradient text-white rounded-xl py-4 text-sm font-semibold hover:opacity-90 transition shadow-lg shadow-[#b68b43]/15 flex items-center justify-center gap-3">
+                        class="w-full gold-gradient text-white rounded-xl py-4 text-sm font-bold hover:opacity-90 transition shadow-lg shadow-[#b68b43]/15 flex items-center justify-center gap-3">
 
                         ارسال پیام
 
@@ -229,7 +229,7 @@
 
                     <div class="min-w-0">
                         <p class="text-xs text-[#a49a89]">شماره تماس</p>
-                        <a href="tel:YOUR_PHONE" class="text-sm font-semibold mt-2 block" dir="ltr">
+                        <a href="tel:YOUR_PHONE" class="text-sm font-bold mt-2 block" dir="ltr">
                             شماره تماس فروشگاه
                         </a>
                     </div>
@@ -249,7 +249,7 @@
 
                     <div class="min-w-0">
                         <p class="text-xs text-[#a49a89]">پست الکترونیکی</p>
-                        <a href="mailto:YOUR_EMAIL" class="text-sm font-semibold mt-2 block" dir="ltr">
+                        <a href="mailto:YOUR_EMAIL" class="text-sm font-bold mt-2 block" dir="ltr">
                             ایمیل فروشگاه
                         </a>
                     </div>
@@ -269,7 +269,7 @@
 
                     <div class="min-w-0">
                         <p class="text-xs text-[#a49a89]">آدرس فروشگاه</p>
-                        <p class="text-sm font-semibold mt-2 leading-7">
+                        <p class="text-sm font-bold mt-2 leading-7">
                             آدرس فروشگاه خود را اینجا وارد کنید
                         </p>
                     </div>
@@ -288,17 +288,17 @@
                             </svg>
                         </span>
 
-                        <h4 class="font-semibold text-sm">ساعات پاسخ‌گویی</h4>
+                        <h4 class="font-bold text-sm">ساعات پاسخ‌گویی</h4>
                     </div>
 
                     <div class="flex justify-between text-xs py-3 border-b border-[#dfd1b4]">
                         <span class="text-[#847967]">شنبه تا پنجشنبه</span>
-                        <span class="font-semibold">ساعت کاری فروشگاه</span>
+                        <span class="font-bold">ساعت کاری فروشگاه</span>
                     </div>
 
                     <div class="flex justify-between text-xs pt-4">
                         <span class="text-[#847967]">جمعه</span>
-                        <span class="font-semibold">طبق برنامه فروشگاه</span>
+                        <span class="font-bold">طبق برنامه فروشگاه</span>
                     </div>
 
                 </div>
