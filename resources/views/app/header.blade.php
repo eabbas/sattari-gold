@@ -35,7 +35,7 @@
     <header class="fixed top-0 right-0 w-full flex justify-center py-4 transition-all duration-300 z-999" id="mainHeader">
         <div class="2xl:container w-full mx-auto">
             <div class="w-11/12 mx-auto flex items-center justify-between">
-                <div class="lg:w-1/4 flex justify-start items-center">
+                <div class="flex justify-start items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="lsm:w-8 w-6 fill-[#c39862] lg:hidden cursor-pointer"
                         id="hamburgerMenu" viewBox="0 0 448 512">
                         <path
@@ -47,20 +47,7 @@
                         </a>
                     @endif
                 </div>
-                <ul class="w-1/2 hidden lg:flex justify-center items-center gap-7 text-gray-700">
-                    {{-- @foreach ($menus as $index => $menu)
-                        @if ($index == 0)
-                            <li>
-                                <a href="{{ route($menu->link) }}"
-                    class="relative py-4 px-2 xl:text-lg font-bold after:absolute after:content-[''] after:min-w-full after:transition-all after:duration-300 after:h-0.75 after:rounded-full after:bg-[#c3924d] after:bottom-0 after:right-0 transition-all duration-300 hover:text-[#C3924D] text-[#c3924d]">{{ $menu->title }}</a>
-                    </li>
-                    @else
-                    <li>
-                        <a href="{{ route($menu->link) }}"
-                            class="relative py-4 px-2 xl:text-lg font-bold text-gray-700 after:absolute after:content-[''] after:min-w-0 after:transition-all after:duration-300 after:h-0.75 after:rounded-full after:bg-[#c3924d] after:bottom-0 after:right-0 hover:after:min-w-full transition-all duration-300 hover:text-[#C3924D]">{{ $menu->title }}</a>
-                    </li>
-                    @endif
-                    @endforeach --}}
+                <ul class="w-2/3 hidden lg:flex justify-center items-center gap-7 text-gray-700">
                     <li>
                         <a href="{{ route('home') }}"
                             class="relative py-2 px-2 xl:text-lg font-bold @if (Route::is('home')) after:absolute after:content-[''] after:min-w-full after:transition-all after:duration-300 after:h-0.75 after:rounded-full after:bg-[#c3924d] after:bottom-0 after:right-0 transition-all duration-300 hover:text-[#C3924D] text-[#c3924d] @endif">خانه</a>
@@ -106,10 +93,10 @@
                     <li>
                         <a href="{{ route('contactUs') }}"
                             class="relative py-2 px-2 xl:text-lg font-bold @if (Route::is('contactUs') || Route::is('contactUs')) after:absolute after:content-[''] after:min-w-full after:transition-all after:duration-300 after:h-0.75 after:rounded-full after:bg-[#c3924d] after:bottom-0 after:right-0 transition-all duration-300 hover:text-[#C3924D] text-[#c3924d] @endif">ارتباط
-                            ما</a>
+                            با ما</a>
                     </li>
                 </ul>
-                <div class="lg:w-1/4 flex gap-4 justify-end items-center">
+                <div class="flex gap-4 justify-end items-center">
                     <div
                         class="flex items-center gap-4 p-2 bg-white rounded-full @if (!Auth::check()) border-1 border-gray-200 @endif">
                         @if (!Auth::check())
@@ -205,7 +192,8 @@
                     <input type="text" name="title" class="w-full py-1 outline-none" placeholder="جستجو ..."
                         id="">
                     <button>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="fill-gray-400 w-4 lg:w-6" viewBox="0 0 512 512">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="fill-gray-400 w-4 lg:w-6"
+                            viewBox="0 0 512 512">
                             <path
                                 d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z" />
                         </svg>
@@ -262,7 +250,8 @@
                     </li>
                     <li class="w-full">
                         <a href="{{ route('contactUs') }}"
-                            class="@if (Route::is('contactUs') || Route::is('contactUs')) text-[#c3924d] @endif sm:text-lg font-bold py-3 block border-b-1 border-[#c3924d]/30">ارتباط با
+                            class="@if (Route::is('contactUs') || Route::is('contactUs')) text-[#c3924d] @endif sm:text-lg font-bold py-3 block border-b-1 border-[#c3924d]/30">ارتباط
+                            با
                             ما</a>
                     </li>
                 </ul>

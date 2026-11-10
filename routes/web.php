@@ -11,25 +11,23 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
-use App\Http\Middleware\checkAccess;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\CartsController;
+use App\Http\Controllers\DefaultCommentsController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ReferenceSitesController;
 use App\Http\Controllers\TransactionSettingController;
+use App\Http\Middleware\checkAccess;
 use App\Http\Middleware\checkIsActive;
 use App\Http\Middleware\checkIsApproved;
 use App\Http\Middleware\checklogin;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\logo;
-use App\Models\creditCard;
-use App\Models\transactionSetting;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Models\logo;
 
 
 Route::get('/z', function () {
@@ -55,24 +53,6 @@ Route::get('/xyz', function () {
     // $time = $dateTime[1];
     // dd($dateTime, $dateJalali, $date, $time);
     // --------------------------------------------------------------------
-    // Schema::table('transactions', function (Blueprint $table) {
-    //     $table->string('description')->nullable()->after('receipt');
-    //     $table->string('date')->nullable()->after('description');
-    //     $table->string('time')->nullable()->after('date');
-    // });
-    // Schema::table('users', function (Blueprint $table) {
-    //     $table->string('password')->nullable()->change();
-    // });
-    // Schema::table('orders', function (Blueprint $table) {
-    //     $table->string('receipt')->nullable()->after('description');
-    // });
-
-    Schema::table('users', function (Blueprint $table) {
-        $table->string('mainImage')->nullable()->after('password');
-        // $table->tinyInteger('sendNotif')->default(0)->after('isActive');
-    });
-
-    User::where('id', '>', 0)->update(['sendNotif'=>0]);
 
     // foreach(User::all() as $user){
     //     $code = strtoupper(Str::random(10));
@@ -81,7 +61,14 @@ Route::get('/xyz', function () {
 });
 
 // home routes
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::group([
+    'controller' => HomeController::class,
+], function () {
+    Route::get('/', 'index')->name('home');
+    Route::get('/about-us', 'aboutUs')->name('aboutUs');
+    Route::get('/contact-us', 'contactUs')->name('contactUs');
+});
+
 
 // user routes
 Route::group([
@@ -138,7 +125,7 @@ Route::group([
     Route::post('/store', 'store')->name('store');
 });
 
-// menu menu
+// menu routes
 Route::group([
     'prefix' => 'menu',
     'controller' => MenuController::class,
@@ -152,6 +139,17 @@ Route::group([
     Route::post('/edit', 'edit')->name('edit');
     Route::post('/update', 'update')->name('update');
     Route::post('/show', 'show')->name('show');
+});
+
+// default comments routes
+Route::group([
+    'prefix' => 'defaultComments',
+    'controller' => DefaultCommentsController::class,
+    'as' => 'comment.',
+    'middleware' => checkAccess::class . ":comment"
+], function () {
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
 });
 
 // category routes
@@ -331,9 +329,6 @@ Route::group([
     Route::post("edit", "edit")->name("edit");
     Route::post("messageStatus",  "messageStatus")->name("messageStatus");
 });
-
-Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('aboutUs');
-Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('contactUs');
 
 // fallback and missing
 Route::fallback([HomeController::class, 'pageNotFound'])->name('fallback');

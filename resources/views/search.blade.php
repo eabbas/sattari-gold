@@ -4,7 +4,8 @@
     <main class="w-11/12 max-w-[1700px] mx-auto my-4 md:my-6">
         <div class="text-[#71717a] text-xs mb-[18px]">خانه / <b class="text-[#333]">جستجو</b></div>
         @if (Route::is('search.page'))
-            <div class="items-end justify-between gap-2.5 mb-[18px] @if(!$title) hidden @else flex @endif">
+            <div
+                class="items-end justify-between gap-2.5 mb-[18px] @if (!$title) hidden @else flex @endif">
                 <div>
                     <h1 id="title" class="m-0 text-[18px] md:text-[22px]">نتایج جستجو برای " {{ $title }} "</h1>
                     <div id="resultCount" class="text-[#71717a] text-[13px]"></div>
@@ -15,7 +16,8 @@
         <div class="grid grid-cols-1 md:grid-cols-10 lg:gap-7 gap-4">
             <div class="fixed w-full h-dvh bg-black/50 z-99 top-0 right-0 md:hidden invisible opacity-0 transition-all duration-300"
                 id="filterBg"></div>
-            <aside class="invisible opacity-0 transition-all duration-300 md:visible md:opacity-100 fixed top-1/2 w-full -translate-y-1/2 right-1/2 translate-x-1/2 md:translate-x-0 md:translate-y-0 z-999 md:z-0 md:static md:block bg-white border border-[#e4e4e7] rounded-xl h-[500px] overflow-y-auto md:h-max md:overflow-hidden lg:col-span-2 col-span-3"
+            <aside
+                class="invisible opacity-0 transition-all duration-300 md:visible md:opacity-100 fixed top-1/2 w-full -translate-y-1/2 right-1/2 translate-x-1/2 md:translate-x-0 md:translate-y-0 z-999 md:z-0 md:static md:block bg-white border border-[#e4e4e7] rounded-xl h-[500px] overflow-y-auto md:h-max md:overflow-hidden lg:col-span-2 col-span-3"
                 id="filterSection">
                 <div class="flex justify-between p-[18px] border-b border-[#e4e4e7] font-bold">
                     <span>فیلترها</span>
@@ -60,7 +62,8 @@
                     <div class="w-full flex items-center gap-3 border-1 bg-white border-gray-200 rounded-xl mb-3">
                         <input type="text" class="w-full px-3.5 py-3 outline-none" id="searchInp">
                         <svg class="w-6 h-6 text-gray-600 ml-2.5 cursor-pointer" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                            viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
                                 d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
                         </svg>
@@ -102,36 +105,40 @@
                                     class="absolute top-[25px] right-[25px] z-10 bg-[#c3924d] text-white rounded-[5px] text-[10px] px-[7px] py-1 in-fa">{{ $product->percent }}
                                     %</span>
                             @endif
-                                <div class="w-full h-2/3 bg-[#f8f8f8] flex justify-center items-center">
-                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->title }}" loading="lazy"
-                                        class="min-w-9/12 min-h-9/12 max-w-full max-md:max-h-50 aspect-square rounded-lg">
-                                    
-                                </div>
+                            <div class="w-full h-2/3 bg-[#f8f8f8] flex justify-center items-center">
+                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->title }}"
+                                    loading="lazy"
+                                    class="min-w-9/12 min-h-9/12 max-w-full max-md:max-h-50 aspect-square rounded-lg">
+
+                            </div>
                             <h3 class="mb-2 text-[13px] leading-[1.9] overflow-hidden">{{ $product->title }}
                             </h3>
-                            
+
                             {{-- @if ($product->count == 0)
                                 <div class="my-2 text-red-500 text-xs">
                                    ناموجود
                                 </div>
                             @endif --}}
                             @if ($product->summary)
-                                <p class="ellipsis-2 max-h-10 h-10 text-sm text-gray-400">
-                                    {{ $product->summery }}
+                                <p class="ellipsis-2 max-h-10 h-10 text-xs text-gray-400">
+                                    {{ $product->summary }}
                                 </p>
                             @endif
                             @if ($product->primary_price)
                                 @if ($product->secondary_price)
                                     <div class="flex items-center justify-between gap-2">
-                                        <strong class="text-[15px] in-fa">{{ number_format($product->secondary_price) }}</strong>
+                                        <strong
+                                            class="text-[15px] in-fa">{{ number_format($product->secondary_price) }}</strong>
                                         <span class="text-[10px] text-[#71717a]">ریال
                                         </span>
                                     </div>
-                                    <div class="line-through text-[#a1a1aa] text-[10px] in-fa">{{ number_format($product->primary_price) }}
+                                    <div class="line-through text-[#a1a1aa] text-[10px] in-fa">
+                                        {{ number_format($product->primary_price) }}
                                         ریال</div>
                                 @else
                                     <div class="flex items-center justify-between gap-2">
-                                        <strong class="text-[15px] in-fa">{{ number_format($product->primary_price) }}</strong>
+                                        <strong
+                                            class="text-[15px] in-fa">{{ number_format($product->primary_price) }}</strong>
                                         <span class="text-[10px] text-[#71717a]">ریال
                                         </span>
                                     </div>
@@ -150,12 +157,10 @@
                             @if ($product->count > 5)
                                 <div class="text-[10px] text-[#16a34a]">● موجود در انبار</div>
                             @endif
-                            @if($product->count == 0)
+                            @if ($product->count == 0)
                                 <div class="text-[10px] text-[#a31616]">● ناموجود</div>
                             @endif
                         </a>
-                       
-                    
                     @endforeach
                 </div>
 
