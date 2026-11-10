@@ -252,7 +252,7 @@
                     }
                 })
                 $.ajax({
-                    url: "{{ route('user.validate') }}",
+                    url: "{{ route('user.validateNewPass') }}",
                     type: "POST",
                     dataType: "json",
                     data: {

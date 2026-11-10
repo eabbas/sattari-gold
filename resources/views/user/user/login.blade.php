@@ -76,16 +76,6 @@
                             @enderror
                         </div>
                         <div class="w-full flex flex-col gap-2">
-                            <label for="nationalCode" class="text-(--color-primary) max-sm:text-sm font-bold">کد
-                                ملی</label>
-                            <input id="nationalCode" type="number" placeholder="کد ملی" name="nationalCode"
-                                value="{{ old('nationalCode') }}"
-                                class="placeholder:text-right placeholder-(--color-zinc-400) max-md:text-sm block w-full rounded-md sm:border-3 border-2 border-(--color-border-strong) px-3 sm:py-3 py-2 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
-                            @error('nationalCode')
-                                <span class="text-xs text-red-500">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="w-full flex flex-col gap-2">
                             <label for="password" class="text-(--color-primary) max-sm:text-sm font-bold">رمز
                                 عبور</label>
                             <input id="password" type="password" placeholder="رمز عبور" name="password"
@@ -156,12 +146,11 @@
 
         let loginForm = document.getElementById('loginForm')
         let phoneNumber = document.getElementById('phoneNumber')
-        let nationalCode = document.getElementById('nationalCode')
         let password = document.getElementById('password')
 
         function checkAuth(e) {
             e.preventDefault()
-            if (phoneNumber.value == "" || password.value == "" || nationalCode.value == "") {
+            if (phoneNumber.value == "" || password.value == "") {
                 showMessage('open')
                 element.innerHTML = `
                         <span class="text-red-500">!</span>
@@ -184,7 +173,6 @@
                     dataType: "json",
                     data: {
                         'phoneNumber': phoneNumber.value,
-                        'nationalCode': nationalCode.value,
                         'password': password.value
                     },
                     success: function(data) {
@@ -192,39 +180,27 @@
                         if (!data.validate) {
                             showMessage('open')
                             element.innerHTML = `
-                                <span class="text-red-500">لطفا ثبت نام کنید</span>
+                                <span class="text-red-500">شماره وارد شده یافت نشد ابتدا ثبت نام کنید.</span>
                             `
                             message.children[0].appendChild(element)
                             setTimeout(() => {
                                 showMessage('close')
                                 location.assign("{{ route('user.signup') }}")
                             }, 5000)
-                            return
-                        }
-                        if (!data.pass) {
-                            showMessage('open')
-                            element.innerHTML = `
-                                <span class="text-red-500">رمز عبور وارد شده اشتباه است</span>
-                            `
-                            message.children[0].appendChild(element)
-                            setTimeout(() => {
-                                showMessage('close')
-                            }, 5000)
-                            return
-                        }
-                        if (!data.match) {
-                            showMessage('open')
-                            element.innerHTML = `
-                                <span class="text-red-500">شماره تلفن و کد ملی باهم مطابقت ندارند</span>
-                            `
-                            message.children[0].appendChild(element)
-                            setTimeout(() => {
-                                showMessage('close')
-                            }, 5000)
-                            return
-                        }
-                        if (data.validate && data.pass && data.match) {
-                            loginForm.submit()
+                        } else {
+                            if (!data.pass) {
+                                showMessage('open')
+                                element.innerHTML = `
+                                    <span class="text-red-500">رمز عبور وارد شده اشتباه است</span>
+                                `
+                                message.children[0].appendChild(element)
+                                setTimeout(() => {
+                                    showMessage('close')
+                                }, 5000)
+                            }
+                            if (data.pass) {
+                                loginForm.submit()
+                            }
                         }
                     },
                     error: function() {
@@ -236,7 +212,7 @@
                         message.children[0].appendChild(element)
                         setTimeout(() => {
                             showMessage('close')
-                        }, 2500)
+                        }, 5000)
                     }
                 })
             }
