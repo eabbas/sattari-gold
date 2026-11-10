@@ -67,15 +67,15 @@
                 </p>
                 <span class="w-full h-px bg-(--color-border-gold) mt-4"></span>
                 <!-- قیمت -->
-                @if($product->count <= 5 && $product->count != 0)
+                @if ($product->count <= 5 && $product->count != 0)
                     <div class="w-full flex items-center gap-1.5 mt-3 pr-5">
 
                         <div class="text-gray-600 text-sm">
-                          تنها
+                            تنها
                         </div>
                         <div class=" text-red-500 in-fa text-sm">{{ $product->count }}</div>
                         <div class="text-gray-600 text-sm">
-                        عدد موجود در انبار
+                            عدد موجود در انبار
                         </div>
                     </div>
                 @endif
@@ -90,11 +90,12 @@
                                     </span>
                                 @endif
                                 <span class="text-xs text-gray-400 font-bold line-through">
-                                    {{ $product->primary_price }} ریال
+                                    {{ number_format($product->primary_price) }} ریال
                                 </span>
                             </div>
                             <div class="text-(--color-primary) font-bold flex items-baseline gap-2">
-                                <span class="text-xl md:text-2xl in-fa">{{ number_format($product->secondary_price) }}</span>
+                                <span
+                                    class="text-xl md:text-2xl in-fa">{{ number_format($product->secondary_price) }}</span>
                                 <span class="text-sm">ریال</span>
                             </div>
                         @else
@@ -107,12 +108,12 @@
                         <span class="text-(--color-primary) font-bold text-base">برای استعلام قیمت تماس بگیرید</span>
                     @endif
                 </div>
-              
+
                 <div class="mt-5 flex items-center gap-2.5">
                     @if ($product->count == 0)
-                        <button data-weight="10"
-                            data-product-id="{{ $product->id }}"
-                            class="addToCartBtns group flex-1 h-11 flex items-center justify-center gap-2 rounded-full bg-[image:var(--gradient-gold)] shadow-md cursor-no-drop transition-all duration-300 hover:shadow-lg" disabled>
+                        <button data-weight="10" data-product-id="{{ $product->id }}"
+                            class="addToCartBtns group flex-1 h-11 flex items-center justify-center gap-2 rounded-full bg-[image:var(--gradient-gold)] shadow-md cursor-no-drop transition-all duration-300 hover:shadow-lg"
+                            disabled>
                             <span class="text-white font-bold text-sm">ناموجود</span>
                         </button>
                     @else
@@ -127,7 +128,7 @@
                         </button>
                     @endif
                 </div>
-                
+
                 <!-- ویژگی‌های اعتماد -->
                 <div class="mt-auto pt-5">
                     <div
@@ -165,11 +166,11 @@
         <section class="w-11/12 mx-auto mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
             <!-- مشخصات محصول -->
             <div class="bg-white rounded-2xl shadow-sm p-5 order-1 lg:order-1">
-                
+
                 <div class="flex items-center gap-3 pb-3 border-b border-zinc-200">
                     <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-                    <svg class='w-6' viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"
-                        stroke-width="3" stroke="var(--color-primary)" fill="none">
+                    <svg class='w-6' viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" stroke-width="3"
+                        stroke="var(--color-primary)" fill="none">
                         <ellipse cx="23.07" cy="14.99" rx="15.22" ry="5.24" stroke-linecap="round" />
                         <path d="M38.3,21.8c0,2.89-6.82,5.24-15.23,5.24S7.85,24.69,7.85,21.8" stroke-linecap="round" />
                         <path d="M27.38,33.43c-.4,0-3.9,0-4.31,0-8.41,0-15.22-2.35-15.22-5.24" stroke-linecap="round" />
@@ -187,17 +188,17 @@
                     <h3 class="text-base font-bold text-(--color-text)">مشخصات محصول</h3>
                 </div>
                 @if (count($product->attributes) > 0)
-                <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-y-4 divide-x divide-x-reverse divide-zinc-200">
-                    @foreach ($product->attributes as $attribute)
-                        <div class="flex flex-col items-center gap-1.5 px-2 text-center">
-                           
-                            <span class="text-xs text-(--color-text-secondary)">{{ $attribute->attribute_key }}</span>
-                            <span class="text-sm font-bold text-(--color-primary) in-fa">
-                                {{ $attribute->attribute_value }}
-                            </span>
-                        </div>
-                    @endforeach
-                </div>
+                    <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-y-4 divide-x divide-x-reverse divide-zinc-200">
+                        @foreach ($product->attributes as $attribute)
+                            <div class="flex flex-col items-center gap-1.5 px-2 text-center">
+
+                                <span class="text-xs text-(--color-text-secondary)">{{ $attribute->attribute_key }}</span>
+                                <span class="text-sm font-bold text-(--color-primary) in-fa">
+                                    {{ $attribute->attribute_value }}
+                                </span>
+                            </div>
+                        @endforeach
+                    </div>
                 @endif
             </div>
             <!-- بنر سرمایه‌گذاری -->
@@ -219,7 +220,7 @@
                     src="{{ asset('assets/img/gold.webp') }}" alt="">
             </div>
         </section>
-        @if (count($product['categories']) > 1)
+        {{-- @if (count($product['categories']) > 1) --}}
         <!-- محصولات مرتبط -->
         <section class="w-11/12 mx-auto mt-10">
             <div class="flex items-center gap-2 mb-3">
@@ -275,12 +276,32 @@
                     @foreach ($product['categories'] as $category)
                         @foreach ($category['products'] as $pro)
                             @if ($pro['id'] != $product['id'])
+                                {{--  --}}
+                                @if ($pro['media']->isNotEmpty())
+                                    @foreach ($pro['media'] as $media)
+                                        @if ($media['is_main'])
+                                            @php
+                                                $imgSrc = asset('storage/' . $media['media_path']);
+                                            @endphp
+                                            @break
+
+                                        @else
+                                            @php
+                                                $imgSrc = asset('storage/default.jpg');
+                                            @endphp
+                                        @endif
+                                    @endforeach
+                                @else
+                                    @php
+                                        $imgSrc = asset('storage/default.jpg');
+                                    @endphp
+                                @endif
+                                {{--  --}}
                                 <div
                                     class="snap-start shrink-0 w-48 bg-white rounded-xl shadow-sm hover:shadow-md transition-all p-3 flex flex-col items-center">
                                     <a href="{{ route('product.show', [$pro]) }}"
                                         class="w-full flex flex-col items-center">
-                                        <img class="w-24 h-24 object-contain"
-                                            src="{{ $pro->mainImg ? asset('storage/' . $pro->mainImg) : asset('storage/default.jpg') }}"
+                                        <img class="w-24 h-24 object-contain" src="{{ $imgSrc }}"
                                             alt="{{ $pro->title }}">
                                         <span
                                             class="mt-2 text-sm font-bold text-(--color-text)">{{ $pro->title }}</span>
@@ -293,7 +314,8 @@
                                                     class="text-sm in-fa">{{ number_format($pro->secondary_price) ?: number_format($pro->primary_price) }}</span>
                                             </div>
                                         @else
-                                            <span class="text-(--color-primary) text-[11px] font-bold">برای استعلام قیمت
+                                            <span class="text-(--color-primary) text-[11px] font-bold">برای استعلام
+                                                قیمت
                                                 تماس بگیرید</span>
                                         @endif
                                     </div>
@@ -304,7 +326,7 @@
                 </div>
             </div>
         </section>
-        @endif
+        {{-- @endif --}}
 
         <section class="w-11/12 mx-auto mt-4 lg:mt-8">
             <p class="text-sm text-justify leading-[1.5] text-gray-600 in-fa">
@@ -318,8 +340,9 @@
         class="fixed bottom-0 inset-x-0 z-50 md:hidden bg-white shadow-[0_-4px_16px_rgba(0,0,0,.08)] h-16 px-4 flex items-center justify-between gap-3">
         @if ($product->count == 0)
             <butto data-product-id="{{ $product->id }}"
-                class="addToCartBtns w-1/2 h-10 rounded-full bg-[image:var(--gradient-gold)] text-white font-bold text-sm cursor-no-drop" disabled>
-              ناموجود
+                class="addToCartBtns w-1/2 h-10 rounded-full bg-[image:var(--gradient-gold)] text-white font-bold text-sm cursor-no-drop"
+                disabled>
+                ناموجود
             </butto>
         @else
             <button onclick="addToCart(this)" data-product-id="{{ $product->id }}"
@@ -328,7 +351,8 @@
             </button>
         @endif
         <div class="text-(--color-primary) font-bold">
-            <span class="text-base sm:text-xl in-fa">{{ number_format($product->secondary_price) ?: number_format($product->primary_price) }}</span>
+            <span
+                class="text-base sm:text-xl in-fa">{{ number_format($product->secondary_price) ?: number_format($product->primary_price) }}</span>
             <span class="text-sm">ریال</span>
         </div>
     </div>

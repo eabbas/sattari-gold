@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\category;
+use App\Models\defaultComments;
 use App\Models\header;
 use App\Models\logo;
 use App\Models\menu;
@@ -15,24 +16,24 @@ class HomeController extends Controller
     {
         $logo = logo::first();
         $categories = category::with('products')->has('products')->get();
-        return view('404', ['logo'=>$logo, 'categories'=>$categories]);
+        return view('404', ['logo' => $logo, 'categories' => $categories]);
     }
     public function aboutUs()
     {
         $logo = logo::first();
         $categories = category::with('products')->has('products')->get();
-        return view('aboutUs', ['logo'=>$logo, 'categories'=>$categories]);
+        return view('aboutUs', ['logo' => $logo, 'categories' => $categories]);
     }
     public function contactUs()
     {
         $logo = logo::first();
         $categories = category::with('products')->has('products')->get();
-        return view('contactUs', ['logo'=>$logo, 'categories'=>$categories]);
+        return view('contactUs', ['logo' => $logo, 'categories' => $categories]);
     }
-
     public function index()
     {
         $header = header::first();
+        $comments = defaultComments::all();
         $menus = menu::where('parent_id', 0)->where('status', 1)->get();
         $products = product::where('show_in_home', 1)->get();
         $categories = category::with('products')->has('products')->get();
@@ -67,6 +68,7 @@ class HomeController extends Controller
             'products' => $products,
             'categories' => $categories,
             'logo' => $logo,
+            'comments' => $comments,
         ]);
     }
 }

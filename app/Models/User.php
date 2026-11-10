@@ -22,18 +22,14 @@ class User extends Authenticatable
         'referral_code',
         'name',
         'family',
-        'address',
         'birthDate',
+        'address',
+        'mainImage',
         'phoneNumber',
         'nationalCode',
-        // 'birthDate',
         'isApproved',
-        // 'accountingCode',
-        // 'referralCode',
-        // 'note',
         'isActive',
         'sendNotif',
-        // 'loginWithPass',
         'password',
     ];
 
@@ -103,7 +99,8 @@ class User extends Authenticatable
         return $this->hasMany(address::class);
     }
 
-    public function creditCards(){
+    public function creditCards()
+    {
         return $this->hasMany(creditCard::class);
     }
 }
