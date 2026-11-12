@@ -93,6 +93,7 @@ Route::group([
     Route::post('/adminStore', 'adminStore')->name('adminStore');
     Route::get('/logout', 'logout')->name('logout');
     Route::get('/index', 'index')->middleware(checkAccess::class . ":user_index")->name('index');
+    Route::post('/pendingUsers', 'pendingUsers')->middleware(checkAccess::class . ":user_index")->name('pendingUsers');
     Route::post('/profileEdit', 'profileEdit')->name('profileEdit');
     Route::post('/update', 'update')->name('update');
     Route::post('/updateProfile', 'updateProfile')->name('updateProfile');

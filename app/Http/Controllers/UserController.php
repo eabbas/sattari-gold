@@ -235,12 +235,10 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $validated = $request->validate(
             [
                 'name' => ['required'],
                 'family' => ['required'],
-                'birthDate' => ['required'],
                 'phoneNumber' => ['required', 'min:11', 'max:11'],
                 'nationalCode' => ['required', 'min:10', 'max:10'],
                 'code' => ['required', 'min:4', 'max:4'],
@@ -249,7 +247,6 @@ class UserController extends Controller
             [
                 'name.required' => 'پر کردن این فیلد الزامی است.',
                 'family.required' => 'پر کردن این فیلد الزامی است.',
-                'birthDate.required' => 'پر کردن این فیلد الزامی است.',
                 'phoneNumber.required' => 'پر کردن این فیلد الزامی است.',
                 'phoneNumber.max' => 'شماره تلفن باید 11 رقمی باشد.',
                 'phoneNumber.min' => 'شماره تلفن باید 11 رقمی باشد.',
@@ -267,8 +264,6 @@ class UserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'family' => $request->family,
-            'birthDate' => $request->birthDate,
-            'address' => $request->address,
             'phoneNumber' => $request->phoneNumber,
             'nationalCode' => $request->nationalCode,
             'password' => $request->password,
@@ -346,7 +341,8 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::paginate(10);
+        // $users = User::where('isApproved', 1)->get();
+        $users = User::all();
         foreach ($users as $user) {
             if ($user->roles->isNotEmpty()) {
                 foreach ($user->roles as $role) {
@@ -366,6 +362,11 @@ class UserController extends Controller
             'setting' => $setting,
         ]);
     }
+    // public function pendingUsers(Request $request)
+    // {
+    //     $users = User::where('isApproved', 0)->get();
+    //     return response()->json($users);
+    // }
 
     public function delete(User $user)
     {
@@ -476,26 +477,6 @@ class UserController extends Controller
 
     public function updateProfile(Request $request)
     {
-        $validated = $request->validate(
-            [
-                // 'name' => ['required'],
-                // 'family' => ['required'],
-                // 'phoneNumber' => ['required', 'min:11', 'max:11'],
-                // 'nationalCode' => ['required', 'min:10', 'max:10'],
-                // 'mainImage' => ['max:100'],
-            ],
-            [
-                // 'name.required' => 'پر کردن این فیلد الزامی است.',
-                // 'family.required' => 'پر کردن این فیلد الزامی است.',
-                // 'phoneNumber.required' => 'پر کردن این فیلد الزامی است.',
-                // 'phoneNumber.max' => 'شماره تلفن باید 11 رقمی باشد.',
-                // 'phoneNumber.min' => 'شماره تلفن باید 11 رقمی باشد.',
-                // 'nationalCode.max' => 'کد ملی باید 10 رقمی باشد.',
-                // 'nationalCode.min' => 'کد ملی باید 10 رقمی باشد.',
-                // 'nationalCode.required' => 'پر کردن این فیلد الزامی است.',
-                // 'mainImage.max' => 'حجم فایل نباید بیشتر از 100 کیلوبایت باشد.',
-            ]
-        );
         if (isset($request['removedImg'])) {
             Storage::disk('public')->delete($request['removedImg']);
             $user = User::where('mainImage', $request['removedImg'])->first();
@@ -511,11 +492,7 @@ class UserController extends Controller
         } else {
             $img_path = $user['mainImage'];
         }
-        // $user->name = $request->name;
-        // $user->family = $request->family;
-        // $user->phoneNumber = $request->phoneNumber;
-        // $user->nationalCode = $request->nationalCode;
-        // $user->birthDate = $request->birthDate;
+        $user->birthDate = $request->birthDate;
         $user->address = $request->address;
         if ($request->password) {
             $password = Hash::make($request->password);

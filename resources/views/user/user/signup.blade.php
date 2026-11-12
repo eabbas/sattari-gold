@@ -91,22 +91,6 @@
                             @enderror
                         </div>
                         <div class="w-full flex flex-col gap-2">
-                            <label for="family" class="text-(--color-primary) max-sm:text-sm font-bold">تاریخ
-                                تولد</label>
-                            <input id="family" type="text" placeholder="تاریخ تولد" name="birthDate"
-                                value="{{ old('birthDate') }}"
-                                class="placeholder:text-right placeholder-(--color-zinc-400) max-md:text-sm block w-full rounded-md  sm:border-3 border-2 border-(--color-border-strong) px-3 sm:py-3 py-2 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
-                            @error('family')
-                                <span class="text-xs text-red-500">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="w-full flex flex-col gap-2">
-                            <label for="family" class="text-(--color-primary) max-sm:text-sm font-bold">آدرس</label>
-                            <input id="family" type="text" placeholder="آدرس" name="address"
-                                value="{{ old('address') }}"
-                                class="placeholder:text-right placeholder-(--color-zinc-400) max-md:text-sm block w-full rounded-md  sm:border-3 border-2 border-(--color-border-strong) px-3 sm:py-3 py-2 font-normal text-(--color-text-secondary) outline-none transition-all focus:border-(--color-border-gold) focus:outline-none">
-                        </div>
-                        <div class="w-full flex flex-col gap-2">
                             <label for="phoneNumber" class="text-(--color-primary) max-sm:text-sm font-bold">شماره
                                 تلفن</label>
                             <input id="phoneNumber" type="number" placeholder="شماره تلفن" name="phoneNumber"
@@ -197,7 +181,6 @@
                 loader.classList.add('invisible', 'opacity-0')
             }
         }
-        let code = document.getElementById('code')
         let message = document.getElementById('message')
         let element = document.createElement('div')
         element.classList = "text-sm font-bold flex flex-row items-center justify-center py-3 gap-2 lg:gap-3"
@@ -274,7 +257,12 @@
             e.preventDefault()
             let phoneNumber = document.getElementById('phoneNumber')
             let nationalCode = document.getElementById('nationalCode')
-            if (phoneNumber.value == "" || code.value == "" || nationalCode.value == "") {
+            let code = document.getElementById('code')
+            let name = document.getElementById('name')
+            let family = document.getElementById('family')
+            let password = document.getElementById('password')
+            if (phoneNumber.value == "" || code.value == "" || nationalCode.value == "" || name.value == "" || family
+                .value == "" || password.value == "") {
                 showMessage('open')
                 element.innerHTML = `
                 <span class="text-red-500">!</span>
@@ -445,7 +433,7 @@
         modals.forEach(modal => {
             setTimeout(() => {
                 modal.classList.add('opacity-0', 'invisible')
-            }, 3000)
+            }, 5000)
         })
     </script>
 </body>

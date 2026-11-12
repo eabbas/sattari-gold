@@ -117,11 +117,12 @@
                         </label>
                         <label class="col-span-3 text-xs md:text-sm lg:text-base" for="roles">
                             تعیین نقش :
-                            <select name="roles[]" id="roles" multiple size="1"
+                            <select name="roles[]" id="roles"
                                 class="w-full hover:shadow-sm transition-all mt-2 bg-zinc-50 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard)">
+                                <option value="0">بدون نقش</option>
                                 @foreach ($roles as $role)
-                                    <option value="{{ $role['id'] }}" @if (in_array($role->id, old('roles', []))) selected @endif>
-                                        {{ $role['faTitle'] }}</option>
+                                    <option value="{{ $role['id'] }}">
+                                        {{ $role['name'] }}</option>
                                 @endforeach
                             </select>
                             @error('roles')
@@ -224,8 +225,6 @@
                     </div>
                 </div>
                 {{-- filters --}}
-                {{-- <form action="{{ route("approvedUsersUpdate") }}" method="POST"> --}}
-                {{-- @csrf --}}
                 <div id="confirmed" class="w-full">
                     <div class="w-full h-5 bg-zinc-200"></div>
                     <div class="w-full overflow-x-auto">
@@ -331,20 +330,20 @@
                                     </th>
                                 </tr>
                             </thead>
-
                             <tbody>
                                 @php
                                     $i = 0;
                                 @endphp
                                 @foreach ($users as $user)
                                     @if ($user->isApproved)
-                                     @php
-                                        $i++;
-                                    @endphp
+                                        @php
+                                            $i++;
+                                        @endphp
                                         <tr class="item_list text-xs lg:text-base approvedUsers"
                                             data-user-id="{{ $user->id }}">
                                             <td class="p-1 md:px-3 md:py-2 flex items-center justify-center gap-2 in-fa">
-                                                <input type="checkbox" name="approvedUsers[]" value="{{ $user->id }}"
+                                                <input type="checkbox" name="approvedUsers[]"
+                                                    value="{{ $user->id }}"
                                                     class="row-checkbox-confirmed appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
                                                 {{ $i }}
                                             </td>
@@ -733,7 +732,6 @@
                         </table>
                     </div>
                 </div>
-                {{-- </form> --}}
                 <div id="pending" class="w-full hidden">
                     <div class="w-full h-5 bg-zinc-200"></div>
                     <div class="w-full overflow-x-auto">
@@ -1006,9 +1004,6 @@
                     </div>
                 </div>
             </div>
-
-
-
         </section>
     </div>
 
@@ -1027,6 +1022,8 @@
     <script src="{{ asset('assets/js/checkAll.js') }}"></script>
     <script src="{{ asset('assets/js/userFilter.js') }}"></script>
     <script>
+        // let route = "{{ route('user.pendingUsers') }}"
+        // let token = "{{ csrf_token() }}"
         let setting = JSON.parse('{!! $setting !!}')
         let minDeposit
         let maxDeposit

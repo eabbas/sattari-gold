@@ -2,9 +2,9 @@
 
 namespace Api;
 
-class creditCard_nationalCode
+class CardMobileMatch
 {
-   private static $route = 'https://s.api.ir/api/sw1/IbanMatch';
+   private static $route = 'https://s.api.ir/api/sw1/CardMobileMatch';
    private static function apiir_request($url, array $data = [], $timeout = APIIR_TIMEOUT)
    {
       // ۱) نمونه‌ی خروجی — قبل از try ساخته می‌شود و در هر شرایطی همین برگردانده می‌شود
@@ -82,16 +82,15 @@ class creditCard_nationalCode
          'data'     => null,
       ];
    }
-   public static function check($nationalCode, $birthDate, $iban)
+   public static function check($mobile, $cardNumber)
    {
       // define('APIIR_TOKEN', 'Bearer +VTBV/jZ76N06n+urIedwvRy96kEFO6ZCBwoQwXof5e9wFqwwjvuuxfWlmeaFGmYLR8T8Klmm8gzPniHw5/GmUafH9pHVdhZGnmj5knHnmA=');   // کلید شما
       // define('APIIR_TIMEOUT', 30);               // مهلت سراسری سرویسهای سبک (ثانیه)
       // define('APIIR_SSL_VERIFY', true);          // اعتبارسنجی SSL — همیشه true بماند
       // define('APIIR_DEFAULT_MESSAGE', 'درخواست ناموفق بود.');
       return self::apiir_request(self::$route, [
-         'nationalCode' => $nationalCode,
-         'birthDate'    => $birthDate,
-         'iban'         => $iban
+         'mobile'     => $mobile,
+         'cardNumber' => $cardNumber
       ]);
    }
 }
