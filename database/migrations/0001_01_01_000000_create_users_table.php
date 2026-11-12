@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('referral_code')->unique()->nullable();
             $table->string('name');
             $table->string('family');
-            $table->string('birthDate');
+            $table->string('birthDate')->nullable();
             $table->string('address')->nullable();
             $table->string('mainImage')->nullable();
             $table->string('phoneNumber')->unique();
-            $table->string('nationalCode');
+            $table->string('nationalCode')->unique();
             $table->tinyInteger('isApproved')->default(0);
             $table->tinyInteger('isActive')->default(0);
             $table->tinyInteger('sendNotif')->default(0);
@@ -28,7 +28,7 @@ return new class extends Migration
             // $table->string('referralCode')->unique()->nullable();
             // $table->text('note')->nullable();
             // $table->boolean('loginWithPass')->default(0);
-            $table->string('password')->nullable();
+            $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });

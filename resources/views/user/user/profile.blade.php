@@ -307,7 +307,7 @@
                             </label>
                             <input type="text"
                                 class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]"
-                                name="birthDate" id="birthDate" placeholder="تاریخ تولد خود را وارد کنید" disabled>
+                                name="birthDate" id="birthDate" placeholder="تاریخ تولد خود را وارد کنید">
                             @error('password')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
                             @enderror

@@ -267,11 +267,11 @@ function submitBtn(el) {
             </td>
             <td
                 class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center fullNameList">
-                ${ data.user.name+' '+data.user.family }
+                ${data.user.name + ' ' + data.user.family}
             </td>
             <td
                 class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa phoneNumberList">
-                ${ data.user.phoneNumber }
+                ${data.user.phoneNumber}
             </td>
             <td
                 class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa phoneNumberList">
@@ -287,7 +287,7 @@ function submitBtn(el) {
             </td>
             <td
                 class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa nationalCodeList">
-                ${ data.user.nationalCode }
+                ${data.user.nationalCode}
             </td>
             <td
                 class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
@@ -295,18 +295,18 @@ function submitBtn(el) {
             </td>
             <td
                 class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center isActiveList">`
-                if (data.user.isActive == 1){
-                    inner+=`<span
+            if (data.user.isActive == 1) {
+                inner += `<span
                         class="w-10 h-10 bg-(--primary-dashboard)/20 text-(--primary-dashboard) rounded-md border-1 border-(--primary-dashboard) p-1 cursor-default">
                         فعال
                     </span>`
-                } else {
-                    inner+=`<span
+            } else {
+                inner += `<span
                         class="w-10 h-10 bg-(--color-danger)/20 text-(--color-danger) rounded-md border-1 border-(--color-danger) p-1 cursor-default">
                         غیرفعال
                     </span>`
-                }
-                inner+=`
+            }
+            inner += `
             </td>
             <td
                 class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
@@ -375,7 +375,7 @@ function submitBtn(el) {
                                                 </div>
                                                 <div class="font-bold pt-2">
                                                     <span id="withdrawableBalance${data.user.id}"
-                                                        data-balance="${ data.user.wallet ? data.user.wallet.asset.toLocaleString('fa-IR') ?? 0 : 0 }"
+                                                        data-balance="${data.user.wallet ? data.user.wallet.asset.toLocaleString('fa-IR') ?? 0 : 0}"
                                                         class="in-fa takebleMoneyAsset"></span>
                                                     <span
                                                         class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
@@ -435,7 +435,7 @@ function submitBtn(el) {
                                                 </div>
                                                 <div class="font-bold pt-2">
                                                     <span
-                                                        class="in-fa">${  data.user.wallet ? data.user.wallet.goldWeight.toLocaleString('fa-IR') ?? 0 : 0 }</span>
+                                                        class="in-fa">${data.user.wallet ? data.user.wallet.goldWeight.toLocaleString('fa-IR') ?? 0 : 0}</span>
                                                     <span
                                                         class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
                                                         گرم
@@ -579,19 +579,19 @@ function submitBtn(el) {
                                         class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) roles"
                                         name="" id="">
                                         <option value="0">بدون نقش</option>`
-                                        if (user.roleIds) {
-                                            data.roles.forEach(role => {
-                                                let isSelected = user.roleIds.includes(role.id) ? 'selected' : ''
-                                                inner += `<option value="${role.id}" ${isSelected}>${role.name}</option>`
-                                            })
-                                        } else {
-                                            data.roles.forEach(role => {
-                                                inner += `
+            if (user.roleIds) {
+                data.roles.forEach(role => {
+                    let isSelected = user.roleIds.includes(role.id) ? 'selected' : ''
+                    inner += `<option value="${role.id}" ${isSelected}>${role.name}</option>`
+                })
+            } else {
+                data.roles.forEach(role => {
+                    inner += `
                                                             <option value="${role.id}">${role.name}</option>
                                                         `
-                                            })
-                                        }
-                                    inner+=`</select>
+                })
+            }
+            inner += `</select>
                                 </div>
 
                                 <div
@@ -647,7 +647,7 @@ function submitBtn(el) {
             </td>
             `
             rowTable.innerHTML = inner
-            
+
             confirmedBulk?.sync()
 
         },
@@ -673,6 +673,45 @@ function conpen(state, el) {
         el.classList.remove('bg-zinc-200')
         confirmed.classList.add("hidden")
         pending.classList.remove("hidden")
+        // 
+        // $.ajaxSetup({
+        //     headers: {
+        //         'X-CSRF-TOKEN': token
+        //     }
+        // })
+        // $.ajax({
+        //     url: route,
+        //     type: "POST",
+        //     dataType: "json",
+        //     data: {},
+        //     success: function (users) {
+        //         console.log(users);
+        //         return
+        //         let tbody = pending.querySelector('tbody')
+        //         tbody.innerHTML = ''
+        //         let div = document.createElement('div')
+        //         let j = 0
+        //         let element
+        //         users.forEach(user => {
+        //             j++
+        //             element += `اینجا ردیف های کاربران قرار میگیره.`
+        //             div.innerHTML = element
+        //             tbody.append(div)
+        //         });
+        //     },
+        //     error: function () {
+        //         showMessage('open')
+        //         element.innerHTML = `
+        //                     <span>❌</span>
+        //                     <span class="text-shadow-lg">خطا در دریافت اطلاعات!</span>
+        //                 `
+        //         message.children[0].appendChild(element)
+        //         setTimeout(() => {
+        //             showMessage('close')
+        //         }, 5000)
+        //     }
+        // })
+        // 
     }
     if (state == 'confirmed') {
         el.classList.add('bg-white')

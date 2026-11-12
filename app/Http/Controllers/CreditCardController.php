@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Api\bankCardInfo;
-use Api\creditCard_nationalCode;
+use Api\CardMobileMatch;
 use App\Models\creditCard;
 use App\Models\logo;
 use App\Models\User;
@@ -40,7 +40,7 @@ class CreditCardController extends Controller
         $user = Auth::user();
         $cardInfoResult = bankCardInfo::check($request->card_number);
         if ($cardInfoResult['data']['name'] != null) {
-            $card_nationalCode_check = creditCard_nationalCode::check($user->nationalCode, $user->birthDate, $cardInfoResult['data']['iban']);
+            $card_nationalCode_check = CardMobileMatch::check($user->phoneNumber, $request->card_number);
             if ($card_nationalCode_check['data']) {
                 creditCard::create([
                     'user_id' => $request->user_id,
@@ -60,39 +60,21 @@ class CreditCardController extends Controller
     }
     public function update(Request $request)
     {
-        if (isset($request->default)) {
-            $allcard = creditcard::all();
-            foreach ($allcard as $card) {
+        $allCards = creditCard::where('user_id', $request->userId)->get();
+        foreach ($allCards as $card) {
+            if ($card->id != $request->cardId) {
                 $card->default = 0;
-                $card->save();
             }
+            if ($card->id == $request->cardId) {
+                $card->default = 1;
+            }
+            $card->save();
         }
-        $validated = $request->validate([
-            'popupname' => ['required'],
-            'popupcard_number' => ['required'],
-            'popupaccount_number' => ['required'],
-            'popupshaba_number' => ['required'],
-        ], [
-            'popupname.required' => 'نام صاحب کارت را وارد کنید',
-            'popupcard_number.required' => ' شماره کارت را وارد کنید',
-            'popupaccount_number.required' => ' شماره حساب کارت را وارد کنید',
-            'popupshaba_number.required' => ' شماره شبای کارت را وارد کنید',
-        ]);
-
-        $card = creditcard::find($request->id);
-        $card->name = $request->popupname;
-        $card->card_number = $request->popupcard_number;
-        $card->account_number = $request->popupaccount_number;
-        $card->shaba_number = $request->popupshaba_number;
-        $card->default = $request->default ? 1 : 0;
-        $card->save();
-        return to_route('creditCard.create');
+        return response()->json();
     }
     public function delete(creditCard $creditCard)
     {
         $creditCard->delete();
-        return to_route('creditCard.create');
+        return redirect()->back()->with('failure', 'شماره کارت و اطلاعات آن حذف شد.');
     }
-    public function list() {}
-    public function adminIndex() {}
 }

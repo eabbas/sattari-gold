@@ -1,12 +1,6 @@
 @extends('admin.app.dashboard')
 @section('title', 'ستاری گلد | مدیریت کارت ها ')
 @section('content')
-    @if ($errors->hasAny(['popupname', 'popupcard_number', 'popupaccount_number', 'popupshaba_number']))
-        <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-300 fixed top-10 right-0 sm:right-5 z-9999999999 flex justify-center items-center transition-all duration-300 in-fa">
-            <span class="text-sm text-[var(--light-theme-text-color)] in-fa"> پر کردن این فیلد الزامی است. </span>
-        </div>
-    @endif
     @if (session('success'))
         <div
             class="modal py-5 px-8 rounded-lg shadow-lg bg-green-300 fixed top-10 right-0 sm:right-5 z-9999999999 flex justify-center items-center transition-all duration-300 in-fa">
@@ -88,7 +82,6 @@
                         </th>
                     </tr>
                 </thead>
-
                 <tbody>
                     @php
                         $i = 1;
@@ -110,121 +103,18 @@
                             <td class="border-1 border-(--border) px-3 py-2 text-center in-fa">
                                 {{ $card->account_number }}
                             </td>
-
                             <td class="border-1 border-(--border) px-3 py-2">
-                                @if ($card->default)
-                                    <div
-                                        class="lg:w-12 w-10 lg:h-6.5 h-5.5 flex justify-center rounded-full items-center transition_normal relative group p-0.5 change_status_product mx-auto">
-                                        <div class="text-center"> پیش فرض</div>
-                                    </div>
-                                @else
-                                    <div
-                                        class="lg:w-12 w-10 lg:h-6.5 h-5.5 flex justify-center rounded-full items-center transition_normal relative group p-0.5 change_status_product mx-auto">
-                                        <div class="text-3xl">-</div>
-                                    </div>
-                                @endif
+                                <label for="default{{ $card->id }}" onchange="defaultCard({{ $card->id }}, this)"
+                                    class="w-[50px] h-[28px] mx-auto flex rounded-full cursor-pointer relative">
+                                    <input type="radio" name="defaultCard" value="1" id="default{{ $card->id }}"
+                                        hidden class="peer" @if ($card->default) checked @endif>
+                                    <span
+                                        class="size-full bg-gray-300 shadow-inner rounded-full peer-checked:bg-(--active) transition-all duration-300"></span>
+                                    <span
+                                        class="size-[20px] rounded-full bg-white absolute top-1 left-1 peer-checked:translate-x-[22px] transition-all duration-300 shadow-md"></span>
+                                </label>
                             </td>
-
                             <td class="border-1 border-(--border) px-3 py-2 flex gap-2">
-                                <div>
-                                    <div data-edit_cart="open" data-id="{{ $card->id }}"
-                                        class="popup_edit_cart text-(--primary-dashboard) border-1 border-(--active) rounded-md p-1.5 mx-auto cursor-pointer flex items-center justify-center">
-                                        <svg class="size-4 fill-(--active)" xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 512 512">
-                                            <path
-                                                d="M395.8 39.6c9.4-9.4 24.6-9.4 33.9 0l42.6 42.6c9.4 9.4 9.4 24.6 0 33.9L417.6 171 341 94.4l54.8-54.8zM318.4 117L395 193.6 159.6 428.9c-7.6 7.6-16.9 13.1-27.2 16.1L39.6 472.4l27.3-92.8c3-10.3 8.6-19.6 16.1-27.2L318.4 117zM452.4 17c-21.9-21.9-57.3-21.9-79.2 0L60.4 329.7c-11.4 11.4-19.7 25.4-24.2 40.8L.7 491.5c-1.7 5.6-.1 11.7 4 15.8s10.2 5.7 15.8 4l121-35.6c15.4-4.5 29.4-12.9 40.8-24.2L495 138.8c21.9-21.9 21.9-57.3 0-79.2L452.4 17z" />
-                                        </svg>
-                                    </div>
-                                    <div
-                                        class="fixed z-50 w-full h-dvh top-0 right-0 flex items-center justify-center invisible opacity-0 transition_normal">
-                                        <div data-edit_cart="close_black"
-                                            class="popup_edit_cart w-full h-full bg-black/50 absolute top-0 right-0 -z-1">
-                                        </div>
-                                        <div class=" lg:w-1/2 w-10/12 bg-white rounded-md px-3 py-2">
-                                            <div
-                                                class="w-full flex items-center justify-between border-b-1 border-(--border) pb-2">
-                                                <div class="font-bold">ویرایش اطلاعات حساب</div>
-                                                <div data-edit_cart="close_xmark" class="popup_edit_cart">
-                                                    <svg class="size-6" fill="currentColor"
-                                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                                                        <path
-                                                            d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z">
-                                                        </path>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <form action="{{ route('creditCard.update') }}" method="post"
-                                                class="grid sm:grid-cols-2 grid-cols-1 gap-5 mt-5">
-                                                @csrf
-                                                <input type="hidden" name="id" value="{{ $card->id }}">
-                                                <div class="w-full flex flex-col justify-start items-start gap-2">
-                                                    <label class="" for="name">
-                                                        به نام
-                                                    </label>
-                                                    <input
-                                                        class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border) rounded-md p-2 outline-none"
-                                                        type="text" name="popupname" id="name"
-                                                        value="{{ $card->name }}">
-                                                    @error('popupname')
-                                                        <div class="text-red-500">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="w-full flex flex-col justify-start items-start gap-2">
-                                                    <label class="" for="name">
-                                                        شماره کارت
-                                                    </label>
-                                                    <input
-                                                        class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border) rounded-md p-2 outline-none"
-                                                        type="text" name="popupcard_number" id="card_number"
-                                                        value="{{ $card->card_number }}">
-                                                    @error('popupcard_number')
-                                                        <div class="text-red-500">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="w-full flex flex-col justify-start items-start gap-2">
-                                                    <label class="" for="name">
-                                                        شماره شبا
-                                                    </label>
-                                                    <input
-                                                        class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border) rounded-md p-2 outline-none"
-                                                        type="text" name="popupshaba_number" id="shaba_number"
-                                                        value="{{ $card->shaba_number }}">
-                                                    @error('popupshaba_number')
-                                                        <div class="text-red-500">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="w-full flex flex-col justify-start items-start gap-2">
-                                                    <label class="" for="name">
-                                                        شماره حساب
-                                                    </label>
-                                                    <input
-                                                        class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border) rounded-md p-2 outline-none"
-                                                        type="text" name="popupaccount_number" id="account_number"
-                                                        value="{{ $card->account_number }}">
-                                                    @error('popupaccount_number')
-                                                        <div class="text-red-500">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="w-full flex justify-start items-start gap-2">
-                                                    <label for=""
-                                                        class="md:text-sm text-xs text-nowrap font-bold text-[#8B929D]">کارت
-                                                        اصلی</label>
-                                                    <div class="">
-                                                        <input type="checkbox" name="default" value="1"
-                                                            id="default"
-                                                            @if ($card->default == 1) checked @endif>
-                                                    </div>
-                                                </div>
-                                                <div class="col-span-2 w-full flex gap-4 justify-between items-center">
-                                                    <button
-                                                        class="w-1/2 border-1 border-(--active) bg-(--active) sm:text-lg font-bold text-white py-2 rounded-md">ویرایش</button>
-                                                    <button
-                                                        class="w-1/2 border-1 border-(--border) bg-(--disactive) sm:text-lg font-bold text-white py-2 rounded-md">لغو</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
                                 <a href="{{ route('creditCard.delete', $card->id) }}"
                                     class="open-popup-edit text-(--primary-dashboard) border-1 border-(--disactive) rounded-md p-1.5 mx-auto cursor-pointer flex items-center justify-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
@@ -244,35 +134,35 @@
         </div>
     </div>
     <script>
-        // function submitCard(e) {
-        //     e.preventDefault()
-        //     let card_number = document.getElementById('card_number')
-        //     let cardNumberErrorText = document.getElementById('cardNumberErrorText')
-        //     cardNumberErrorText.innerText = ''
-        //     if (card_number.value.length != 16) {
-        //         cardNumberErrorText.innerText = 'شماره کارت باید 16 رقمی باشد.'
-        //     }
-        //     if (card_number.value == '') {
-        //         cardNumberErrorText.innerText = 'شماره کارت خود را وارد کنید.'
-        //     }
-        // }
-
-        let popup_edit_cart = document.querySelectorAll('.popup_edit_cart')
-        popup_edit_cart.forEach((item) => {
-            item.addEventListener('click', function(data) {
-                if (item.getAttribute('data-edit_cart') == 'open') {
-                    item.nextElementSibling.classList.remove('invisible')
-                    item.nextElementSibling.classList.remove('opacity-0')
-                }
-                if (item.getAttribute('data-edit_cart') == 'close_black') {
-                    item.parentElement.classList.add('invisible')
-                    item.parentElement.classList.add('opacity-0')
-                }
-                if (item.getAttribute('data-edit_cart') == 'close_xmark') {
-                    item.parentElement.parentElement.parentElement.classList.add('invisible')
-                    item.parentElement.parentElement.parentElement.classList.add('opacity-0')
+        function defaultCard(cardId, el) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 }
             })
-        })
+            $.ajax({
+                url: "{{ route('creditCard.update') }}",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    'cardId': cardId,
+                    'userId': {{ Auth::id() }},
+                },
+                success: function(data) {
+                    el.querySelector('input').checked = true
+                },
+                error: function() {
+                    showMessage('open')
+                    element.innerHTML = `
+                            <span>❌</span>
+                            <span class="text-shadow-lg">خطا در دریافت اطلاعات!</span>
+                        `
+                    message.children[0].appendChild(element)
+                    setTimeout(() => {
+                        showMessage('close')
+                    }, 5000)
+                }
+            })
+        }
     </script>
 @endsection
