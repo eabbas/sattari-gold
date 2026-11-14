@@ -307,7 +307,7 @@
                 </div>
 
                 <button type="button" id="closeBtn"
-                        class="w-9 h-9 flex items-center justify-center rounded-lg border border-[#E7E2D9] bg-white text-[#78716C] transition hover:bg-red-50 hover:text-red-600 hover:border-red-200">
+                        class="size-9 cursor-pointer flex items-center cursor-pinter justify-center rounded-lg border border-[#E7E2D9] bg-white text-[#78716C] transition hover:bg-red-50 hover:text-red-600 hover:border-red-200">
 
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 384 512">
                         <path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"/>
@@ -427,10 +427,10 @@
             <div class="relative w-full max-w-5xl p-5 md:p-8 rounded-2xl bg-white shadow-2xl">
 
                 <button type="button" onclick="closeZoom()"
-                        class="absolute top-3 right-3 w-9 h-9 flex items-center justify-center rounded-lg bg-[#F8F5EF] text-[#78716C] hover:bg-red-50 hover:text-red-600 transition">
+                        class="absolute top-3 right-3 size-9 cursor-pointer flex items-center justify-center rounded-lg bg-[#F8F5EF] text-[#78716C] hover:bg-red-50 hover:text-red-600 transition">
 
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 384 512">
-                        <path d="M345 137c9.4-9.4 9.4-24.6-33.9 0s-33.9 0l-119 119L73 103c-9.4-9.4-33.9 0s-33.9 24.6 0 33.9l119 119L39 375c-9.4 9.4 9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 fill-red-600" viewBox="0 0 384 512">
+                        <path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"/>
                     </svg>
 
                 </button>
