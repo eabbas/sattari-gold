@@ -615,7 +615,7 @@
         <div class="w-full h-full relative">
 
             <form action="{{ route('deal.store') }}" method="POST"
-                  class="w-full max-w-xl absolute -bottom-full left-1/2 -translate-x-1/2 transition-all duration-300 bg-white rounded-t-2xl shadow-2xl overflow-y-auto max-h-[92dvh] border border-gray-100"
+                  class="w-[calc(100%-24px)] max-w-xl max-h-[85dvh] overflow-y-auto absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 bg-white rounded-2xl shadow-2xl border border-gray-100"
                   id="mainBlock">
 
                 @csrf

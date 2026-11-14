@@ -27,28 +27,31 @@ let cleanGoldBalance = parseFloat(userGoldBalance.toString().replace(/,/g, '')) 
 let cleanWalletBalance = parseFloat(userWalletBalance.toString().replace(/,/g, '')) || 0
 
 function closeBlock() {
-    dealBlock.classList.add('invisible')
-    dealBlock.classList.add('opacity-0')
-    dealBlock.querySelector('#mainBlock').classList.remove('bottom-0')
-    dealBlock.querySelector('#mainBlock').classList.add('-bottom-full')
-    switchMode('price')
+    dealBlock.classList.add('invisible', 'opacity-0');
+
+    dealBlock.querySelector('#mainBlock').classList.remove('scale-100');
+    dealBlock.querySelector('#mainBlock').classList.add('scale-95');
+
+    switchMode('price');
 }
 
 function openBlock(el) {
     if (el.id == 'buyBox') {
-        dealPopupTitle.innerText = 'خرید آبشده نقدی'
-        actionInp.value = 'buy'
-        currentAction = 'buy'
+        dealPopupTitle.innerText = 'خرید آبشده نقدی';
+        actionInp.value = 'buy';
+        currentAction = 'buy';
     }
+
     if (el.id == 'sellBox') {
-        dealPopupTitle.innerText = 'فروش آبشده نقدی'
-        actionInp.value = 'sell'
-        currentAction = 'sell'
+        dealPopupTitle.innerText = 'فروش آبشده نقدی';
+        actionInp.value = 'sell';
+        currentAction = 'sell';
     }
-    dealBlock.classList.remove('invisible')
-    dealBlock.classList.remove('opacity-0')
-    dealBlock.querySelector('#mainBlock').classList.remove('-bottom-full')
-    dealBlock.querySelector('#mainBlock').classList.add('bottom-0')
+
+    dealBlock.classList.remove('invisible', 'opacity-0');
+
+    dealBlock.querySelector('#mainBlock').classList.remove('scale-95');
+    dealBlock.querySelector('#mainBlock').classList.add('scale-100');
 }
 
 document.addEventListener('click', (e) => {
