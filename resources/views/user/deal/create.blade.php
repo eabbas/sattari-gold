@@ -872,7 +872,7 @@
                             class="flex border border-gray-200 rounded-lg overflow-hidden focus-within:border-brand-red focus-within:ring-1 focus-within:ring-brand-red transition bg-white">
 
                             <input type="number" id="userInput" name="userInput" step="0.0001" min="0"
-                                placeholder="مبلغ کل"
+                                placeholder="مبلغ کل (ریال)"
                                 class="w-full min-w-0 bg-transparent px-3 py-3 focus:outline-none text-left font-bold text-base in-fa"
                                 dir="ltr">
 

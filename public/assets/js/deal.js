@@ -32,7 +32,7 @@ function closeBlock() {
 
     dealBlock.querySelector('#mainBlock').classList.remove('scale-100');
     dealBlock.querySelector('#mainBlock').classList.add('scale-95');
-
+    priceBlock.innerText = ''
     switchMode('price');
 }
 
@@ -86,7 +86,7 @@ function switchMode(mode) {
         btnByWeight.className =
             'flex-1 py-2 text-sm font-medium rounded-lg transition-all duration-300 text-gray-500 hover:text-gray-700'
         calcBy.value = 'price'
-        userInput.placeholder = 'مبلغ کل'
+        userInput.placeholder = 'مبلغ کل (ریال)'
         inputUnit.innerText = 'ریال'
         resultOutput.placeholder = 'وزن (گرم)'
         resultUnit.innerText = 'گرم'
@@ -98,7 +98,7 @@ function switchMode(mode) {
         calcBy.value = 'weight'
         userInput.placeholder = 'وزن (گرم)'
         inputUnit.innerText = 'گرم'
-        resultOutput.placeholder = 'مبلغ کل'
+        resultOutput.placeholder = 'مبلغ کل (ریال)'
         resultUnit.innerText = 'ریال'
     }
 }
