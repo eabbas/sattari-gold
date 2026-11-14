@@ -120,7 +120,7 @@ function applyDealFilters() {
             bodyTable.innerHTML = '';
 
             data.forEach(row => {
-                if(!row.user) return
+                if (!row.user) return
                 counter++;
 
                 const parentRow = document.createElement('tr');
@@ -159,7 +159,7 @@ function applyDealFilters() {
                             </span>
 
                             <span class="font-semibold whitespace-nowrap">
-                                ${row.user.name + " " + row.user.family}
+                                ${escapeHtml(row.user.name)} ${escapeHtml(row.user.family)}
                             </span>
 
                         </div>
