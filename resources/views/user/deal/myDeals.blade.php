@@ -135,14 +135,6 @@
                     تمام معاملات خرید و فروش طلای خود را در این بخش مشاهده کنید.
                 </p>
             </div>
-
-            <div class="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#eae3d5] bg-white text-[#a47b3b] shadow-sm">
-                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"
-                          d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
-                </svg>
-            </div>
-
         </div>
 
         {{-- محتوای معاملات --}}
@@ -159,15 +151,6 @@
                         سوابق ثبت‌شده در حساب کاربری شما
                     </p>
                 </div>
-
-                <div class="flex items-center gap-2 rounded-lg bg-[#f5eddf] px-3 py-2 text-[11px] font-medium text-[#8e672b]">
-                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"
-                              d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
-                    </svg>
-                    گزارش معاملات
-                </div>
-
             </div>
 
             @if (count(Auth::user()->deals))

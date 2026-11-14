@@ -1079,7 +1079,7 @@
                     } else {
                         transactionMethod.innerHTML = `
                             <label class="col-span-6 md:col-span-3" for="depositFee" onkeyup="checkFee('deposit', this)">
-                                    مبلغ
+                                    مبلغ (ریال)
                                     <span class="text-[10px] text-red-500">(اجباری)</span>
                                     <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa" type="number" name="depositFee" id="depositFee" placeholder="ریال" value="">
                                     <div class="my-1 flex flex-col gap-1">
@@ -1131,7 +1131,7 @@
                                 </div>
                             </div>
                             <label class="col-span-6 md:col-span-3" for="withdrawFee" onkeyup="checkFee('withdraw', this)">
-                                مبلغ
+                                مبلغ (ریال)
                                 <span class="text-[10px] text-red-500">(اجباری)</span>
                                 <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa" type="number" name="withdrawFee" id="withdrawFee" placeholder="ریال" value="">
                                 <div class="my-1 flex flex-col gap-1">
