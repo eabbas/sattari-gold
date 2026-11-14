@@ -7,6 +7,7 @@ let inputUnit = document.getElementById('inputUnit')
 let resultOutput = document.getElementById('resultOutput')
 let resultUnit = document.getElementById('resultUnit')
 let inputError = document.getElementById('inputError')
+let priceBlock = document.getElementById('priceBlock')
 let submitBtn = document.getElementById('submitBtn')
 let buyBox = document.getElementById('buyBox')
 let sellBox = document.getElementById('sellBox')
@@ -116,12 +117,17 @@ userInput.addEventListener('input', function () {
         disableSubmitButton()
         return
     }
-
+    priceBlock.innerText = ''
     // ---------------------------------------------------------
     // حالت اول: کاربر مبلغ را وارد کرده است
     // ---------------------------------------------------------
     if (currentMode === 'price') {
         let price = value
+
+        let finalPrice = parseInt(this.value)/10
+        if(finalPrice >= 1){
+            priceBlock.innerText = 'معادل '+finalPrice.toLocaleString('fa-IR')+" تومان"
+        }
 
         // بررسی موجودی ریالی (در هر دو حالت خرید و فروش، کاربر باید پول کافی داشته باشد)
         // در فروش، کاربر پول را دریافت می‌کند، پس محدودیت موجودی ریالی معنی ندارد،
@@ -167,7 +173,10 @@ userInput.addEventListener('input', function () {
     // ---------------------------------------------------------
     else {
         let weight = value
+        let finalWeight = parseInt(this.value) / 10
 
+        priceBlock.innerText = finalWeight.toLocaleString('fa-IR')
+        
         // بررسی حداقل وزن
         if (weight < minWeight) {
             showError('حداقل وزن مجاز ۰.۰۰۰۱ گرم است.')

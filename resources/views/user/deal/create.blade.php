@@ -739,7 +739,9 @@
 
                         </div>
 
-                        <p id="inputError" class="text-[11px] text-brand-red mt-1.5 hidden">
+                        <p id="priceBlock" class="text-xs text-gray-400 mt-1.5 in-fa"></p>
+
+                        <p id="inputError" class="text-[11px] text-red-500 mt-1.5 hidden">
                             خطا در ورود اطلاعات
                         </p>
 
