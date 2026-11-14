@@ -1,6 +1,802 @@
 @extends('admin.app.dashboard')
 @section('title', 'ستاری گلد | کاربران')
 @section('content')
+
+
+    <style>
+        /* =========================================
+           SATTARI GOLD - CUSTOMERS PAGE REDESIGN
+        ========================================= */
+
+        :root {
+            --user-bg: #F8F5EF;
+            --user-card: #FFFFFF;
+            --user-gold: #D6AD60;
+            --user-gold-dark: #B88A3B;
+            --user-text: #29251F;
+            --user-muted: #78716C;
+            --user-border: #E7E2D9;
+            --user-hover: #FAF7F1;
+            --user-green: #398568;
+            --user-red: #C45D54;
+        }
+
+        /* صفحه اصلی */
+        #confirmed_pending {
+            background: var(--user-card);
+            border: 1px solid var(--user-border);
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(54, 42, 20, .045);
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        /* هدر صفحه */
+        .w-full.flex.flex-col.gap-3>section:first-of-type {
+            background: linear-gradient(115deg, #fff 0%, #FBF7EF 100%);
+            border: 1px solid var(--user-border);
+            border-radius: 18px;
+            padding: 20px 24px;
+            box-shadow: 0 5px 20px rgba(54, 42, 20, .04);
+            min-height: 76px;
+        }
+
+        .w-full.flex.flex-col.gap-3>section:first-of-type h2 {
+            color: var(--user-text);
+            font-size: 19px;
+            font-weight: 800;
+            position: relative;
+            padding-right: 14px;
+        }
+
+        .w-full.flex.flex-col.gap-3>section:first-of-type h2::before {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 3px;
+            bottom: 3px;
+            width: 4px;
+            border-radius: 5px;
+            background: var(--user-gold);
+        }
+
+        .w-full.flex.flex-col.gap-3>section:first-of-type>div[onclick*="createUser"] {
+            background: linear-gradient(135deg, #DDBB78, #B88A3B);
+            color: #fff;
+            border: 1px solid #C69B50;
+            border-radius: 11px;
+            padding: 11px 18px;
+            gap: 9px;
+            font-weight: 700;
+            transition: .25s ease;
+            box-shadow: 0 4px 12px rgba(184, 138, 59, .18);
+        }
+
+        .w-full.flex.flex-col.gap-3>section:first-of-type>div[onclick*="createUser"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 18px rgba(184, 138, 59, .25);
+        }
+
+        /* تب‌های کاربران */
+        #confirmed_pending>div:first-child {
+            background: #F1EDE5;
+            padding: 8px;
+            gap: 8px;
+        }
+
+        #confirmed_pending>div:first-child>.customers {
+            background: transparent;
+            color: var(--user-muted);
+            border-radius: 11px;
+            padding: 14px 10px;
+            font-weight: 600;
+            transition: .25s ease;
+        }
+
+        #confirmed_pending>div:first-child>.customers.bg-white {
+            background: #fff;
+            color: var(--user-gold-dark);
+            box-shadow: 0 2px 9px rgba(60, 45, 20, .08);
+            font-weight: 800;
+        }
+
+        #confirmed_pending>div:first-child>.customers:hover {
+            color: var(--user-gold-dark);
+        }
+
+        /* ناحیه فیلترها */
+        #confirmed_pending .w-full.my-10 {
+            margin-top: 22px;
+            margin-bottom: 22px;
+            padding-left: 22px;
+            padding-right: 22px;
+        }
+
+        #confirmed_pending .w-full.my-10>div:first-child {
+            padding: 0 2px 12px;
+        }
+
+        #confirmed_pending button[onclick="sort(this)"] {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 14px;
+            background: #fff;
+            border: 1px solid var(--user-border);
+            border-radius: 10px;
+            color: var(--user-text);
+            font-size: 12px;
+            transition: .2s;
+        }
+
+        #confirmed_pending button[onclick="sort(this)"]:hover {
+            border-color: var(--user-gold);
+            background: var(--user-hover);
+        }
+
+        #confirmed_pending button[onclick="sort(this)"] img {
+            width: 22px !important;
+            height: 22px !important;
+            object-fit: contain;
+            margin: 0 !important;
+        }
+
+        #confirmed_pending .w-full.my-10>div:nth-child(2) {
+            background: #FBF9F5;
+            border: 1px solid var(--user-border);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        #confirmed_pending fieldset {
+            background: #fff;
+            border: 1px solid var(--user-border);
+            border-radius: 10px;
+            padding: 8px 12px;
+            min-width: 0;
+            transition: .2s;
+        }
+
+        #confirmed_pending fieldset:focus-within {
+            border-color: var(--user-gold);
+            box-shadow: 0 0 0 3px rgba(214, 173, 96, .12);
+        }
+
+        #confirmed_pending fieldset legend {
+            color: var(--user-muted);
+            font-weight: 600;
+            padding: 0 6px;
+        }
+
+        #confirmed_pending fieldset input,
+        #confirmed_pending fieldset select {
+            color: var(--user-text);
+            min-height: 27px;
+            background: transparent;
+        }
+
+        #confirmed_pending fieldset input::placeholder {
+            color: #B0AAA0;
+        }
+
+        #confirmed_pending button[onclick="setDatas()"] {
+            background: var(--user-gold-dark);
+            color: white;
+            border: 1px solid var(--user-gold-dark);
+            border-radius: 9px;
+            padding: 9px 28px;
+            font-weight: 700;
+            transition: .2s;
+        }
+
+        #confirmed_pending button[onclick="setDatas()"]:hover {
+            background: #A77B31;
+            border-color: #A77B31;
+            transform: translateY(-1px);
+        }
+
+        /* نوار بالای جدول و عملیات گروهی */
+        #confirmed_pending .mx-5.mt-5.rounded-xl {
+            background: linear-gradient(135deg, #FBF9F5, #F7F3EB);
+            border: 1px solid var(--user-border);
+            border-radius: 15px;
+            padding: 18px;
+            margin: 18px 20px;
+        }
+
+        #confirmed_pending .mx-5.mt-5.rounded-xl label {
+            color: var(--user-text);
+        }
+
+        #confirmed_pending .mx-5.mt-5.rounded-xl select {
+            background-color: #fff;
+            border: 1px solid var(--user-border);
+            border-radius: 9px;
+            color: var(--user-text);
+            min-height: 42px;
+            padding: 0 12px;
+            transition: .2s;
+        }
+
+        #confirmed_pending .mx-5.mt-5.rounded-xl select:focus {
+            outline: none;
+            border-color: var(--user-gold);
+            box-shadow: 0 0 0 3px rgba(214, 173, 96, .12);
+        }
+
+        #confirmed_pending .mx-5.mt-5.rounded-xl button {
+            background: var(--user-gold-dark);
+            border: 1px solid var(--user-gold-dark);
+            border-radius: 9px;
+            color: white;
+            font-weight: 700;
+            transition: .2s;
+        }
+
+        #confirmed_pending .mx-5.mt-5.rounded-xl button:hover:not(:disabled) {
+            background: #A77B31;
+            transform: translateY(-1px);
+        }
+
+        #confirmed_pending .mx-5.mt-5.rounded-xl button:disabled {
+            opacity: .4;
+            cursor: not-allowed;
+        }
+
+        #confirmed_pending .mx-5.mt-5.rounded-xl input[type="checkbox"] {
+            accent-color: var(--user-gold-dark);
+        }
+
+        /* جدول‌ها */
+        #confirmed_pending table {
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid var(--user-border);
+            border-radius: 13px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        #confirmed_pending table thead tr {
+            background: #F3EBDD;
+        }
+
+        #confirmed_pending table thead th {
+            background: #F3EBDD;
+            color: #66512E;
+            font-weight: 800;
+            font-size: 12px;
+            border: none;
+            border-bottom: 1px solid #E6D9C2;
+            padding: 15px 12px;
+            white-space: nowrap;
+        }
+
+        #confirmed_pending table tbody tr {
+            background: #fff;
+            transition: background .2s ease;
+        }
+
+        #confirmed_pending table tbody tr:nth-child(even) {
+            background: #FDFCF9;
+        }
+
+        #confirmed_pending table tbody tr:hover {
+            background: var(--user-hover);
+        }
+
+        #confirmed_pending table tbody td {
+            color: var(--user-text);
+            border: none;
+            border-bottom: 1px solid #F0ECE5;
+            padding: 13px 10px;
+            vertical-align: middle;
+            font-size: 12px;
+        }
+
+        #confirmed_pending table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        #confirmed_pending table tbody td:first-child {
+            color: var(--user-muted);
+        }
+
+        #confirmed_pending table tbody input[type="checkbox"] {
+            accent-color: var(--user-gold-dark);
+        }
+
+        /* وضعیت حساب */
+        #confirmed_pending td.isActiveList span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+            min-width: 65px;
+            height: auto;
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        /* دکمه‌های ابزار */
+        #confirmed_pending .walletBtn,
+        #confirmed_pending .open-popup-edited {
+            min-height: 38px;
+            border-radius: 9px;
+            font-size: 11px;
+            font-weight: 700;
+            transition: .2s;
+            background: #fff;
+        }
+
+        #confirmed_pending .walletBtn:hover,
+        #confirmed_pending .open-popup-edited:hover {
+            background: #F8F1E4;
+            border-color: var(--user-gold-dark);
+            color: var(--user-gold-dark);
+        }
+
+        #confirmed_pending .deleteUser {
+            background: #FFF1EF;
+            color: #B84F47;
+            border: 1px solid #F0D2CE;
+            border-radius: 9px;
+            font-weight: 700;
+            transition: .2s;
+        }
+
+        #confirmed_pending .deleteUser:hover {
+            background: #B84F47;
+            color: white;
+        }
+
+        #confirmed_pending .open-look-cont {
+            background: var(--user-gold-dark);
+            border-radius: 9px;
+            font-weight: 700;
+            transition: .2s;
+        }
+
+        #confirmed_pending .open-look-cont:hover {
+            background: #A77B31;
+        }
+
+        /* مودال‌ها */
+        #userCreatePopup,
+        #confirmed_pending .popup-wallet,
+        #confirmed_pending .popup-edit,
+        #confirmed_pending .popup-look-cont {
+            backdrop-filter: blur(4px);
+            padding: 18px;
+            overflow-y: auto;
+        }
+
+        #userCreatePopup>div:last-child,
+        #confirmed_pending .popup-wallet>div:last-child,
+        #confirmed_pending .popup-edit .detailBox,
+        #confirmed_pending .popup-look-cont .detailBox {
+            background: #fff;
+            border: 1px solid var(--user-border);
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 20px 70px rgba(30, 25, 15, .18);
+            max-height: calc(100dvh - 36px);
+            overflow-y: auto;
+        }
+
+        #userCreatePopup>div:last-child>div:first-child,
+        #confirmed_pending .detailBox>div:first-child {
+            color: var(--user-text);
+            padding-bottom: 15px;
+            border-color: var(--user-border);
+        }
+
+        #userCreatePopup input,
+        #userCreatePopup select,
+        #confirmed_pending .detailBox input:not([type="checkbox"]),
+        #confirmed_pending .detailBox select,
+        #confirmed_pending .popup-wallet textarea,
+        #confirmed_pending .popup-wallet input:not([type="radio"]) {
+            background: #FBFAF7;
+            border: 1px solid var(--user-border);
+            border-radius: 9px;
+            padding: 11px 12px;
+            color: var(--user-text);
+            transition: .2s;
+        }
+
+        #userCreatePopup input:focus,
+        #userCreatePopup select:focus,
+        #confirmed_pending .detailBox input:focus,
+        #confirmed_pending .detailBox select:focus,
+        #confirmed_pending .popup-wallet textarea:focus,
+        #confirmed_pending .popup-wallet input:focus {
+            outline: none;
+            border-color: var(--user-gold);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(214, 173, 96, .12);
+        }
+
+        #userCreatePopup label,
+        #confirmed_pending .detailBox .text-start {
+            color: var(--user-muted);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        #userCreatePopup button,
+        #confirmed_pending .detailBox button,
+        #confirmed_pending .popup-wallet button {
+            border-radius: 9px;
+            font-weight: 700;
+            transition: .2s;
+        }
+
+        #userCreatePopup button[type="submit"],
+        #confirmed_pending .detailBox .submitBtn,
+        #confirmed_pending .popup-wallet .submitWallet {
+            background: var(--user-gold-dark);
+            color: #fff;
+            border-color: var(--user-gold-dark);
+        }
+
+        #userCreatePopup button[type="submit"]:hover,
+        #confirmed_pending .detailBox .submitBtn:hover,
+        #confirmed_pending .popup-wallet .submitWallet:hover {
+            background: #A77B31;
+            color: #fff;
+        }
+
+        #userCreatePopup button[type="reset"],
+        #confirmed_pending .detailBox .closeBtn,
+        #confirmed_pending .popup-wallet .closeWalletBtn {
+            background: #FFF6F4;
+            border-color: #EBCFC9;
+            color: var(--user-red);
+        }
+
+        #userCreatePopup button[type="reset"]:hover,
+        #confirmed_pending .detailBox .closeBtn:hover,
+        #confirmed_pending .popup-wallet .closeWalletBtn:hover {
+            background: var(--user-red);
+            color: #fff;
+        }
+
+        /* کارت‌های کیف پول */
+        #confirmed_pending .popup-wallet .bg-zinc-200 {
+            background: #F5F0E7;
+            border-radius: 12px;
+        }
+
+        #confirmed_pending .popup-wallet .bg-white {
+            border: 1px solid #EAE2D4;
+        }
+
+        #confirmed_pending .popup-wallet .moneyAsset,
+        #confirmed_pending .popup-wallet .goldAsset {
+            color: var(--user-gold-dark);
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        /* سوییچ‌ها */
+        #confirmed_pending .detailBox input[type="checkbox"].peer+span {
+            transition: .25s;
+        }
+
+        /* پیام‌ها */
+        #message {
+            border: 1px solid var(--user-border);
+            border-radius: 12px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, .1);
+        }
+
+        .modal.fixed {
+            border-radius: 12px;
+            padding: 16px 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .12);
+            border: 1px solid rgba(0, 0, 0, .05);
+        }
+
+        /* لودر */
+        #loader>div {
+            border: 1px solid var(--user-border);
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, .15);
+        }
+
+        #loader p {
+            color: var(--user-text);
+            font-size: 14px;
+        }
+
+        #loader span {
+            border-color: #F1E7D4;
+            border-top-color: var(--user-gold-dark);
+        }
+
+        /* اسکرول افقی جدول */
+        #confirmed_pending .overflow-x-auto {
+            scrollbar-width: thin;
+            scrollbar-color: #D6AD60 #F3EFE7;
+        }
+
+        #confirmed_pending .overflow-x-auto::-webkit-scrollbar {
+            height: 7px;
+        }
+
+        #confirmed_pending .overflow-x-auto::-webkit-scrollbar-track {
+            background: #F3EFE7;
+            border-radius: 10px;
+        }
+
+        #confirmed_pending .overflow-x-auto::-webkit-scrollbar-thumb {
+            background: #D6AD60;
+            border-radius: 10px;
+        }
+
+        /* انیمیشن نرم */
+        #confirmed_pending button,
+        #confirmed_pending input,
+        #confirmed_pending select,
+        #userCreatePopup button,
+        #userCreatePopup input {
+            font-family: inherit;
+        }
+
+        /* موبایل */
+        @media (max-width: 768px) {
+            .w-full.flex.flex-col.gap-3>section:first-of-type {
+                padding: 13px;
+                border-radius: 13px;
+            }
+
+            .w-full.flex.flex-col.gap-3>section:first-of-type h2 {
+                font-size: 14px;
+            }
+
+            #confirmed_pending {
+                border-radius: 13px;
+            }
+
+            #confirmed_pending>div:first-child>.customers {
+                font-size: 11px;
+                padding: 12px 5px;
+            }
+
+            #confirmed_pending .w-full.my-10 {
+                padding-left: 10px;
+                padding-right: 10px;
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
+
+            #confirmed_pending .w-full.my-10>div:nth-child(2) {
+                padding: 11px;
+            }
+
+            #confirmed_pending .mx-5.mt-5.rounded-xl {
+                margin: 12px;
+                padding: 12px;
+            }
+
+            #confirmed_pending .mx-5.mt-5.rounded-xl select {
+                font-size: 11px;
+                padding: 0 7px;
+            }
+
+            #confirmed_pending table thead th {
+                padding: 11px 9px;
+                font-size: 11px;
+            }
+
+            #confirmed_pending table tbody td {
+                padding: 10px 8px;
+                font-size: 11px;
+            }
+
+            #userCreatePopup>div:last-child,
+            #confirmed_pending .popup-wallet>div:last-child,
+            #confirmed_pending .popup-edit .detailBox,
+            #confirmed_pending .popup-look-cont .detailBox {
+                width: 100%;
+                padding: 15px;
+                border-radius: 14px;
+            }
+
+            #userCreatePopup form {
+                gap: 12px;
+            }
+
+            #confirmed_pending .popup-wallet .grid {
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #confirmed_pending .w-full.my-10>div:nth-child(2)>div:first-child {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            #confirmed_pending .mx-5.mt-5.rounded-xl .grid {
+                gap: 9px;
+            }
+
+            #confirmed_pending .mx-5.mt-5.rounded-xl button {
+                font-size: 11px;
+                padding: 8px;
+            }
+
+            #userCreatePopup form label {
+                font-size: 11px;
+            }
+
+            #userCreatePopup form input,
+            #userCreatePopup form select {
+                font-size: 12px;
+            }
+        }
+
+
+        /* =========================================
+           USERS LIST - TABLE & MOBILE REFINEMENT
+           Keep native table-cell layout for stable columns.
+        ========================================= */
+        #confirmed_pending #confirmed,
+        #confirmed_pending #pending {
+            min-width: 0;
+        }
+
+        #confirmed_pending .overflow-x-auto {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
+            overflow-y: visible;
+            -webkit-overflow-scrolling: touch;
+            padding: 0 14px 14px;
+        }
+
+        #confirmed_pending .overflow-x-auto > table {
+            width: 100%;
+            min-width: 1120px;
+            table-layout: auto;
+        }
+
+        #confirmed_pending #pending .overflow-x-auto > table {
+            min-width: 760px;
+        }
+
+        #confirmed_pending .overflow-x-auto > .mx-5.mt-5.rounded-xl {
+            width: auto;
+            margin: 18px 0 14px;
+        }
+
+        #confirmed_pending table th,
+        #confirmed_pending table td {
+            vertical-align: middle;
+            line-height: 1.8;
+        }
+
+        #confirmed_pending table tbody td {
+            white-space: nowrap;
+        }
+
+        #confirmed_pending table tbody td:first-child {
+            min-width: 76px;
+        }
+
+        #confirmed_pending table tbody td:first-child input[type="checkbox"] {
+            display: inline-grid;
+            vertical-align: middle;
+            margin-left: 7px;
+        }
+
+        #confirmed_pending .user-tools-cell {
+            min-width: 190px;
+            white-space: normal;
+        }
+
+        #confirmed_pending .user-tools-cell > button {
+            min-width: 86px;
+            min-height: 36px;
+            margin: 3px;
+            padding: 8px 10px;
+            white-space: nowrap;
+        }
+
+        #confirmed_pending .user-tools-cell .popup-wallet,
+        #confirmed_pending .user-tools-cell .popup-edit,
+        #confirmed_pending .user-tools-cell .popup-look-cont {
+            white-space: normal;
+        }
+
+        #confirmed_pending .mx-5.mt-5.rounded-xl {
+            min-width: 0;
+        }
+
+        #confirmed_pending .mx-5.mt-5.rounded-xl .grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        #confirmed_pending .w-full.my-10 > div:nth-child(2) > div:first-child {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        #confirmed_pending fieldset input,
+        #confirmed_pending fieldset select {
+            width: 100%;
+            min-width: 0;
+            font-size: 13px;
+        }
+
+        #confirmed_pending .customers {
+            user-select: none;
+        }
+
+        @media (max-width: 640px) {
+            #confirmed_pending .overflow-x-auto {
+                padding: 0 9px 12px;
+            }
+
+            #confirmed_pending .overflow-x-auto > table {
+                min-width: 1080px;
+            }
+
+            #confirmed_pending #pending .overflow-x-auto > table {
+                min-width: 700px;
+            }
+
+            #confirmed_pending .mx-5.mt-5.rounded-xl {
+                margin: 12px 0;
+                padding: 12px;
+            }
+
+            #confirmed_pending .mx-5.mt-5.rounded-xl > div:first-child {
+                align-items: flex-start;
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+
+            #confirmed_pending .mx-5.mt-5.rounded-xl .grid {
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            }
+
+            #confirmed_pending .mx-5.mt-5.rounded-xl .grid > button {
+                grid-column: 1 / -1;
+            }
+
+            #confirmed_pending .w-full.my-10 > div:nth-child(2) > div:first-child {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            #confirmed_pending .w-full.my-10 > div:first-child {
+                justify-content: stretch;
+            }
+
+            #confirmed_pending button[onclick="sort(this)"] {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            #confirmed_pending .user-tools-cell > button {
+                min-width: 82px;
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            #confirmed_pending .mx-5.mt-5.rounded-xl .grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+    </style>
+
+
     <div class="absolute z-999 top-0 opacity-0 invisible right-1/2 translate-x-1/2 w-11/12 sm:w-2/3 lg:w-1/3 bg-white rounded-lg shadow-md transition-all duration-500"
         id="message">
         <div class="relative">
@@ -341,7 +1137,7 @@
                                         @endphp
                                         <tr class="item_list text-xs lg:text-base approvedUsers"
                                             data-user-id="{{ $user->id }}">
-                                            <td class="p-1 md:px-3 md:py-2 flex items-center justify-center gap-2 in-fa">
+                                            <td class="p-1 md:px-3 md:py-2 text-center in-fa">
                                                 <input type="checkbox" name="approvedUsers[]"
                                                     value="{{ $user->id }}"
                                                     class="row-checkbox-confirmed appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
@@ -356,7 +1152,7 @@
                                                 {{ $user->phoneNumber }}
                                             </td>
                                             <td
-                                                class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa phoneNumberList">
+                                                class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa roleList">
                                                 {{ count($user->roles) ? $user->roles[0]->name : 'بدون نقش' }}
                                             </td>
                                             <td
@@ -393,7 +1189,7 @@
                                                 class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                                                 قلک طلا
                                             </td>
-                                            <td class="relative p-1 md:px-3 md:py-2 grid grid-cols-2 gap-3">
+                                            <td class="relative p-1 md:px-3 md:py-2 text-center user-tools-cell">
                                                 @can('access', 'user_wallet')
                                                     <button onclick="wallet(this, 'open', {{ $user->id }})"
                                                         class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer walletBtn">
@@ -837,7 +1633,7 @@
                                         <tr class="item_2 text-xs lg:text-base approvedPendingUsers"
                                             data-user-id="{{ $user->id }}">
                                             <td
-                                                class="border-x-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center text-nowrap in-fa flex items-center justify-center gap-2">
+                                                class="border-x-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center text-nowrap in-fa">
                                                 <input type="checkbox" name="approvedPendingUsers[]"
                                                     value="{{ $user->id }}"
                                                     class="row-checkbox-pending appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
@@ -861,7 +1657,7 @@
                                             </td>
                                             @can('access', 'user_edit')
                                                 <td
-                                                    class="relative border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center flex items-center gap-3">
+                                                    class="relative border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center user-tools-cell">
                                                     <button type="button" onclick="popupLookCont(this)"
                                                         class="open-look-cont w-3/6 bg-(--primary-dashboard) text-white rounded-md px-3 py-2 cursor-pointer text-nowrap">
                                                         تایید و بازبینی
@@ -1079,7 +1875,7 @@
                             <label class="col-span-6 md:col-span-3" for="depositFee" onkeyup="checkFee('deposit', this)">
                                     مبلغ (ریال)
                                     <span class="text-[10px] text-red-500">(اجباری)</span>
-                                    <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa" type="number" name="depositFee" id="depositFee" placeholder="ریال" value="">
+                                    <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa fee" type="number" name="depositFee" id="depositFee" placeholder="ریال" value="">
                                     <div class="my-1 flex flex-col gap-1">
                                         <span class="text-xs text-gray-500"></span>
                                         <span class="text-xs text-red-500"></span>
@@ -1131,7 +1927,7 @@
                             <label class="col-span-6 md:col-span-3" for="withdrawFee" onkeyup="checkFee('withdraw', this)">
                                 مبلغ (ریال)
                                 <span class="text-[10px] text-red-500">(اجباری)</span>
-                                <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa" type="number" name="withdrawFee" id="withdrawFee" placeholder="ریال" value="">
+                                <input class="w-full hover:shadow-sm transition-all mt-2 border-1 border-(--border-dashboard) rounded-md p-2 outline-(--border-dashboard) in-fa fee" type="number" name="withdrawFee" id="withdrawFee" placeholder="ریال" value="">
                                 <div class="my-1 flex flex-col gap-1">
                                         <span class="text-xs text-gray-500"></span>
                                         <span class="text-xs text-red-500"></span>
@@ -1170,3 +1966,4 @@
         // }
     </script>
 @endsection
+
