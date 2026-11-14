@@ -60,12 +60,7 @@ Route::get('/xyz', function () {
     // $date = implode('/', explode('-', $date[0]));
     // $time = $dateTime[1];
     // dd($dateTime, $dateJalali, $date, $time);
-    // --------------------------------------------------------------------
 
-    // foreach(User::all() as $user){
-    //     $code = strtoupper(Str::random(10));
-    //     $user->update(['referral_code'=>$code]);
-    // }
 });
 
 // home routes
