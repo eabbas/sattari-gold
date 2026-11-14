@@ -33,6 +33,9 @@ Route::get('/setMessage', function(){
     Schema::table('deals', function(Blueprint $table){
         $table->string('message')->nullable()->after('isApproved');
     });
+    Schema::table('deal_temporaries', function(Blueprint $table){
+        $table->decimal('resultOutput', 11, 5)->default(0)->change();
+    });
 });
 
 Route::get('/z', function () {
