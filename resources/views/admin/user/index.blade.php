@@ -1022,8 +1022,6 @@
     <script src="{{ asset('assets/js/checkAll.js') }}"></script>
     <script src="{{ asset('assets/js/userFilter.js') }}"></script>
     <script>
-        // let route = "{{ route('user.pendingUsers') }}"
-        // let token = "{{ csrf_token() }}"
         let setting = JSON.parse('{!! $setting !!}')
         let minDeposit
         let maxDeposit
