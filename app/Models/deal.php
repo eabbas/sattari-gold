@@ -15,6 +15,7 @@ class deal extends Model
         'date',
         'time',
         'isApproved',
+        'message',
     ];
 
     public function user(){
