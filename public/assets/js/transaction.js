@@ -55,64 +55,90 @@ function applyDealFilters() {
             'filters': dealFilters
         },
         success: function (data) {
-            console.log(data)
+            console.log(data);
+
             let counter = 0;
             let bodyTable = document.querySelector('tbody');
-            bodyTable.innerHTML = ''
+
+            bodyTable.innerHTML = '';
+
             data.forEach(row => {
                 let parentRow = document.createElement('tr');
-                parentRow.dataset.transactionId = row.id
-                parentRow.classList = 'item_fayle text-xs lg:text-base'
-                counter++
+
+                parentRow.dataset.transactionId = row.id;
+                parentRow.className = 'item_fayle text-xs lg:text-sm bg-white text-[#29251F] text-center transition-colors duration-200 hover:bg-[#FAF7F1]';
+
+                counter++;
+
                 let html = `
-                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
+                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center text-[#78716C] in-fa">
                         ${counter}
                     </td>
-                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                       ${row.fullName}
+
+                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center font-medium text-[#29251F]">
+                        ${row.fullName}
                     </td>
-                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
+
+                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center text-[#78716C] in-fa">
                         ${row.phoneNumber}
                     </td>
-                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                        <div class="w-18 mx-auto px-2 py-1 rounded-lg border-2 border-[${row.typeColor}] text-[${row.typeColor}] text-center">
+
+                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
+                        <div
+                            class="w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-medium"
+                            style="color: ${row.typeColor}; border-color: ${row.typeColor}; background-color: ${row.typeColor}12;"
+                        >
                             ${row.type}
                         </div>
                     </td>
-                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
+
+                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center font-semibold text-[#29251F] in-fa">
                         ${row.amount.toLocaleString('fa-IR')}
                     </td>
-                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
+
+                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center text-[#78716C] in-fa">
                         ${row.deal ? row.deal.goldWeight : '-'}
                     </td>
-                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
+
+                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center text-[#78716C] whitespace-nowrap in-fa">
                         ${row.time + ' | ' + row.date}
                     </td>
-                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                        <span class="w-10 h-10 px-3 py-1 text-gray-600 rounded-md border-1 border-gray-600 p-1 cursor-pointer in-fa">
+
+                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
+                        <span class="inline-block px-3 py-1.5 rounded-lg border border-[#E7E2D9] bg-[#F8F5EF] text-[#B88A3B] font-medium text-xs in-fa">
                             ${'100' + row.id}
                         </span>
                     </td>
-                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                        <div class="mx-auto px-2 py-1 rounded-lg border-2 border-[${row.stateColor}] text-[${row.stateColor}] text-center">
+
+                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
+                        <div
+                            class="min-w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-medium"
+                            style="border-color: ${row.stateColor}; color: ${row.stateColor}; background-color: #F8F5EF;"
+                        >
                             ${row.stateTitle}
                         </div>
                     </td>
-                    <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
-                        <button onclick="showTransaction('${row.wallet.user.name + ' ' + row.wallet.user.family}', '${row.wallet.user.phoneNumber}', '${row.time + ' | ' + row.date}', '${row.stateColor}', '${row.stateTitle}', '${row.type}', '${row.amount}', '${row.isApproved}', '${row.id}', '${row.card}', '${row.shaba}', '${row.receipt}')" 
-                        class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer">
+
+                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
+                        <button
+                            onclick="showTransaction('${row.wallet.user.name + ' ' + row.wallet.user.family}', '${row.wallet.user.phoneNumber}', '${row.time + ' | ' + row.date}', '${row.stateColor}', '${row.stateTitle}', '${row.type}', '${row.amount}', '${row.isApproved}', '${row.id}', '${row.card==undefined ? 'هنوز شماره کارت وارد نشده' : row.card}', '${row.shaba==undefined ? 'هنوز شماره شبا وارد نشده' : row.shaba}', '${row.receipt}')"
+                            class="w-full min-w-20 px-3 py-2 rounded-lg border border-[#D6AD60] bg-[#F8F5EF] text-[#B88A3B] font-medium hover:bg-[#B88A3B] hover:text-white transition-all duration-200 cursor-pointer"
+                        >
                             مشاهده
                         </button>
-                    </td>`
-                parentRow.innerHTML = html
-                bodyTable.append(parentRow)
-            })
+                    </td>
+                `;
+
+                parentRow.innerHTML = html;
+                bodyTable.append(parentRow);
+            });
         },
         error: function () {
-            console.log('error')
+            console.log('error');
         }
-    })
+    });
 }
+
 
 document.addEventListener('DOMContentLoaded', function () {
     setTimeout(function () {
@@ -130,12 +156,15 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 
 function showTransaction(user, phoneNumber, dateTime, stateColor, stateTitle, type, amount, isApproved, transactionId ,card, shaba, receipt = null) {
+    console.log(card)
+    console.log(shaba)
     transactionPopup.classList.remove('invisible', 'opacity-0')
     transactionControl.classList.remove('hidden')
     transactionControl.dataset.transactionId = transactionId
     if (isApproved != 0) {
         transactionControl.classList.add('hidden')
     }
+    
     document.getElementById('transactionPopupName').innerText = user
     document.getElementById('transactionPopupPhoneNumber').innerText = phoneNumber
     document.getElementById('transactionPopupDate').innerText = dateTime
@@ -146,10 +175,12 @@ function showTransaction(user, phoneNumber, dateTime, stateColor, stateTitle, ty
     cardNumber.innerText = card !== "" ? card :'هنوز شماره کارت وارد نشده'
     shabaNumber.innerText = shaba !== "" ? shaba :'هنوز شماره شبا وارد نشده'
     let transactionPopupReceipt = document.getElementById('transactionPopupReceipt')
+    console.log(transactionPopupReceipt)
+    console.log(imgPath)
     if (type == 'واریز') {
         transactionPopupReceipt.classList.remove('hidden')
         transactionPopupReceipt.classList.add('flex')
-        transactionPopupReceipt.children[0].src = imgPath + receipt
+        transactionPopupReceipt.querySelector('img').src = imgPath + receipt
     } else {
         transactionPopupReceipt.classList.add('hidden')
         transactionPopupReceipt.classList.remove('flex')
@@ -177,9 +208,11 @@ document.addEventListener('click', (e) => {
 
 })
 
+
 function transactionAct(isApproved) {
-    let transactionId = transactionControl.dataset.transactionId
-    let rows = document.querySelector('tbody').querySelectorAll('tr')
+    let transactionId = transactionControl.dataset.transactionId;
+    let rows = document.querySelector('tbody').querySelectorAll('tr');
+
     $.ajax({
         url: api + 'submitChanges',
         type: "POST",
@@ -192,58 +225,79 @@ function transactionAct(isApproved) {
             rows.forEach(row => {
                 if (response.id == row.dataset.transactionId) {
 
-                    let counter = row.children[0].innerText
+                    let counter = row.children[0].innerText;
+
                     row.innerHTML = `
-                        <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
+                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center text-[#78716C] in-fa">
                             ${counter}
                         </td>
-                        <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                        ${response.fullName}
+
+                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center font-medium text-[#29251F]">
+                            ${response.fullName}
                         </td>
-                        <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
+
+                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center text-[#78716C] in-fa">
                             ${response.phoneNumber}
                         </td>
-                        <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                            <div class="w-18 mx-auto px-2 py-1 rounded-lg border-2 border-[${response.typeColor}] text-[${response.typeColor}] text-center">
+
+                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
+                            <div
+                                class="w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-medium"
+                                style="color: ${response.typeColor}; border-color: ${response.typeColor}; background-color: ${response.typeColor}12;"
+                            >
                                 ${response.type}
                             </div>
                         </td>
-                        <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
+
+                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center font-semibold text-[#29251F] in-fa">
                             ${response.amount.toLocaleString('fa-IR')}
                         </td>
-                        <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
+
+                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center text-[#78716C] in-fa">
                             ${response.deal ? response.deal.goldWeight : '-'}
                         </td>
-                        <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
+
+                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center text-[#78716C] whitespace-nowrap in-fa">
                             ${response.time + ' | ' + response.date}
                         </td>
-                        <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                            <span class="w-10 h-10 px-3 py-1 text-gray-600 rounded-md border-1 border-gray-600 p-1 cursor-pointer in-fa">
+
+                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
+                            <span class="inline-block px-3 py-1.5 rounded-lg border border-[#E7E2D9] bg-[#F8F5EF] text-[#B88A3B] font-medium text-xs in-fa">
                                 ${'100' + response.id}
                             </span>
                         </td>
-                        <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                            <div class="mx-auto px-2 py-1 rounded-lg border-2 border-[${response.stateColor}] text-[${response.stateColor}] text-center">
+
+                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
+                            <div
+                                class="min-w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-medium"
+                                style="border-color: ${response.stateColor}; color: ${response.stateColor}; background-color: #F8F5EF;"
+                            >
                                 ${response.stateTitle}
                             </div>
                         </td>
-                        <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
-                            <button onclick="showTransaction('${response.fullName}', '${response.wallet.user.phoneNumber}', '${response.time + ' | ' + response.date}', '${response.stateColor}', '${response.stateTitle}', '${response.type}', '${response.amount}', '${response.isApproved}', '${response.id}', '${response.card}', '${response.shaba}', '${response.receipt}')" 
-                            class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer">
+
+                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
+                            <button
+                                onclick="showTransaction('${response.fullName}', '${response.wallet.user.phoneNumber}', '${response.time + ' | ' + response.date}', '${response.stateColor}', '${response.stateTitle}', '${response.type}', '${response.amount}', '${response.isApproved}', '${response.id}', '${response.card==undefined ? 'هنوز شماره کارت وارد نشده' : response.card}', '${response.shaba==undefined ? 'هنوز شماره شبا وارد نشده' : response.shaba}', '${response.receipt}')"
+                                class="w-full min-w-20 px-3 py-2 rounded-lg border border-[#D6AD60] bg-[#F8F5EF] text-[#B88A3B] font-medium hover:bg-[#B88A3B] hover:text-white transition-all duration-200 cursor-pointer"
+                            >
                                 مشاهده
                             </button>
                         </td>
-                        `
-                    transactionPopup.classList.add('invisible', 'opacity-0')
+                    `;
 
+                    row.className = 'item_fayle text-xs lg:text-sm bg-white text-[#29251F] text-center transition-colors duration-200 hover:bg-[#FAF7F1]';
+
+                    transactionPopup.classList.add('invisible', 'opacity-0');
                 }
-            })
+            });
         },
         error: function () {
-            alert('failed to load data')
+            alert('failed to load data');
         }
-    })
+    });
 }
+
 
 function sort(el) {
     if (el.dataset.sort == 'desc') {

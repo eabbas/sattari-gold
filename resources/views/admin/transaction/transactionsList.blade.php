@@ -1,337 +1,447 @@
+
 @extends('admin.app.dashboard')
+
 @section('title', 'ستاری گلد | واریز و برداشت ها')
+
 @section('content')
 
-    <!-- واریز و برداشت -->
-    <div class="w-full flex flex-col gap-3 justify-start items-center">
-        <!-- واریز و برداشت / هدر -->
-        <section
-            class="w-full mx-auto bg-(--secondary-dashboard) flex items-center justify-between border-1 border-(--border-dashboard) p-2 2 rounded-md">
-            <h2 class="text-base md:text-xl font-bold">واریز و برداشت</h2>
-            <!-- <div id="openPopup-deposit"
-                            class="w-fit bg-(--info-dashboard) text-xs md:text-base text-(--color-surface-dashboard) rounded-md px-3 py-2 cursor-pointer flex items-center justify-center">
-                            <span class="">
-                                <svg class="size-3 md:size-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                    <path
-                                        d="M248 72c0-13.3-10.7-24-24-24s-24 10.7-24 24V232H40c-13.3 0-24 10.7-24 24s10.7 24 24 24H200V440c0 13.3 10.7 24 24 24s24-10.7 24-24V280H408c13.3 0 24-10.7 24-24s-10.7-24-24-24H248V72z">
-                                    </path>
-                                </svg>
-                            </span>
-                            <div class="">خروجی اکسل</div>
-                        </div> -->
-            <div id="popup-deposit"
-                class="fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2 invisible opacity-0 transition-all flex items-center justify-center">
-                <div id="closePopup-deposit2" class="absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2">
-                </div>
-                <div class="relative z-51 w-[80%] lg:w-200 bg-white rounded-md px-3 py-2">
-                    <div class="w-full flex items-center justify-between border-b-1 border-(--border-dashboard) pb-2">
-                        <div class="font-bold">خروجی اکسل</div>
-                        <div id="closePopup-deposit">
-                            <svg class="size-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 384 512">
-                                <path
-                                    d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z">
-                                </path>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- واریز و برداشت / لسیت -->
-        <section class="w-full mx-auto rounded-md border-1 border-(--border-dashboard) mt-5 pb-10 overflow-hidden">
-            <div class="w-full">
-                <div class="w-full pb-3 px-3 flex flex-row justify-end">
-                    <button onclick="sort(this)" class="flex gap-5 items-center" data-sort="desc">
-                        <span>مرتب سازی :</span>
-                        <p>جدید به قدیمی</p>
-                        <img src="{{ asset('assets/img/sort/desc.png') }}"
-                            style="
-                            max-width: 30px;
-                            max-height: 30px;
-                            margin-top: 10px;
-                            margin-left: 5px;
-                            cursor: pointer;
-                        "
-                            alt="">
-                    </button>
-                </div>
-                <div class="w-full bg-white py-5 px-2 mb-2">
-                    <div class="w-full grid grid-cols-2 md:grid-cols-4 justify-items-end gap-2">
-                        <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
-                            <legend class="px-2 text-(--text-secondary-dashboard) text-[10px] md:text-sm">
-                                نام و نام خانوادگی
-                            </legend>
-                            <input class="w-full outline-none text-[10px] md:text-base" type="text" name="fullName"
-                                id="fullName" placeholder=" نام و نام خانوادگی">
-                        </fieldset>
-                        <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
-                            <legend class="px-2 text-(--text-secondary-dashboard) text-[10px] md:text-sm">
-                                نوع تراکنش
-                            </legend>
-                            <select id="type" name="type[]" data-placeholder="انتخاب کنید" data-multi-select
-                                data-select-all-default="true" multiple>
-                                <option value="deposit">واریز</option>
-                                <option value="withdraw">برداشت</option>
-                                <option value="buy">خرید</option>
-                                <option value="sell">فروش</option>
-                            </select>
-                        </fieldset>
+    <div class="w-full flex flex-col gap-5 text-[#29251F]">
 
-                        <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
-                            <legend class="px-2 text-(--text-secondary-dashboard) text-[10px] md:text-sm">
-                                وضعیت
-                            </legend>
-                            <select id="status" name="status[]" data-placeholder="انتخاب کنید" data-multi-select
-                                data-select-all-default="true" multiple>
-                                <option value="0">در انتظار</option>
-                                <option value="1">تایید شده</option>
-                                <option value="-1">رد شده</option>
-                            </select>
-                        </fieldset>
+        {{-- هدر صفحه --}}
+        <section class="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-[#E7E2D9] bg-white p-4 shadow-sm">
 
-                        <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
-                            <legend class="px-2 text-(--text-secondary-dashboard) text-[10px] md:text-sm">
-                                از تاریخ
-                            </legend>
-                            <input class="w-full outline-none text-xs md:text-base in-fa" dir="ltr" type="text"
-                                name="fromDate" id="fromDate" placeholder="از تاریخ">
-                        </fieldset>
-                        <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
-                            <legend class="px-2 text-(--text-secondary-dashboard) text-[10px] md:text-sm">
-                                تا تاریخ
-                            </legend>
-                            <input class="w-full outline-none text-xs md:text-base in-fa" dir="ltr" type="text"
-                                name="toDate" id="toDate" placeholder="تا تاریخ">
-                        </fieldset>
-
-                        <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
-                            <legend class="px-2 text-(--text-secondary-dashboard) text-[10px] md:text-sm">
-                                مبلغ
-                            </legend>
-                            <input class="w-full outline-none text-xs  md:text-base in-fa" type="number" dir="ltr"
-                                name="" id="price" placeholder="مبلغ">
-                        </fieldset>
-                        <fieldset class="w-full border-1 border-(--color-border) rounded-md p-2">
-                            <legend class="px-2 text-(--text-secondary-dashboard) text-[10px] md:text-sm">
-                                شماره سند
-                            </legend>
-                            <input class="w-full outline-none text-xs  md:text-base in-fa" type="number" dir="ltr"
-                                name="" id="transactionId" placeholder=" شماره سند">
-                        </fieldset>
-                    </div>
-                    <div class="w-full flex justify-end">
-                        <button
-                            class="w-fit flex items-center justify-center font-bold text-xs md:text-base px-3 py-2 md:px-6 mt-5 hover:bg-(--color-blue) hover:text-white transition-all duratoin-300 col-span-1 md:text-right border-1 border-(--color-blue) text-(--color-blue) rounded-md text-center cursor-pointer"
-                            onclick="setDatas()">اعمال</button>
-                    </div>
-                </div>
-                <div class="w-full h-5 bg-zinc-200"></div>
-                <div class="w-full overflow-x-auto">
-                    <div class="w-full flex items-center justify-start gap-2 px-2 py-3">
-                        <div
-                            class="w-full bg-zinc-100 rounded-md p-1 md:px-3 md:py-2 cursor-default text-xs md:text-sm text-(--text-secondary-dashboard) hidden md:flex flex-col md:flex-row">
-                            <span class="">تعداد 55 مشتری در لیست مشتریان یافت شد .</span>
-                            <span class="hidden md:flex">|</span>
-                            <span class="">ظرفیت باقیمانده 445 نفر</span>
-                        </div>
-                    </div>
-                    <table class="w-full border-collapse border-1 border-(--border-dashboard) text-sm">
-                        <thead>
-                            <tr class="bg-gray-100 text-xs lg:text-base">
-                                <th class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
-                                    ردیف
-                                </th>
-                                <th class="min-w-40 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
-                                    نام و نام خانوادگی
-                                </th>
-                                <th class="min-w-30 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
-                                    شماره موبایل
-                                </th>
-                                <th class="min-w-32 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
-                                    نوع تراکنش
-                                </th>
-                                <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
-                                    مبلغ
-                                </th>
-                                <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
-                                    وزن
-                                </th>
-                                <th class="min-w-48 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
-                                    زمان | تاریخ
-                                </th>
-                                <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
-                                    شماره سند
-                                </th>
-                                <th class="min-w-36 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
-                                    وضعیت
-                                </th>
-                                @can('access', 'transactionDetail')
-                                    <th class="min-w-20 border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
-                                        ابزار
-                                    </th>
-                                @endcan
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @php
-                                $i = 0;
-                            @endphp
-                            @foreach ($transactions as $transaction)
-                                @php
-                                    $i++;
-                                @endphp
-                                <tr class="text-xs lg:text-base" data-transaction-id="{{ $transaction->id }}">
-                                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
-                                        {{ $i }}
-                                    </td>
-                                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                                        {{ $transaction->wallet->user['name'] }}
-                                        {{ $transaction->wallet->user['family'] }}
-                                    </td>
-                                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
-                                        {{ $transaction->wallet->user['phoneNumber'] }}
-                                    </td>
-                                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                                        <div
-                                            class="w-18 mx-auto px-2 py-1 rounded-lg border-2 border-[{{ $transaction->typeColor }}] text-[{{ $transaction->typeColor }}] text-center">
-                                            {{ $transaction->type }}
-                                        </div>
-                                    </td>
-                                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
-                                        {{ number_format($transaction->amount) }}
-                                    </td>
-                                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
-                                        {{ $transaction->deal ? $transaction->deal->goldWeight : '-' }}
-                                    </td>
-                                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center in-fa">
-                                        {{ $transaction->time . ' | ' . $transaction->date }}
-                                    </td>
-                                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                                        <span
-                                            class="w-10 h-10 px-3 py-1 text-gray-600 rounded-md border-1 border-gray-600 p-1 cursor-pointer in-fa">
-                                            {{ '100' . $transaction->id }}
-                                        </span>
-                                    </td>
-                                    <td class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
-                                        <div
-                                            class="mx-auto px-2 py-1 rounded-lg border-2 border-[{{ $transaction->stateColor }}] text-[{{ $transaction->stateColor }}] text-center">
-                                            {{ $transaction->stateTitle }}
-                                        </div>
-                                    </td>
-                                    @can('access', 'transactionDetail')
-                                        <td class="relative p-1 md:px-3 md:py-2 flex items-center gap-3">
-                                            <button
-                                                onclick="showTransaction('{{ $transaction->wallet->user->name . ' ' . $transaction->wallet->user->family }}', '{{ $transaction->wallet->user->phoneNumber }}', '{{ $transaction->time . ' | ' . $transaction->date }}', '{{ $transaction->stateColor }}', '{{ $transaction->stateTitle }}', '{{ $transaction->type }}', '{{ $transaction->amount }}', '{{ $transaction->isApproved }}', '{{ $transaction->id }}', '{{ $transaction->card }}', '{{ $transaction->shaba }}', '{{ $transaction->receipt }}')"
-                                                class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer openPopup">
-                                                مشاهده
-                                            </button>
-                                        </td>
-                                    @endcan
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-        {{-- {{ $transactions->links() }} --}}
-    </div>
-    <div id="transaction"
-        class="fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2 invisible opacity-0 transition-all flex items-center justify-center">
-        <div class="absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2">
-        </div>
-        <div class="relative z-51 w-[80%] lg:w-200 bg-white rounded-md px-3 py-2">
-            <div class="w-full flex items-center justify-between border-b-1 border-(--border-dashboard) pb-2">
-                <div class="font-bold">جزئیات تراکنش</div>
-                <div class="cursor-pointer" id="closeBtn">
-                    <svg class="size-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-                        <path
-                            d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z">
-                        </path>
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 flex items-center justify-center rounded-xl bg-[#D6AD60]/15 text-[#B88A3B]">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                              d="M12 8c-1.5 0-2.5.8-2.5 2s1 2 2.5 2 2.5.8 2.5 2-1 2-2.5 2m0-10V6m0 12v-2m9-4a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                     </svg>
                 </div>
-            </div>
-            <div class="grid grid-cols-6 gap-5 mt-5">
-                <div
-                    class="col-span-6 grid grid-cols-3 border-1 border-(--border-dashboard) rounded-lg px-1 md:px-2 py-2 md:py-3 gap-2">
-                    <div class="w-full flex flex-col sm:flex-row">
-                        <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">نام
-                            :</span>
-                        <span id="transactionPopupName" class="text-[10px] md:text-base font-bold"></span>
-                    </div>
-                    <div class="w-full flex flex-col sm:flex-row">
-                        <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره
-                            :</span>
-                        <span id="transactionPopupPhoneNumber" class="text-[10px] md:text-base font-bold in-fa"></span>
-                    </div>
-                    <div class="w-full flex flex-col sm:flex-row">
-                        <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">تاریخ
-                            ثبت :</span>
-                        <span id="transactionPopupDate" class="text-[10px] md:text-base font-bold in-fa"></span>
-                    </div>
-                    <div class="w-full flex flex-col sm:flex-row">
-                        <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">وضعیت
-                            :</span>
-                        <span id="transactionPopupStatus" class="text-[10px] md:text-base font-bold"></span>
-                    </div>
-                    <div class="w-full flex flex-col sm:flex-row">
-                        <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">نوع تراکنش
-                            :</span>
-                        <span id="transactionPopupType" class="text-[10px] md:text-base font-bold"></span>
-                    </div>
-                    <div class="w-full flex flex-col sm:flex-row">
-                        <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1"> مبلغ :</span>
-                        <span id="transactionPopupFee" class="text-[10px] md:text-base font-bold in-fa"></span>
-                    </div>
-                </div>
-                <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
-                    <div
-                        class="w-full bg-white divide-x-1 divide-(--border-dashboard) flex items-center gap-2 p-2 rounded-lg">
-                        <div class="w-6/12 flex flex-col sm:flex-row gap-2">
-                            <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1 in-fa">شماره
-                                کارت :</span>
-                            <span class="text-[8px] sm:text-xs md:text-base font-bold in-fa" id="cardNumber">هنوز شماره کارت وارد نشده</span>
-                        </div>
-                        <div class="w-6/12 flex flex-col sm:flex-row gap-2">
-                            <span class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1 in-fa">شماره
-                                شبا :</span>
-                            <span class="text-[8px] sm:text-xs md:text-base font-bold in-fa" id="shabaNumber">هنوز شماره شبا وارد نشده</span>
-                        </div>
-                    </div>
-                </div>
-                <div id="transactionPopupReceipt"
-                    class="col-span-6 border-1 border-(--border-dashboard) rounded-lg p-2 items-center justify-center hidden">
-                    <img class="w-[90%] h-50 bg-zinc-300" onclick="showImage(this)" src="" alt="">
-                </div>
-                <div id="transactionControl" class="w-full grid grid-cols-2 gap-3 col-span-6" data-transaction-id="">
-                    <button onclick="transactionAct('1')"
-                        class="bg-green-50 text-green-500 border-2 border-green-400 transition-all duration-300 hover:bg-green-500 hover:border-green-500 hover:text-white font-bold px-2 py-4 rounded-md text-center cursor-pointer">
-                        تایید تراکنش
-                    </button>
-                    <button onclick="transactionAct('-1')"
-                        class="bg-red-50 text-red-500 border-2 border-red-400 transition-all duration-300 hover:bg-red-500 hover:border-red-500 hover:text-white font-bold px-2 py-4 rounded-md text-center cursor-pointer">
-                        رد تراکنش
-                    </button>
+
+                <div>
+                    <h2 class="text-base md:text-xl font-bold">واریز و برداشت</h2>
+                    <p class="mt-1 text-xs text-[#78716C]">مدیریت و بررسی تراکنش‌های مالی کاربران</p>
                 </div>
             </div>
+
+            {{-- خروجی اکسل --}}
+            <div id="popup-deposit"
+                 class="fixed inset-0 z-999999 bg-black/50 flex items-center justify-center p-4 invisible opacity-0 transition-all duration-300">
+
+                <div id="closePopup-deposit2" class="absolute inset-0"></div>
+
+                <div class="relative z-10 w-full max-w-2xl rounded-2xl border border-[#E7E2D9] bg-white p-4 shadow-2xl">
+
+                    <div class="flex items-center justify-between border-b border-[#E7E2D9] pb-3">
+                        <div>
+                            <h3 class="font-bold text-[#29251F]">خروجی اکسل</h3>
+                            <p class="mt-1 text-xs text-[#78716C]">دریافت گزارش تراکنش‌ها</p>
+                        </div>
+
+                        <button type="button" id="closePopup-deposit"
+                                class="w-9 h-9 flex items-center justify-center rounded-lg bg-[#F8F5EF] text-[#78716C] hover:bg-red-50 hover:text-red-600 transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 384 512">
+                                <path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        {{-- بخش لیست تراکنش‌ها --}}
+        <section class="w-full overflow-hidden rounded-2xl border border-[#E7E2D9] bg-white shadow-sm">
+
+            {{-- هدر جدول --}}
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#E7E2D9] p-4">
+
+                <div>
+                    <h3 class="text-sm md:text-base font-bold">آرشیو تراکنش‌ها</h3>
+                    <p class="mt-1 text-[11px] text-[#78716C]">مشاهده و جستجوی واریزها و برداشت‌ها</p>
+                </div>
+
+                <button onclick="sort(this)"
+                        class="flex items-center gap-3 rounded-lg border border-[#E7E2D9] bg-[#F8F5EF] px-3 py-2 text-xs font-semibold text-[#78716C] transition hover:border-[#D6AD60] hover:text-[#B88A3B]"
+                        data-sort="desc">
+
+                    <span>مرتب‌سازی:</span>
+                    <span class="text-[#29251F]">جدید به قدیمی</span>
+
+                    <img src="{{ asset('assets/img/sort/desc.png') }}"
+                         class="w-5 h-5 object-contain"
+                         alt="مرتب‌سازی">
+                </button>
+            </div>
+
+            {{-- فیلترها --}}
+            <div class="m-3 md:m-4 rounded-xl border border-[#E7E2D9] bg-[#F8F5EF] p-3 md:p-4">
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+
+                    <fieldset class="min-w-0 rounded-lg border border-[#E7E2D9] bg-white px-3 py-2 transition focus-within:border-[#B88A3B]">
+                        <legend class="px-1 text-[10px] md:text-xs font-semibold text-[#78716C]">
+                            نام و نام خانوادگی
+                        </legend>
+                        <input class="w-full bg-transparent text-xs md:text-sm text-[#29251F] outline-none placeholder:text-[#A8A29E]"
+                               type="text" name="fullName" id="fullName"
+                               placeholder="نام مشتری">
+                    </fieldset>
+
+                    <fieldset class="min-w-0 rounded-lg border border-[#E7E2D9] bg-white px-3 py-2 transition focus-within:border-[#B88A3B]">
+                        <legend class="px-1 text-[10px] md:text-xs font-semibold text-[#78716C]">
+                            نوع تراکنش
+                        </legend>
+                        <select id="type" name="type[]" data-placeholder="انتخاب کنید"
+                                data-multi-select data-select-all-default="true" multiple>
+                            <option value="deposit">واریز</option>
+                            <option value="withdraw">برداشت</option>
+                            <option value="buy">خرید</option>
+                            <option value="sell">فروش</option>
+                        </select>
+                    </fieldset>
+
+                    <fieldset class="min-w-0 rounded-lg border border-[#E7E2D9] bg-white px-3 py-2 transition focus-within:border-[#B88A3B]">
+                        <legend class="px-1 text-[10px] md:text-xs font-semibold text-[#78716C]">
+                            وضعیت
+                        </legend>
+                        <select id="status" name="status[]" data-placeholder="انتخاب کنید"
+                                data-multi-select data-select-all-default="true" multiple>
+                            <option value="0">در انتظار</option>
+                            <option value="1">تایید شده</option>
+                            <option value="-1">رد شده</option>
+                        </select>
+                    </fieldset>
+
+                    <fieldset class="min-w-0 rounded-lg border border-[#E7E2D9] bg-white px-3 py-2 transition focus-within:border-[#B88A3B]">
+                        <legend class="px-1 text-[10px] md:text-xs font-semibold text-[#78716C]">
+                            از تاریخ
+                        </legend>
+                        <input class="w-full bg-transparent text-xs md:text-sm text-[#29251F] outline-none"
+                               dir="ltr" type="text" name="fromDate" id="fromDate"
+                               placeholder="از تاریخ">
+                    </fieldset>
+
+                    <fieldset class="min-w-0 rounded-lg border border-[#E7E2D9] bg-white px-3 py-2 transition focus-within:border-[#B88A3B]">
+                        <legend class="px-1 text-[10px] md:text-xs font-semibold text-[#78716C]">
+                            تا تاریخ
+                        </legend>
+                        <input class="w-full bg-transparent text-xs md:text-sm text-[#29251F] outline-none"
+                               dir="ltr" type="text" name="toDate" id="toDate"
+                               placeholder="تا تاریخ">
+                    </fieldset>
+
+                    <fieldset class="min-w-0 rounded-lg border border-[#E7E2D9] bg-white px-3 py-2 transition focus-within:border-[#B88A3B]">
+                        <legend class="px-1 text-[10px] md:text-xs font-semibold text-[#78716C]">
+                            مبلغ
+                        </legend>
+                        <input class="w-full bg-transparent text-xs md:text-sm text-[#29251F] outline-none placeholder:text-[#A8A29E]"
+                               type="number" dir="ltr" id="price"
+                               placeholder="مبلغ">
+                    </fieldset>
+
+                    <fieldset class="min-w-0 rounded-lg border border-[#E7E2D9] bg-white px-3 py-2 transition focus-within:border-[#B88A3B]">
+                        <legend class="px-1 text-[10px] md:text-xs font-semibold text-[#78716C]">
+                            شماره سند
+                        </legend>
+                        <input class="w-full bg-transparent text-xs md:text-sm text-[#29251F] outline-none placeholder:text-[#A8A29E]"
+                               type="number" dir="ltr" id="transactionId"
+                               placeholder="شماره سند">
+                    </fieldset>
+
+                </div>
+
+                <div class="flex justify-end mt-4">
+                    <button onclick="setDatas()"
+                            class="flex items-center justify-center gap-2 rounded-lg bg-[#B88A3B] px-7 py-2.5 text-xs md:text-sm font-bold text-white transition-all duration-200 hover:bg-[#9F742F]">
+
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M3 4h18M6 9h12m-9 5h6m-3 0v6"/>
+                        </svg>
+
+                        اعمال فیلترها
+                    </button>
+                </div>
+            </div>
+
+            {{-- اطلاعات لیست --}}
+            <div class="mx-3 md:mx-4 mb-3 hidden md:flex flex-col md:flex-row gap-2 rounded-xl border border-[#E7E2D9] bg-[#F8F5EF] p-3 text-xs text-[#78716C]">
+                <span>تعداد 55 مشتری در لیست مشتریان یافت شد.</span>
+                <span class="hidden md:block text-[#D6AD60]">|</span>
+                <span>ظرفیت باقیمانده 445 نفر</span>
+            </div>
+
+            {{-- جدول --}}
+            <div class="w-full overflow-x-auto px-3 md:px-4 pb-5">
+
+                <table class="w-full min-w-[1100px] border-collapse text-xs md:text-sm">
+
+                    <thead>
+                        <tr class="bg-[#F8F5EF] text-[#78716C]">
+
+                            <th class="border border-[#E7E2D9] px-3 py-3">ردیف</th>
+                            <th class="min-w-40 border border-[#E7E2D9] px-3 py-3">نام و نام خانوادگی</th>
+                            <th class="min-w-30 border border-[#E7E2D9] px-3 py-3">شماره موبایل</th>
+                            <th class="min-w-32 border border-[#E7E2D9] px-3 py-3">نوع تراکنش</th>
+                            <th class="min-w-28 border border-[#E7E2D9] px-3 py-3">مبلغ</th>
+                            <th class="min-w-20 border border-[#E7E2D9] px-3 py-3">وزن</th>
+                            <th class="min-w-48 border border-[#E7E2D9] px-3 py-3">زمان | تاریخ</th>
+                            <th class="min-w-28 border border-[#E7E2D9] px-3 py-3">شماره سند</th>
+                            <th class="min-w-36 border border-[#E7E2D9] px-3 py-3">وضعیت</th>
+
+                            @can('access', 'transactionDetail')
+                                <th class="min-w-24 border border-[#E7E2D9] px-3 py-3">ابزار</th>
+                            @endcan
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @php
+                            $i = 0;
+                        @endphp
+
+                        @foreach ($transactions as $transaction)
+
+                            @php
+                                $i++;
+                            @endphp
+
+                            <tr class="item_fayle text-xs lg:text-sm bg-white text-[#29251F] text-center transition-colors duration-200 hover:bg-[#FAF7F1]"
+                                data-transaction-id="{{ $transaction->id }}">
+
+                                <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center text-[#78716C] in-fa">
+                                    {{ $i }}
+                                </td>
+
+                                <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center font-medium text-[#29251F]">
+                                    {{ $transaction->wallet->user['name'] }}
+                                    {{ $transaction->wallet->user['family'] }}
+                                </td>
+
+                                <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center text-[#78716C] in-fa">
+                                    {{ $transaction->wallet->user['phoneNumber'] }}
+                                </td>
+
+                                <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
+                                    <div
+                                        style="color: {{ $transaction->typeColor }}; border-color: {{ $transaction->typeColor }}; background-color: {{ $transaction->typeColor }}12;"
+                                        class="w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-medium">
+                                        {{ $transaction->type }}
+                                    </div>
+                                </td>
+
+                                <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center font-semibold text-[#29251F] in-fa">
+                                    {{ number_format($transaction->amount) }}
+                                </td>
+
+                                <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center text-[#78716C] in-fa">
+                                    {{ $transaction->deal ? $transaction->deal->goldWeight : '-' }}
+                                </td>
+
+                                <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center text-[#78716C] whitespace-nowrap in-fa">
+                                    {{ $transaction->time . ' | ' . $transaction->date }}
+                                </td>
+
+                                <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
+                                    <span class="inline-block px-3 py-1.5 rounded-lg border border-[#E7E2D9] bg-[#F8F5EF] text-[#B88A3B] font-medium text-xs in-fa">
+                                        {{ '100' . $transaction->id }}
+                                    </span>
+                                </td>
+
+                                <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
+                                    <div
+                                        style="border-color: {{ $transaction->stateColor }}; color: {{ $transaction->stateColor }}; background-color: #F8F5EF;"
+                                        class="min-w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-medium">
+                                        {{ $transaction->stateTitle }}
+                                    </div>
+                                </td>
+
+                                @can('access', 'transactionDetail')
+                                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
+
+                                        <button
+                                            onclick="showTransaction('{{ $transaction->wallet->user->name . ' ' . $transaction->wallet->user->family }}', '{{ $transaction->wallet->user->phoneNumber }}', '{{ $transaction->time . ' | ' . $transaction->date }}', '{{ $transaction->stateColor }}', '{{ $transaction->stateTitle }}', '{{ $transaction->type }}', '{{ $transaction->amount }}', '{{ $transaction->isApproved }}', '{{ $transaction->id }}', '{{ $transaction->card }}', '{{ $transaction->shaba }}', '{{ $transaction->receipt }}')"
+                                            class="w-full min-w-20 px-3 py-2 rounded-lg border border-[#D6AD60] bg-[#F8F5EF] text-[#B88A3B] font-medium hover:bg-[#B88A3B] hover:text-white transition-all duration-200 cursor-pointer">
+
+                                            مشاهده
+
+                                        </button>
+
+                                    </td>
+                                @endcan
+
+                            </tr>
+
+                        @endforeach
+
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        {{-- {{ $transactions->links() }} --}}
+
+    </div>
+
+    {{-- پاپ‌آپ جزئیات تراکنش --}}
+    <div id="transaction"
+         class="fixed inset-0 z-999999 bg-black/50 flex items-center justify-center p-3 invisible opacity-0 transition-all duration-300">
+
+        <div class="absolute inset-0"></div>
+
+        <div class="relative z-10 w-full max-w-3xl max-h-[90dvh] overflow-y-auto rounded-2xl border border-[#E7E2D9] bg-[#F8F5EF] p-4 md:p-6 shadow-2xl">
+
+            {{-- هدر --}}
+            <div class="flex items-center justify-between border-b border-[#E7E2D9] pb-4">
+
+                <div>
+                    <h3 class="text-base md:text-lg font-bold text-[#29251F]">
+                        جزئیات تراکنش
+                    </h3>
+                    <p class="mt-1 text-xs text-[#78716C]">
+                        اطلاعات کامل تراکنش انتخاب‌شده
+                    </p>
+                </div>
+
+                <button type="button" id="closeBtn"
+                        class="w-9 h-9 flex items-center justify-center rounded-lg border border-[#E7E2D9] bg-white text-[#78716C] transition hover:bg-red-50 hover:text-red-600 hover:border-red-200">
+
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 384 512">
+                        <path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"/>
+                    </svg>
+
+                </button>
+            </div>
+
+            {{-- اطلاعات اصلی --}}
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mt-5">
+
+                <div class="rounded-xl border border-[#E7E2D9] bg-white p-3">
+                    <span class="block text-xs text-[#78716C] mb-2">نام مشتری</span>
+                    <span id="transactionPopupName" class="text-xs md:text-sm font-bold text-[#29251F] break-words"></span>
+                </div>
+
+                <div class="rounded-xl border border-[#E7E2D9] bg-white p-3">
+                    <span class="block text-xs text-[#78716C] mb-2">شماره موبایل</span>
+                    <span id="transactionPopupPhoneNumber" class="text-xs md:text-sm font-bold text-[#29251F] in-fa"></span>
+                </div>
+
+                <div class="rounded-xl border border-[#E7E2D9] bg-white p-3">
+                    <span class="block text-xs text-[#78716C] mb-2">تاریخ ثبت</span>
+                    <span id="transactionPopupDate" class="text-xs md:text-sm font-bold text-[#29251F] in-fa"></span>
+                </div>
+
+                <div class="rounded-xl border border-[#E7E2D9] bg-white p-3">
+                    <span class="block text-xs text-[#78716C] mb-2">وضعیت</span>
+                    <span id="transactionPopupStatus" class="text-xs md:text-sm font-bold"></span>
+                </div>
+
+                <div class="rounded-xl border border-[#E7E2D9] bg-white p-3">
+                    <span class="block text-xs text-[#78716C] mb-2">نوع تراکنش</span>
+                    <span id="transactionPopupType" class="text-xs md:text-sm font-bold text-[#29251F]"></span>
+                </div>
+
+                <div class="rounded-xl border border-[#E7E2D9] bg-white p-3">
+                    <span class="block text-xs text-[#78716C] mb-2">مبلغ تراکنش</span>
+                    <span id="transactionPopupFee" class="text-xs md:text-sm font-bold text-[#B88A3B] in-fa"></span>
+                </div>
+
+            </div>
+
+            {{-- اطلاعات بانکی --}}
+            <div class="mt-4 rounded-xl border border-[#E7E2D9] bg-white p-3">
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+                    <div class="rounded-lg bg-[#F8F5EF] p-3">
+                        <span class="block text-xs text-[#78716C] mb-2">شماره کارت</span>
+                        <span class="text-xs md:text-sm font-bold text-[#29251F] in-fa break-all" id="cardNumber">
+                            هنوز شماره کارت وارد نشده
+                        </span>
+                    </div>
+
+                    <div class="rounded-lg bg-[#F8F5EF] p-3">
+                        <span class="block text-xs text-[#78716C] mb-2">شماره شبا</span>
+                        <span class="text-xs md:text-sm font-bold text-[#29251F] in-fa break-all" id="shabaNumber">
+                            هنوز شماره شبا وارد نشده
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+            {{-- تصویر رسید --}}
+            <div id="transactionPopupReceipt"
+                 class="mt-4 rounded-xl border border-[#E7E2D9] bg-white p-3 items-center justify-center hidden">
+
+                <div class="w-full">
+                    <p class="mb-3 text-xs font-bold text-[#78716C]">تصویر رسید تراکنش</p>
+
+                    <img class="w-full max-h-72 object-contain rounded-lg bg-[#F8F5EF] cursor-zoom-in"
+                         onclick="showImage(this)" src="" alt="تصویر رسید">
+                </div>
+
+            </div>
+
+            {{-- عملیات تراکنش --}}
+            <div id="transactionControl"
+                 class="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5"
+                 data-transaction-id="">
+
+                <button onclick="transactionAct('1')"
+                        class="flex items-center justify-center gap-2 rounded-xl border border-green-200 bg-green-50 px-3 py-3 text-sm font-bold text-green-700 transition-all duration-200 hover:bg-green-600 hover:border-green-600 hover:text-white">
+
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="m5 12 4 4L19 6"/>
+                    </svg>
+
+                    تایید تراکنش
+                </button>
+
+                <button onclick="transactionAct('-1')"
+                        class="flex items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 px-3 py-3 text-sm font-bold text-red-700 transition-all duration-200 hover:bg-red-600 hover:border-red-600 hover:text-white">
+
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M6 18 18 6M6 6l12 12"/>
+                    </svg>
+
+                    رد تراکنش
+                </button>
+
+            </div>
+
         </div>
     </div>
 
-    <div class="w-full h-dvh fixed top-0 right-0 bg-black/50 transition-all duration-300 z-999 invisible opacity-0"
-        id='showImg'>
-        <div class="w-full h-full flex justify-center items-center">
-            <div class="relative w-11/12  p-6 rounded-lg bg-white">
-                <svg xmlns="http://www.w3.org/2000/svg" class="absolute top-2 right-3 w-4 cursor-pointer"
-                    onclick="closeZoom()" viewBox="0 0 384 512">
-                    <path
-                        d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z" />
-                </svg>
-                <img src="" class="w-full max-h-[calc(100vh-100px)]" alt="">
+    {{-- نمایش بزرگ تصویر --}}
+    <div class="w-full h-dvh fixed inset-0 bg-black/70 transition-all duration-300 z-999999 invisible opacity-0"
+         id="showImg">
+
+        <div class="w-full h-full flex justify-center items-center p-3">
+
+            <div class="relative w-full max-w-5xl p-5 md:p-8 rounded-2xl bg-white shadow-2xl">
+
+                <button type="button" onclick="closeZoom()"
+                        class="absolute top-3 right-3 w-9 h-9 flex items-center justify-center rounded-lg bg-[#F8F5EF] text-[#78716C] hover:bg-red-50 hover:text-red-600 transition">
+
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 384 512">
+                        <path d="M345 137c9.4-9.4 9.4-24.6-33.9 0s-33.9 0l-119 119L73 103c-9.4-9.4-33.9 0s-33.9 24.6 0 33.9l119 119L39 375c-9.4 9.4 9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"/>
+                    </svg>
+
+                </button>
+
+                <img src="" class="w-full max-h-[calc(100vh-100px)] object-contain rounded-lg" alt="تصویر بزرگ رسید">
+
             </div>
+
         </div>
     </div>
-    <!-- واریز و برداشت -->
+
     <script src="{{ asset('assets/js/transaction.js') }}"></script>
+
 @endsection
