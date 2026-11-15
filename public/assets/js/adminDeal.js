@@ -154,10 +154,6 @@ function applyDealFilters() {
                     <td class="border border-[#E7E2D9] px-3 py-3">
                         <div class="flex items-center justify-center gap-3">
 
-                            <span class="min-w-16 rounded-lg px-2 py-1 text-[10px] font-bold ${transactionClass}">
-                                ${transactionText}
-                            </span>
-
                             <span class="font-semibold whitespace-nowrap">
                                 ${escapeHtml(row.user.name)} ${escapeHtml(row.user.family)}
                             </span>
@@ -166,7 +162,9 @@ function applyDealFilters() {
                     </td>
 
                     <td class="border border-[#E7E2D9] px-3 py-3">
-                        شمش نقره
+                            <span class="min-w-16 rounded-lg px-2 py-1 text-[10px] font-bold ${transactionClass}">
+                                ${transactionText}
+                            </span>
                     </td>
 
                     <td class="border border-[#E7E2D9] px-3 py-3 in-fa">
@@ -250,7 +248,7 @@ function setDatas() {
     if (dealTypeMs) {
         dealFilters.dealType = dealTypeMs.getFilterValues()
     }
-    
+
     const dealStateSelect = document.getElementById('dealState')
     const dealStateMs = dealStateSelect ? dealStateSelect._multiSelect : null
     if (dealStateMs) {
