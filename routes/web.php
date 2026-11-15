@@ -29,15 +29,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Models\logo;
 
-Route::get('/setMessage', function(){
-    Schema::table('deals', function(Blueprint $table){
-        $table->string('message')->nullable()->after('isApproved');
-    });
-    Schema::table('deal_temporaries', function(Blueprint $table){
-        $table->decimal('resultOutput', 11, 5)->default(0)->change();
-    });
-});
-
 Route::get('/z', function () {
     $logo = logo::first();
     return view('user.user.account', ['logo' => $logo]);
@@ -54,13 +45,16 @@ Route::get('/u', function () {
 });
 
 Route::get('/xyz', function () {
-    // $dateTime = explode(' ', now());
-    // $dateJalali = verta($dateTime[0]);
-    // $date = explode(' ', $dateJalali);
-    // $date = implode('/', explode('-', $date[0]));
-    // $time = $dateTime[1];
-    // dd($dateTime, $dateJalali, $date, $time);
-
+    // Schema::table('deals', function (Blueprint $table) {
+    //     $table->string('message')->nullable()->after('isApproved');
+    // });
+    Schema::table('headers', function (Blueprint $table) {
+        $table->string('header_bg')->nullable()->change();
+        $table->string('header_img')->nullable()->change();
+    });
+    Schema::table('logos', function (Blueprint $table) {
+        $table->string('logo')->nullable()->change();
+    });
 });
 
 // home routes
