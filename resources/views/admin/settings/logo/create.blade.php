@@ -36,9 +36,6 @@
                                 <input type="file"
                                     class="w-full outline-none pr-5 py-3 bg-[#F9F9F9] border border-slate-300 rounded-xl focus:bg-[#f1f1f4]"
                                     name="logo" id="logo">
-                                @error('logo')
-                                    <span class="text-xs text-red-500">{{ $message }}</span>
-                                @enderror
                             </div>
                             <img id="image" src="{{ old('logo', asset('storage/' . $logo?->logo)) }}" alt=""
                                 class="h-70 w-2/3 mt-10 @if (!$logo) hidden @endif">

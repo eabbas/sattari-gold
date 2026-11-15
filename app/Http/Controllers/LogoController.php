@@ -11,27 +11,32 @@ class LogoController extends Controller
     public function create()
     {
         $logo = logo::first();
+        // return $logo;
         return view('admin.settings.logo.create', ['logo' => $logo]);
     }
     public function store(Request $request)
     {
         $validated = $request->validate(
             [
-                'logo' => ['required', 'max:50'],
                 'link' => ['required']
             ],
             [
-                'logo.required' => 'پر کردن این فیلد الزامی است.',
-                'logo.max' => 'حجم فایل نباید بیشتر از 50 کیلوبایت باشد.',
                 'link.required' => 'پر کردن این فیلد الزامی است.'
             ]
         );
         if ($validated) {
             $logo = logo::first();
+            $logo_path = null;
             if ($logo) {
-                Storage::disk('public')->delete($logo->logo);
+                if (isset($request['logo'])) {
+                    if ($logo['logo']) {
+                        Storage::disk('public')->delete($logo['logo']);
+                    }
+                    $logo_path = $request->logo->store('logoImgs', 'public');
+                } else {
+                    $logo_path = $logo['logo'];
+                }
             }
-            $logo_path = $request->logo->store('logoImgs', 'public');
             logo::updateOrCreate(
                 ['id' => 1],
                 [

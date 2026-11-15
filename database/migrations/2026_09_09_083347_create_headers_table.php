@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('headers', function (Blueprint $table) {
             $table->id();
-            $table->string('header_bg');
-            $table->string('header_img');
+            $table->string('header_bg')->nullable();
+            $table->string('header_img')->nullable();
             $table->string('title');
             $table->string('subTitle');
             $table->string('btnText');
