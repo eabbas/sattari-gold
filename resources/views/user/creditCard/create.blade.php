@@ -51,7 +51,7 @@
                     </label>
                 </div>
             </div>
-            <button type="submit" onclick="submitCard(event)"
+            <button type="submit"
                 class="self-end px-8 py-2.5 font-bold text-white bg-(--active) rounded-xl max-md:text-sm cursor-pointer">ثبت</button>
         </form>
         <div class="w-full overflow-x-auto">

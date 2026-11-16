@@ -22,14 +22,17 @@ class CreditCardController extends Controller
     {
         $validated = $request->validate(
             [
-                'card_number' => ['required', 'min:16', 'max:16'],
+                'card_number' => ['required', 'digits:16'],
             ],
             [
                 'card_number.required' => ' شماره کارت را وارد کنید',
-                'card_number.min' => ' شماره کارت باید 16 رقمی باشد.',
-                'card_number.max' => ' شماره کارت باید 16 رقمی باشد.',
+                'card_number.digits' => ' شماره کارت باید 16 رقمی باشد.',
             ]
         );
+        $foundCard = creditCard::where('card_number', $request->card_number)->first();
+        if ($foundCard) {
+            return redirect()->back()->with('failure', 'شماره کارت وارد شده یک بار ثبت شده است.');
+        }
         if (isset($request->default)) {
             $allcard = creditCard::all();
             foreach ($allcard as $card) {
