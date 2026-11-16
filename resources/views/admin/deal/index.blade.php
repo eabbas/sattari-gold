@@ -114,7 +114,7 @@
                             data-select-all-default="true" multiple>
                             <option value="0">در انتظار</option>
                             <option value="1">تایید شده</option>
-                            <option value="01">رد شده</option>
+                            <option value="-1">رد شده</option>
                         </select>
                     </fieldset>
 
