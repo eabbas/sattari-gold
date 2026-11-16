@@ -12,13 +12,15 @@ use App\Models\logo;
 
 class MessageController extends Controller
 {
-    public function insert(){
-        $segment=segment::all();
+    public function insert()
+    {
+        $segment = segment::all();
         $logo = logo::first();
-        $message=Message::all()->load('segment');
-        return view('admin.Message.insert' , ['logo'=>$logo , 'message'=>$message , 'segment'=>$segment]);
+        $message = Message::all()->load('segment');
+        return view('admin.Message.insert', ['logo' => $logo, 'message' => $message, 'segment' => $segment]);
     }
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         Message::insertGetId([
             "message" => $request->message,
             "segment_id" => $request->segment_id
@@ -32,7 +34,8 @@ class MessageController extends Controller
         $allMessage = Message::all();
         return view("Message.list", ["messages" => $allMessage]);
     }
-    public function delete(Message $id){
+    public function delete(Message $id)
+    {
         $id->delete();
         return to_route("Message.insert");
     }
@@ -41,7 +44,8 @@ class MessageController extends Controller
         $message = Message::find($request->id)->load('segment');
         return response()->json($message);
     }
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $mess = Message::find($request->id);
         $mess->message = $request->popupMessage;
         $mess->segment_id = $request->segment_id;

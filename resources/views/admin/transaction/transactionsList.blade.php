@@ -170,14 +170,6 @@
                 </div>
             </div>
 
-            {{-- اطلاعات لیست --}}
-            <div
-                class="mx-3 md:mx-4 mb-3 hidden md:flex flex-col md:flex-row gap-2 rounded-xl border border-[#E7E2D9] bg-[#F8F5EF] p-3 text-xs text-[#78716C]">
-                <span>تعداد 55 مشتری در لیست مشتریان یافت شد.</span>
-                <span class="hidden md:block text-[#D6AD60]">|</span>
-                <span>ظرفیت باقیمانده 445 نفر</span>
-            </div>
-
             {{-- جدول --}}
             <div class="w-full overflow-x-auto px-3 md:px-4 pb-5">
 
@@ -371,14 +363,16 @@
 
                     <div class="rounded-lg bg-[#F8F5EF] p-3">
                         <span class="block text-xs text-[#78716C] mb-2">شماره کارت</span>
-                        <span class="text-xs md:text-sm font-bold text-[#29251F] in-fa break-all" id="cardNumber">
+                        <span class="text-xs md:text-sm font-bold text-[#29251F] in-fa break-all" id="cardNumber"
+                            style="direction: ltr">
                             هنوز شماره کارت وارد نشده
                         </span>
                     </div>
 
                     <div class="rounded-lg bg-[#F8F5EF] p-3">
                         <span class="block text-xs text-[#78716C] mb-2">شماره شبا</span>
-                        <span class="text-xs md:text-sm font-bold text-[#29251F] in-fa break-all" id="shabaNumber">
+                        <span class="text-xs md:text-sm font-bold text-[#29251F] in-fa break-all" id="shabaNumber"
+                            style="direction: ltr">
                             هنوز شماره شبا وارد نشده
                         </span>
                     </div>

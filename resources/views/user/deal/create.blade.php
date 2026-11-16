@@ -261,30 +261,6 @@
 
             </div>
 
-            {{-- Market Update --}}
-            <div class="flex justify-between items-center text-xs text-gray-500 mb-4 px-1">
-
-                <div class="flex items-center gap-2">
-
-                    <span class="w-2 h-2 rounded-full bg-green-500"></span>
-
-                    <span>
-                        به‌روزرسانی ۳ ثانیه قبل
-                    </span>
-
-                </div>
-
-                <a href="#" class="text-brand-red flex items-center gap-1 font-medium hover:opacity-70 transition">
-
-                    <span>تحلیل بازار</span>
-
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-
-                </a>
-
-            </div>
 
             {{-- Main Gold Trading Card --}}
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-5">
@@ -310,10 +286,6 @@
                         </div>
 
                     </div>
-
-                    <span class="text-[10px] text-green-600 bg-green-50 px-2.5 py-1 rounded-full">
-                        بازار فعال
-                    </span>
 
                 </div>
 
@@ -440,70 +412,6 @@
 
             </div>
 
-            {{-- Global Gold Prices --}}
-            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 mb-5">
-
-                <div class="flex items-center justify-between mb-4">
-
-                    <h3 class="font-bold text-sm text-gray-800">
-                        بازار جهانی طلا
-                    </h3>
-
-                    <span class="text-[10px] text-gray-400">
-                        اطلاعات بازار
-                    </span>
-
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-
-                    <div class="bg-gray-50 rounded-xl p-3">
-
-                        <div class="flex items-center gap-2 mb-2">
-
-                            <span class="text-base">🌍</span>
-
-                            <span class="text-xs text-gray-500">
-                                انس جهانی
-                            </span>
-
-                        </div>
-
-                        <div class="font-bold text-sm text-gray-800 in-fa">
-                            ۴,۳۹۵
-                        </div>
-
-                        <span class="text-[10px] text-gray-400">
-                            دلار
-                        </span>
-
-                    </div>
-
-                    <div class="bg-gray-50 rounded-xl p-3">
-
-                        <div class="flex items-center gap-2 mb-2">
-
-                            <span class="text-base">🪙</span>
-
-                            <span class="text-xs text-gray-500">
-                                طلای جهانی
-                            </span>
-
-                        </div>
-
-                        <div class="font-bold text-sm text-gray-800 in-fa">
-                            ۱,۰۶۹,۵۷۷,۶۱۵
-                        </div>
-
-                        <span class="text-[10px] text-gray-400">
-                            ریال
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
 
             {{-- Account Balance --}}
             <div class="mb-5">
