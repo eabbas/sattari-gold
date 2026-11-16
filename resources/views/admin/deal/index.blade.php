@@ -72,7 +72,7 @@
                     data-sort="desc">
 
                     <span>مرتب‌سازی:</span>
-                    <span class="text-[#29251F]">جدید به قدیمی</span>
+                    <p class="text-[#29251F]">جدید به قدیمی</p>
 
                     <img src="{{ asset('assets/img/sort/desc.png') }}" class="w-5 h-5 object-contain" alt="مرتب‌سازی">
                 </button>
@@ -114,7 +114,7 @@
                             data-select-all-default="true" multiple>
                             <option value="0">در انتظار</option>
                             <option value="1">تایید شده</option>
-                            <option value="01">رد شده</option>
+                            <option value="-1">رد شده</option>
                         </select>
                     </fieldset>
 
