@@ -42,10 +42,10 @@
             </div>
             <span class="w-0.5 h-1/2 bg-[#e5b369] rounded-full"></span>
             <div class="w-1/4 h-full flex justify-center items-center">
-                <a href="{{ route('wallet.wallet', [Auth::user()]) }}" class="flex flex-col gap-1 items-center">
-                    <div class="p-2 rounded-full @if (Route::is('wallet.wallet')) bg-[#A56920] @else bg-white @endif">
+                <a href="{{ route('deal.create') }}" class="flex flex-col gap-1 items-center">
+                    <div class="p-2 rounded-full @if (Route::is('deal.create')) bg-[#A56920] @else bg-white @endif">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                            class="sm:size-5 size-4 fill-none stroke-[#A56920] @if (Route::is('wallet.wallet')) stroke-white @endif"
+                            class="sm:size-5 size-4 fill-none stroke-[#A56920] @if (Route::is('deal.create')) stroke-white @endif"
                             stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M8 5.2H14.8L17.1 9.2H5.7L8 5.2Z" />
                             <path d="M8.7 6.3L7.1 9.2" />

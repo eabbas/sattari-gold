@@ -48,13 +48,13 @@ Route::get('/xyz', function () {
     // Schema::table('deals', function (Blueprint $table) {
     //     $table->string('message')->nullable()->after('isApproved');
     // });
-    Schema::table('headers', function (Blueprint $table) {
-        $table->string('header_bg')->nullable()->change();
-        $table->string('header_img')->nullable()->change();
-    });
-    Schema::table('logos', function (Blueprint $table) {
-        $table->string('logo')->nullable()->change();
-    });
+    // Schema::table('headers', function (Blueprint $table) {
+    //     $table->string('header_bg')->nullable()->change();
+    //     $table->string('header_img')->nullable()->change();
+    // });
+    // Schema::table('logos', function (Blueprint $table) {
+    //     $table->string('logo')->nullable()->change();
+    // });
 });
 
 // home routes
@@ -198,16 +198,16 @@ Route::group([
 
 // wallet routes
 Route::group([
-    'prefix' => 'wallet',
     'controller' => WalletController::class,
     'as' => 'wallet.',
 ], function () {
-    Route::get('/user/{user?}', 'wallet')->missing(function () {
+    Route::get('/wallet/user/{user?}', 'wallet')->missing(function () {
         return to_route('missing');
     })->middleware(checkIsApproved::class)->name('wallet');
     Route::post('/transaction/request', 'transactionRequest')->middleware(checkIsActive::class)->name('transactionRequest');
     // Route::post('/transactions', 'transactions')->name('transactions');
     Route::get('/transactions/list', 'transactionsList')->middleware(checkAccess::class . ":transactionsList")->name('transactionsList');
+    Route::get('/transactions/user/{user}', 'transactionsSingle')->middleware(checkIsApproved::class)->name('transactionsSingle');
     // Route::post('/popupWalletData', 'popupWalletData')->name('popupWalletData');
 });
 

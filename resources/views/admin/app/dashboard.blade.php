@@ -107,7 +107,7 @@
                 <!-- item_dashboard -->
                 <div class="w-full flex flex-col gap-2 justify-start items-start p-5 max-h-full overflow-y-auto">
                     <a href="{{ route('home') }}"
-                        class="px-2 py-2 @if (Route::is('home')) bg-green-300 @endif rounded-xl flex gap-3 justify-start items-center max-lg:hidden"
+                        class="px-2 py-2 @if (Route::is('home')) bg-green-300 @endif rounded-xl flex gap-3 justify-start items-center"
                         title="خانه">
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="xl:size-4 size-5">
@@ -118,7 +118,7 @@
                         <span>خانه</span>
                     </a>
                     <a href="{{ route('product.index') }}"
-                        class="px-2 py-2 @if (Route::is('product.index')) bg-green-300 @endif rounded-xl flex gap-3 justify-start items-center max-lg:hidden"
+                        class="px-2 py-2 @if (Route::is('product.index')) bg-green-300 @endif rounded-xl flex gap-3 justify-start items-center"
                         title="محصولات">
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="xl:size-4 size-5">
@@ -129,7 +129,7 @@
                         <span>محصولات</span>
                     </a>
                     <a href="{{ route('user.profile') }}"
-                        class="px-2 py-2 @if (Route::is('user.profile')) bg-green-300 @endif rounded-xl flex gap-3 justify-start items-center max-lg:hidden"
+                        class="px-2 py-2 @if (Route::is('user.profile')) bg-green-300 @endif rounded-xl flex gap-3 justify-start items-center"
                         title="پروفایل">
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="xl:size-4 size-5">
@@ -140,7 +140,7 @@
                         <span>پروفایل</span>
                     </a>
                     <a href="{{ route('wallet.wallet', [Auth::user()]) }}"
-                        class="px-2 py-2 rounded-xl @if (Route::is('wallet.wallet')) bg-green-300 @endif flex gap-3 justify-start items-center max-lg:hidden"
+                        class="px-2 py-2 rounded-xl @if (Route::is('wallet.wallet')) bg-green-300 @endif flex gap-3 justify-start items-center"
                         title="کیف پول">
                         <div>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="xl:size-4 size-5">
@@ -149,6 +149,18 @@
                             </svg>
                         </div>
                         <span>کیف پول</span>
+                    </a>
+                    <a href="{{ route('wallet.transactionsSingle', [Auth::user()]) }}"
+                        class="px-2 py-2 rounded-xl @if (Route::is('wallet.transactionsSingle')) bg-green-300 @endif flex gap-3 justify-start items-center"
+                        title="تراکنش های من">
+                        <div>
+                            <svg viewBox="0 0 16 16" class="xl:size-4 size-5">
+                                <path
+                                    d="m.427 1.927 1.215 1.215a8.002 8.002 0 1 1-1.6 5.685.75.75 0 1 1 1.493-.154 6.5 6.5 0 1 0 1.18-4.458l1.358 1.358A.25.25 0 0 1 3.896 6H.25A.25.25 0 0 1 0 5.75V2.104a.25.25 0 0 1 .427-.177ZM7.75 4a.75.75 0 0 1 .75.75v2.992l2.028.812a.75.75 0 0 1-.557 1.392l-2.5-1A.751.751 0 0 1 7 8.25v-3.5A.75.75 0 0 1 7.75 4Z">
+                                </path>
+                            </svg>
+                        </div>
+                        <span>تراکنش های من</span>
                     </a>
                     <a href="{{ route('deal.create') }}"
                         class="px-2 py-2 rounded-xl @if (Route::is('deal.create')) bg-green-300 @endif flex gap-3 justify-start items-center"

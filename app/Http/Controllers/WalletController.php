@@ -41,7 +41,7 @@ class WalletController extends Controller
 
     public function transactionRequestApi(Request $request)
     {
-        
+
         if ($request->transactionType == 'deposit') {
             return $this->depositApi($request);
         }
@@ -219,7 +219,7 @@ class WalletController extends Controller
         $transactions = transaction::orderBy('date', 'desc')->orderBy('time', 'desc')->get();
         $logo = logo::first();
         foreach ($transactions as $transaction) {
-            
+
             switch ($transaction->type) {
                 case 'deposit':
                     $transaction->type = 'واریز';
@@ -252,9 +252,9 @@ class WalletController extends Controller
                     $transaction->stateColor = '#3aae3f';
                     break;
             }
-            if(count($transaction->wallet->user->creditCards)>0){
-                foreach($transaction->wallet->user->creditCards as $creditCard){
-                    if($creditCard->default == 1){
+            if (count($transaction->wallet->user->creditCards) > 0) {
+                foreach ($transaction->wallet->user->creditCards as $creditCard) {
+                    if ($creditCard->default == 1) {
                         $transaction->card = implode(' ', str_split($creditCard->card_number, 4));
                         $transaction->shaba = implode(' ', str_split($creditCard->shaba_number, 4));
                     }
@@ -262,6 +262,55 @@ class WalletController extends Controller
             }
         }
         return view('admin.transaction.transactionsList', ['logo' => $logo, 'transactions' => $transactions]);
+    }
+
+    public function transactionsSingle(User $user)
+    {
+        $logo = logo::first();
+        foreach ($user->walletTransactions as $transaction) {
+
+            switch ($transaction->type) {
+                case 'deposit':
+                    $transaction->type = 'واریز';
+                    $transaction->typeColor = '#3aae3f';
+                    break;
+                case 'withdraw':
+                    $transaction->type = 'برداشت';
+                    $transaction->typeColor = '#d23334';
+                    break;
+                case 'buy':
+                    $transaction->type = 'خرید';
+                    $transaction->typeColor = '#0867d5';
+                    break;
+                case 'sell':
+                    $transaction->type = 'فروش';
+                    $transaction->typeColor = '#e57200';
+                    break;
+            }
+            switch ($transaction->isApproved) {
+                case -1:
+                    $transaction->stateTitle = 'رد شده';
+                    $transaction->stateColor = '#d23334';
+                    break;
+                case 0:
+                    $transaction->stateTitle = 'در انتظار';
+                    $transaction->stateColor = '#6a6a6a';
+                    break;
+                case 1:
+                    $transaction->stateTitle = 'تایید شده';
+                    $transaction->stateColor = '#3aae3f';
+                    break;
+            }
+            if (count($transaction->wallet->user->creditCards) > 0) {
+                foreach ($transaction->wallet->user->creditCards as $creditCard) {
+                    if ($creditCard->default == 1) {
+                        $transaction->card = implode(' ', str_split($creditCard->card_number, 4));
+                        $transaction->shaba = implode(' ', str_split($creditCard->shaba_number, 4));
+                    }
+                }
+            }
+        }
+        return view('user.transaction.single', ['logo' => $logo, 'transactions' => $user->walletTransactions]);
     }
 
     public function submitChanges(Request $request)
