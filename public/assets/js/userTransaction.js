@@ -1,0 +1,230 @@
+let userDealFilters = {
+
+    'type': ['all'],
+    'status': ['all'],
+    'fromDate': null,
+    'toDate': null,
+    'price': null,
+    'transactionId': null,
+    'sortType': 'desc'
+}
+
+let fromDate = document.getElementById('fromDate')
+let toDate = document.getElementById('toDate')
+let status = document.getElementById('status')
+let price = document.getElementById('price')
+let transactionId = document.getElementById('transactionId')
+let type = document.getElementById('type')
+let transactionControl = document.getElementById('transactionControl')
+let showImg = document.getElementById('showImg')
+let cardNumber = document.getElementById('cardNumber')
+let shabaNumber = document.getElementById('shabaNumber')
+
+let transactionPopup = document.getElementById('transaction')
+let closeBtn = document.getElementById('closeBtn')
+let openPopup = document.querySelectorAll('.openPopup')
+
+function setDatas() {
+    userDealFilters.fromDate = fromDate.value || null;
+    userDealFilters.toDate = toDate.value || null;
+    userDealFilters.price = price.value || null;
+    userDealFilters.transactionId = transactionId.value || null;
+
+    // استفاده از getFilterValues برای MultiSelect
+    const typeMs = type ? type._multiSelect : null;
+    if (typeMs) {
+        userDealFilters.type = typeMs.getFilterValues();
+    }
+
+    const statusMs = status ? status._multiSelect : null;
+    if (statusMs) {
+        userDealFilters.status = statusMs.getFilterValues();
+    }
+
+    applyuserDealFilters();
+}
+
+function applyuserDealFilters() {
+    $.ajax({
+        url: api + 'getUserTransactionFilter',
+        type: "POST",
+        dataType: "json",
+        data: {
+            'filters': userDealFilters,
+            'userId': userId
+        },
+        success: function (data) {
+            console.log(data);
+           
+            let counter = 0;
+            let bodyTable = document.querySelector('tbody');
+
+            bodyTable.innerHTML = '';
+
+            data.forEach(row => {
+                let parentRow = document.createElement('tr');
+
+                parentRow.dataset.transactionId = row.id;
+                parentRow.className = 'item_fayle text-xs lg:text-sm bg-white text-[#29251F] text-center transition-colors duration-200 hover:bg-[#FAF7F1]';
+
+                counter++;
+
+                let html = `
+                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center text-[#78716C] in-fa">
+                        ${counter}
+                    </td>
+
+                 
+                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
+                        <div
+                            class="w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-medium"
+                            style="color: ${row.typeColor}; border-color: ${row.typeColor}; background-color: ${row.typeColor}12;"
+                        >
+                            ${row.type}
+                        </div>
+                    </td>
+
+                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center font-semibold text-[#29251F] in-fa">
+                        ${row.amount.toLocaleString('fa-IR')}
+                    </td>
+
+                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center text-[#78716C] in-fa">
+                        ${row.deal ? row.deal.goldWeight : '-'}
+                    </td>
+
+                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center text-[#78716C] whitespace-nowrap in-fa">
+                        ${row.time + ' | ' + row.date}
+                    </td>
+
+                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
+                        <span class="inline-block px-3 py-1.5 rounded-lg border border-[#E7E2D9] bg-[#F8F5EF] text-[#B88A3B] font-medium text-xs in-fa">
+                            ${'100' + row.id}
+                        </span>
+                    </td>
+
+                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
+                        <div
+                            class="min-w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-medium"
+                            style="border-color: ${row.stateColor}; color: ${row.stateColor}; background-color: #F8F5EF;"
+                        >
+                            ${row.stateTitle}
+                        </div>
+                    </td>
+
+                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
+                        <button
+                            onclick="showTransaction('${row.wallet.user.name + ' ' + row.wallet.user.family}', '${row.wallet.user.phoneNumber}', '${row.time + ' | ' + row.date}', '${row.stateColor}', '${row.stateTitle}', '${row.type}', '${row.amount}', '${row.isApproved}', '${row.id}', '${row.card == undefined ? 'هنوز شماره کارت وارد نشده' : row.card}', '${row.shaba == undefined ? 'هنوز شماره شبا وارد نشده' : row.shaba}', '${row.receipt}')"
+                            class="w-full min-w-20 px-3 py-2 rounded-lg border border-[#D6AD60] bg-[#F8F5EF] text-[#B88A3B] font-medium hover:bg-[#B88A3B] hover:text-white transition-all duration-200 cursor-pointer"
+                        >
+                            مشاهده
+                        </button>
+                    </td>
+                `;
+
+                parentRow.innerHTML = html;
+                bodyTable.append(parentRow);
+            });
+        },
+        error: function () {
+            console.log('error');
+        }
+    });
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(function () {
+        const typeMs = type ? type._multiSelect : null
+        if (typeMs) {
+            userDealFilters.type = typeMs.getFilterValues()
+        }
+
+        const statusMs = status ? status._multiSelect : null
+        if (statusMs) {
+            userDealFilters.status = statusMs.getFilterValues()
+        }
+
+    }, 100)
+})
+
+function showTransaction(user, phoneNumber, dateTime, stateColor, stateTitle, type, amount, isApproved, transactionId, card, shaba, receipt = null) {
+    console.log(card)
+    console.log(shaba)
+    transactionPopup.classList.remove('invisible', 'opacity-0')
+    transactionControl.classList.remove('hidden')
+    transactionControl.dataset.transactionId = transactionId
+    if (isApproved != 0) {
+        transactionControl.classList.add('hidden')
+    }
+
+    document.getElementById('transactionPopupName').innerText = user
+    document.getElementById('transactionPopupPhoneNumber').innerText = phoneNumber
+    document.getElementById('transactionPopupDate').innerText = dateTime
+    document.getElementById('transactionPopupStatus').innerText = stateTitle
+    document.getElementById('transactionPopupStatus').classList.add('text-[' + stateColor + ']')
+    document.getElementById('transactionPopupType').innerText = type
+    document.getElementById('transactionPopupFee').innerText = parseInt(amount).toLocaleString('fa-IR')
+    // cardNumber.innerText = card !== "" ? card.replace(/(\d{4})(?=\d)/g, "$1 ") :'هنوز شماره کارت وارد نشده'
+    // shabaNumber.innerText = shaba !== "" ? shaba.replace(/(\d{4})(?=\d)/g, "$1 ") :'هنوز شماره شبا وارد نشده'
+    cardNumber.innerText = card !== "" ? card : 'هنوز شماره کارت وارد نشده'
+    shabaNumber.innerText = shaba !== "" ? shaba : 'هنوز شماره شبا وارد نشده'
+    let transactionPopupReceipt = document.getElementById('transactionPopupReceipt')
+    console.log(transactionPopupReceipt)
+    console.log(imgPath)
+    if (type == 'واریز') {
+        transactionPopupReceipt.classList.remove('hidden')
+        transactionPopupReceipt.classList.add('flex')
+        transactionPopupReceipt.querySelector('img').src = imgPath + receipt
+    } else {
+        transactionPopupReceipt.classList.add('hidden')
+        transactionPopupReceipt.classList.remove('flex')
+    }
+}
+
+document.addEventListener('click', (e) => {
+    let openPopup = document.querySelectorAll('.openPopup')
+    let clickedOnOpenBtn = false
+    openPopup.forEach(btn => {
+        if (btn.contains(e.target)) {
+            clickedOnOpenBtn = true
+        }
+    })
+    if (clickedOnOpenBtn) return
+    if (!transactionPopup || !closeBtn) return
+    let clickedInsidePopup = transactionPopup.children[0].contains(e.target)
+    let clickedOnCloseBtn = closeBtn.contains(e.target)
+    if (clickedOnCloseBtn || clickedInsidePopup) {
+        transactionPopup.classList.add('invisible', 'opacity-0')
+    }
+    if (!showImg.children[0].children[0].contains(e.target) && !document.getElementById('transactionPopupReceipt').querySelector('img').contains(e.target)) {
+        closeZoom()
+    }
+
+})
+
+
+function sort(el) {
+    if (el.dataset.sort == 'desc') {
+        el.querySelector('img').src = url + 'assets/img/sort/asc.png'
+        el.querySelector('p').innerText = 'قدیمی به جدید'
+        el.dataset.sort = 'asc'
+        userDealFilters.sortType = 'asc'
+    }
+    else {
+        el.querySelector('img').src = url + 'assets/img/sort/desc.png'
+        el.querySelector('p').innerText = 'جدید به قدیمی'
+        el.dataset.sort = 'desc'
+        userDealFilters.sortType = 'desc'
+    }
+    applyuserDealFilters()
+}
+
+function showImage(el) {
+    showImg.classList.remove('invisible', 'opacity-0')
+    showImg.querySelector('img').src = el.src
+}
+
+function closeZoom() {
+    showImg.classList.add('invisible', 'opacity-0')
+}
+

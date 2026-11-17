@@ -266,9 +266,9 @@ class WalletController extends Controller
         return view('admin.transaction.transactionsList', ['logo' => $logo, 'transactions' => $transactions]);
     }
 
-    public function transactionsSingle(User $user)
+    public function userTransactions(User $user)
     {
-        $transactions = transaction::where('wallet_id', $user->wallet->id)->orderBy('date', 'desc')->orderBy('time', 'desc')->get();
+        $transactions = $user->walletTransactions()->orderBy('date', 'desc')->orderBy('time', 'desc')->get();
         $logo = logo::first();
         foreach ($transactions as $transaction) {
 

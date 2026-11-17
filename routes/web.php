@@ -207,7 +207,7 @@ Route::group([
     Route::post('/transaction/request', 'transactionRequest')->middleware(checkIsActive::class)->name('transactionRequest');
     // Route::post('/transactions', 'transactions')->name('transactions');
     Route::get('/transactions/list', 'transactionsList')->middleware(checkAccess::class . ":transactionsList")->name('transactionsList');
-    Route::get('/transactions/user/{user}', 'transactionsSingle')->middleware(checkIsApproved::class)->name('transactionsSingle');
+    Route::get('/transactions/user/{user}', 'userTransactions')->middleware(checkIsApproved::class)->name('userTransactions');
     // Route::post('/popupWalletData', 'popupWalletData')->name('popupWalletData');
 });
 

@@ -427,6 +427,6 @@
         </div>
     </div>
 
-    <script src="{{ asset('assets/js/transaction.js') }}"></script>
+    <script src="{{ asset('assets/js/userTransaction.js') }}"></script>
 
 @endsection

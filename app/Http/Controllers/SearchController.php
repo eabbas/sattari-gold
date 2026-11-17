@@ -325,6 +325,112 @@ class SearchController extends Controller
         }
         return response()->json($transactions);
     }
+    public function getUserTransactionFilter(Request $request)
+    {
+        $filters = $request->input('filters');
+        $userId = $request->input('userId');
+        $fromDate = $filters['fromDate'] ?? null;
+        $fullName = $filters['fullName'] ?? null;
+        $status = $filters['status'] ?? ['all'];
+        $type = $filters['type'] ?? ['all'];
+        $toDate = $filters['toDate'] ?? null;
+        $price = $filters['price'] ?? null;
+        $number = $filters['transactionId'] ?? null;
+        $sortType = $filters['sortType'] ?? 'desc';
+        if ($number) {
+            $transactionId = substr($number, 3);
+            $transactions = transaction::find($transactionId);
+            return response()->json($transactions);
+        }
+        if ($type == ['all']) {
+            $type = [];
+            $type[] = 'sell';
+            $type[] = 'buy';
+            $type[] = 'deposit';
+            $type[] = 'withdraw';
+        }
+        if ($status == ['all']) {
+            $status = [];
+            $status[] = '-1';
+            $status[] = '0';
+            $status[] = '1';
+        }
+        $user = User::find($userId);
+        $transactions = $user->walletTransactions()->where(function ($query) use ($price, $fromDate, $toDate, $type, $status) {
+            if ($price) {
+                $query->where('transactions.amount', $price);
+            }
+            if ($fromDate && !$toDate) {
+                $query->where('transactions.date', '>=', $fromDate);
+            }
+            if ($toDate && !$fromDate) {
+                $query->where('transactions.date', '<=', $toDate);
+            }
+            if ($fromDate && $toDate) {
+                $query->whereBetween('transactions.date', [$fromDate, $toDate]);
+            }
+            if ($status) {
+                $query->whereIn('transactions.isApproved', $status);
+            }
+            if ($type) {
+                $query->whereIn('transactions.type', $type);
+            }
+        })->with(['wallet', 'deal']);
+
+        if ($fullName) {
+            $transactions->whereHas('wallet', function ($query) use ($fullName) {
+                $query->whereHas('user', function ($query) use ($fullName) {
+                    $query->where('name', 'like', '%' . $fullName . '%')->orWhere('family', 'like', '%' . $fullName . '%');
+                });
+            });
+        }
+        $transactions = $transactions->orderBy('date', $sortType)->orderBy('time', $sortType)->get();
+        foreach ($transactions as $transaction) {
+            $transaction->fullName = $transaction->wallet->user->name . ' ' . $transaction->wallet->user->family;
+            $transaction->phoneNumber = $transaction->wallet->user->phoneNumber;
+            switch ($transaction->type) {
+                case 'deposit':
+                    $transaction->type = 'واریز';
+                    $transaction->typeColor = '#3aae3f';
+                    break;
+                case 'withdraw':
+                    $transaction->type = 'برداشت';
+                    $transaction->typeColor = '#d23334';
+                    break;
+                case 'buy':
+                    $transaction->type = 'خرید';
+                    $transaction->typeColor = '#0867d5';
+                    break;
+                case 'sell':
+                    $transaction->type = 'فروش';
+                    $transaction->typeColor = '#e57200';
+                    break;
+            }
+            switch ($transaction->isApproved) {
+                case -1:
+                    $transaction->stateTitle = 'رد شده';
+                    $transaction->stateColor = '#d23334';
+                    break;
+                case 0:
+                    $transaction->stateTitle = 'در انتظار';
+                    $transaction->stateColor = '#6a6a6a';
+                    break;
+                case 1:
+                    $transaction->stateTitle = 'تایید شده';
+                    $transaction->stateColor = '#3aae3f';
+                    break;
+            }
+            if(count($transaction->wallet->user->creditCards)>0){
+                foreach($transaction->wallet->user->creditCards as $creditCard){
+                    if($creditCard->default == 1){
+                        $transaction->card = implode(' ', str_split($creditCard->card_number, 4));
+                        $transaction->shaba = implode(' ', str_split($creditCard->shaba_number, 4));
+                    }
+                }
+            }
+        }
+        return response()->json($transactions);
+    }
 
     public function getUserFilter(Request $request)
     {

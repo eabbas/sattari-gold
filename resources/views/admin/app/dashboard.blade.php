@@ -150,8 +150,8 @@
                         </div>
                         <span>کیف پول</span>
                     </a>
-                    <a href="{{ route('wallet.transactionsSingle', [Auth::user()]) }}"
-                        class="px-2 py-2 rounded-xl @if (Route::is('wallet.transactionsSingle')) bg-green-300 @endif flex gap-3 justify-start items-center"
+                    <a href="{{ route('wallet.userTransactions', [Auth::user()]) }}"
+                        class="px-2 py-2 rounded-xl @if (Route::is('wallet.userTransactions')) bg-green-300 @endif flex gap-3 justify-start items-center"
                         title="تراکنش های من">
                         <div>
                             <svg viewBox="0 0 16 16" class="xl:size-4 size-5">
