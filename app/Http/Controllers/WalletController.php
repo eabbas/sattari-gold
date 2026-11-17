@@ -256,7 +256,9 @@ class WalletController extends Controller
                 foreach ($transaction->wallet->user->creditCards as $creditCard) {
                     if ($creditCard->default == 1) {
                         $transaction->card = implode(' ', str_split($creditCard->card_number, 4));
+                        // $transaction->card = $creditCard->card_number;
                         $transaction->shaba = implode(' ', str_split($creditCard->shaba_number, 4));
+                        // $transaction->shaba = $creditCard->shaba_number;
                     }
                 }
             }
