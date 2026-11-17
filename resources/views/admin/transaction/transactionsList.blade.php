@@ -363,16 +363,14 @@
 
                     <div class="rounded-lg bg-[#F8F5EF] p-3">
                         <span class="block text-xs text-[#78716C] mb-2">شماره کارت</span>
-                        <span class="text-xs md:text-sm font-bold text-[#29251F] in-fa break-all" id="cardNumber"
-                            style="direction: ltr">
+                        <span class="text-xs md:text-sm font-bold text-[#29251F] in-fa break-all" dir="ltr" id="cardNumber">
                             هنوز شماره کارت وارد نشده
                         </span>
                     </div>
 
                     <div class="rounded-lg bg-[#F8F5EF] p-3">
                         <span class="block text-xs text-[#78716C] mb-2">شماره شبا</span>
-                        <span class="text-xs md:text-sm font-bold text-[#29251F] in-fa break-all" id="shabaNumber"
-                            style="direction: ltr">
+                        <span class="text-xs md:text-sm font-bold text-[#29251F] in-fa break-all" dir="ltr" id="shabaNumber">
                             هنوز شماره شبا وارد نشده
                         </span>
                     </div>
