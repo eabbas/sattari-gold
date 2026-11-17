@@ -268,8 +268,9 @@ class WalletController extends Controller
 
     public function transactionsSingle(User $user)
     {
+        $transactions = transaction::where('wallet_id', $user->wallet->id)->orderBy('date', 'desc')->orderBy('time', 'desc')->get();
         $logo = logo::first();
-        foreach ($user->walletTransactions as $transaction) {
+        foreach ($transactions as $transaction) {
 
             switch ($transaction->type) {
                 case 'deposit':
@@ -312,7 +313,7 @@ class WalletController extends Controller
                 }
             }
         }
-        return view('user.transaction.single', ['logo' => $logo, 'transactions' => $user->walletTransactions]);
+        return view('user.transaction.single', ['logo' => $logo, 'transactions' => $transactions]);
     }
 
     public function submitChanges(Request $request)

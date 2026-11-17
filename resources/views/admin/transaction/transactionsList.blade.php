@@ -170,14 +170,6 @@
                 </div>
             </div>
 
-            {{-- اطلاعات لیست --}}
-            <div
-                class="mx-3 md:mx-4 mb-3 hidden md:flex flex-col md:flex-row gap-2 rounded-xl border border-[#E7E2D9] bg-[#F8F5EF] p-3 text-xs text-[#78716C]">
-                <span>تعداد 55 مشتری در لیست مشتریان یافت شد.</span>
-                <span class="hidden md:block text-[#D6AD60]">|</span>
-                <span>ظرفیت باقیمانده 445 نفر</span>
-            </div>
-
             {{-- جدول --}}
             <div class="w-full overflow-x-auto px-3 md:px-4 pb-5">
 
