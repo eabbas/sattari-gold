@@ -172,6 +172,8 @@ function showTransaction(user, phoneNumber, dateTime, stateColor, stateTitle, ty
     document.getElementById('transactionPopupStatus').classList.add('text-[' + stateColor + ']')
     document.getElementById('transactionPopupType').innerText = type
     document.getElementById('transactionPopupFee').innerText = parseInt(amount).toLocaleString('fa-IR')
+    // cardNumber.innerText = card !== "" ? card.replace(/(\d{4})(?=\d)/g, "$1 ") :'هنوز شماره کارت وارد نشده'
+    // shabaNumber.innerText = shaba !== "" ? shaba.replace(/(\d{4})(?=\d)/g, "$1 ") :'هنوز شماره شبا وارد نشده'
     cardNumber.innerText = card !== "" ? card :'هنوز شماره کارت وارد نشده'
     shabaNumber.innerText = shaba !== "" ? shaba :'هنوز شماره شبا وارد نشده'
     let transactionPopupReceipt = document.getElementById('transactionPopupReceipt')
