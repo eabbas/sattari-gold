@@ -5,8 +5,8 @@
 
     <style>
         /* =========================================
-           SATTARI GOLD - CUSTOMERS PAGE REDESIGN
-        ========================================= */
+                           SATTARI GOLD - CUSTOMERS PAGE REDESIGN
+                        ========================================= */
 
         :root {
             --user-bg: #F8F5EF;
@@ -642,9 +642,9 @@
 
 
         /* =========================================
-           USERS LIST - TABLE & MOBILE REFINEMENT
-           Keep native table-cell layout for stable columns.
-        ========================================= */
+                           USERS LIST - TABLE & MOBILE REFINEMENT
+                           Keep native table-cell layout for stable columns.
+                        ========================================= */
         #confirmed_pending #confirmed,
         #confirmed_pending #pending {
             min-width: 0;
@@ -660,17 +660,17 @@
             padding: 0 14px 14px;
         }
 
-        #confirmed_pending .overflow-x-auto > table {
+        #confirmed_pending .overflow-x-auto>table {
             width: 100%;
             min-width: 1120px;
             table-layout: auto;
         }
 
-        #confirmed_pending #pending .overflow-x-auto > table {
+        #confirmed_pending #pending .overflow-x-auto>table {
             min-width: 760px;
         }
 
-        #confirmed_pending .overflow-x-auto > .mx-5.mt-5.rounded-xl {
+        #confirmed_pending .overflow-x-auto>.mx-5.mt-5.rounded-xl {
             width: auto;
             margin: 18px 0 14px;
         }
@@ -700,7 +700,7 @@
             white-space: normal;
         }
 
-        #confirmed_pending .user-tools-cell > button {
+        #confirmed_pending .user-tools-cell>button {
             min-width: 86px;
             min-height: 36px;
             margin: 3px;
@@ -722,7 +722,7 @@
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
-        #confirmed_pending .w-full.my-10 > div:nth-child(2) > div:first-child {
+        #confirmed_pending .w-full.my-10>div:nth-child(2)>div:first-child {
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
@@ -742,11 +742,11 @@
                 padding: 0 9px 12px;
             }
 
-            #confirmed_pending .overflow-x-auto > table {
+            #confirmed_pending .overflow-x-auto>table {
                 min-width: 1080px;
             }
 
-            #confirmed_pending #pending .overflow-x-auto > table {
+            #confirmed_pending #pending .overflow-x-auto>table {
                 min-width: 700px;
             }
 
@@ -755,7 +755,7 @@
                 padding: 12px;
             }
 
-            #confirmed_pending .mx-5.mt-5.rounded-xl > div:first-child {
+            #confirmed_pending .mx-5.mt-5.rounded-xl>div:first-child {
                 align-items: flex-start;
                 gap: 10px;
                 flex-wrap: wrap;
@@ -765,15 +765,15 @@
                 grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
             }
 
-            #confirmed_pending .mx-5.mt-5.rounded-xl .grid > button {
+            #confirmed_pending .mx-5.mt-5.rounded-xl .grid>button {
                 grid-column: 1 / -1;
             }
 
-            #confirmed_pending .w-full.my-10 > div:nth-child(2) > div:first-child {
+            #confirmed_pending .w-full.my-10>div:nth-child(2)>div:first-child {
                 grid-template-columns: minmax(0, 1fr);
             }
 
-            #confirmed_pending .w-full.my-10 > div:first-child {
+            #confirmed_pending .w-full.my-10>div:first-child {
                 justify-content: stretch;
             }
 
@@ -782,7 +782,7 @@
                 justify-content: space-between;
             }
 
-            #confirmed_pending .user-tools-cell > button {
+            #confirmed_pending .user-tools-cell>button {
                 min-width: 82px;
                 font-size: 11px;
             }
@@ -793,7 +793,6 @@
                 grid-template-columns: minmax(0, 1fr);
             }
         }
-
     </style>
 
 
@@ -1195,194 +1194,624 @@
                                                         class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer walletBtn">
                                                         کیف پول
                                                     </button>
-                                                    <div id=""
-                                                        class="fixed z-50 bg-black/30 w-full h-[100dvh] top-0 left-1/2 -translate-x-1/2 invisible opacity-0 transition-all flex items-center justify-center popup-wallet">
+
+                                                    <style>
+                                                        /* ستاری گلد | User Wallet Modal */
+
+                                                        .popup-wallet {
+                                                            --gold-primary: #D6AD60;
+                                                            --gold-dark: #B88A3B;
+                                                            --cream-bg: #F8F5EF;
+                                                            --cream-border: #E7E2D9;
+                                                            --brown-dark: #29251F;
+                                                            --brown-muted: #78716C;
+
+                                                            color: var(--brown-dark);
+                                                        }
+
+                                                        .popup-wallet .wallet-modal-card {
+                                                            background: #FFFFFF;
+                                                            border: 1px solid var(--cream-border);
+                                                            border-radius: 18px;
+                                                            box-shadow: 0 3px 14px rgba(41, 37, 31, .035);
+                                                        }
+
+                                                        .popup-wallet .wallet-gold-icon {
+                                                            display: flex;
+                                                            align-items: center;
+                                                            justify-content: center;
+                                                            width: 42px;
+                                                            height: 42px;
+                                                            flex-shrink: 0;
+                                                            border-radius: 12px;
+                                                            background: #FBF3E2;
+                                                            color: var(--gold-dark);
+                                                        }
+
+                                                        .popup-wallet .wallet-modal-muted {
+                                                            color: var(--brown-muted);
+                                                        }
+
+                                                        .popup-wallet .wallet-modal-divider {
+                                                            border-color: var(--cream-border);
+                                                        }
+
+                                                        .popup-wallet .wallet-modal-balance {
+                                                            background: linear-gradient(135deg, #FFFFFF 0%, #FBF8F1 100%);
+                                                            border: 1px solid var(--cream-border);
+                                                            border-radius: 15px;
+                                                        }
+
+                                                        .popup-wallet .wallet-type-option {
+                                                            display: flex;
+                                                            align-items: center;
+                                                            gap: 10px;
+                                                            padding: 15px;
+                                                            border: 1px solid var(--cream-border);
+                                                            border-radius: 12px;
+                                                            cursor: pointer;
+                                                            transition: .2s ease;
+                                                            background: #FFFFFF;
+                                                        }
+
+                                                        .popup-wallet .wallet-type-option:hover {
+                                                            border-color: var(--gold-primary);
+                                                        }
+
+                                                        .popup-wallet .wallet-radio {
+                                                            accent-color: var(--gold-dark);
+                                                            width: 17px;
+                                                            height: 17px;
+                                                            flex-shrink: 0;
+                                                            cursor: pointer;
+                                                        }
+
+                                                        .popup-wallet .deposit:checked+.wallet-type-option {
+                                                            border-color: #D6AD60;
+                                                            background: #FBF8F1;
+                                                            box-shadow: 0 0 0 2px rgba(214, 173, 96, .10);
+                                                        }
+
+                                                        .popup-wallet .withdraw:checked+.wallet-type-option {
+                                                            border-color: #D6AD60;
+                                                            background: #FBF8F1;
+                                                            box-shadow: 0 0 0 2px rgba(214, 173, 96, .10);
+                                                        }
+
+                                                        .popup-wallet .wallet-modal-input {
+                                                            width: 100%;
+                                                            margin-top: 9px;
+                                                            padding: 12px 14px;
+                                                            border: 1px solid var(--cream-border);
+                                                            border-radius: 10px;
+                                                            outline: none;
+                                                            color: var(--brown-dark);
+                                                            background: #FFFFFF;
+                                                            transition: .2s ease;
+                                                        }
+
+                                                        .popup-wallet .wallet-modal-input:focus {
+                                                            border-color: var(--gold-primary);
+                                                            box-shadow: 0 0 0 3px rgba(214, 173, 96, .14);
+                                                        }
+
+                                                        .popup-wallet .wallet-modal-input::placeholder {
+                                                            color: #A8A29E;
+                                                        }
+
+                                                        .popup-wallet .wallet-modal-percent {
+                                                            display: flex;
+                                                            align-items: center;
+                                                            justify-content: center;
+                                                            gap: 7px;
+                                                            padding: 11px 15px;
+                                                            min-width: 65px;
+                                                            border: 1px solid var(--cream-border);
+                                                            border-radius: 10px;
+                                                            background: #FFFFFF;
+                                                            color: var(--brown-dark);
+                                                            cursor: pointer;
+                                                            transition: .2s ease;
+                                                        }
+
+                                                        .popup-wallet .wallet-modal-percent:has(input:checked) {
+                                                            border-color: var(--gold-primary);
+                                                            background: #FBF6EA;
+                                                            color: var(--gold-dark);
+                                                            box-shadow: 0 0 0 2px rgba(214, 173, 96, .12);
+                                                        }
+
+                                                        .popup-wallet .wallet-modal-submit {
+                                                            background: var(--gold-dark);
+                                                            color: #FFFFFF;
+                                                            transition: .2s ease;
+                                                        }
+
+                                                        .popup-wallet .wallet-modal-submit:hover {
+                                                            background: #A8792F;
+                                                            box-shadow: 0 5px 15px rgba(184, 138, 59, .2);
+                                                            transform: translateY(-1px);
+                                                        }
+
+                                                        .popup-wallet .wallet-modal-cancel {
+                                                            border: 1px solid var(--cream-border);
+                                                            color: var(--brown-muted);
+                                                            background: #FFFFFF;
+                                                            transition: .2s ease;
+                                                        }
+
+                                                        .popup-wallet .wallet-modal-cancel:hover {
+                                                            border-color: #C9BFB0;
+                                                            background: #FAF8F4;
+                                                        }
+
+                                                        /* هماهنگی فرم داینامیک با طراحی کیف پول */
+                                                        .popup-wallet #transactionMethod{{ $user->id }} input:not([type="radio"]):not([type="checkbox"]),
+                                                        .popup-wallet #transactionMethod{{ $user->id }} select,
+                                                        .popup-wallet #transactionMethod{{ $user->id }} textarea {
+                                                            width: 100%;
+                                                            margin-top: 9px;
+                                                            padding: 12px 14px;
+                                                            border: 1px solid var(--cream-border);
+                                                            border-radius: 10px;
+                                                            outline: none;
+                                                            color: var(--brown-dark);
+                                                            background: #FFFFFF;
+                                                            transition: .2s ease;
+                                                        }
+
+                                                        .popup-wallet #transactionMethod{{ $user->id }} input:focus,
+                                                        .popup-wallet #transactionMethod{{ $user->id }} select:focus,
+                                                        .popup-wallet #transactionMethod{{ $user->id }} textarea:focus {
+                                                            border-color: var(--gold-primary);
+                                                            box-shadow: 0 0 0 3px rgba(214, 173, 96, .14);
+                                                        }
+
+                                                        .popup-wallet #transactionMethod{{ $user->id }} label {
+                                                            color: var(--brown-dark);
+                                                        }
+
+                                                        .popup-wallet #transactionMethod{{ $user->id }} .amount-error {
+                                                            color: #DC5555;
+                                                        }
+
+                                                        .popup-wallet #transactionMethod{{ $user->id }} .toman-price {
+                                                            color: var(--brown-muted);
+                                                        }
+
+                                                        @media (max-width: 640px) {
+                                                            .popup-wallet .wallet-modal-percent {
+                                                                flex: 1;
+                                                                min-width: 0;
+                                                                padding: 10px 8px;
+                                                            }
+                                                        }
+                                                    </style>
+
+                                                    <div
+                                                        class="fixed inset-0 z-[9999] invisible opacity-0 transition-all duration-300 flex items-center justify-center popup-wallet bg-black/30 backdrop-blur-sm p-3 md:p-5">
+
+                                                        <!-- Overlay -->
                                                         <div onclick="wallet(this, 'close')"
-                                                            class="absolute z-49 w-full h-[100dvh] bg-black/30 left-1/2 -translate-x-1/2 cursour-pointer">
+                                                            class="absolute inset-0 cursor-pointer">
                                                         </div>
 
+
+                                                        <!-- Modal -->
                                                         <div
-                                                            class="px-3 py-2 w-2/3 mx-auto bg-white relative z-51 rounded-md max-h-[500px] overflow-y-auto">
-                                                            <div>
-                                                                <div class="grid grid-cols-6 gap-5 mt-5">
-                                                                    <div
-                                                                        class="col-span-6 flex flex-col md:flex-row items-center border-1 border-(--border-dashboard) rounded-lg md:divide-x-1 divide-(--border-dashboard) px-1 md:px-2 py-2 md:py-3 gap-2">
-                                                                        <div class="w-full md:w-6/12">
-                                                                            <span
-                                                                                class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">نام
-                                                                                :</span>
-                                                                            <span
-                                                                                class="text-xs md:text-base font-bold fullName"></span>
+                                                            class="relative z-10 w-full max-w-10/12 max-h-[90dvh] overflow-y-auto rounded-2xl bg-white shadow-2xl border border-[#E7E2D9]">
+
+                                                            <div class="p-4 md:p-6 space-y-5">
+
+                                                                <!-- User Information -->
+                                                                <div class="wallet-modal-card p-4 sm:p-5">
+
+                                                                    <div class="flex items-center gap-3 mb-4">
+
+                                                                        <span class="wallet-gold-icon">
+                                                                            <svg class="w-5 h-5" fill="none"
+                                                                                stroke="currentColor" viewBox="0 0 24 24">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round" stroke-width="1.7"
+                                                                                    d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2m16 0v-2a4 4 0 0 0-3-3.87M14 3.13a4 4 0 0 1 0 7.75M14 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" />
+                                                                            </svg>
+                                                                        </span>
+
+                                                                        <div>
+                                                                            <h2 class="text-sm font-bold text-[#29251F]">
+                                                                                اطلاعات حساب
+                                                                            </h2>
+                                                                            <p class="text-[11px] text-[#78716C] mt-1">
+                                                                                مشخصات کاربر انتخاب‌شده
+                                                                            </p>
                                                                         </div>
-                                                                        <div class="w-full md:w-6/12">
-                                                                            <span
-                                                                                class="text-xs md:text-base text-(--text-secondary-dashboard) ml-1">شماره
-                                                                                :</span>
-                                                                            <span
-                                                                                class="text-[10px] md:text-base font-bold in-fa phoneNumber"></span>
-                                                                        </div>
+
                                                                     </div>
-                                                                    <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
-                                                                        <div
-                                                                            class="w-full bg-white divide-y-1 divide-(--border-dashboard) p-2 rounded-lg">
-                                                                            <div class="flex items-center justify-between">
-                                                                                <div class="flex items-center gap-3 pb-2">
-                                                                                    <span class="">
-                                                                                        <svg class="size-5 fill-(--primary-dashboard)"
-                                                                                            xmlns="http://www.w3.org/2000/svg"
+
+                                                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+
+                                                                        <div class="rounded-xl bg-[#F8F5EF] p-3 sm:p-4">
+                                                                            <span class="block text-xs text-[#78716C] mb-2">
+                                                                                نام و نام خانوادگی
+                                                                            </span>
+
+                                                                            <span
+                                                                                class="text-sm font-bold text-[#29251F] fullName"></span>
+                                                                        </div>
+
+                                                                        <div class="rounded-xl bg-[#F8F5EF] p-3 sm:p-4">
+                                                                            <span class="block text-xs text-[#78716C] mb-2">
+                                                                                شماره تلفن
+                                                                            </span>
+
+                                                                            <span
+                                                                                class="text-sm font-bold text-[#29251F] in-fa phoneNumber"></span>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <!-- Assets Title -->
+                                                                <div>
+                                                                    <div class="flex items-center justify-between mb-3">
+
+                                                                        <div>
+                                                                            <h2 class="text-sm font-black text-[#29251F]">
+                                                                                خلاصه دارایی‌ها
+                                                                            </h2>
+
+                                                                            <p class="text-[11px] text-[#78716C] mt-1">
+                                                                                وضعیت موجودی کیف پول کاربر
+                                                                            </p>
+                                                                        </div>
+
+                                                                        <span
+                                                                            class="text-[10px] font-bold text-[#B88A3B] bg-[#FBF3E2] rounded-full px-3 py-2">
+                                                                            Wallet Assets
+                                                                        </span>
+
+                                                                    </div>
+
+
+                                                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                                                                        <!-- Rial Balance -->
+                                                                        <div class="wallet-modal-card p-4 sm:p-5">
+
+                                                                            <div
+                                                                                class="flex items-center justify-between mb-5">
+
+                                                                                <div class="flex items-center gap-3">
+
+                                                                                    <span class="wallet-gold-icon">
+                                                                                        <svg class="w-5 h-5" fill="none"
+                                                                                            stroke="currentColor"
                                                                                             viewBox="0 0 576 512">
                                                                                             <path
-                                                                                                d="M276.1 405.2l5.6-1.4 0 0c55.2-14.1 117.5-30 182.8-28.1c4.1-31.4 30.9-55.7 63.5-55.7V144c-35.3 0-63.9-28.6-64-63.9c-49.9-1.8-103.1 11.1-164.1 26.6l-5.6 1.4c-55.2 14.1-117.5 30-182.8 28.1C107.4 167.7 80.5 192 48 192V368c35.3 0 63.9 28.6 64 63.9c49.9 1.8 103.1-11.1 164.1-26.6zM0 60.3c16 8.2 32 14.3 48 18.7c80 22.1 160 1.7 240-18.7c96-24.5 192-48.9 288 0V398.9v52.8c-16-8.2-32-14.3-48-18.7c-80-22.1-160-1.7-240 18.7c-96 24.5-192 48.9-288 0V113.1 60.3zM384 256c0 61.9-43 112-96 112s-96-50.1-96-112s43-112 96-112s96 50.1 96 112zM256 192v32h16v64h-8H248v32h16 8 32 8 16V288H312h-8V208 192H288 272 256z" />
+                                                                                                d="M276.1 405.2l5.6-1.4 0 0c55.2-14.1 117.5-30 182.8-28.1c4.1-31.4 30.9-55.7 63.5-55.7V144c-35.3 0-63.9-28.6-64-63.9c-49.9-1.8-103.1 11.1-164.1 26.6l-5.6 1.4c-55.2 14.1-117.5 30-182.8 28.1C107.4 167.7 80.5 192 48 192V368c35.3 0 63.9 28.6 64 63.9c49.9-1.8 103.1-11.1 164.1-26.6zM0 60.3c16 8.2 32 14.3 48 18.7c80 22.1 160 1.7 240-18.7c96-24.5 192-48.9 288 0V398.9v52.8c-16-8.2-32-14.3-48-18.7c-80-22.1-160-1.7-240 18.7c-96 24.5-192 48.9-288 0V113.1 60.3zM384 256c0 61.9-43 112-96 112s-96-50.1-96-112s43-112 96-112s96 50.1 96 112zM256 192v32h16v64h-8H248v32h16 8 32 8 16V288H312h-8V208 192H288 272 256z" />
                                                                                         </svg>
                                                                                     </span>
-                                                                                    <span
-                                                                                        class="text-xs md:text-base text-(--text-secondary-dashboard) font-bold">
-                                                                                        موجودی ریال
-                                                                                    </span>
-                                                                                </div>
-                                                                                <div class="font-bold pb-2 in-fa moneyAsset">
+
+                                                                                    <div>
+                                                                                        <h2
+                                                                                            class="text-sm font-bold text-[#29251F]">
+                                                                                            موجودی ریالی
+                                                                                        </h2>
+                                                                                        <p
+                                                                                            class="text-[11px] text-[#78716C] mt-1">
+                                                                                            دارایی نقدی کاربر
+                                                                                        </p>
+                                                                                    </div>
 
                                                                                 </div>
+
+                                                                                <span
+                                                                                    class="text-[10px] font-bold text-[#B88A3B] bg-[#FBF3E2] rounded-full px-3 py-1">
+                                                                                    ریال
+                                                                                </span>
+
                                                                             </div>
-                                                                            <div class="flex items-center justify-between">
-                                                                                <div class="flex items-center gap-3 pt-2">
-                                                                                    <span
-                                                                                        class="text-(--text-secondary-dashboard) text-xs md:text-sm">
-                                                                                        موجودی قابل برداشت
-                                                                                    </span>
+
+
+                                                                            <div class="rounded-xl bg-[#F8F5EF] p-4">
+
+                                                                                <span
+                                                                                    class="block text-xs text-[#78716C] mb-2">
+                                                                                    موجودی کل
+                                                                                </span>
+
+                                                                                <div
+                                                                                    class="text-xl sm:text-2xl font-black text-[#29251F] in-fa moneyAsset">
                                                                                 </div>
-                                                                                <div class="font-bold pt-2">
+
+                                                                            </div>
+
+
+                                                                            <div
+                                                                                class="flex items-center justify-between mt-4 pt-4 border-t border-[#E7E2D9]">
+
+                                                                                <span class="text-xs text-[#78716C]">
+                                                                                    موجودی قابل برداشت
+                                                                                </span>
+
+                                                                                <div
+                                                                                    class="text-sm font-bold text-[#B88A3B] in-fa">
+
                                                                                     <span
                                                                                         id="withdrawableBalance{{ $user->id }}"
                                                                                         data-balance="{{ $user->wallet ? number_format($user->wallet['asset']) ?? 0 : 0 }}"
-                                                                                        class="in-fa takebleMoneyAsset"></span>
-                                                                                    <span
-                                                                                        class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
+                                                                                        class="takebleMoneyAsset">
+                                                                                    </span>
+
+                                                                                    <span class="text-[10px] text-[#78716C]">
                                                                                         ریال
                                                                                     </span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-span-6 bg-zinc-200 p-2 rounded-lg">
-                                                                        <div
-                                                                            class="w-full bg-white divide-y-1 divide-(--border-dashboard) p-2 rounded-lg">
-                                                                            <div class="flex items-center justify-between">
-                                                                                <div class="flex items-center gap-2 pb-2">
-                                                                                    <span class="">
-                                                                                        <svg height="30px" width="30px"
-                                                                                            version="1.1" id="Layer_1"
-                                                                                            xmlns="http://www.w3.org/2000/svg"
-                                                                                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                                                            viewBox="0 0 511.882 511.882"
-                                                                                            xml:space="preserve">
-                                                                                            <polygon style="fill:#F6BB42;"
-                                                                                                points="350.216,176.572 278.374,158.615 37.038,264.123 0,338.207 125.753,374.324 386.13,258.531 " />
-                                                                                            <polygon style="fill:#FFCE54;"
-                                                                                                points="350.216,176.572 107.756,284.345 125.753,374.324 386.13,258.531 " />
-                                                                                            <polygon style="fill:#E8AA3D;"
-                                                                                                points="107.756,284.345 37.038,264.123 0.015,338.207 125.753,374.324 " />
-                                                                                            <polygon style="fill:#F6BB42;"
-                                                                                                points="475.969,212.682 404.127,194.717 162.791,300.232 125.753,374.324 251.504,410.41 511.882,294.625 " />
-                                                                                            <polygon style="fill:#FFCE54;"
-                                                                                                points="475.969,212.682 233.508,320.431 251.504,410.41 511.882,294.625 " />
-                                                                                            <polygon style="fill:#E8AA3D;"
-                                                                                                points="233.508,320.431 162.791,300.232 125.753,374.324 251.504,410.41 " />
-                                                                                            <polygon style="fill:#F6BB42;"
-                                                                                                points="396.316,119.429 324.488,101.473 103.867,198.435 66.843,272.519 192.596,308.621 432.245,201.379 " />
-                                                                                            <polygon style="fill:#FFCE54;"
-                                                                                                points="396.316,119.429 174.6,218.641 192.596,308.621 432.245,201.379 " />
-                                                                                            <polygon style="fill:#E8AA3D;"
-                                                                                                points="174.6,218.641 103.867,198.435 66.843,272.519 192.596,308.621 " />
-                                                                                        </svg>
-                                                                                    </span>
-                                                                                    <span
-                                                                                        class="text-xs md:text-base text-(--text-secondary-dashboard) font-bold">
-                                                                                        موجودی طلا
-                                                                                    </span>
-                                                                                </div>
-                                                                                <div class="font-bold pb-2 in-fa goldAsset">
 
                                                                                 </div>
+
                                                                             </div>
-                                                                            <div class="flex items-center justify-between">
-                                                                                <div class="flex items-center gap-3 pt-2">
-                                                                                    <span
-                                                                                        class="text-(--text-secondary-dashboard) text-xs md:text-sm">
-                                                                                        موجودی قابل برداشت
-                                                                                    </span>
-                                                                                </div>
-                                                                                <div class="font-bold pt-2">
-                                                                                    <span
-                                                                                        class="in-fa">{{ $user->wallet ? number_format($user->wallet->goldWeight) ?? 0 : 0 }}</span>
-                                                                                    <span
-                                                                                        class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
-                                                                                        گرم
-                                                                                    </span>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="flex items-center justify-between">
-                                                                                <div class="flex items-center gap-3 pt-2">
-                                                                                    <span
-                                                                                        class="text-(--text-secondary-dashboard) text-xs md:text-sm">
-                                                                                        ارزش دارایی شما
-                                                                                    </span>
-                                                                                </div>
-                                                                                <div class="font-bold pt-2">
-                                                                                    <span
-                                                                                        class="in-fa takebleGoldAsset"></span>
-                                                                                    <span
-                                                                                        class="text-(--text-secondary-dashboard) text-[6px] md:text-xs">
-                                                                                        ریال
-                                                                                    </span>
-                                                                                </div>
-                                                                            </div>
+
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="col-span-6">
-                                                                        <div
-                                                                            class="flex items-center border-1 border-(--border-dashboard) rounded-lg divide-x-1 divide-(--border-dashboard) px-2 py-3 gap-2">
-                                                                            <div class="w-6/12">
-                                                                                <label for="deposit"
-                                                                                    class="flex items-center gap-1 md:gap-3">
-                                                                                    <input
-                                                                                        class="accent-(--primary-dashboard) size-4 md:size-5 deposit"
-                                                                                        type="radio"
-                                                                                        name="transactionType{{ $user->id }}"
-                                                                                        value="deposit" id="deposit"
-                                                                                        onclick="transactionMethod('deposit',this, {{ $user->id }})">
-                                                                                    <span
-                                                                                        class="text-xs text-green-400 md:text-base font-bold">واریز</span>
-                                                                                </label>
-                                                                                <span class="text-xs text-red-400"></span>
+
+
+                                                                        <!-- Gold Balance -->
+                                                                        <div class="wallet-modal-card p-4 sm:p-5">
+
+                                                                            <div
+                                                                                class="flex items-center justify-between mb-5">
+
+                                                                                <div class="flex items-center gap-3">
+
+                                                                                    <span class="wallet-gold-icon">
+
+                                                                                        <svg class="w-6 h-6"
+                                                                                            viewBox="0 0 512 512"
+                                                                                            fill="none">
+                                                                                            <path
+                                                                                                d="M256 45 80 145l176 72 176-72L256 45Z"
+                                                                                                fill="#D6AD60" />
+                                                                                            <path
+                                                                                                d="M80 145v220l176 102V217L80 145Z"
+                                                                                                fill="#B88A3B" />
+                                                                                            <path
+                                                                                                d="M432 145v220L256 467V217l176-72Z"
+                                                                                                fill="#E8C47D" />
+                                                                                            <path d="m80 145 176 72 176-72"
+                                                                                                stroke="#FFF8E9"
+                                                                                                stroke-width="5" />
+                                                                                        </svg>
+
+                                                                                    </span>
+
+                                                                                    <div>
+                                                                                        <h2
+                                                                                            class="text-sm font-bold text-[#29251F]">
+                                                                                            موجودی طلا
+                                                                                        </h2>
+                                                                                        <p
+                                                                                            class="text-[11px] text-[#78716C] mt-1">
+                                                                                            دارایی طلایی کاربر
+                                                                                        </p>
+                                                                                    </div>
+
+                                                                                </div>
+
+                                                                                <span
+                                                                                    class="text-[10px] font-bold text-[#B88A3B] bg-[#FBF3E2] rounded-full px-3 py-1">
+                                                                                    گرم
+                                                                                </span>
+
                                                                             </div>
-                                                                            <div class="w-6/12">
-                                                                                <label for="withdraw{{ $user->id }}"
-                                                                                    class="flex items-center gap-1 md:gap-3">
-                                                                                    <input
-                                                                                        class="accent-(--primary-dashboard) size-4 md:size-5 withdraw"
-                                                                                        type="radio"
-                                                                                        name="transactionType{{ $user->id }}"
-                                                                                        value="withdraw" id="withdraw"
-                                                                                        onclick="transactionMethod('withdraw',this, {{ $user->id }})">
-                                                                                    <span
-                                                                                        class="text-xs text-red-400 md:text-base font-bold">برداشت</span>
-                                                                                </label>
-                                                                                <span class="text-xs text-red-400"></span>
+
+
+                                                                            <div class="rounded-xl bg-[#F8F5EF] p-4">
+
+                                                                                <span
+                                                                                    class="block text-xs text-[#78716C] mb-2">
+                                                                                    موجودی کل
+                                                                                </span>
+
+                                                                                <div
+                                                                                    class="text-xl sm:text-2xl font-black text-[#29251F] in-fa goldAsset">
+                                                                                </div>
+
                                                                             </div>
+
+
+                                                                            <div
+                                                                                class="flex items-center justify-between mt-4 pt-4 border-t border-[#E7E2D9]">
+
+                                                                                <span class="text-xs text-[#78716C]">
+                                                                                    موجودی قابل برداشت
+                                                                                </span>
+
+                                                                                <span
+                                                                                    class="text-sm font-bold text-[#B88A3B] in-fa">
+                                                                                    {{ $user->wallet ? number_format($user->wallet->goldWeight) ?? 0 : 0 }}
+                                                                                    <span
+                                                                                        class="text-[10px] font-normal text-[#78716C]">گرم</span>
+                                                                                </span>
+
+                                                                            </div>
+
+
+                                                                            <div
+                                                                                class="flex items-center justify-between mt-3">
+
+                                                                                <span class="text-xs text-[#78716C]">
+                                                                                    ارزش دارایی
+                                                                                </span>
+
+                                                                                <span
+                                                                                    class="text-sm font-bold text-[#29251F] in-fa">
+                                                                                    <span class="takebleGoldAsset"></span>
+                                                                                    <span
+                                                                                        class="text-[10px] font-normal text-[#78716C]">ریال</span>
+                                                                                </span>
+
+                                                                            </div>
+
                                                                         </div>
+
                                                                     </div>
-                                                                    <div id="transactionMethod{{ $user->id }}"
-                                                                        class="col-span-6 grid grid-cols-6 gap-4">
-                                                                    </div>
-                                                                    <button type="submit"
-                                                                        class="col-span-3 border-1 border-(--primary-dashboard) text-(--primary-dashboard) py-4 rounded-md font-bold cursor-pointer submitWallet"
-                                                                        onclick="submitWallet(this, {{ $user->id }})">ثبت</button>
-                                                                    <button type="reset"
-                                                                        class="col-span-3 border-1 border-(--danger-dashboard) text-(--danger-dashboard) py-4 rounded-md font-bold cursor-pointer closeWalletBtn"
-                                                                        onclick="closeWalletBtn(this)">
-                                                                        لغو</button>
                                                                 </div>
+
+
+                                                                <!-- Transaction Type -->
+                                                                <div class="wallet-modal-card p-4 sm:p-5">
+
+                                                                    <div class="flex items-center gap-3 mb-4">
+
+                                                                        <span class="wallet-gold-icon">
+                                                                            <svg class="w-5 h-5" fill="none"
+                                                                                stroke="currentColor" viewBox="0 0 24 24">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round" stroke-width="1.8"
+                                                                                    d="M8 7h12m0 0-4-4m4 4-4 4M16 17H4m0 0 4 4m-4-4 4-4" />
+                                                                            </svg>
+                                                                        </span>
+
+                                                                        <div>
+                                                                            <h2 class="text-sm font-bold text-[#29251F]">
+                                                                                عملیات کیف پول
+                                                                            </h2>
+                                                                            <p class="text-[11px] text-[#78716C] mt-1">
+                                                                                نوع تراکنش مورد نظر را انتخاب کنید
+                                                                            </p>
+                                                                        </div>
+
+                                                                    </div>
+
+
+                                                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+                                                                        <!-- Deposit -->
+                                                                        <label class="cursor-pointer">
+
+                                                                            <input class="sr-only wallet-radio deposit"
+                                                                                type="radio"
+                                                                                name="transactionType{{ $user->id }}"
+                                                                                value="deposit"
+                                                                                id="deposit{{ $user->id }}"
+                                                                                onclick="transactionMethod('deposit',this, {{ $user->id }})">
+
+                                                                            <div class="wallet-type-option">
+
+                                                                                <span class="flex-1">
+
+                                                                                    <span
+                                                                                        class="block text-sm font-bold text-[#29251F]">
+                                                                                        واریز وجه
+                                                                                    </span>
+
+                                                                                    <span
+                                                                                        class="block text-[10px] text-[#78716C] mt-1">
+                                                                                        افزایش موجودی کیف پول
+                                                                                    </span>
+
+                                                                                </span>
+
+                                                                                <span class="text-green-600">
+                                                                                    <svg class="w-5 h-5" fill="none"
+                                                                                        stroke="currentColor"
+                                                                                        viewBox="0 0 24 24">
+                                                                                        <path stroke-linecap="round"
+                                                                                            stroke-linejoin="round"
+                                                                                            stroke-width="1.8"
+                                                                                            d="M12 5v14m-7-7h14" />
+                                                                                    </svg>
+                                                                                </span>
+
+                                                                            </div>
+
+                                                                        </label>
+
+
+                                                                        <!-- Withdraw -->
+                                                                        <label class="cursor-pointer">
+
+                                                                            <input class="sr-only wallet-radio withdraw"
+                                                                                type="radio"
+                                                                                name="transactionType{{ $user->id }}"
+                                                                                value="withdraw"
+                                                                                id="withdraw{{ $user->id }}"
+                                                                                onclick="transactionMethod('withdraw',this, {{ $user->id }})">
+
+                                                                            <div class="wallet-type-option">
+
+                                                                                <span class="flex-1">
+
+                                                                                    <span
+                                                                                        class="block text-sm font-bold text-[#29251F]">
+                                                                                        برداشت وجه
+                                                                                    </span>
+
+                                                                                    <span
+                                                                                        class="block text-[10px] text-[#78716C] mt-1">
+                                                                                        کاهش موجودی کیف پول
+                                                                                    </span>
+
+                                                                                </span>
+
+                                                                                <span class="text-red-500">
+                                                                                    <svg class="w-5 h-5" fill="none"
+                                                                                        stroke="currentColor"
+                                                                                        viewBox="0 0 24 24">
+                                                                                        <path stroke-linecap="round"
+                                                                                            stroke-linejoin="round"
+                                                                                            stroke-width="1.8" d="M5 12h14" />
+                                                                                    </svg>
+                                                                                </span>
+
+                                                                            </div>
+
+                                                                        </label>
+
+                                                                    </div>
+
+                                                                </div>
+
+
+                                                                <!-- Dynamic Transaction Form -->
+                                                                <div id="transactionMethod{{ $user->id }}"
+                                                                    class="wallet-modal-card grid grid-cols-6 gap-4 p-4 sm:p-5">
+                                                                </div>
+
+
+                                                                <!-- Actions -->
+                                                                <div class="grid grid-cols-2 gap-3 pt-2">
+
+                                                                    <button type="submit"
+                                                                        onclick="submitWallet(this, {{ $user->id }})"
+                                                                        class="wallet-modal-submit submitWallet py-4 rounded-xl font-bold text-sm cursor-pointer">
+
+                                                                        <span
+                                                                            class="inline-flex items-center justify-center gap-2">
+
+                                                                            <svg class="w-5 h-5" fill="none"
+                                                                                stroke="currentColor" viewBox="0 0 24 24">
+                                                                                <path stroke-linecap="round"
+                                                                                    stroke-linejoin="round" stroke-width="1.8"
+                                                                                    d="m5 12 4 4L19 6" />
+                                                                            </svg>
+
+                                                                            ثبت عملیات
+
+                                                                        </span>
+
+                                                                    </button>
+
+
+                                                                    <button type="reset" onclick="closeWalletBtn(this)"
+                                                                        class="wallet-modal-cancel py-4 rounded-xl font-bold text-sm cursor-pointer">
+
+                                                                        انصراف
+
+                                                                    </button>
+
+                                                                </div>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1966,4 +2395,3 @@
         // }
     </script>
 @endsection
-

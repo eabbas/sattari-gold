@@ -1,1058 +1,619 @@
 
 @extends('admin.app.dashboard')
-
 @section('title', 'کیف پول')
-
 @section('content')
 
-    <style>
-        /* ستاری گلد | Wallet */
+    {{-- پیام‌ها --}}
+    @if (session('success'))
+        <div class="modal fixed top-6 right-4 sm:right-6 z-[9999999999] flex items-center gap-3 rounded-2xl border border-emerald-200 bg-white px-6 py-4 shadow-xl transition-all">
+            <span class="flex size-9 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">✓</span>
+            <span class="text-sm font-medium text-[#29251F]">{{ session('success') }}</span>
+        </div>
+    @endif
 
-        .wallet-page {
-            --gold-primary: #D6AD60;
-            --gold-dark: #B88A3B;
-            --cream-bg: #F8F5EF;
-            --cream-border: #E7E2D9;
-            --brown-dark: #29251F;
-            --brown-muted: #78716C;
+    @if (session('failure'))
+        <div class="modal fixed top-6 right-4 sm:right-6 z-[9999999999] flex items-center gap-3 rounded-2xl border border-red-200 bg-white px-6 py-4 shadow-xl transition-all">
+            <span class="flex size-9 items-center justify-center rounded-full bg-red-50 text-red-500">!</span>
+            <span class="text-sm font-medium text-[#29251F]">{{ session('failure') }}</span>
+        </div>
+    @endif
 
-            color: var(--brown-dark);
-        }
+    @error('depositFee')
+        <div class="modal fixed top-6 right-4 sm:right-6 z-[9999999999] rounded-2xl border border-red-200 bg-white px-6 py-4 text-sm text-red-500 shadow-xl">
+            {{ $message }}
+        </div>
+    @enderror
 
-        .wallet-page .wallet-card {
-            background: #FFFFFF;
-            border: 1px solid var(--cream-border);
-            border-radius: 18px;
-            box-shadow: 0 3px 14px rgba(41, 37, 31, .035);
-        }
+    @error('withdrawFee')
+        <div class="modal fixed top-6 right-4 sm:right-6 z-[9999999999] rounded-2xl border border-red-200 bg-white px-6 py-4 text-sm text-red-500 shadow-xl">
+            {{ $message }}
+        </div>
+    @enderror
 
-        .wallet-page .wallet-section-title {
-            color: var(--brown-dark);
-            font-weight: 800;
-        }
+    @error('receipt')
+        <div class="modal fixed top-6 right-4 sm:right-6 z-[9999999999] rounded-2xl border border-red-200 bg-white px-6 py-4 text-sm text-red-500 shadow-xl">
+            {{ $message }}
+        </div>
+    @enderror
 
-        .wallet-page .wallet-muted {
-            color: var(--brown-muted);
-        }
+    <div class="w-full max-w-5xl mx-auto space-y-6 pb-8">
 
-        .wallet-page .wallet-divider {
-            border-color: var(--cream-border);
-        }
-
-        .wallet-page .wallet-input {
-            width: 100%;
-            margin-top: 9px;
-            padding: 12px 14px;
-            border: 1px solid var(--cream-border);
-            border-radius: 10px;
-            outline: none;
-            color: var(--brown-dark);
-            background: #FFFFFF;
-            transition: .2s ease;
-        }
-
-        .wallet-page .wallet-input:focus {
-            border-color: var(--gold-primary);
-            box-shadow: 0 0 0 3px rgba(214, 173, 96, .14);
-        }
-
-        .wallet-page .wallet-input::placeholder {
-            color: #A8A29E;
-        }
-
-        .wallet-page .wallet-radio {
-            accent-color: var(--gold-dark);
-            width: 17px;
-            height: 17px;
-            cursor: pointer;
-        }
-
-        .wallet-page .wallet-percent {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 7px;
-            padding: 11px 15px;
-            min-width: 65px;
-            border: 1px solid var(--cream-border);
-            border-radius: 10px;
-            background: #FFFFFF;
-            color: var(--brown-dark);
-            cursor: pointer;
-            transition: .2s ease;
-        }
-
-        .wallet-page .wallet-percent:has(input:checked) {
-            border-color: var(--gold-primary);
-            background: #FBF6EA;
-            color: var(--gold-dark);
-            box-shadow: 0 0 0 2px rgba(214, 173, 96, .12);
-        }
-
-        .wallet-page .wallet-type-option {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 15px;
-            border: 1px solid var(--cream-border);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: .2s ease;
-        }
-
-        .wallet-page .wallet-type-option:has(input:checked) {
-            border-color: var(--gold-primary);
-            background: #FBF8F1;
-        }
-
-        .wallet-page .wallet-submit {
-            background: var(--gold-dark);
-            color: #FFFFFF;
-            transition: .2s ease;
-        }
-
-        .wallet-page .wallet-submit:hover {
-            background: #A8792F;
-            box-shadow: 0 5px 15px rgba(184, 138, 59, .2);
-            transform: translateY(-1px);
-        }
-
-        .wallet-page .wallet-cancel {
-            border: 1px solid var(--cream-border);
-            color: var(--brown-muted);
-            background: #FFFFFF;
-            transition: .2s ease;
-        }
-
-        .wallet-page .wallet-cancel:hover {
-            border-color: #C9BFB0;
-            background: #FAF8F4;
-        }
-
-        .wallet-page .wallet-balance-card {
-            background: linear-gradient(135deg, #FFFFFF 0%, #FBF8F1 100%);
-            border: 1px solid var(--cream-border);
-            border-radius: 15px;
-        }
-
-        .wallet-page .wallet-gold-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 42px;
-            height: 42px;
-            flex-shrink: 0;
-            border-radius: 12px;
-            background: #FBF3E2;
-            color: var(--gold-dark);
-        }
-
-        .wallet-page .wallet-modal {
-            box-shadow: 0 12px 35px rgba(41, 37, 31, .12);
-        }
-
-        @media (max-width: 640px) {
-            .wallet-page .wallet-percent {
-                flex: 1;
-                min-width: 0;
-                padding: 10px 8px;
-            }
-        }
-    </style>
-
-    <div class="wallet-page w-full min-h-screen rounded-2xl p-3 sm:p-5 lg:p-7">
-
-        {{-- پیام‌های سیستم --}}
-        @if (session('success'))
-            <div class="wallet-modal modal py-4 px-6 rounded-xl bg-green-100 border border-green-200 fixed top-5 right-3 sm:right-5 z-9999999999 flex items-center gap-2 transition-all duration-300">
-                <span class="text-sm text-green-800 in-fa">{{ session('success') }}</span>
+        {{-- عنوان صفحه --}}
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div>
+                <span class="text-xs font-medium text-[#B88A3B]">مدیریت دارایی</span>
+                <h1 class="mt-1 text-xl md:text-2xl font-extrabold text-[#29251F]">
+                    کیف پول من
+                </h1>
+                <p class="mt-2 text-xs md:text-sm text-[#78716C]">
+                    موجودی، دارایی طلا و تراکنش‌های مالی خود را مدیریت کنید.
+                </p>
             </div>
-        @endif
 
-        @if (session('failure'))
-            <div class="wallet-modal modal py-4 px-6 rounded-xl bg-red-100 border border-red-200 fixed top-5 right-3 sm:right-5 z-9999999999 flex items-center gap-2 transition-all duration-300">
-                <span class="text-sm text-red-800 in-fa">{{ session('failure') }}</span>
+            <div class="flex items-center gap-2 text-xs text-[#78716C] bg-white border border-[#E7E2D9] rounded-xl px-4 py-3">
+                <span class="size-2 rounded-full bg-emerald-500"></span>
+                حساب کاربری شما
+                <span class="font-bold text-[#29251F]">
+                    {{ $user['name'] }} {{ $user['family'] }}
+                </span>
             </div>
-        @endif
+        </div>
 
-        @error('depositFee')
-            <div class="wallet-modal modal py-4 px-6 rounded-xl bg-red-100 border border-red-200 fixed top-5 right-3 sm:right-5 z-9999999999 flex items-center transition-all duration-300">
-                <span class="text-sm text-red-800 in-fa">{{ $message }}</span>
+        {{-- اطلاعات کاربر --}}
+        <div class="bg-white border border-[#E7E2D9] rounded-2xl p-4 md:p-5 shadow-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                <div class="flex items-center gap-3">
+                    <div class="size-11 rounded-xl bg-[#F8F5EF] flex items-center justify-center text-[#B88A3B]">
+                        <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                            <circle cx="12" cy="8" r="4" />
+                            <path d="M4 21a8 8 0 0 1 16 0" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-xs text-[#78716C]">نام و نام خانوادگی</p>
+                        <p class="mt-1 text-sm font-bold text-[#29251F]">
+                            {{ $user['name'] }} {{ $user['family'] }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 md:border-r md:border-[#E7E2D9] md:pr-5">
+                    <div class="size-11 rounded-xl bg-[#F8F5EF] flex items-center justify-center text-[#B88A3B]">
+                        <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                            <path d="M5 4h14v16H5z" />
+                            <path d="M9 8h6M9 12h6M9 16h3" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-xs text-[#78716C]">شماره همراه</p>
+                        <p class="mt-1 text-sm font-bold text-[#29251F] in-fa">
+                            {{ $user['phoneNumber'] }}
+                        </p>
+                    </div>
+                </div>
+
             </div>
-        @enderror
+        </div>
 
-        @error('withdrawFee')
-            <div class="wallet-modal modal py-4 px-6 rounded-xl bg-red-100 border border-red-200 fixed top-5 right-3 sm:right-5 z-9999999999 flex items-center transition-all duration-300">
-                <span class="text-sm text-red-800 in-fa">{{ $message }}</span>
-            </div>
-        @enderror
+        {{-- کارت‌های موجودی --}}
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
 
-        @error('receipt')
-            <div class="wallet-modal modal py-4 px-6 rounded-xl bg-red-100 border border-red-200 fixed top-5 right-3 sm:right-5 z-9999999999 flex items-center transition-all duration-300">
-                <span class="text-sm text-red-800 in-fa">{{ $message }}</span>
-            </div>
-        @enderror
+            {{-- موجودی ریالی --}}
+            <div class="relative overflow-hidden rounded-2xl border border-[#E7E2D9] bg-white p-5 md:p-6 shadow-sm">
+                <div class="absolute -left-10 -top-10 size-36 rounded-full bg-[#F8F5EF]"></div>
 
+                <div class="relative">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="size-12 rounded-xl bg-[#F8F5EF] flex items-center justify-center text-[#B88A3B]">
+                                <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                    <rect x="2.5" y="5" width="19" height="14" rx="3" />
+                                    <path d="M2.5 10h19M16 15h2" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-bold text-[#29251F]">موجودی ریالی</h3>
+                                <p class="text-xs text-[#78716C] mt-1">دارایی نقدی شما</p>
+                            </div>
+                        </div>
 
-        <div class="max-w-5xl mx-auto">
-
-            {{-- سربرگ صفحه --}}
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-
-                <div>
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="w-8 h-1 rounded-full bg-[#D6AD60]"></span>
-                        <span class="text-xs font-bold tracking-wide text-[#B88A3B]">
-                            SETARI GOLD
+                        <span class="rounded-lg bg-[#F8F5EF] px-3 py-1.5 text-[10px] font-bold text-[#B88A3B]">
+                            ریال
                         </span>
                     </div>
 
-                    <h1 class="text-xl sm:text-2xl font-black text-[#29251F]">
-                        کیف پول من
-                    </h1>
-
-                    <p class="text-xs sm:text-sm text-[#78716C] mt-2">
-                        مدیریت موجودی، واریز و برداشت دارایی
-                    </p>
-                </div>
-
-                <div class="flex items-center gap-2 text-xs text-[#78716C] bg-white border border-[#E7E2D9] rounded-xl px-4 py-3">
-                    <svg class="w-4 h-4 text-[#B88A3B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                            d="M12 8v4l3 2m6-2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg>
-                    <span>مدیریت دارایی شما</span>
-                </div>
-
-            </div>
-
-
-            <form
-                id="walletTransactionForm"
-                action="{{ route('wallet.transactionRequest') }}"
-                method="POST"
-                enctype="multipart/form-data"
-                onsubmit="submitBtn(event)"
-            >
-                @csrf
-
-                <div class="grid grid-cols-6 gap-4 sm:gap-5">
-
-                    {{-- اطلاعات کاربر --}}
-                    <div class="col-span-6 wallet-card p-4 sm:p-5">
-
-                        <div class="flex items-center gap-2 mb-4">
-                            <span class="wallet-gold-icon">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"
-                                        d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2m16 0v-2a4 4 0 0 0-3-3.87M14 3.13a4 4 0 0 1 0 7.75M14 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" />
-                                </svg>
-                            </span>
-
-                            <div>
-                                <h2 class="text-sm font-bold text-[#29251F]">اطلاعات حساب</h2>
-                                <p class="text-[11px] text-[#78716C] mt-1">مشخصات کاربری شما</p>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-
-                            <div class="rounded-xl bg-[#F8F5EF] p-3 sm:p-4">
-                                <span class="block text-xs text-[#78716C] mb-2">نام و نام خانوادگی</span>
-                                <span class="text-sm font-bold text-[#29251F]">
-                                    {{ $user['name'] }} {{ $user['family'] }}
-                                </span>
-                            </div>
-
-                            <div class="rounded-xl bg-[#F8F5EF] p-3 sm:p-4">
-                                <span class="block text-xs text-[#78716C] mb-2">شماره تلفن</span>
-                                <span class="text-sm font-bold text-[#29251F] in-fa">
-                                    {{ $user['phoneNumber'] }}
-                                </span>
-                            </div>
-
-                        </div>
-                    </div>
-
-
-                    {{-- کارت موجودی ریالی --}}
-                    <div class="col-span-6 md:col-span-3 wallet-card p-4 sm:p-5">
-
-                        <div class="flex items-center justify-between mb-5">
-                            <div class="flex items-center gap-3">
-                                <span class="wallet-gold-icon">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 576 512">
-                                        <path d="M276.1 405.2l5.6-1.4 0 0c55.2-14.1 117.5-30 182.8-28.1c4.1-31.4 30.9-55.7 63.5-55.7V144c-35.3 0-63.9-28.6-64-63.9c-49.9-1.8-103.1 11.1-164.1 26.6l-5.6 1.4c-55.2 14.1-117.5 30-182.8 28.1C107.4 167.7 80.5 192 48 192V368c35.3 0 63.9 28.6 64 63.9c49.9-1.8 103.1 11.1 164.1-26.6zM0 60.3c16 8.2 32 14.3 48 18.7c80 22.1 160 1.7 240-18.7c96-24.5 192-48.9 288 0V398.9v52.8c-16-8.2-32-14.3-48-18.7c-80-22.1-160-1.7-240 18.7c-96 24.5-192 48.9-288 0V113.1 60.3zM384 256c0 61.9-43 112-96 112s-96-50.1-96-112s43-112 96-112s96 50.1 96 112zM256 192v32h16v64h-8H248v32h16 8 32 8 16V288H312h-8V208 192H288 272 256z" />
-                                    </svg>
-                                </span>
-
-                                <div>
-                                    <h2 class="text-sm font-bold text-[#29251F]">موجودی ریالی</h2>
-                                    <p class="text-[11px] text-[#78716C] mt-1">دارایی نقدی شما</p>
-                                </div>
-                            </div>
-
-                            <span class="text-[10px] font-bold text-[#B88A3B] bg-[#FBF3E2] rounded-full px-3 py-1">
-                                ریال
-                            </span>
-                        </div>
-
-                        <div class="rounded-xl bg-[#F8F5EF] p-4">
-                            <span class="block text-xs text-[#78716C] mb-2">موجودی کل</span>
-
-                            <div class="flex items-baseline gap-2">
-                                <span class="text-xl sm:text-2xl font-black text-[#29251F] in-fa">
-                                    {{ number_format($user->wallet['asset'] ?? 0) }}
-                                </span>
-                                <span class="text-xs text-[#78716C]">ریال</span>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center justify-between mt-4 pt-4 border-t border-[#E7E2D9]">
-                            <span class="text-xs text-[#78716C]">موجودی قابل برداشت</span>
-                            <span class="text-sm font-bold text-[#B88A3B] in-fa">
+                    <div class="mt-7">
+                        <p class="text-xs text-[#78716C]">موجودی کل کیف پول</p>
+                        <div class="flex items-baseline gap-2 mt-2">
+                            <span class="text-2xl md:text-3xl font-extrabold text-[#29251F] in-fa">
                                 {{ number_format($user->wallet['asset'] ?? 0) }}
                             </span>
+                            <span class="text-xs text-[#78716C]">ریال</span>
                         </div>
-
-                        <span
-                            id="withdrawableBalance"
-                            class="hidden"
-                            data-balance="{{ $user->wallet['asset'] ?? 0 }}"
-                        ></span>
-
                     </div>
 
-
-                    {{-- کارت موجودی طلا --}}
-                    <div class="col-span-6 md:col-span-3 wallet-card p-4 sm:p-5">
-
-                        <div class="flex items-center justify-between mb-5">
-                            <div class="flex items-center gap-3">
-                                <span class="wallet-gold-icon">
-                                    <svg class="w-6 h-6" viewBox="0 0 512 512" fill="none">
-                                        <path d="M256 45 80 145l176 72 176-72L256 45Z" fill="#D6AD60" />
-                                        <path d="M80 145v220l176 102V217L80 145Z" fill="#B88A3B" />
-                                        <path d="M432 145v220L256 467V217l176-72Z" fill="#E8C47D" />
-                                        <path d="m80 145 176 72 176-72" stroke="#FFF8E9" stroke-width="5" />
-                                    </svg>
-                                </span>
-
-                                <div>
-                                    <h2 class="text-sm font-bold text-[#29251F]">موجودی طلا</h2>
-                                    <p class="text-[11px] text-[#78716C] mt-1">دارایی طلایی شما</p>
-                                </div>
-                            </div>
-
-                            <span class="text-[10px] font-bold text-[#B88A3B] bg-[#FBF3E2] rounded-full px-3 py-1">
-                                گرم
+                    <div class="mt-6 pt-4 border-t border-[#E7E2D9] flex items-center justify-between">
+                        <span class="text-xs text-[#78716C]">موجودی قابل برداشت</span>
+                        <div class="flex items-baseline gap-1">
+                            <span id="withdrawableBalance"
+                                data-balance="{{ $user->wallet['asset'] ?? 0 }}"
+                                class="text-sm font-bold text-[#29251F] in-fa">
+                                {{ number_format($user->wallet['asset'] ?? 0) }}
                             </span>
+                            <span class="text-[10px] text-[#78716C]">ریال</span>
                         </div>
+                    </div>
+                </div>
+            </div>
 
-                        <div class="rounded-xl bg-[#F8F5EF] p-4">
-                            <span class="block text-xs text-[#78716C] mb-2">موجودی کل</span>
+            {{-- موجودی طلا --}}
+            <div class="relative overflow-hidden rounded-2xl border border-[#E7E2D9] bg-[#29251F] p-5 md:p-6 shadow-sm">
+                <div class="absolute -left-10 -top-10 size-40 rounded-full border border-[#D6AD60]/20"></div>
+                <div class="absolute -left-4 -top-4 size-28 rounded-full border border-[#D6AD60]/10"></div>
 
-                            <div class="flex items-baseline gap-2">
-                                <span class="text-xl sm:text-2xl font-black text-[#29251F] in-fa">
-                                    {{ $user->wallet->goldWeight ?? 0 }}
-                                </span>
-                                <span class="text-xs text-[#78716C]">گرم</span>
+                <div class="relative">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="size-12 rounded-xl bg-[#D6AD60]/15 flex items-center justify-center">
+                                <svg class="size-7" viewBox="0 0 24 24" fill="none" stroke="#D6AD60" stroke-width="1.5">
+                                    <path d="M3 17 8 7h8l5 10H3Z" />
+                                    <path d="m8 7 4 10 4-10M3 17h18" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-bold text-white">موجودی طلا</h3>
+                                <p class="text-xs text-[#D6AD60] mt-1">سرمایه طلایی شما</p>
                             </div>
                         </div>
 
-                        <div class="flex items-center justify-between mt-4 pt-4 border-t border-[#E7E2D9]">
-                            <span class="text-xs text-[#78716C]">موجودی قابل برداشت</span>
-                            <span class="text-sm font-bold text-[#B88A3B] in-fa">
-                                {{ $user->wallet->goldWeight ?? 0 }} گرم
-                            </span>
-                        </div>
+                        <span class="rounded-lg bg-[#D6AD60]/15 px-3 py-1.5 text-[10px] font-bold text-[#D6AD60]">
+                            GOLD
+                        </span>
+                    </div>
 
-                        <div class="flex items-center justify-between mt-3">
-                            <span class="text-xs text-[#78716C]">ارزش دارایی شما</span>
-                            <span class="text-sm font-bold text-[#29251F] in-fa">
+                    <div class="mt-7">
+                        <p class="text-xs text-white/60">وزن طلای موجود در کیف پول</p>
+                        <div class="flex items-baseline gap-2 mt-2">
+                            <span class="text-2xl md:text-3xl font-extrabold text-[#D6AD60] in-fa">
+                                {{ $user->wallet->goldWeight ?? 0 }}
+                            </span>
+                            <span class="text-xs text-white/60">گرم</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+                        <span class="text-xs text-white/60">موجودی قابل برداشت</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-sm font-bold text-white in-fa">
+                                {{ $user->wallet->goldWeight ?? 0 }}
+                            </span>
+                            <span class="text-[10px] text-white/60">گرم</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 rounded-xl bg-white/5 px-4 py-3 flex items-center justify-between">
+                        <span class="text-xs text-white/70">ارزش تقریبی دارایی</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-sm font-bold text-[#D6AD60] in-fa">
                                 {{ number_format(($user->wallet->goldWeight ?? 0) * 25000000) }}
-                                <span class="text-[10px] font-normal text-[#78716C]">ریال</span>
                             </span>
+                            <span class="text-[10px] text-white/60">ریال</span>
                         </div>
-
                     </div>
+                </div>
+            </div>
 
+        </div>
+
+        {{-- فرم تراکنش --}}
+        <div class="bg-white border border-[#E7E2D9] rounded-2xl shadow-sm overflow-hidden">
+
+            <div class="p-5 md:p-6 border-b border-[#E7E2D9]">
+                <h2 class="text-base font-extrabold text-[#29251F]">
+                    مدیریت تراکنش‌ها
+                </h2>
+                <p class="text-xs text-[#78716C] mt-2">
+                    نوع عملیات مالی موردنظر خود را انتخاب کنید.
+                </p>
+            </div>
+
+            <form action="{{ route('wallet.transactionRequest') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+
+                <div class="grid grid-cols-6 gap-5 p-5 md:p-6">
 
                     {{-- انتخاب نوع تراکنش --}}
-                    <div class="col-span-6 wallet-card p-4 sm:p-5">
+                    <div class="col-span-6 grid grid-cols-2 gap-3">
 
-                        <div class="flex items-center gap-2 mb-4">
-                            <span class="wallet-gold-icon">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                                        d="M8 7h12m0 0-4-4m4 4-4 4M16 17H4m0 0 4 4m-4-4 4-4" />
-                                </svg>
-                            </span>
+                        <div class="relative">
+                            <input class="peer hidden" type="radio" name="transactionType" value="deposit"
+                                id="deposit" onclick="transactionMethod('deposit',this)">
 
-                            <div>
-                                <h2 class="text-sm font-bold text-[#29251F]">عملیات کیف پول</h2>
-                                <p class="text-[11px] text-[#78716C] mt-1">نوع تراکنش مورد نظر را انتخاب کنید</p>
-                            </div>
+                            <label for="deposit"
+                                class="flex cursor-pointer items-center gap-3 rounded-xl border border-[#E7E2D9] bg-white p-4 transition-all hover:border-[#D6AD60] peer-checked:border-[#B88A3B] peer-checked:bg-[#F8F5EF]">
+                                <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+                                    <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 5v14M5 12h14" />
+                                    </svg>
+                                </span>
+                                <span>
+                                    <span class="block text-sm font-bold text-[#29251F]">واریز وجه</span>
+                                    <span class="block mt-1 text-[10px] text-[#78716C]">افزایش موجودی کیف پول</span>
+                                </span>
+                            </label>
+                            <span class="mt-2 block text-[10px] text-red-500"></span>
                         </div>
 
-                        <div class="grid grid-cols-2 gap-3">
+                        <div class="relative">
+                            <input class="peer hidden" type="radio" name="transactionType" value="withdraw"
+                                id="withdraw" onclick="transactionMethod('withdraw',this)">
 
-                            <div>
-                                <label for="deposit" class="wallet-type-option">
-                                    <input
-                                        class="wallet-radio"
-                                        type="radio"
-                                        name="transactionType"
-                                        value="deposit"
-                                        id="deposit"
-                                        onclick="transactionMethod('deposit', this)"
-                                    >
-
-                                    <span class="flex-1">
-                                        <span class="block text-sm font-bold text-[#29251F]">واریز وجه</span>
-                                        <span class="block text-[10px] text-[#78716C] mt-1">افزایش موجودی کیف پول</span>
-                                    </span>
-
-                                    <span class="text-green-600">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                                                d="M12 5v14m-7-7h14" />
-                                        </svg>
-                                    </span>
-                                </label>
-
-                                <span id="depositTypeError" class="block text-xs text-red-500 mt-2"></span>
-                            </div>
-
-                            <div>
-                                <label for="withdraw" class="wallet-type-option">
-                                    <input
-                                        class="wallet-radio"
-                                        type="radio"
-                                        name="transactionType"
-                                        value="withdraw"
-                                        id="withdraw"
-                                        onclick="transactionMethod('withdraw', this)"
-                                    >
-
-                                    <span class="flex-1">
-                                        <span class="block text-sm font-bold text-[#29251F]">برداشت وجه</span>
-                                        <span class="block text-[10px] text-[#78716C] mt-1">انتقال وجه از کیف پول</span>
-                                    </span>
-
-                                    <span class="text-red-500">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                                                d="M5 12h14" />
-                                        </svg>
-                                    </span>
-                                </label>
-
-                                <span id="withdrawTypeError" class="block text-xs text-red-500 mt-2"></span>
-                            </div>
-
+                            <label for="withdraw"
+                                class="flex cursor-pointer items-center gap-3 rounded-xl border border-[#E7E2D9] bg-white p-4 transition-all hover:border-[#D6AD60] peer-checked:border-[#B88A3B] peer-checked:bg-[#F8F5EF]">
+                                <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-red-50 text-red-500">
+                                    <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 5v14M5 12h14" />
+                                    </svg>
+                                </span>
+                                <span>
+                                    <span class="block text-sm font-bold text-[#29251F]">برداشت وجه</span>
+                                    <span class="block mt-1 text-[10px] text-[#78716C]">انتقال موجودی به حساب شما</span>
+                                </span>
+                            </label>
+                            <span class="mt-2 block text-[10px] text-red-500"></span>
                         </div>
+
                     </div>
 
+                    @error('transactionType')
+                        <span class="col-span-6 text-xs text-red-500">{{ $message }}</span>
+                    @enderror
 
-                    {{-- فرم داینامیک واریز و برداشت --}}
-                    <div
-                        id="transactionMethod"
-                        class="col-span-6 grid grid-cols-6 gap-4 wallet-card p-4 sm:p-5"
-                    ></div>
-
+                    {{-- محتوای داینامیک تراکنش --}}
+                    <div id="transactionMethod" class="col-span-6 grid grid-cols-6 gap-4"></div>
 
                     {{-- دکمه‌ها --}}
                     @if (Auth::user()->isActive)
-
-                        <button
-                            type="submit"
-                            id="walletSubmitButton"
-                            class="wallet-submit col-span-3 py-4 rounded-xl font-bold text-sm cursor-pointer"
-                        >
-                            <span class="inline-flex items-center justify-center gap-2">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                                        d="m5 12 4 4L19 6" />
-                                </svg>
-                                ثبت درخواست
-                            </span>
+                        <button type="submit" onclick="submitBtn(event)"
+                            class="col-span-3 rounded-xl bg-[#B88A3B] py-3.5 text-sm font-bold text-white shadow-sm shadow-[#B88A3B]/20 transition-all hover:bg-[#A47A32] hover:shadow-md">
+                            ثبت درخواست
                         </button>
 
-                        <button
-                            type="reset"
-                            class="wallet-cancel col-span-3 py-4 rounded-xl font-bold text-sm cursor-pointer"
-                        >
+                        <button type="reset"
+                            class="col-span-3 rounded-xl border border-[#E7E2D9] bg-[#F8F5EF] py-3.5 text-sm font-bold text-[#78716C] transition-all hover:border-[#B88A3B] hover:text-[#29251F]">
                             لغو عملیات
                         </button>
-
                     @else
-
-                        <div class="col-span-6 bg-[#FBF3E2] border border-[#E7D4AD] text-[#92703A] py-5 px-4 rounded-xl font-bold text-center text-sm">
-                            پس از فعال سازی حساب کاربری شما توسط مدیریت میتوانید واریز و برداشت انجام دهید.
+                        <div class="col-span-6 flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4">
+                            <span class="flex size-9 shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-700">!</span>
+                            <div>
+                                <p class="text-sm font-bold text-amber-800">حساب کاربری غیرفعال است</p>
+                                <p class="mt-1 text-xs leading-6 text-amber-700">
+                                    پس از فعال‌سازی حساب کاربری شما توسط مدیریت، امکان انجام عملیات واریز و برداشت فراهم خواهد شد.
+                                </p>
+                            </div>
                         </div>
-
                     @endif
 
                 </div>
             </form>
         </div>
 
+        {{-- راهنمای کوتاه --}}
+        <div class="flex items-start gap-3 rounded-2xl border border-[#E7E2D9] bg-[#F8F5EF] p-4">
+            <div class="flex size-9 shrink-0 items-center justify-center rounded-xl bg-white text-[#B88A3B]">
+                <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M12 11v5M12 8h.01" />
+                </svg>
+            </div>
+            <div>
+                <p class="text-xs font-bold text-[#29251F]">نکته مهم</p>
+                <p class="mt-1 text-xs leading-6 text-[#78716C]">
+                    قبل از ثبت درخواست واریز یا برداشت، اطلاعات واردشده را بررسی کنید. درخواست‌های مالی پس از بررسی توسط مدیریت پردازش می‌شوند.
+                </p>
+            </div>
+        </div>
+
     </div>
 
-
     <script>
-        /* -------------------------------------------------------
-         | تنظیمات
-         ------------------------------------------------------- */
+        let setting = null
 
-        let setting = @json($setting);
-
-        if (typeof setting === 'string') {
-            try {
-                setting = JSON.parse(setting);
-            } catch (error) {
-                setting = null;
-                console.error('خطا در خواندن تنظیمات کیف پول:', error);
-            }
+        if ('{!! $setting !!}' != '') {
+            setting = JSON.parse('{!! $setting !!}')
         }
 
-        let currentTransactionType = null;
+        let minDeposit
+        let maxDeposit
+        let minWithdraw
+        let maxWithdraw
 
-        let minDeposit = true;
-        let maxDeposit = true;
-        let minWithdraw = true;
-        let maxWithdraw = true;
+        function checkFee(state, el) {
+            let inputValue = Number(el.children[1].value)
 
-        const transactionMethodContainer = document.getElementById('transactionMethod');
+            el.querySelector('div').children[1].innerText = ""
 
-        const transactionForm = document.getElementById('walletTransactionForm');
+            minDeposit = true
+            maxDeposit = true
+            minWithdraw = true
+            maxWithdraw = true
 
-        const depositTypeError = document.getElementById('depositTypeError');
-
-        const withdrawTypeError = document.getElementById('withdrawTypeError');
-
-
-        /* -------------------------------------------------------
-         | توابع کمکی
-         ------------------------------------------------------- */
-
-        function formatNumber(value) {
-            return Number(value).toLocaleString('fa-IR');
-        }
-
-
-        function getSettingNumber(key) {
-            const value = Number(setting?.[key]);
-
-            return Number.isFinite(value) ? value : null;
-        }
-
-
-        function resetValidation() {
-            minDeposit = true;
-            maxDeposit = true;
-
-            minWithdraw = true;
-            maxWithdraw = true;
-        }
-
-
-        function getTransactionInput(state) {
-            return document.getElementById(
-                state === 'deposit' ? 'depositFee' : 'withdrawFee'
-            );
-        }
-
-
-        /* -------------------------------------------------------
-         | اعتبارسنجی مبلغ
-         ------------------------------------------------------- */
-
-        function checkFee(state, input) {
-
-            if (!input || !setting) {
-                return false;
-            }
-
-            const value = input.value.trim();
-
-            const amount = value === '' ? NaN : Number(value);
-
-            const helperContainer = input.parentElement.querySelector('.amount-helper');
-
-            if (!helperContainer) {
-                return false;
-            }
-
-            const tomanElement = helperContainer.querySelector('.toman-price');
-
-            const errorElement = helperContainer.querySelector('.amount-error');
-
-            errorElement.innerText = '';
-            tomanElement.innerText = '';
-
-            if (!Number.isFinite(amount) || amount <= 0) {
-
-                if (state === 'deposit') {
-                    minDeposit = false;
-                } else {
-                    minWithdraw = false;
+            if (state == 'deposit') {
+                if (inputValue < setting.minDepositAmount) {
+                    el.querySelector('div').children[1].innerText =
+                        `حداقل مبلغ قابل واریز ${parseInt(setting.minDepositAmount).toLocaleString('fa-IR')} ریال است.`
+                    minDeposit = false
                 }
 
-                const minAmount = getSettingNumber(
-                    state === 'deposit' ? 'minDepositAmount' : 'minWithdrawAmount'
-                );
+                if (inputValue > setting.maxDepositAmount) {
+                    el.querySelector('div').children[1].innerText =
+                        `حداکثر مبلغ قابل واریز ${parseInt(setting.maxDepositAmount).toLocaleString('fa-IR')} ریال است.`
+                    maxDeposit = false
+                }
+            }
 
-                if (minAmount !== null) {
-                    errorElement.innerText =
-                        `حداقل مبلغ ${state === 'deposit' ? 'واریز' : 'برداشت'} ${formatNumber(minAmount)} ریال است.`;
-                } else {
-                    errorElement.innerText = 'لطفاً مبلغ معتبری وارد کنید.';
+            if (state == 'withdraw') {
+                if (inputValue < setting.minWithdrawAmount) {
+                    el.querySelector('div').children[1].innerText =
+                        `حداقل مبلغ قابل برداشت ${parseInt(setting.minWithdrawAmount).toLocaleString('fa-IR')} ریال است.`
+                    minWithdraw = false
                 }
 
-                return false;
+                if (inputValue > setting.maxWithdrawAmount) {
+                    el.querySelector('div').children[1].innerText =
+                        `حداکثر مبلغ قابل برداشت ${parseInt(setting.maxWithdrawAmount).toLocaleString('fa-IR')} ریال است.`
+                    maxWithdraw = false
+                }
             }
 
-            const minAmount = getSettingNumber(
-                state === 'deposit' ? 'minDepositAmount' : 'minWithdrawAmount'
-            );
+            let tomanPrice = Math.floor(parseInt(el.querySelector('input').value) / 10)
 
-            const maxAmount = getSettingNumber(
-                state === 'deposit' ? 'maxDepositAmount' : 'maxWithdrawAmount'
-            );
-
-            let isValid = true;
-
-            if (minAmount !== null && amount < minAmount) {
-
-                errorElement.innerText =
-                    `حداقل مبلغ ${state === 'deposit' ? 'واریز' : 'برداشت'} ${formatNumber(minAmount)} ریال است.`;
-
-                isValid = false;
-            }
-
-            if (maxAmount !== null && amount > maxAmount) {
-
-                errorElement.innerText =
-                    `حداکثر مبلغ ${state === 'deposit' ? 'واریز' : 'برداشت'} ${formatNumber(maxAmount)} ریال است.`;
-
-                isValid = false;
-            }
-
-            const tomanPrice = Math.floor(amount / 10);
-
-            if (Number.isFinite(tomanPrice) && tomanPrice > 0) {
-                tomanElement.innerText =
-                    'معادل ' + formatNumber(tomanPrice) + ' تومان';
-            }
-
-            if (state === 'deposit') {
-                minDeposit = isValid;
-                maxDeposit = isValid;
+            if (tomanPrice != 0 && tomanPrice != NaN && el.querySelector('input').value !== '') {
+                el.querySelector('div').children[0].innerText =
+                    'معادل ' + tomanPrice.toLocaleString('fa-IR') + ' تومان'
             } else {
-                minWithdraw = isValid;
-                maxWithdraw = isValid;
+                el.querySelector('div').children[0].innerText = ''
             }
-
-            return isValid;
         }
-
-
-        /* -------------------------------------------------------
-         | نمایش فرم واریز یا برداشت
-         ------------------------------------------------------- */
 
         function transactionMethod(state, el) {
-
-            if (!setting) {
-                alert('تنظیمات کیف پول در دسترس نیست.');
-                el.checked = false;
-                return;
-            }
-
-            depositTypeError.innerText = '';
-            withdrawTypeError.innerText = '';
-
-            currentTransactionType = state;
-
-            resetValidation();
-
-            const isActive = state === 'deposit'
-                ? Number(setting.depositIsActive) === 1
-                : Number(setting.withdrawIsActive) === 1;
-
-            if (!isActive) {
-
-                const errorElement = state === 'deposit'
-                    ? depositTypeError
-                    : withdrawTypeError;
-
-                errorElement.innerText =
-                    state === 'deposit'
-                        ? 'در حال حاضر امکان واریز کردن غیرفعال است.'
-                        : 'در حال حاضر امکان برداشت کردن غیرفعال است.';
-
-                el.checked = false;
-
-                currentTransactionType = null;
-
-                transactionMethodContainer.innerHTML = '';
-
-                return;
-            }
-
-
-            /* ------------------------------
-             | فرم واریز
-             ------------------------------ */
-
-            if (state === 'deposit') {
-
-                transactionMethodContainer.innerHTML = `
-
-                    <label class="col-span-6 md:col-span-3 text-sm font-bold text-[#29251F]" for="depositFee">
-
-                        مبلغ (ریال)
-
-                        <span class="text-[10px] text-red-500">
-                            (اجباری)
-                        </span>
-
-                        <input
-                            class="wallet-input in-fa font-normal"
-                            type="number"
-                            name="depositFee"
-                            id="depositFee"
-                            placeholder="مبلغ مورد نظر به ریال"
-                            min="1"
-                            step="1"
-                            required
-                        >
-
-                        <div class="amount-helper my-2 flex flex-col gap-1">
-
-                            <span class="toman-price text-xs text-[#78716C]"></span>
-
-                            <span class="amount-error text-xs text-red-500"></span>
-
-                        </div>
-
-                    </label>
-
-
-                    <label class="col-span-6 md:col-span-3 text-sm font-bold text-[#29251F]" for="receipt">
-
-                        تصویر فیش واریزی
-
-                        <span class="text-[10px] text-red-500">
-                            (اجباری)
-                        </span>
-
-                        <input
-                            class="wallet-input font-normal"
-                            type="file"
-                            name="receipt"
-                            id="receipt"
-                            accept="image/*"
-                            required
-                        >
-
-                    </label>
-
-
-                    <label class="col-span-6 text-sm font-bold text-[#29251F]" for="description">
-
-                        توضیحات
-
-                        <textarea
-                            class="wallet-input font-normal"
-                            name="description"
-                            id="description"
-                            rows="3"
-                            placeholder="در صورت نیاز توضیحات خود را وارد کنید..."
-                        ></textarea>
-
-                    </label>
-
-                `;
-
-                const depositInput = document.getElementById('depositFee');
-
-                depositInput.addEventListener('input', function () {
-                    checkFee('deposit', this);
-                });
-
-                return;
-            }
-
-
-            /* ------------------------------
-             | فرم برداشت
-             ------------------------------ */
-
-            if (state === 'withdraw') {
-
-                transactionMethodContainer.innerHTML = `
-
-                    <div id="percents" class="col-span-6">
-
-                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
-
-                            <span class="text-sm font-bold text-[#29251F]">
-                                انتخاب میزان برداشت
-                            </span>
-
-                            <span class="text-xs text-[#78716C]">
-                                درصد مورد نظر را انتخاب کنید
-                            </span>
-
-                        </div>
-
-                        <div class="w-full flex items-center justify-between gap-2 flex-wrap">
-
-                            <label for="withdrawPercent10" class="wallet-percent">
-                                <input
-                                    type="radio"
-                                    name="withdrawPercent"
-                                    id="withdrawPercent10"
-                                    value="10"
-                                    class="wallet-radio"
-                                >
-                                <span class="in-fa text-sm">10%</span>
-                            </label>
-
-                            <label for="withdrawPercent25" class="wallet-percent">
-                                <input
-                                    type="radio"
-                                    name="withdrawPercent"
-                                    id="withdrawPercent25"
-                                    value="25"
-                                    class="wallet-radio"
-                                >
-                                <span class="in-fa text-sm">25%</span>
-                            </label>
-
-                            <label for="withdrawPercent50" class="wallet-percent">
-                                <input
-                                    type="radio"
-                                    name="withdrawPercent"
-                                    id="withdrawPercent50"
-                                    value="50"
-                                    class="wallet-radio"
-                                >
-                                <span class="in-fa text-sm">50%</span>
-                            </label>
-
-                            <label for="withdrawPercent75" class="wallet-percent">
-                                <input
-                                    type="radio"
-                                    name="withdrawPercent"
-                                    id="withdrawPercent75"
-                                    value="75"
-                                    class="wallet-radio"
-                                >
-                                <span class="in-fa text-sm">75%</span>
-                            </label>
-
-                            <label for="withdrawPercent100" class="wallet-percent">
-                                <input
-                                    type="radio"
-                                    name="withdrawPercent"
-                                    id="withdrawPercent100"
-                                    value="100"
-                                    class="wallet-radio"
-                                >
-                                <span class="in-fa text-sm">100%</span>
-                            </label>
-
-                        </div>
-
-                    </div>
-
-
-                    <label class="col-span-6 md:col-span-3 text-sm font-bold text-[#29251F]" for="withdrawFee">
-
-                        مبلغ (ریال)
-
-                        <span class="text-[10px] text-red-500">
-                            (اجباری)
-                        </span>
-
-                        <input
-                            class="wallet-input in-fa font-normal"
-                            type="number"
-                            name="withdrawFee"
-                            id="withdrawFee"
-                            placeholder="مبلغ مورد نظر به ریال"
-                            min="1"
-                            step="1"
-                            required
-                        >
-
-                        <div class="amount-helper my-2 flex flex-col gap-1">
-
-                            <span class="toman-price text-xs text-[#78716C]"></span>
-
-                            <span class="amount-error text-xs text-red-500"></span>
-
-                        </div>
-
-                    </label>
-
-
-                    <label class="col-span-6 text-sm font-bold text-[#29251F]" for="description">
-
-                        توضیحات
-
-                        <textarea
-                            class="wallet-input font-normal"
-                            name="description"
-                            id="description"
-                            rows="3"
-                            placeholder="در صورت نیاز توضیحات خود را وارد کنید..."
-                        ></textarea>
-
-                    </label>
-
-                `;
-
-                percents();
+            let transactionMethod = document.getElementById('transactionMethod')
+
+            if (setting) {
+                if (state == 'deposit') {
+                    if (setting.depositIsActive == 0) {
+                        el.parentElement.nextElementSibling.innerText = 'در حال حاضر امکان واریز کردن غیرفعال است'
+                        el.checked = false
+                    } else {
+
+                        transactionMethod.innerHTML = `
+                            <div class="col-span-6 rounded-2xl border border-[#E7E2D9] bg-[#F8F5EF] p-4 md:p-5 space-y-5">
+
+                                <div class="flex items-center gap-3">
+                                    <div class="flex size-11 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+                                        <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                            <path d="M12 16V4m-5 5 5-5 5 5"/>
+                                            <path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-sm font-extrabold text-[#29251F]">افزایش موجودی کیف پول</h3>
+                                        <p class="mt-1 text-xs text-[#78716C]">مبلغ موردنظر خود را وارد و فیش واریزی را بارگذاری کنید.</p>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                                    {{-- مبلغ واریزی --}}
+                                    <label class="relative block text-sm font-bold text-[#29251F]"
+                                        for="depositFee"
+                                        onkeyup="checkFee('deposit', this)">
+
+                                        مبلغ واریزی
+                                        <span class="text-red-500 text-xs">(اجباری)</span>
+
+                                        <input
+                                            class="mt-2 w-full rounded-xl border border-[#E7E2D9] bg-white py-3.5 pr-4 pl-14 text-sm text-[#29251F] outline-none transition-all placeholder:text-[#A8A29E] focus:border-[#B88A3B] focus:ring-4 focus:ring-[#D6AD60]/10 in-fa"
+                                            type="number"
+                                            name="depositFee"
+                                            id="depositFee"
+                                            placeholder="مبلغ را به ریال وارد کنید"
+                                            value=""
+                                        >
+
+                                        <span class="absolute left-4 top-[43px] text-xs font-normal text-[#78716C]">ریال</span>
+
+                                        <div class="my-2 flex flex-col gap-1">
+                                            <span class="text-xs font-medium text-[#B88A3B]"></span>
+                                            <span class="text-xs text-red-500"></span>
+                                        </div>
+                                    </label>
+
+                                    {{-- تصویر فیش --}}
+                                    <label class="block text-sm font-bold text-[#29251F]" for="receipt">
+                                        تصویر فیش واریزی
+                                        <span class="text-red-500 text-xs">(اجباری)</span>
+
+                                        <div class="mt-2 flex min-h-[112px] cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#D6AD60]/50 bg-white px-4 py-4 text-center transition-all hover:border-[#B88A3B] hover:bg-[#FFFCF7]">
+                                            <svg class="size-7 text-[#B88A3B]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+                                                <path d="M12 16V4m-5 5 5-5 5 5"/>
+                                                <path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/>
+                                            </svg>
+                                            <span class="mt-2 text-xs font-bold text-[#29251F]">انتخاب تصویر فیش</span>
+                                            <span class="mt-1 text-[10px] text-[#78716C]">برای بارگذاری کلیک کنید</span>
+                                        </div>
+
+                                        <input
+                                            class="w-full mt-2 text-xs text-[#78716C] file:ml-3 file:rounded-lg file:border-0 file:bg-[#F8F5EF] file:px-3 file:py-2 file:text-xs file:font-bold file:text-[#B88A3B] hover:file:bg-[#E7E2D9]"
+                                            type="file"
+                                            name="receipt"
+                                            id="receipt"
+                                            accept="image/*"
+                                        >
+                                    </label>
+
+                                </div>
+
+                                {{-- توضیحات --}}
+                                <label class="block text-sm font-bold text-[#29251F]" for="description">
+                                    توضیحات
+                                    <span class="text-xs font-normal text-[#78716C]">(اختیاری)</span>
+
+                                    <textarea
+                                        class="mt-2 min-h-28 w-full resize-y rounded-xl border border-[#E7E2D9] bg-white p-4 text-sm text-[#29251F] outline-none transition-all placeholder:text-[#A8A29E] focus:border-[#B88A3B] focus:ring-4 focus:ring-[#D6AD60]/10"
+                                        name="description"
+                                        id="description"
+                                        placeholder="در صورت نیاز توضیحات خود را وارد کنید..."
+                                    ></textarea>
+                                </label>
+
+                            </div>
+                        `
+                    }
+                }
+
+                if (state == 'withdraw') {
+                    if (setting.withdrawIsActive == 0) {
+                        el.parentElement.nextElementSibling.innerText = 'در حال حاضر امکان برداشت کردن غیرفعال است'
+                        el.checked = false
+                    } else {
+
+                        transactionMethod.innerHTML = `
+                            <div class="col-span-6 rounded-2xl border border-[#E7E2D9] bg-[#F8F5EF] p-4 md:p-5 space-y-5">
+
+                                <div class="flex items-center gap-3">
+                                    <div class="flex size-11 items-center justify-center rounded-xl bg-[#D6AD60]/15 text-[#B88A3B]">
+                                        <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                            <path d="M12 8v12m-5-5 5 5 5-5"/>
+                                            <path d="M4 8V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-sm font-extrabold text-[#29251F]">برداشت از کیف پول</h3>
+                                        <p class="mt-1 text-xs text-[#78716C]">میزان موجودی موردنظر برای برداشت را انتخاب کنید.</p>
+                                    </div>
+                                </div>
+
+                                {{-- انتخاب درصد برداشت --}}
+                                <div id="percents" class="rounded-xl border border-[#E7E2D9] bg-white p-4">
+
+                                    <div class="flex items-center justify-between gap-2 mb-4">
+                                        <span class="text-sm font-bold text-[#29251F]">میزان برداشت</span>
+                                        <span class="text-[10px] text-[#78716C]">انتخاب درصد موجودی</span>
+                                    </div>
+
+                                    <div class="grid grid-cols-5 gap-2">
+
+                                        <div>
+                                            <input class="peer hidden" type="radio" name="withdrawPercent" id="withdrawPercent10" value="10">
+                                            <label for="withdrawPercent10" class="flex cursor-pointer items-center justify-center rounded-lg border border-[#E7E2D9] bg-[#F8F5EF] py-3 text-xs font-bold text-[#78716C] transition-all hover:border-[#D6AD60] peer-checked:border-[#B88A3B] peer-checked:bg-[#B88A3B] peer-checked:text-white in-fa">
+                                                ۱۰٪
+                                            </label>
+                                        </div>
+
+                                        <div>
+                                            <input class="peer hidden" type="radio" name="withdrawPercent" id="withdrawPercent25" value="25">
+                                            <label for="withdrawPercent25" class="flex cursor-pointer items-center justify-center rounded-lg border border-[#E7E2D9] bg-[#F8F5EF] py-3 text-xs font-bold text-[#78716C] transition-all hover:border-[#D6AD60] peer-checked:border-[#B88A3B] peer-checked:bg-[#B88A3B] peer-checked:text-white in-fa">
+                                                ۲۵٪
+                                            </label>
+                                        </div>
+
+                                        <div>
+                                            <input class="peer hidden" type="radio" name="withdrawPercent" id="withdrawPercent50" value="50">
+                                            <label for="withdrawPercent50" class="flex cursor-pointer items-center justify-center rounded-lg border border-[#E7E2D9] bg-[#F8F5EF] py-3 text-xs font-bold text-[#78716C] transition-all hover:border-[#D6AD60] peer-checked:border-[#B88A3B] peer-checked:bg-[#B88A3B] peer-checked:text-white in-fa">
+                                                ۵۰٪
+                                            </label>
+                                        </div>
+
+                                        <div>
+                                            <input class="peer hidden" type="radio" name="withdrawPercent" id="withdrawPercent75" value="75">
+                                            <label for="withdrawPercent75" class="flex cursor-pointer items-center justify-center rounded-lg border border-[#E7E2D9] bg-[#F8F5EF] py-3 text-xs font-bold text-[#78716C] transition-all hover:border-[#D6AD60] peer-checked:border-[#B88A3B] peer-checked:bg-[#B88A3B] peer-checked:text-white in-fa">
+                                                ۷۵٪
+                                            </label>
+                                        </div>
+
+                                        <div>
+                                            <input class="peer hidden" type="radio" name="withdrawPercent" id="withdrawPercent100" value="100">
+                                            <label for="withdrawPercent100" class="flex cursor-pointer items-center justify-center rounded-lg border border-[#E7E2D9] bg-[#F8F5EF] py-3 text-xs font-bold text-[#78716C] transition-all hover:border-[#D6AD60] peer-checked:border-[#B88A3B] peer-checked:bg-[#B88A3B] peer-checked:text-white in-fa">
+                                                ۱۰۰٪
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                {{-- مبلغ برداشت --}}
+                                <label class="relative block text-sm font-bold text-[#29251F]"
+                                    for="withdrawFee"
+                                    onkeyup="checkFee('withdraw', this)">
+
+                                    مبلغ برداشت
+                                    <span class="text-red-500 text-xs">(اجباری)</span>
+
+                                    <input
+                                        class="mt-2 w-full rounded-xl border border-[#E7E2D9] bg-white py-3.5 pr-4 pl-14 text-sm text-[#29251F] outline-none transition-all placeholder:text-[#A8A29E] focus:border-[#B88A3B] focus:ring-4 focus:ring-[#D6AD60]/10 in-fa"
+                                        type="number"
+                                        name="withdrawFee"
+                                        id="withdrawFee"
+                                        placeholder="مبلغ را به ریال وارد کنید"
+                                        value=""
+                                    >
+
+                                    <span class="absolute left-4 top-[43px] text-xs font-normal text-[#78716C]">ریال</span>
+
+                                    <div class="my-2 flex flex-col gap-1">
+                                        <span class="text-xs font-medium text-[#B88A3B]"></span>
+                                        <span class="text-xs text-red-500"></span>
+                                    </div>
+                                </label>
+
+                                {{-- توضیحات --}}
+                                <label class="block text-sm font-bold text-[#29251F]" for="description">
+                                    توضیحات
+                                    <span class="text-xs font-normal text-[#78716C]">(اختیاری)</span>
+
+                                    <textarea
+                                        class="mt-2 min-h-28 w-full resize-y rounded-xl border border-[#E7E2D9] bg-white p-4 text-sm text-[#29251F] outline-none transition-all placeholder:text-[#A8A29E] focus:border-[#B88A3B] focus:ring-4 focus:ring-[#D6AD60]/10"
+                                        name="description"
+                                        id="description"
+                                        placeholder="در صورت نیاز توضیحات خود را وارد کنید..."
+                                    ></textarea>
+                                </label>
+
+                            </div>
+                        `
+
+                        percents()
+                    }
+                }
             }
         }
-
-
-        /* -------------------------------------------------------
-         | انتخاب درصد برداشت
-         ------------------------------------------------------- */
 
         function percents() {
+            let withdrawPercents = document.querySelectorAll('input[name="withdrawPercent"]')
+            let withdrawableBalance = document.getElementById('withdrawableBalance').dataset.balance
+            let feeInput = document.getElementById('withdrawFee')
 
-            const withdrawPercents = document.querySelectorAll(
-                'input[name="withdrawPercent"]'
-            );
-
-            const withdrawableBalanceElement = document.getElementById(
-                'withdrawableBalance'
-            );
-
-            const feeInput = document.getElementById('withdrawFee');
-
-            const withdrawableBalance = Number(
-                withdrawableBalanceElement.dataset.balance
-            );
-
-
-            // انتخاب درصد و محاسبه مبلغ
             withdrawPercents.forEach(percent => {
+                percent.addEventListener('change', function() {
+                    let result = (parseInt(percent.value) / 100) * parseInt(withdrawableBalance)
+                    let value = Math.round(result)
 
-                percent.addEventListener('change', function () {
-
-                    if (!Number.isFinite(withdrawableBalance) || withdrawableBalance <= 0) {
-
-                        feeInput.value = '';
-
-                        checkFee('withdraw', feeInput);
-
-                        return;
-                    }
-
-                    const selectedPercent = Number(this.value);
-
-                    const calculatedAmount = Math.floor(
-                        withdrawableBalance * selectedPercent / 100
-                    );
-
-                    feeInput.value = calculatedAmount;
-
-                    checkFee('withdraw', feeInput);
-
-                });
-
+                    feeInput.value = value
+                    checkFee('withdraw', feeInput.parentElement)
+                })
             });
-
-
-            // اگر کاربر مبلغ را دستی تغییر دهد،
-            // انتخاب درصد قبلی باید برداشته شود.
-            feeInput.addEventListener('input', function () {
-
-                withdrawPercents.forEach(percent => {
-                    percent.checked = false;
-                });
-
-                checkFee('withdraw', this);
-
-            });
-
         }
 
+        function submitBtn(e) {
+            e.preventDefault()
 
-        /* -------------------------------------------------------
-         | ارسال فرم
-         ------------------------------------------------------- */
-
-        function submitBtn(event) {
-
-            event.preventDefault();
-
-            if (!currentTransactionType) {
-                alert('لطفاً ابتدا نوع تراکنش را انتخاب کنید.');
-                return;
+            if (minDeposit && maxDeposit && minWithdraw && maxWithdraw) {
+                document.forms[0].submit()
             }
-
-            const input = getTransactionInput(currentTransactionType);
-
-            if (!input) {
-                alert('فیلد مبلغ تراکنش پیدا نشد.');
-                return;
-            }
-
-            // اعتبارسنجی نهایی مبلغ
-            const isAmountValid = checkFee(currentTransactionType, input);
-
-            if (!isAmountValid) {
-                input.focus();
-                return;
-            }
-
-            // بررسی فعال بودن عملیات در زمان ارسال
-            const isActive = currentTransactionType === 'deposit'
-                ? Number(setting?.depositIsActive) === 1
-                : Number(setting?.withdrawIsActive) === 1;
-
-            if (!isActive) {
-                alert('این عملیات در حال حاضر غیرفعال است.');
-                return;
-            }
-
-            // بررسی اعتبارسنجی فرم و فیلدهای اجباری
-            if (!transactionForm.reportValidity()) {
-                return;
-            }
-
-            // ارسال همان فرم کیف پول
-            transactionForm.submit();
         }
-
-
-        /* -------------------------------------------------------
-         | بازنشانی فرم
-         ------------------------------------------------------- */
-
-        transactionForm.addEventListener('reset', function () {
-
-            currentTransactionType = null;
-
-            resetValidation();
-
-            transactionMethodContainer.innerHTML = '';
-
-            depositTypeError.innerText = '';
-
-            withdrawTypeError.innerText = '';
-
-        });
-
     </script>
 
 @endsection
