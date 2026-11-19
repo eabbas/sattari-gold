@@ -28,7 +28,7 @@
                         class="w-full outline-none font-bold rounded-xl max-lg:text-sm py-2 px-3 in-fa"
                         value="{{ old('minDepositAmount', $setting['minDepositAmount'] ?? '') }}">
                 </div>
-                <p class="text-xs text-gray-400 in-fa">معادل {{ number_format($setting['minDepositAmount']/10) }} تومان</p>
+                <p class="text-xs text-gray-400 in-fa">معادل {{ number_format($setting['minDepositAmount'] / 10) }} تومان</p>
                 @error('minDepositAmount')
                     <span class="text-xs text-red-400 in-fa">{{ $message }}</span>
                 @enderror
@@ -41,7 +41,7 @@
                         class="w-full outline-none font-bold rounded-xl max-lg:text-sm py-2 px-3 in-fa"
                         value="{{ old('maxDepositAmount', $setting['maxDepositAmount'] ?? '') }}">
                 </div>
-                <p class="text-xs text-gray-400 in-fa">معادل {{ number_format($setting['maxDepositAmount']/10) }} تومان</p>
+                <p class="text-xs text-gray-400 in-fa">معادل {{ number_format($setting['maxDepositAmount'] / 10) }} تومان</p>
                 @error('maxDepositAmount')
                     <span class="text-xs text-red-400">{{ $message }}</span>
                 @enderror
@@ -65,7 +65,7 @@
                         class="w-full outline-none font-bold rounded-xl max-lg:text-sm py-2 px-3 in-fa"
                         value="{{ old('minWithdrawAmount', $setting['minWithdrawAmount'] ?? '') }}">
                 </div>
-                <p class="text-xs text-gray-400 in-fa">معادل {{ number_format($setting['minWithdrawAmount']/10) }} تومان</p>
+                <p class="text-xs text-gray-400 in-fa">معادل {{ number_format($setting['minWithdrawAmount'] / 10) }} تومان</p>
                 @error('minWithdrawAmount')
                     <span class="text-xs text-red-400">{{ $message }}</span>
                 @enderror
@@ -78,7 +78,8 @@
                         class="w-full outline-none font-bold rounded-xl max-lg:text-sm py-2 px-3 in-fa"
                         value="{{ old('maxWithdrawAmount', $setting['maxWithdrawAmount'] ?? '') }}">
                 </div>
-                <p class="text-xs text-gray-400 in-fa">معادل {{ number_format($setting['maxWithdrawAmount']/10) }} تومان</p>
+                <p class="text-xs text-gray-400 in-fa">معادل {{ number_format($setting['maxWithdrawAmount'] / 10) }} تومان
+                </p>
                 @error('maxWithdrawAmount')
                     <span class="text-xs text-red-400">{{ $message }}</span>
                 @enderror
@@ -102,32 +103,36 @@
 
     <script>
         let minDepositAmount = document.getElementById('minDepositAmount')
-        minDepositAmount.addEventListener('input', ()=>{
+        minDepositAmount.addEventListener('input', () => {
             minDepositAmount.closest('.parent').querySelector('p').innerText = ''
             let price = minDepositAmount.value
-            let finalPrice = parseInt(price)/10
-            minDepositAmount.closest('.parent').querySelector('p').innerText = 'معادل '+finalPrice.toLocaleString('fa-IR')+' تومان'
+            let finalPrice = parseInt(price) / 10
+            minDepositAmount.closest('.parent').querySelector('p').innerText = 'معادل ' + finalPrice.toLocaleString(
+                'fa-IR') + ' تومان'
         })
         let maxDepositAmount = document.getElementById('maxDepositAmount')
-        maxDepositAmount.addEventListener('input', ()=>{
+        maxDepositAmount.addEventListener('input', () => {
             maxDepositAmount.closest('.parent').querySelector('p').innerText = ''
             let price = maxDepositAmount.value
-            let finalPrice = parseInt(price)/10
-            maxDepositAmount.closest('.parent').querySelector('p').innerText = 'معادل '+finalPrice.toLocaleString('fa-IR')+' تومان'
+            let finalPrice = parseInt(price) / 10
+            maxDepositAmount.closest('.parent').querySelector('p').innerText = 'معادل ' + finalPrice.toLocaleString(
+                'fa-IR') + ' تومان'
         })
         let minWithdrawAmount = document.getElementById('minWithdrawAmount')
-        minWithdrawAmount.addEventListener('input', ()=>{
+        minWithdrawAmount.addEventListener('input', () => {
             minWithdrawAmount.closest('.parent').querySelector('p').innerText = ''
             let price = minWithdrawAmount.value
-            let finalPrice = parseInt(price)/10
-            minWithdrawAmount.closest('.parent').querySelector('p').innerText = 'معادل '+finalPrice.toLocaleString('fa-IR')+' تومان'
+            let finalPrice = parseInt(price) / 10
+            minWithdrawAmount.closest('.parent').querySelector('p').innerText = 'معادل ' + finalPrice
+                .toLocaleString('fa-IR') + ' تومان'
         })
         let maxWithdrawAmount = document.getElementById('maxWithdrawAmount')
-        maxWithdrawAmount.addEventListener('input', ()=>{
+        maxWithdrawAmount.addEventListener('input', () => {
             maxWithdrawAmount.closest('.parent').querySelector('p').innerText = ''
             let price = maxWithdrawAmount.value
-            let finalPrice = parseInt(price)/10
-            maxWithdrawAmount.closest('.parent').querySelector('p').innerText = 'معادل '+finalPrice.toLocaleString('fa-IR')+' تومان'
+            let finalPrice = parseInt(price) / 10
+            maxWithdrawAmount.closest('.parent').querySelector('p').innerText = 'معادل ' + finalPrice
+                .toLocaleString('fa-IR') + ' تومان'
         })
     </script>
 @endsection

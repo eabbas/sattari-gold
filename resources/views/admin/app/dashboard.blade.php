@@ -759,6 +759,16 @@
                     </a>
                 @endcan --}}
 
+                @can('access', ['priceLine'])
+                    <a href="{{ route('line.create') }}" class="@if (Route::is('line.create')) active @endif"
+                        title="تعیین ارزش خط">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                        </svg>
+                        <span>تعیین ارزش خط</span>
+                    </a>
+                @endcan
+
                 @can('access', ['transactionsList'])
                     <a href="{{ route('wallet.transactionsList') }}"
                         class="@if (Route::is('wallet.transactionsList')) active @endif" title="واریز و برداشت">

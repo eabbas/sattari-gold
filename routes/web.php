@@ -17,6 +17,7 @@ use App\Http\Controllers\DefaultCommentsController;
 use App\Http\Controllers\LivePriceController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PriceLineController;
 use App\Http\Controllers\ReferenceSitesController;
 use App\Http\Controllers\TransactionSettingController;
 use App\Http\Middleware\checkAccess;
@@ -338,6 +339,17 @@ Route::group([
 // ], function () {
 //     Route::get('/create', 'create')->name('create');
 // });
+
+// price line
+Route::group([
+    'as' => 'line.',
+    'prefix' => 'line',
+    'controller' => PriceLineController::class,
+    'middleware' => checkAccess::class . ":priceLine"
+], function () {
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+});
 
 // fallback and missing
 Route::fallback([HomeController::class, 'pageNotFound'])->name('fallback');
