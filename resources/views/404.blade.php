@@ -129,7 +129,7 @@
             <!-- Text -->
             <div class="order-2 md:order-1 text-center md:text-right">
 
-                <h2 class="text-8xl sm:text-9xl font-extrabold gold-text leading-none mb-5">
+                <h2 class="text-8xl sm:text-9xl font-bold gold-text leading-none mb-5">
                     404
                 </h2>
 

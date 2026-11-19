@@ -42,7 +42,7 @@
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
                 <span class="text-xs font-medium text-[#B88A3B]">مدیریت دارایی</span>
-                <h1 class="mt-1 text-xl md:text-2xl font-extrabold text-[#29251F]">
+                <h1 class="mt-1 text-xl md:text-2xl font-bold text-[#29251F]">
                     کیف پول من
                 </h1>
                 <p class="mt-2 text-xs md:text-sm text-[#78716C]">
@@ -126,7 +126,7 @@
                     <div class="mt-7">
                         <p class="text-xs text-[#78716C]">موجودی کل کیف پول</p>
                         <div class="flex items-baseline gap-2 mt-2">
-                            <span class="text-2xl md:text-3xl font-extrabold text-[#29251F] in-fa">
+                            <span class="text-2xl md:text-3xl font-bold text-[#29251F] in-fa">
                                 {{ number_format($user->wallet['asset'] ?? 0) }}
                             </span>
                             <span class="text-xs text-[#78716C]">ریال</span>
@@ -175,7 +175,7 @@
                     <div class="mt-7">
                         <p class="text-xs text-white/60">وزن طلای موجود در کیف پول</p>
                         <div class="flex items-baseline gap-2 mt-2">
-                            <span class="text-2xl md:text-3xl font-extrabold text-[#D6AD60] in-fa">
+                            <span class="text-2xl md:text-3xl font-bold text-[#D6AD60] in-fa">
                                 {{ $user->wallet->goldWeight ?? 0 }}
                             </span>
                             <span class="text-xs text-white/60">گرم</span>
@@ -210,7 +210,7 @@
         <div class="bg-white border border-[#E7E2D9] rounded-2xl shadow-sm overflow-hidden">
 
             <div class="p-5 md:p-6 border-b border-[#E7E2D9]">
-                <h2 class="text-base font-extrabold text-[#29251F]">
+                <h2 class="text-base font-bold text-[#29251F]">
                     مدیریت تراکنش‌ها
                 </h2>
                 <p class="text-xs text-[#78716C] mt-2">
@@ -399,7 +399,7 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 class="text-sm font-extrabold text-[#29251F]">افزایش موجودی کیف پول</h3>
+                                        <h3 class="text-sm font-bold text-[#29251F]">افزایش موجودی کیف پول</h3>
                                         <p class="mt-1 text-xs text-[#78716C]">مبلغ موردنظر خود را وارد و فیش واریزی را بارگذاری کنید.</p>
                                     </div>
                                 </div>
@@ -491,7 +491,7 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 class="text-sm font-extrabold text-[#29251F]">برداشت از کیف پول</h3>
+                                        <h3 class="text-sm font-bold text-[#29251F]">برداشت از کیف پول</h3>
                                         <p class="mt-1 text-xs text-[#78716C]">میزان موجودی موردنظر برای برداشت را انتخاب کنید.</p>
                                     </div>
                                 </div>

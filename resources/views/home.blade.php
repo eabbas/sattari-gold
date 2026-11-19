@@ -42,7 +42,7 @@
                     alt="">
 
                 <h2
-                    class="mt-4 flex items-center justify-center gap-1 text-center text-xl font-extrabold leading-relaxed text-gray-800 sm:text-2xl lg:text-3xl">
+                    class="mt-4 flex items-center justify-center gap-1 text-center text-xl font-bold leading-relaxed text-gray-800 sm:text-2xl lg:text-3xl">
                     <span>{{ $header->title }}</span>
                 </h2>
 
@@ -166,12 +166,12 @@
             {{-- Introduction Text --}}
             <div class="flex flex-col gap-4 lg:pr-5">
 
-                <span class="flex items-center gap-2 text-xs font-extrabold text-[#c3924d] sm:text-sm">
+                <span class="flex items-center gap-2 text-xs font-bold text-[#c3924d] sm:text-sm">
                     <span class="h-1.5 w-7 rounded-full bg-[#c3924d]"></span>
                     آشنایی با ستاری گلد
                 </span>
 
-                <h2 class="text-xl font-extrabold leading-[1.9] text-gray-800 sm:text-2xl lg:text-3xl">
+                <h2 class="text-xl font-bold leading-[1.9] text-gray-800 sm:text-2xl lg:text-3xl">
                     همراه مطمئن شما در مسیر سرمایه‌گذاری طلا
                 </h2>
 
@@ -209,7 +209,7 @@
                 <div class="flex flex-col gap-2">
                     <span class="text-xs font-bold text-[#c3924d] sm:text-sm">محصولات منتخب</span>
 
-                    <h2 class="text-lg font-extrabold text-gray-800 sm:text-2xl">
+                    <h2 class="text-lg font-bold text-gray-800 sm:text-2xl">
                         محصولات ما
                     </h2>
 
@@ -282,7 +282,7 @@
                                             </div>
 
                                             <div class="flex flex-row items-center gap-1">
-                                                <span class="text-sm font-extrabold text-gray-800 in-fa">
+                                                <span class="text-sm font-bold text-gray-800 in-fa">
                                                     {{ number_format($product->secondary_price) }}
                                                 </span>
 
@@ -293,7 +293,7 @@
                                         </div>
                                     @else
                                         <div class="flex flex-row items-center gap-1">
-                                            <span class="text-sm font-extrabold text-gray-800 in-fa">
+                                            <span class="text-sm font-bold text-gray-800 in-fa">
                                                 {{ number_format($product->primary_price) }}
                                             </span>
 
@@ -348,7 +348,7 @@
                     مزایای انتخاب ما
                 </span>
 
-                <h2 class="text-xl font-extrabold text-[#302b25] sm:text-3xl">
+                <h2 class="text-xl font-bold text-[#302b25] sm:text-3xl">
                     چرا <span class="text-[#bd914e]">ستاری گلد</span>؟
                 </h2>
 
@@ -377,7 +377,7 @@
                                 <path d="M16 19a4 4 0 0 1-4 2" />
                             </svg>
                         </div>
-                        <h3 class="text-xs font-extrabold text-[#39332c] sm:text-sm">پشتیبانی تخصصی</h3>
+                        <h3 class="text-xs font-bold text-[#39332c] sm:text-sm">پشتیبانی تخصصی</h3>
                         <p class="mt-2 text-[10px] leading-6 text-gray-500 sm:text-xs">همراهی کارشناسان مجرب در تمام مراحل
                         </p>
                         <span
@@ -396,7 +396,7 @@
                                 <path d="M2 10h20" />
                             </svg>
                         </div>
-                        <h3 class="text-xs font-extrabold text-[#39332c] sm:text-sm">سرمایه‌گذاری مطمئن</h3>
+                        <h3 class="text-xs font-bold text-[#39332c] sm:text-sm">سرمایه‌گذاری مطمئن</h3>
                         <p class="mt-2 text-[10px] leading-6 text-gray-500 sm:text-xs">راهی هوشمندانه برای حفظ ارزش سرمایه
                         </p>
                         <span
@@ -415,7 +415,7 @@
                                 <circle cx="17.5" cy="17.5" r="2.5" />
                             </svg>
                         </div>
-                        <h3 class="text-xs font-extrabold text-[#39332c] sm:text-sm">کارمزد پایین</h3>
+                        <h3 class="text-xs font-bold text-[#39332c] sm:text-sm">کارمزد پایین</h3>
                         <p class="mt-2 text-[10px] leading-6 text-gray-500 sm:text-xs">هزینه کمتر، تجربه خرید بهتر</p>
                         <span
                             class="absolute -bottom-5 -left-5 h-16 w-16 rounded-full bg-[#d6ad60]/5 transition-all duration-300 group-hover:scale-150"></span>
@@ -434,7 +434,7 @@
                                 <path d="m10 10 2 2 4-4" />
                             </svg>
                         </div>
-                        <h3 class="text-xs font-extrabold text-[#39332c] sm:text-sm">خرید و فروش آنلاین</h3>
+                        <h3 class="text-xs font-bold text-[#39332c] sm:text-sm">خرید و فروش آنلاین</h3>
                         <p class="mt-2 text-[10px] leading-6 text-gray-500 sm:text-xs">معامله آسان در تمام ساعات شبانه‌روز
                         </p>
                         <span
@@ -453,7 +453,7 @@
                                 <path d="M15 6h5v5" />
                             </svg>
                         </div>
-                        <h3 class="text-xs font-extrabold text-[#39332c] sm:text-sm">قیمت‌های لحظه‌ای</h3>
+                        <h3 class="text-xs font-bold text-[#39332c] sm:text-sm">قیمت‌های لحظه‌ای</h3>
                         <p class="mt-2 text-[10px] leading-6 text-gray-500 sm:text-xs">دسترسی به آخرین نرخ‌های بازار</p>
                         <span
                             class="absolute -bottom-5 -left-5 h-16 w-16 rounded-full bg-[#d6ad60]/5 transition-all duration-300 group-hover:scale-150"></span>
@@ -470,7 +470,7 @@
                                 <path d="m9 12 2 2 4-4" />
                             </svg>
                         </div>
-                        <h3 class="text-xs font-extrabold text-[#39332c] sm:text-sm">امنیت بالا</h3>
+                        <h3 class="text-xs font-bold text-[#39332c] sm:text-sm">امنیت بالا</h3>
                         <p class="mt-2 text-[10px] leading-6 text-gray-500 sm:text-xs">حفاظت از اطلاعات و دارایی‌های شما
                         </p>
                         <span
@@ -496,7 +496,7 @@
                     تجربه مشتریان
                 </span>
 
-                <h2 class="text-lg font-extrabold text-gray-800 sm:text-xl">
+                <h2 class="text-lg font-bold text-gray-800 sm:text-xl">
                     نظرات کاربران
                 </h2>
 

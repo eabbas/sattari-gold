@@ -73,7 +73,7 @@
                     <span class="w-6 h-px bg-[#c8a35c]"></span>
                 </span>
 
-                <h2 class="text-4xl md:text-6xl font-extrabold leading-relaxed mt-6">
+                <h2 class="text-4xl md:text-6xl font-bold leading-relaxed mt-6">
                     ما همیشه
                     <span class="gold-text">کنار شما هستیم</span>
                 </h2>
