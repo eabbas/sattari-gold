@@ -245,8 +245,8 @@
 
                 <div class="text-xs leading-7 text-gray-600">
 
-                    @if (isset($message))
-                        @foreach ($message as $mess)
+                    @if (count($messages) > 0)
+                        @foreach ($messages as $mess)
                             <p class="border-t border-gray-50 pt-2 mt-2 first:border-0 first:pt-0 first:mt-0">
                                 {{ $mess->message }}
                             </p>

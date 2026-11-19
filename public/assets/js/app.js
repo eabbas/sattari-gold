@@ -48,16 +48,18 @@ modals.forEach(modal => {
 let hamburger_menu_dashboard_item = document.getElementById('hamburger_menu_dashboard_item')
 let hamburger_menu_dashboard_item_close = document.getElementById('hamburger_menu_dashboard_item_close')
 
-function hamburger_menu_dashboard(type, close) {
+function hamburger_menu_dashboard(type) {
+
+   if (!hamburger_menu_dashboard_item || !hamburger_menu_dashboard_item_close) return;
+
    if (type == 'open') {
-      hamburger_menu_dashboard_item.classList.remove('max-lg:translate-x-full')
-      hamburger_menu_dashboard_item_close.classList.remove('invisible')
-      hamburger_menu_dashboard_item_close.classList.remove('opacity-0')
+      hamburger_menu_dashboard_item.classList.add('is-open');
+      hamburger_menu_dashboard_item_close.classList.add('is-open');
    }
+
    if (type == 'close') {
-      hamburger_menu_dashboard_item.classList.add('max-lg:translate-x-full')
-      hamburger_menu_dashboard_item_close.classList.add('invisible')
-      hamburger_menu_dashboard_item_close.classList.add('opacity-0')
+      hamburger_menu_dashboard_item.classList.remove('is-open');
+      hamburger_menu_dashboard_item_close.classList.remove('is-open');
    }
 }
 

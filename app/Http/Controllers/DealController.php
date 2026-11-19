@@ -10,6 +10,7 @@ use App\Models\wallet;
 use Illuminate\Http\Request;
 use App\Models\Message;
 use App\Models\dealTemporary;
+use App\Models\segment;
 use Illuminate\Support\Facades\Auth;
 use Log;
 
@@ -28,8 +29,12 @@ class DealController extends Controller
         if (Auth::user()->wallet) {
             $asset = Auth::user()->wallet->asset;
         }
-        $message = Message::all();
-        return view('user.deal.create', ['asset' => $asset, 'totalGoldWeight' => $totalGoldWeight, 'logo' => $logo, "message" => $message]);
+        $segment = segment::where('en_name', 'deal_create')->first();
+        $messages = [];
+        if ($segment) {
+            $messages = Message::where('segment_id', $segment->id)->where('status', 1)->get();
+        }
+        return view('user.deal.create', ['asset' => $asset, 'totalGoldWeight' => $totalGoldWeight, 'logo' => $logo, "messages" => $messages]);
     }
 
 
@@ -233,16 +238,16 @@ class DealController extends Controller
         $dealTemporary = dealTemporary::where('deal_id', $deal->id)->delete();
         return to_route('deal.adminIndex');
     }
-    public function cancel(Request $request){
-        $deal=deal::find($request->id);
-        $deal->isApproved=-1;
-        $deal->message=$request->message;
-        $trancsavtion=transaction::find($deal->transaction_id);
-        $trancsavtion->isApproved=-1;
+    public function cancel(Request $request)
+    {
+        $deal = deal::find($request->id);
+        $deal->isApproved = -1;
+        $deal->message = $request->message;
+        $trancsavtion = transaction::find($deal->transaction_id);
+        $trancsavtion->isApproved = -1;
         $trancsavtion->save();
         $deal->save();
         dealTemporary::where('deal_id', $request->id)->delete();
         return to_route('deal.adminIndex');
-
     }
 }

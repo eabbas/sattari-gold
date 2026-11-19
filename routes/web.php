@@ -14,6 +14,7 @@ use App\Http\Controllers\WalletController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\CartsController;
 use App\Http\Controllers\DefaultCommentsController;
+use App\Http\Controllers\LivePriceController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ReferenceSitesController;
@@ -55,6 +56,9 @@ Route::get('/xyz', function () {
     // Schema::table('logos', function (Blueprint $table) {
     //     $table->string('logo')->nullable()->change();
     // });
+    Schema::table('messages', function (Blueprint $table) {
+        $table->integer("segment_id")->after('message');
+    });
 });
 
 // home routes
@@ -65,7 +69,6 @@ Route::group([
     Route::get('/about-us', 'aboutUs')->name('aboutUs');
     Route::get('/contact-us', 'contactUs')->name('contactUs');
 });
-
 
 // user routes
 Route::group([
@@ -315,19 +318,26 @@ Route::group([
 
 // message routes
 Route::group([
-    "as" => "Message.",
-    "prefix" => "Message",
+    "as" => "message.",
+    "prefix" => "message",
     "controller" => MessageController::class,
-    'middleware' => checklogin::class,
 ], function () {
-    Route::get("insert", 'insert')->middleware(checkAccess::class . ":message_create")->name('insert');
-    Route::post("/create", "create")->middleware(checkAccess::class . ":message_create")->name("create");
-    Route::get("list", "list")->name("list");
-    Route::get("delete/{id}", "delete")->name("delete");
-    Route::post("/update", "update")->name("update");
-    Route::post("edit", "edit")->name("edit");
-    Route::post("messageStatus",  "messageStatus")->name("messageStatus");
+    Route::get("create", 'create')->middleware(checkAccess::class . ":message_create")->name('create');
+    Route::post("/store", "store")->middleware(checkAccess::class . ":message_create")->name("store");
+    Route::get("delete/{id}", "delete")->middleware(checkAccess::class . ":message_delete")->name("delete");
+    Route::post("/update", "update")->middleware(checkAccess::class . ":message_edit")->name("update");
+    Route::post("edit", "edit")->middleware(checkAccess::class . ":message_edit")->name("edit");
 });
+
+// prices
+// Route::group([
+//     'as' => 'price.',
+//     'prefix' => 'price',
+//     'controller' => LivePriceController::class,
+//     'middleware' => checkAccess::class . ":livePrice"
+// ], function () {
+//     Route::get('/create', 'create')->name('create');
+// });
 
 // fallback and missing
 Route::fallback([HomeController::class, 'pageNotFound'])->name('fallback');

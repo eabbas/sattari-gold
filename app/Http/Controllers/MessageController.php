@@ -12,32 +12,26 @@ use App\Models\logo;
 
 class MessageController extends Controller
 {
-    public function insert()
+    public function create()
     {
         $segment = segment::all();
         $logo = logo::first();
         $message = Message::all()->load('segment');
-        return view('admin.Message.insert', ['logo' => $logo, 'message' => $message, 'segment' => $segment]);
+        return view('admin.message.create', ['logo' => $logo, 'message' => $message, 'segment' => $segment]);
     }
-    public function create(Request $request)
+    public function store(Request $request)
     {
-        Message::insertGetId([
+        Message::create([
             "message" => $request->message,
-            "segment_id" => $request->segment_id
+            "segment_id" => $request->segment_id,
+            'status' => $request->status
         ]);
-        $message = Message::all();
-        $logo = logo::first();
-        return view("admin.Message.insert", ['logo' => $logo, 'message' => $message]);
-    }
-    public function list()
-    {
-        $allMessage = Message::all();
-        return view("Message.list", ["messages" => $allMessage]);
+        return redirect()->back()->with('message', 'پیام جدید ایجاد شد.');
     }
     public function delete(Message $id)
     {
         $id->delete();
-        return to_route("Message.insert");
+        return redirect()->back()->with('message', 'پیام حذف شد.');
     }
     public function edit(Request $request)
     {
@@ -49,15 +43,8 @@ class MessageController extends Controller
         $mess = Message::find($request->id);
         $mess->message = $request->popupMessage;
         $mess->segment_id = $request->segment_id;
+        $mess->status = $request->status;
         $mess->save();
-        return to_route("Message.insert");
-    }
-    public function messageStatus(Request $request)
-    {
-        $mess_id = $request->input("id");
-        $status = $request->input("status");
-        $mess_row = Message::find($mess_id);
-        $mess_row->status = $status;
-        $mess_row->save();
+        return redirect()->back()->with('message', 'پیام به روز رسانی شد.');
     }
 }
