@@ -759,6 +759,16 @@
                     </a>
                 @endcan --}}
 
+                @can('access', ['currency'])
+                    <a href="{{ route('currencyUnit.create') }}" class="@if (Route::is('currencyUnit.create')) active @endif"
+                        title="واحد پولی">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                        </svg>
+                        <span>واحد پولی</span>
+                    </a>
+                @endcan
+
                 @can('access', ['priceLine'])
                     <a href="{{ route('line.create') }}" class="@if (Route::is('line.create')) active @endif"
                         title="تعیین ارزش خط">

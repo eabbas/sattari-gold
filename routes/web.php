@@ -13,6 +13,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\CartsController;
+use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\DefaultCommentsController;
 use App\Http\Controllers\LivePriceController;
 use App\Http\Controllers\MessageController;
@@ -30,6 +31,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Models\logo;
+use App\Models\curren;
 
 Route::get('/z', function () {
     $logo = logo::first();
@@ -346,6 +348,17 @@ Route::group([
     'prefix' => 'line',
     'controller' => PriceLineController::class,
     'middleware' => checkAccess::class . ":priceLine"
+], function () {
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+});
+
+// currency unit
+Route::group([
+    'as' => 'currencyUnit.',
+    'prefix' => 'currencyUnit',
+    'controller' => CurrencyController::class,
+    'middleware' => checkAccess::class . ":currency"
 ], function () {
     Route::get('/create', 'create')->name('create');
     Route::post('/store', 'store')->name('store');
