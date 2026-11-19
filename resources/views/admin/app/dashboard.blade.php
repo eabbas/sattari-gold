@@ -749,7 +749,7 @@
                     مدیریت و تنظیمات
                 </div>
 
-                {{-- @can('access', ['livePrice'])
+                @can('access', ['livePrice'])
                     <a href="{{ route('price.create') }}" class="@if (Route::is('price.create')) active @endif"
                         title="تنظیمات قیمت ها">
                         <svg viewBox="0 0 24 24">
@@ -757,7 +757,7 @@
                         </svg>
                         <span>تنظیمات قیمت ها</span>
                     </a>
-                @endcan --}}
+                @endcan
 
                 @can('access', ['transactionConfirmTime'])
                     <a href="{{ route('transactionConfirmTime.create') }}"

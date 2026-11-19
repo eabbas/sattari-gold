@@ -333,17 +333,18 @@ Route::group([
     Route::post("edit", "edit")->middleware(checkAccess::class . ":message_edit")->name("edit");
 });
 
-// prices
-// Route::group([
-//     'as' => 'price.',
-//     'prefix' => 'price',
-//     'controller' => LivePriceController::class,
-//     'middleware' => checkAccess::class . ":livePrice"
-// ], function () {
-//     Route::get('/create', 'create')->name('create');
-// });
+// prices routes
+Route::group([
+    'as' => 'price.',
+    'prefix' => 'price',
+    'controller' => LivePriceController::class,
+    'middleware' => checkAccess::class . ":livePrice"
+], function () {
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+});
 
-// price line
+// price line routes
 Route::group([
     'as' => 'line.',
     'prefix' => 'line',
@@ -354,7 +355,7 @@ Route::group([
     Route::post('/store', 'store')->name('store');
 });
 
-// currency unit
+// currency unit routes
 Route::group([
     'as' => 'currencyUnit.',
     'prefix' => 'currencyUnit',
@@ -365,7 +366,7 @@ Route::group([
     Route::post('/store', 'store')->name('store');
 });
 
-// transaction confirm time
+// transaction confirm time routes
 Route::group([
     'as' => 'transactionConfirmTime.',
     'prefix' => 'transactionConfirmTime',
