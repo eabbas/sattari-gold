@@ -759,9 +759,19 @@
                     </a>
                 @endcan --}}
 
+                @can('access', ['transactionConfirmTime'])
+                    <a href="{{ route('transactionConfirmTime.create') }}"
+                        class="@if (Route::is('transactionConfirmTime.create')) active @endif" title="زمان تایید معامله">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                        </svg>
+                        <span>زمان تایید معامله</span>
+                    </a>
+                @endcan
+
                 @can('access', ['currency'])
-                    <a href="{{ route('currencyUnit.create') }}" class="@if (Route::is('currencyUnit.create')) active @endif"
-                        title="واحد پولی">
+                    <a href="{{ route('currencyUnit.create') }}"
+                        class="@if (Route::is('currencyUnit.create')) active @endif" title="واحد پولی">
                         <svg viewBox="0 0 24 24">
                             <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                         </svg>

@@ -12,7 +12,6 @@ class CurrencyController extends Controller
     {
         $logo = logo::first();
         $currency = currency::first();
-        // return $currency;
         return view('admin.currency.create', ['logo' => $logo, 'currency' => $currency]);
     }
     public function store(Request $request)

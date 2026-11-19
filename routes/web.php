@@ -20,6 +20,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PriceLineController;
 use App\Http\Controllers\ReferenceSitesController;
+use App\Http\Controllers\TransactionConfirmTimeController;
 use App\Http\Controllers\TransactionSettingController;
 use App\Http\Middleware\checkAccess;
 use App\Http\Middleware\checkIsActive;
@@ -359,6 +360,17 @@ Route::group([
     'prefix' => 'currencyUnit',
     'controller' => CurrencyController::class,
     'middleware' => checkAccess::class . ":currency"
+], function () {
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+});
+
+// transaction confirm time
+Route::group([
+    'as' => 'transactionConfirmTime.',
+    'prefix' => 'transactionConfirmTime',
+    'controller' => TransactionConfirmTimeController::class,
+    'middleware' => checkAccess::class . ":transactionConfirmTime"
 ], function () {
     Route::get('/create', 'create')->name('create');
     Route::post('/store', 'store')->name('store');
