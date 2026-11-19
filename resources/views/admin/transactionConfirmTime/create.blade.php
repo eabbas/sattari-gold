@@ -17,7 +17,7 @@
         @csrf
 
         <div>
-            <h2 class="text-base font-semibold text-gray-800">مدت زمان تأیید معامله</h2>
+            <h2 class="text-base font-bold text-gray-800">مدت زمان تأیید معامله</h2>
             <p class="text-sm text-gray-500 mt-1">
                 مدت زمان مجاز برای انجام و تأیید معامله را انتخاب کنید.
             </p>

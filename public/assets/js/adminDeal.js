@@ -154,7 +154,7 @@ function applyDealFilters() {
                     <td class="border border-[#E7E2D9] px-3 py-3">
                         <div class="flex items-center justify-center gap-3">
 
-                            <span class="font-semibold whitespace-nowrap">
+                            <span class="font-bold whitespace-nowrap">
                                 ${escapeHtml(row.user.name)} ${escapeHtml(row.user.family)}
                             </span>
 
@@ -184,7 +184,7 @@ function applyDealFilters() {
                     </td>
 
                     <td class="border border-[#E7E2D9] px-3 py-3">
-                        <span class="inline-flex rounded-lg border border-[#D6AD60]/50 bg-[#D6AD60]/10 px-3 py-1.5 font-semibold text-[#B88A3B] in-fa">
+                        <span class="inline-flex rounded-lg border border-[#D6AD60]/50 bg-[#D6AD60]/10 px-3 py-1.5 font-bold text-[#B88A3B] in-fa">
                             ${'100' + row.id}
                         </span>
                     </td>
@@ -198,7 +198,7 @@ function applyDealFilters() {
                     <td class="border border-[#E7E2D9] px-3 py-3">
                         <span
                             style="${stateStyle}"
-                            class="inline-flex rounded-lg border px-3 py-1.5 font-semibold whitespace-nowrap">
+                            class="inline-flex rounded-lg border px-3 py-1.5 font-bold whitespace-nowrap">
                             ${escapeHtml(row.state)}
                         </span>
                     </td>

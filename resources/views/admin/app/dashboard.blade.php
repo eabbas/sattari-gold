@@ -78,7 +78,7 @@
             background: var(--dash-white);
             border-bottom: 1px solid var(--dash-border);
             position: relative;
-            z-index: 10;
+            z-index: 5;
         }
 
         .dashboard-header-right,

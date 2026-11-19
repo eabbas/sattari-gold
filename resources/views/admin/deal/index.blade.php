@@ -8,7 +8,7 @@
     @if (session('success'))
         <div
             class="modal fixed top-10 right-0 sm:right-5 z-9999999999 flex items-center justify-center rounded-xl border border-green-200 bg-green-50 px-8 py-5 shadow-lg transition-all duration-300">
-            <span class="text-sm font-semibold text-green-700">
+            <span class="text-sm font-bold text-green-700">
                 {{ session('success') }}
             </span>
         </div>
@@ -18,7 +18,7 @@
     @if (session('failure'))
         <div
             class="modal fixed top-10 right-0 sm:right-5 z-9999999999 flex items-center justify-center rounded-xl border border-red-200 bg-red-50 px-8 py-5 shadow-lg transition-all duration-300">
-            <span class="text-sm font-semibold text-red-700">
+            <span class="text-sm font-bold text-red-700">
                 {{ session('failure') }}
             </span>
         </div>
@@ -68,7 +68,7 @@
                 </div>
 
                 <button onclick="sort(this)"
-                    class="flex items-center gap-3 rounded-lg border border-[#E7E2D9] bg-[#F8F5EF] px-3 py-2 text-xs font-semibold text-[#78716C] transition hover:border-[#D6AD60] hover:text-[#B88A3B]"
+                    class="flex items-center gap-3 rounded-lg border border-[#E7E2D9] bg-[#F8F5EF] px-3 py-2 text-xs font-bold text-[#78716C] transition hover:border-[#D6AD60] hover:text-[#B88A3B]"
                     data-sort="desc">
 
                     <span>مرتب‌سازی:</span>
@@ -85,7 +85,7 @@
 
                     <fieldset
                         class="min-w-0 rounded-lg border border-[#E7E2D9] bg-white px-3 py-2 focus-within:border-[#B88A3B] transition">
-                        <legend class="px-1 text-[10px] md:text-xs font-semibold text-[#78716C]">
+                        <legend class="px-1 text-[10px] md:text-xs font-bold text-[#78716C]">
                             نام و نام خانوادگی
                         </legend>
                         <input
@@ -95,7 +95,7 @@
 
                     <fieldset
                         class="min-w-0 rounded-lg border border-[#E7E2D9] bg-white px-3 py-2 focus-within:border-[#B88A3B] transition">
-                        <legend class="px-1 text-[10px] md:text-xs font-semibold text-[#78716C]">
+                        <legend class="px-1 text-[10px] md:text-xs font-bold text-[#78716C]">
                             نوع معامله
                         </legend>
                         <select id="dealType" name="dealType[]" data-placeholder="انتخاب کنید" data-multi-select
@@ -107,7 +107,7 @@
 
                     <fieldset
                         class="min-w-0 rounded-lg border border-[#E7E2D9] bg-white px-3 py-2 focus-within:border-[#B88A3B] transition">
-                        <legend class="px-1 text-[10px] md:text-xs font-semibold text-[#78716C]">
+                        <legend class="px-1 text-[10px] md:text-xs font-bold text-[#78716C]">
                             وضعیت
                         </legend>
                         <select id="dealState" name="dealState[]" data-placeholder="انتخاب کنید" data-multi-select
@@ -120,7 +120,7 @@
 
                     <fieldset
                         class="min-w-0 rounded-lg border border-[#E7E2D9] bg-white px-3 py-2 focus-within:border-[#B88A3B] transition">
-                        <legend class="px-1 text-[10px] md:text-xs font-semibold text-[#78716C]">
+                        <legend class="px-1 text-[10px] md:text-xs font-bold text-[#78716C]">
                             از تاریخ
                         </legend>
                         <input class="w-full bg-transparent text-xs md:text-sm text-[#29251F] outline-none" dir="ltr"
@@ -129,7 +129,7 @@
 
                     <fieldset
                         class="min-w-0 rounded-lg border border-[#E7E2D9] bg-white px-3 py-2 focus-within:border-[#B88A3B] transition">
-                        <legend class="px-1 text-[10px] md:text-xs font-semibold text-[#78716C]">
+                        <legend class="px-1 text-[10px] md:text-xs font-bold text-[#78716C]">
                             تا تاریخ
                         </legend>
                         <input class="w-full bg-transparent text-xs md:text-sm text-[#29251F] outline-none" dir="ltr"
@@ -138,7 +138,7 @@
 
                     <fieldset
                         class="min-w-0 rounded-lg border border-[#E7E2D9] bg-white px-3 py-2 focus-within:border-[#B88A3B] transition">
-                        <legend class="px-1 text-[10px] md:text-xs font-semibold text-[#78716C]">
+                        <legend class="px-1 text-[10px] md:text-xs font-bold text-[#78716C]">
                             وزن
                         </legend>
                         <input
@@ -148,7 +148,7 @@
 
                     <fieldset
                         class="min-w-0 rounded-lg border border-[#E7E2D9] bg-white px-3 py-2 focus-within:border-[#B88A3B] transition">
-                        <legend class="px-1 text-[10px] md:text-xs font-semibold text-[#78716C]">
+                        <legend class="px-1 text-[10px] md:text-xs font-bold text-[#78716C]">
                             مبلغ
                         </legend>
                         <input
@@ -158,7 +158,7 @@
 
                     <fieldset
                         class="min-w-0 rounded-lg border border-[#E7E2D9] bg-white px-3 py-2 focus-within:border-[#B88A3B] transition">
-                        <legend class="px-1 text-[10px] md:text-xs font-semibold text-[#78716C]">
+                        <legend class="px-1 text-[10px] md:text-xs font-bold text-[#78716C]">
                             شماره سند
                         </legend>
                         <input
@@ -225,7 +225,7 @@
 
                                 <td class="border border-[#E7E2D9] px-3 py-3">
                                     <div class="flex items-center justify-center gap-3">
-                                        <span class="font-semibold whitespace-nowrap">
+                                        <span class="font-bold whitespace-nowrap">
                                             {{ $deal->user->name . ' ' . $deal->user->family }}
                                         </span>
 
@@ -260,7 +260,7 @@
 
                                 <td class="border border-[#E7E2D9] px-3 py-3">
                                     <span
-                                        class="inline-flex rounded-lg border border-[#D6AD60]/50 bg-[#D6AD60]/10 px-3 py-1.5 font-semibold text-[#B88A3B] in-fa">
+                                        class="inline-flex rounded-lg border border-[#D6AD60]/50 bg-[#D6AD60]/10 px-3 py-1.5 font-bold text-[#B88A3B] in-fa">
                                         {{ '100' . $deal->id }}
                                     </span>
                                 </td>
@@ -277,14 +277,14 @@
                                         @can('access', 'deal_confirm')
                                             <span onclick="deal('open', {{ Js::from($deal) }})"
                                                 style="background-color: {{ $deal->color }}20; color: {{ $deal->color }}; border-color: {{ $deal->color }};"
-                                                class="inline-flex cursor-pointer rounded-lg border px-3 py-1.5 font-semibold whitespace-nowrap">
+                                                class="inline-flex cursor-pointer rounded-lg border px-3 py-1.5 font-bold whitespace-nowrap">
                                                 {{ $deal->state }}
                                             </span>
                                         @endcan
                                     @else
                                         <span
                                             style="background-color: {{ $deal->color }}20; color: {{ $deal->color }}; border-color: {{ $deal->color }};"
-                                            class="inline-flex rounded-lg border px-3 py-1.5 font-semibold whitespace-nowrap">
+                                            class="inline-flex rounded-lg border px-3 py-1.5 font-bold whitespace-nowrap">
                                             {{ $deal->state }}
                                         </span>
                                     @endif

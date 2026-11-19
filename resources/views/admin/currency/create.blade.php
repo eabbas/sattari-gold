@@ -13,7 +13,7 @@
         class="w-full bg-white rounded-2xl border border-gray-100 p-5 space-y-4">
         @csrf
         <div>
-            <h2 class="text-base font-semibold text-gray-800">واحد پولی</h2>
+            <h2 class="text-base font-bold text-gray-800">واحد پولی</h2>
             <p class="text-sm text-gray-500 mt-1">
                 واحد پولی موردنظر خود را انتخاب کنید.
             </p>

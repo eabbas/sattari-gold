@@ -108,7 +108,7 @@
                         <tbody class="divide-y divide-(--border)">
                             @forelse ($message as $mess)
                                 <tr class="transition hover:bg-[#FAFBFD]">
-                                    <td class="px-4 py-4 text-center text-xs font-semibold text-[#8B929D]">
+                                    <td class="px-4 py-4 text-center text-xs font-bold text-[#8B929D]">
                                         {{ $loop->iteration }}
                                     </td>
                                     <td
@@ -117,7 +117,7 @@
                                     </td>
                                     <td class="px-4 py-4 text-center">
                                         <span
-                                            class="inline-flex rounded-lg bg-[#FAFBFD] px-3 py-1.5 text-xs font-semibold text-[#68717D]">
+                                            class="inline-flex rounded-lg bg-[#FAFBFD] px-3 py-1.5 text-xs font-bold text-[#68717D]">
                                             {{ $mess->segment?->fa_name ?? 'بدون بخش' }}
                                         </span>
                                     </td>

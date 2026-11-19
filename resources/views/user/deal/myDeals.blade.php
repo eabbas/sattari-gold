@@ -226,7 +226,7 @@
                                         </td>
 
                                         <td>
-                                            <span class="font-semibold text-[#65563f] in-fa">
+                                            <span class="font-bold text-[#65563f] in-fa">
                                                 {{ $deal->goldWeight }}
                                             </span>
                                             <span class="mr-1 text-[10px] text-[#a39783]">گرم</span>
@@ -306,7 +306,7 @@
 
                                     <div>
                                         <span class="block text-[10px] text-[#a39783]">قیمت هر گرم</span>
-                                        <span class="mt-1 block text-xs font-semibold text-[#65563f] in-fa">
+                                        <span class="mt-1 block text-xs font-bold text-[#65563f] in-fa">
                                             {{ number_format($deal->goldPrice) }}
                                             <span class="text-[10px] font-normal text-[#a39783]">ریال</span>
                                         </span>
@@ -314,7 +314,7 @@
 
                                     <div>
                                         <span class="block text-[10px] text-[#a39783]">وزن معامله</span>
-                                        <span class="mt-1 block text-xs font-semibold text-[#65563f] in-fa">
+                                        <span class="mt-1 block text-xs font-bold text-[#65563f] in-fa">
                                             {{ $deal->goldWeight }}
                                             <span class="text-[10px] font-normal text-[#a39783]">گرم</span>
                                         </span>

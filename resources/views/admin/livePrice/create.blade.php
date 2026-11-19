@@ -549,7 +549,7 @@
 
                         <div class="text-xs sm:text-left">
                             <p style="color:var(--gold-muted)">آخرین بروزرسانی</p>
-                            <p class="font-semibold mt-2">
+                            <p class="font-bold mt-2">
                                 {{ $price->updated_at?->format('Y/m/d - H:i') }}
                             </p>
                         </div>
@@ -560,7 +560,7 @@
 
                         <div class="price-info-row">
                             <span style="color:var(--gold-muted)">سایت مرجع</span>
-                            <span class="font-semibold">
+                            <span class="font-bold">
                                 @if ($price->referenceSite)
                                     <a href="https://{{ $price->referenceSite->address }}" target="_blank"
                                         rel="noopener noreferrer" style="color:var(--gold-dark)">
@@ -574,7 +574,7 @@
 
                         <div class="price-info-row">
                             <span style="color:var(--gold-muted)">نوع محاسبه اختلاف</span>
-                            <span class="font-semibold">
+                            <span class="font-bold">
                                 {{ $price->difference_type === 'line' ? 'بر اساس خط' : 'بر اساس درصد' }}
                             </span>
                         </div>

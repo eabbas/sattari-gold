@@ -92,7 +92,7 @@ function applyDealFilters() {
                         </div>
                     </td>
 
-                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center font-semibold text-[#29251F] in-fa">
+                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center font-bold text-[#29251F] in-fa">
                         ${row.amount.toLocaleString('fa-IR')}
                     </td>
 
@@ -251,7 +251,7 @@ function transactionAct(isApproved) {
                             </div>
                         </td>
 
-                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center font-semibold text-[#29251F] in-fa">
+                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center font-bold text-[#29251F] in-fa">
                             ${response.amount.toLocaleString('fa-IR')}
                         </td>
 
