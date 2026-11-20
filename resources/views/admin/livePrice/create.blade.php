@@ -244,9 +244,6 @@
                     مدیریت قیمت طلا
                 </h1>
 
-                <p class="text-xs mt-2" style="color:var(--gold-muted)">
-                    تنظیم مظنه و مدیریت قیمت خرید و فروش
-                </p>
             </div>
 
             <form action="{{ route('price.store') }}" method="POST" id="priceForm">
@@ -383,20 +380,25 @@
                                 اختلاف قیمت خرید و فروش
                             </h3>
 
-                            <p class="text-[11px] mt-1" style="color:var(--gold-muted)">
-                                مقدار اختلاف را نسبت به قیمت پایه تعیین کنید.
-                            </p>
                         </div>
 
                         <div class="flex items-center gap-5">
 
                             <label class="price-method-option">
-                                <input type="radio" name="difference_type" value="line" checked>
+                                <span class="text-[10px] text-gray-400" id="line_price">
+                                    قیمت هر خط
+                                    <span class="in-fa">{{ number_format($line?->line_value) }}</span>
+                                    ریال
+                                </span>
+                                <input type="radio" name="difference_type" value="line"
+                                    @if ($price?->difference_type) checked @endif
+                                    @if (!$price) checked @endif>
                                 <span>خط</span>
                             </label>
 
                             <label class="price-method-option">
-                                <input type="radio" name="difference_type" value="percent">
+                                <input type="radio" name="difference_type" value="percent"
+                                    @if ($price?->difference_type) checked @endif>
                                 <span>درصد</span>
                             </label>
 
@@ -432,7 +434,7 @@
                                 <div class="flex-1 rounded-lg border bg-white px-2"
                                     style="border-color:var(--gold-border)">
                                     <input type="text" id="sellDifference" class="price-difference-input w-full zero"
-                                        value="0 خط" readonly>
+                                        value="0" readonly>
                                 </div>
 
                                 <button type="button" class="price-adjust" data-target="sellDifference"
@@ -468,7 +470,7 @@
                                 <div class="flex-1 rounded-lg border bg-white px-2"
                                     style="border-color:var(--gold-border)">
                                     <input type="text" id="buyDifference" class="price-difference-input w-full zero"
-                                        value="0 خط" readonly>
+                                        value="0" readonly>
                                 </div>
 
                                 <button type="button" class="price-adjust" data-target="buyDifference"
@@ -525,7 +527,7 @@
                             {{ $price->update_mode === 'automatic' ? 'bg-blue-500' : 'bg-amber-500' }}">
                             </span>
 
-                            {{ $price->update_mode === 'automatic' ? 'بروزرسانی اتوماتیک' : 'بروزرسانی دستی' }}
+                            {{ $price->update_mode === 'automatic' ? 'بروزرسانی از سایت مرجع' : 'بروزرسانی دستی' }}
                         </span>
 
                     </div>
@@ -549,8 +551,8 @@
 
                         <div class="text-xs sm:text-left">
                             <p style="color:var(--gold-muted)">آخرین بروزرسانی</p>
-                            <p class="font-bold mt-2">
-                                {{ $price->updated_at?->format('Y/m/d - H:i') }}
+                            <p class="font-bold mt-2 in-fa">
+                                {{ verta($price->updated_at) }}
                             </p>
                         </div>
 
@@ -596,6 +598,20 @@
                                 <small class="font-normal" style="color:var(--gold-muted)">
                                     {{ $price->difference_type === 'line' ? 'خط' : '%' }}
                                 </small>
+                            </span>
+                        </div>
+
+                        <div class="price-info-row">
+                            <span style="color:var(--gold-muted)">قیمت خرید</span>
+                            <span class="font-bold text-gray-700 in-fa">
+                                {{ number_format($price->buy_price) }} ریال
+                            </span>
+                        </div>
+
+                        <div class="price-info-row">
+                            <span style="color:var(--gold-muted)">قیمت فروش</span>
+                            <span class="font-bold text-gray-700 in-fa">
+                                {{ number_format($price->sell_price) }} ریال
                             </span>
                         </div>
 
@@ -654,11 +670,11 @@
             let manualPriceValue = '';
             let automaticPriceValue = null;
 
-            let buyLineDifference = 0;
-            let sellLineDifference = 0;
+            let buyLineDifference = {{ $price->buy_difference ?? 0 }};
+            let sellLineDifference = {{ $price->sell_difference ?? 0 }};
 
-            let buyPercentDifference = 0;
-            let sellPercentDifference = 0;
+            let buyPercentDifference = {{ $price->buy_difference ?? 0 }};
+            let sellPercentDifference = {{ $price->sell_difference ?? 0 }};
 
             const fetchedPrices = {};
 
@@ -818,6 +834,13 @@
                     if (!this.checked) return;
 
                     differenceType = this.value;
+                    const linePrice = document.getElementById('line_price')
+                    if (differenceType == 'percent') {
+                        linePrice.classList.add('hidden')
+                    }
+                    if (differenceType == 'line') {
+                        linePrice.classList.remove('hidden')
+                    }
 
                     updateDifferenceDisplay();
                     hideMessage(saveMessage);
@@ -999,7 +1022,7 @@
 
             });
 
-            updateDifferenceDisplay();
+            // updateDifferenceDisplay();
             updateHiddenPrice();
 
         });

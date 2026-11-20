@@ -139,7 +139,7 @@
         }
     </style>
 
-    <div class="gold-profile min-h-screen py-6 sm:py-9 w-full" style="background:var(--gold-bg)">
+    <div class="gold-profile min-h-screen py-6 sm:py-9 w-full">
 
         <div class="gold-profile-container w-11/12 mx-auto max-w-[1500px]">
 
@@ -161,15 +161,6 @@
                     <h1 class="text-xl sm:text-2xl font-bold">
                         پروفایل کاربری
                     </h1>
-
-                    <p class="text-xs sm:text-sm mt-2" style="color:var(--gold-muted)">
-                        مدیریت اطلاعات شخصی و تنظیمات حساب کاربری
-                    </p>
-                </div>
-
-                <div class="flex items-center gap-2 text-xs" style="color:var(--gold-muted)">
-                    <span class="size-2 rounded-full" style="background:var(--gold-primary)"></span>
-                    پنل کاربری ستاری گلد
                 </div>
 
             </div>
@@ -274,10 +265,6 @@
 
                         </button>
 
-                        <p class="text-xs text-center" style="color:var(--gold-muted)">
-                            اطلاعات حساب خود را مدیریت کنید
-                        </p>
-
                     </div>
 
                 </div>
@@ -352,10 +339,6 @@
                     اطلاعات حساب
                 </h3>
 
-                <p class="text-xs mt-2" style="color:var(--gold-muted)">
-                    مشخصات ثبت شده در حساب کاربری شما
-                </p>
-
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
@@ -372,7 +355,7 @@
                         </div>
                         <span class="text-xs" style="color:var(--gold-muted)">شماره تلفن</span>
                     </div>
-                    <p class="font-bold text-base in-fa" dir="ltr">
+                    <p class="font-bold text-base in-fa">
                         {{ $user->phoneNumber ?? 'ثبت نشده' }}
                     </p>
                 </div>
@@ -389,7 +372,7 @@
                         </div>
                         <span class="text-xs" style="color:var(--gold-muted)">کد ملی</span>
                     </div>
-                    <p class="font-bold text-base in-fa" dir="ltr">
+                    <p class="font-bold text-base in-fa">
                         {{ $user->nationalCode ?? 'ثبت نشده' }}
                     </p>
                 </div>
@@ -452,9 +435,6 @@
                 <h3 class="font-bold text-base">
                     دسترسی سریع
                 </h3>
-                <p class="text-xs mt-2" style="color:var(--gold-muted)">
-                    مدیریت بخش‌های مختلف حساب کاربری
-                </p>
             </div>
 
             <div class="gold-card p-5 sm:p-6 mb-8">

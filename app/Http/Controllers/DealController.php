@@ -10,6 +10,8 @@ use App\Models\wallet;
 use Illuminate\Http\Request;
 use App\Models\Message;
 use App\Models\dealTemporary;
+use App\Models\livePrice;
+use App\Models\priceLine;
 use App\Models\segment;
 use Illuminate\Support\Facades\Auth;
 use Log;
@@ -34,12 +36,27 @@ class DealController extends Controller
         if ($segment) {
             $messages = Message::where('segment_id', $segment->id)->where('status', 1)->get();
         }
-        return view('user.deal.create', ['asset' => $asset, 'totalGoldWeight' => $totalGoldWeight, 'logo' => $logo, "messages" => $messages]);
+        $price = livePrice::first();
+        if ($price->difference_type == 'line') {
+            $line = priceLine::first();
+            $buyDifference = $price->buy_difference * $line->line_value;
+            $price['buy_price'] = $price->price + $buyDifference;
+            $sellDifference = $price->sell_difference * $line->line_value;
+            $price['sell_price'] = $price->price + $sellDifference;
+        }
+        if ($price->difference_type == 'percent') {
+            $buyDifference = ($price->buy_difference / 100) * $price->price;
+            $price['buy_price'] = $price->price + $buyDifference;
+            $sellDifference = ($price->sell_difference / 100) * $price->price;
+            $price['sell_price'] = $price->price + $sellDifference;
+        }
+        return view('user.deal.create', ['asset' => $asset, 'totalGoldWeight' => $totalGoldWeight, 'logo' => $logo, "messages" => $messages, 'price' => $price]);
     }
 
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $dateTime = explode(' ', now());
         $dateJalali = verta($dateTime[0]);
         $date = explode(' ', $dateJalali);
@@ -113,7 +130,7 @@ class DealController extends Controller
                 'userInput' => $request->userInput,
                 'resultOutput' => $request->resultOutput,
             ]);
-            return redirect()->back()->with('success', "منتظر تایید");
+            return redirect()->back()->with('success',  "معامله شما پس از تایید مدیریت ثبت خواهد شد.");
         }
 
         if ($action == 'sell') {

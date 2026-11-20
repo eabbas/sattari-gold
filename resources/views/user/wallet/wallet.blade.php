@@ -1,37 +1,41 @@
-
 @extends('admin.app.dashboard')
 @section('title', 'کیف پول')
 @section('content')
 
     {{-- پیام‌ها --}}
     @if (session('success'))
-        <div class="modal fixed top-6 right-4 sm:right-6 z-[9999999999] flex items-center gap-3 rounded-2xl border border-emerald-200 bg-white px-6 py-4 shadow-xl transition-all">
+        <div
+            class="modal fixed top-6 right-4 sm:right-6 z-[9999999999] flex items-center gap-3 rounded-2xl border border-emerald-200 bg-white px-6 py-4 shadow-xl transition-all">
             <span class="flex size-9 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">✓</span>
             <span class="text-sm font-medium text-[#29251F]">{{ session('success') }}</span>
         </div>
     @endif
 
     @if (session('failure'))
-        <div class="modal fixed top-6 right-4 sm:right-6 z-[9999999999] flex items-center gap-3 rounded-2xl border border-red-200 bg-white px-6 py-4 shadow-xl transition-all">
+        <div
+            class="modal fixed top-6 right-4 sm:right-6 z-[9999999999] flex items-center gap-3 rounded-2xl border border-red-200 bg-white px-6 py-4 shadow-xl transition-all">
             <span class="flex size-9 items-center justify-center rounded-full bg-red-50 text-red-500">!</span>
             <span class="text-sm font-medium text-[#29251F]">{{ session('failure') }}</span>
         </div>
     @endif
 
     @error('depositFee')
-        <div class="modal fixed top-6 right-4 sm:right-6 z-[9999999999] rounded-2xl border border-red-200 bg-white px-6 py-4 text-sm text-red-500 shadow-xl">
+        <div
+            class="modal fixed top-6 right-4 sm:right-6 z-[9999999999] rounded-2xl border border-red-200 bg-white px-6 py-4 text-sm text-red-500 shadow-xl">
             {{ $message }}
         </div>
     @enderror
 
     @error('withdrawFee')
-        <div class="modal fixed top-6 right-4 sm:right-6 z-[9999999999] rounded-2xl border border-red-200 bg-white px-6 py-4 text-sm text-red-500 shadow-xl">
+        <div
+            class="modal fixed top-6 right-4 sm:right-6 z-[9999999999] rounded-2xl border border-red-200 bg-white px-6 py-4 text-sm text-red-500 shadow-xl">
             {{ $message }}
         </div>
     @enderror
 
     @error('receipt')
-        <div class="modal fixed top-6 right-4 sm:right-6 z-[9999999999] rounded-2xl border border-red-200 bg-white px-6 py-4 text-sm text-red-500 shadow-xl">
+        <div
+            class="modal fixed top-6 right-4 sm:right-6 z-[9999999999] rounded-2xl border border-red-200 bg-white px-6 py-4 text-sm text-red-500 shadow-xl">
             {{ $message }}
         </div>
     @enderror
@@ -41,21 +45,9 @@
         {{-- عنوان صفحه --}}
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
-                <span class="text-xs font-medium text-[#B88A3B]">مدیریت دارایی</span>
                 <h1 class="mt-1 text-xl md:text-2xl font-bold text-[#29251F]">
                     کیف پول من
                 </h1>
-                <p class="mt-2 text-xs md:text-sm text-[#78716C]">
-                    موجودی، دارایی طلا و تراکنش‌های مالی خود را مدیریت کنید.
-                </p>
-            </div>
-
-            <div class="flex items-center gap-2 text-xs text-[#78716C] bg-white border border-[#E7E2D9] rounded-xl px-4 py-3">
-                <span class="size-2 rounded-full bg-emerald-500"></span>
-                حساب کاربری شما
-                <span class="font-bold text-[#29251F]">
-                    {{ $user['name'] }} {{ $user['family'] }}
-                </span>
             </div>
         </div>
 
@@ -107,7 +99,8 @@
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
                             <div class="size-12 rounded-xl bg-[#F8F5EF] flex items-center justify-center text-[#B88A3B]">
-                                <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.7">
                                     <rect x="2.5" y="5" width="19" height="14" rx="3" />
                                     <path d="M2.5 10h19M16 15h2" />
                                 </svg>
@@ -136,8 +129,7 @@
                     <div class="mt-6 pt-4 border-t border-[#E7E2D9] flex items-center justify-between">
                         <span class="text-xs text-[#78716C]">موجودی قابل برداشت</span>
                         <div class="flex items-baseline gap-1">
-                            <span id="withdrawableBalance"
-                                data-balance="{{ $user->wallet['asset'] ?? 0 }}"
+                            <span id="withdrawableBalance" data-balance="{{ $user->wallet['asset'] ?? 0 }}"
                                 class="text-sm font-bold text-[#29251F] in-fa">
                                 {{ number_format($user->wallet['asset'] ?? 0) }}
                             </span>
@@ -213,9 +205,6 @@
                 <h2 class="text-base font-bold text-[#29251F]">
                     مدیریت تراکنش‌ها
                 </h2>
-                <p class="text-xs text-[#78716C] mt-2">
-                    نوع عملیات مالی موردنظر خود را انتخاب کنید.
-                </p>
             </div>
 
             <form action="{{ route('wallet.transactionRequest') }}" method="POST" enctype="multipart/form-data">
@@ -232,8 +221,10 @@
 
                             <label for="deposit"
                                 class="flex cursor-pointer items-center gap-3 rounded-xl border border-[#E7E2D9] bg-white p-4 transition-all hover:border-[#D6AD60] peer-checked:border-[#B88A3B] peer-checked:bg-[#F8F5EF]">
-                                <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
-                                    <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <span
+                                    class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+                                    <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
                                         <path d="M12 5v14M5 12h14" />
                                     </svg>
                                 </span>
@@ -251,9 +242,11 @@
 
                             <label for="withdraw"
                                 class="flex cursor-pointer items-center gap-3 rounded-xl border border-[#E7E2D9] bg-white p-4 transition-all hover:border-[#D6AD60] peer-checked:border-[#B88A3B] peer-checked:bg-[#F8F5EF]">
-                                <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-red-50 text-red-500">
-                                    <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M12 5v14M5 12h14" />
+                                <span
+                                    class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-red-50 text-red-500">
+                                    <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path d="M5 12h14" />
                                     </svg>
                                 </span>
                                 <span>
@@ -286,11 +279,13 @@
                         </button>
                     @else
                         <div class="col-span-6 flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4">
-                            <span class="flex size-9 shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-700">!</span>
+                            <span
+                                class="flex size-9 shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-700">!</span>
                             <div>
                                 <p class="text-sm font-bold text-amber-800">حساب کاربری غیرفعال است</p>
                                 <p class="mt-1 text-xs leading-6 text-amber-700">
-                                    پس از فعال‌سازی حساب کاربری شما توسط مدیریت، امکان انجام عملیات واریز و برداشت فراهم خواهد شد.
+                                    پس از فعال‌سازی حساب کاربری شما توسط مدیریت، امکان انجام عملیات واریز و برداشت فراهم
+                                    خواهد شد.
                                 </p>
                             </div>
                         </div>
@@ -311,7 +306,8 @@
             <div>
                 <p class="text-xs font-bold text-[#29251F]">نکته مهم</p>
                 <p class="mt-1 text-xs leading-6 text-[#78716C]">
-                    قبل از ثبت درخواست واریز یا برداشت، اطلاعات واردشده را بررسی کنید. درخواست‌های مالی پس از بررسی توسط مدیریت پردازش می‌شوند.
+                    قبل از ثبت درخواست واریز یا برداشت، اطلاعات واردشده را بررسی کنید. درخواست‌های مالی پس از بررسی توسط
+                    مدیریت پردازش می‌شوند.
                 </p>
             </div>
         </div>
@@ -409,7 +405,7 @@
                                     {{-- مبلغ واریزی --}}
                                     <label class="relative block text-sm font-bold text-[#29251F]"
                                         for="depositFee"
-                                        onkeyup="checkFee('deposit', this)">
+                                        oninput="checkFee('deposit', this)">
 
                                         مبلغ واریزی
                                         <span class="text-red-500 text-xs">(اجباری)</span>
@@ -501,7 +497,7 @@
 
                                     <div class="flex items-center justify-between gap-2 mb-4">
                                         <span class="text-sm font-bold text-[#29251F]">میزان برداشت</span>
-                                        <span class="text-[10px] text-[#78716C]">انتخاب درصد موجودی</span>
+                                        <span class="text-[10px] text-[#78716C] in-fa">موجودی شما {{ number_format($user->wallet['asset'] ?? 0) }} ریال</span>
                                     </div>
 
                                     <div class="grid grid-cols-5 gap-2">
@@ -547,7 +543,7 @@
                                 {{-- مبلغ برداشت --}}
                                 <label class="relative block text-sm font-bold text-[#29251F]"
                                     for="withdrawFee"
-                                    onkeyup="checkFee('withdraw', this)">
+                                    oninput="checkFee('withdraw', this)">
 
                                     مبلغ برداشت
                                     <span class="text-red-500 text-xs">(اجباری)</span>

@@ -307,7 +307,7 @@
                             </div>
 
                             <div class="font-bold text-gray-800 text-base in-fa">
-                                {{ number_format(25200000) }}
+                                {{ number_format($price->sell_price) }}
                             </div>
 
                             <span class="text-[10px] text-gray-400">
@@ -359,7 +359,7 @@
                             </div>
 
                             <div class="font-bold text-gray-800 text-base in-fa">
-                                {{ number_format(25000000) }}
+                                {{ number_format($price->buy_price) }}
                             </div>
 
                             <span class="text-[10px] text-gray-400">
@@ -483,7 +483,8 @@
                         </div>
 
                         <div class="font-bold text-sm text-gray-800 in-fa">
-                            {{ $totalGoldWeight }}
+                            {{-- {{ $totalGoldWeight }} --}}
+                            {{ Auth::user()->wallet['goldWeight'] }}
                         </div>
 
                         <span class="text-[10px] text-gray-400 mt-1 block">
@@ -705,40 +706,23 @@
 
                 <div class="p-4 flex flex-col gap-3">
 
-                    {{-- Gold Prices --}}
-                    <div
-                        class="grid grid-cols-2 border border-red-100 rounded-xl overflow-hidden bg-red-50/40 divide-x divide-x-reverse divide-red-100">
+                    {{-- Gold Price --}}
+                    <div class="border border-red-100 rounded-xl overflow-hidden bg-red-50/40">
+                        <div class="px-3 py-3 flex justify-between items-center">
+                            <div class="flex flex-col gap-1">
+                                <span class="text-xs text-gray-500">
+                                    قیمت هر گرم در این معامله
+                                </span>
 
-                        <div class="px-3 py-2.5 flex flex-col gap-1">
+                                <span id="popupPricePerGram" class="font-bold text-base text-gray-800 in-fa">
+                                    -
+                                </span>
+                            </div>
 
-                            <span class="text-xs text-gray-500">
-                                قیمت مثقال
+                            <span class="text-[10px] text-gray-400">
+                                ریال
                             </span>
-
-                            <span class="font-bold text-sm text-gray-800 in-fa">
-                                ۱,۰۴۸,۹۰۰,۰۰۰
-                                <small class="font-normal text-gray-400 text-[10px]">
-                                    ریال
-                                </small>
-                            </span>
-
                         </div>
-
-                        <div class="px-3 py-2.5 flex flex-col gap-1">
-
-                            <span class="text-xs text-gray-500">
-                                قیمت هر گرم
-                            </span>
-
-                            <span class="font-bold text-sm text-gray-800 in-fa">
-                                ۲۴۲,۱۳۹,۴۱۴
-                                <small class="font-normal text-gray-400 text-[10px]">
-                                    ریال
-                                </small>
-                            </span>
-
-                        </div>
-
                     </div>
 
                     {{-- Calculation Mode --}}
@@ -858,11 +842,21 @@
 
     </div>
 
-    {{-- JavaScript Variables --}}
     <script>
-        let pricePerGram = 242139414
-        let userWalletBalance = "{{ $asset }}"
-        let userGoldBalance = "{{ $totalGoldWeight }}"
+        // قیمت فروش طلا به کاربر
+        let buyPricePerGram = @json((float) $price->sell_price);
+
+        // قیمت خرید طلا از کاربر
+        let sellPricePerGram = @json((float) $price->buy_price);
+
+        // موجودی کیف پول کاربر (ریال)
+        let userWalletBalance = @json((float) $asset);
+
+        // موجودی طلای کاربر (گرم)
+        let userGoldBalance = @json((float) $totalGoldWeight);
+
+        // قیمت پیش‌فرض
+        let pricePerGram = buyPricePerGram;
     </script>
 
     <script src="{{ asset('assets/js/deal.js') }}"></script>
