@@ -212,10 +212,8 @@ Route::group([
         return to_route('missing');
     })->middleware(checkIsApproved::class)->name('wallet');
     Route::post('/transaction/request', 'transactionRequest')->middleware(checkIsActive::class)->name('transactionRequest');
-    // Route::post('/transactions', 'transactions')->name('transactions');
     Route::get('/transactions/list', 'transactionsList')->middleware(checkAccess::class . ":transactionsList")->name('transactionsList');
     Route::get('/transactions/user/{user}', 'userTransactions')->middleware(checkIsApproved::class)->name('userTransactions');
-    // Route::post('/popupWalletData', 'popupWalletData')->name('popupWalletData');
 });
 
 // search routes

@@ -30,15 +30,6 @@
                         شفاف و مطمئن.
                     </p>
                 </div>
-
-                <div class="flex items-center gap-3 mt-1">
-
-                    <span class="w-10 h-[2px] bg-[#C9A45C] rounded-full"></span>
-                    <span class="text-xs text-[#B8A47F]">
-                        اعتماد، اصالت و ارزش
-                    </span>
-
-                </div>
             </div>
 
 

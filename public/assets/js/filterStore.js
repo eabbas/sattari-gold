@@ -105,14 +105,14 @@ categories.forEach(category => {
 })
 minPrice.addEventListener('keyup', () => {
     clearTimeout(timeout)
-    timeout = setTimeout(()=>{
+    timeout = setTimeout(() => {
         filters.fromPrice = minPrice.value
         getFilters()
     }, 500)
 })
 maxPrice.addEventListener('keyup', () => {
     clearTimeout(timeout)
-    timeout = setTimeout(()=>{
+    timeout = setTimeout(() => {
         filters.toPrice = maxPrice.value
         getFilters()
     }, 500)
@@ -120,7 +120,7 @@ maxPrice.addEventListener('keyup', () => {
 searchInp.addEventListener('keyup', () => {
     clearTimeout(timeout)
     timeout = setTimeout(() => {
-        if (searchInp.value !== ''){
+        if (searchInp.value !== '') {
             title.parentElement.parentElement.classList.remove('hidden')
         } else {
             title.parentElement.parentElement.classList.add('hidden')
@@ -134,8 +134,8 @@ searchInp.addEventListener('keyup', () => {
 //     filters.keyword = searchInput.value
 //     getFilters()
 // })
-hasDescount.addEventListener('change', () => {
-    hasDescount.checked ? filters.hasDescount = 1 : filters.hasDescount = 0
+hadDiscount.addEventListener('change', () => {
+    hadDiscount.checked ? filters.hadDiscount = 1 : filters.hadDiscount = 0
     getFilters()
 })
 exists.addEventListener('change', () => {
@@ -199,7 +199,7 @@ resetFilters.addEventListener('click', () => {
     })
     // minPrice.value = 0
     // maxPrice.value = ''
-    hasDescount.checked = false
+    hadDiscount.checked = false
     exists.checked = false
     filterBg.classList.add('invisible')
     filterBg.classList.add('opacity-0')

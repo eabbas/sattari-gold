@@ -45,7 +45,7 @@
                 </section>
                 <section class="p-[18px]">
                     <label class="flex items-center gap-2 my-3 text-[13px] text-[#52525b]">
-                        <input id="hasDescount" class="accent-[#c3924d] w-[17px] h-[17px]" type="checkbox">
+                        <input id="hadDiscount" class="accent-[#c3924d] w-[17px] h-[17px]" type="checkbox">
                         تخفیف خورده
                     </label>
                 </section>
@@ -58,7 +58,7 @@
             </aside>
 
             <section class="min-w-0 lg:col-span-8 col-span-7">
-                @if (Route::is('serarch.page'))
+                @if (Route::is('search.page'))
                     <div class="w-full flex items-center gap-3 border-1 bg-white border-gray-200 rounded-xl mb-3">
                         <input type="text" class="w-full px-3.5 py-3 outline-none" id="searchInp">
                         <svg class="w-6 h-6 text-gray-600 ml-2.5 cursor-pointer" aria-hidden="true"

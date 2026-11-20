@@ -112,9 +112,6 @@
                         پیامتان را برای ما بنویسید
                     </h3>
 
-                    <p class="text-xs text-[#999083] mt-3 leading-7">
-                        فرم زیر را تکمیل کنید تا بتوانیم بهتر به شما پاسخ دهیم.
-                    </p>
                 </div>
 
                 <form action="#" method="POST" class="space-y-6">
@@ -210,9 +207,6 @@
                         راه‌های ارتباطی
                     </h3>
 
-                    <p class="text-xs text-[#91897d] leading-7 mt-3">
-                        از راه‌های زیر می‌توانید با مجموعه طلای ستاری در ارتباط باشید.
-                    </p>
                 </div>
 
 
@@ -309,16 +303,13 @@
 
 
     <!-- MAP / LOCATION -->
-    <section class="px-5 pb-20">
+    <section class="px-5">
 
         <div class="max-w-7xl mx-auto">
 
             <div class="text-center mb-10">
                 <span class="text-xs tracking-widest text-[#a9823e]">OUR LOCATION</span>
                 <h2 class="text-3xl font-bold mt-4">منتظر دیدار شما هستیم</h2>
-                <p class="text-sm text-[#91897d] mt-3">
-                    برای بازدید حضوری، به فروشگاه طلای ستاری سر بزنید.
-                </p>
             </div>
 
             <div class="rounded-[28px] overflow-hidden bg-[#f2ead9] border border-[#e9dfcc]">
@@ -332,12 +323,6 @@
                             <circle cx="12" cy="10" r="2.5" />
                         </svg>
                     </div>
-
-                    <h3 class="font-bold mt-6">موقعیت فروشگاه طلای ستاری</h3>
-
-                    <p class="text-xs text-[#887e6d] mt-3 leading-7">
-                        برای نمایش نقشه، آدرس دقیق فروشگاه را در این بخش قرار دهید.
-                    </p>
 
                     <a href="YOUR_MAP_LINK"
                         class="mt-6 bg-[#a9823e] text-white px-7 py-3 rounded-xl text-xs hover:bg-[#89662e] transition">

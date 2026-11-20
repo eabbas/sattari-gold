@@ -533,17 +533,7 @@
                                     <span class="text-sm font-bold text-gray-800">
                                         {{ $comment->userName }}
                                     </span>
-
-                                    <span class="text-[10px] text-[#c3924d]">
-                                        مشتری ستاری گلد
-                                    </span>
                                 </div>
-
-                                <svg class="mr-auto h-7 w-7 text-[#e8d7bc]" viewBox="0 0 24 24" fill="none">
-                                    <path
-                                        d="M10 11H5.5A2.5 2.5 0 0 0 3 13.5V17h7v-6Zm11 0h-4.5a2.5 2.5 0 0 0-2.5 2.5V17h7v-6Z"
-                                        fill="currentColor" />
-                                </svg>
 
                             </div>
 
