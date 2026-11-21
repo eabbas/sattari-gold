@@ -110,7 +110,7 @@ class DealController extends Controller
                 'isApproved' => 0,
             ]);
 
-            $id_deal = deal::insertGetId([
+            deal::create([
                 'user_id' => $userId,
                 'transaction_id' => $transaction->id,
                 'goldWeight' => $weight,
@@ -121,15 +121,16 @@ class DealController extends Controller
                 'description' => $description
             ]);
             //حسین
-            dealTemporary::create([
-                'user_id' => $userId,
-                'deal_id' => $id_deal,
-                'goldPrice' => $request->goldPrice,
-                'action' => $request->action,
-                'calcBy' => $request->calcBy,
-                'userInput' => $request->userInput,
-                'resultOutput' => $request->resultOutput,
-            ]);
+            // dealTemporary::create([
+            //     'user_id' => $userId,
+            //     'deal_id' => $id_deal,
+            //     'goldPrice' => $request->goldPrice,
+            //     'action' => $request->action,
+            //     'calcBy' => $request->calcBy,
+            //     'userInput' => $request->userInput,
+            //     'resultOutput' => $request->resultOutput,
+            // ]);
+            
             return redirect()->back()->with('success',  "معامله شما پس از تایید مدیریت ثبت خواهد شد.");
         }
 
@@ -211,48 +212,25 @@ class DealController extends Controller
     }
     public function confirm(deal $deal)
     {
-        $deal->isApproved = 1;
-        $deal->transaction->isApproved = 1;
-        $deal->transaction->save();
-        $deal->save();
-        $dealTemporary = dealTemporary::where('deal_id', $deal->id)->first();
-        $action = $dealTemporary->action;
-        $calcBy = $dealTemporary->calcBy;
-        $input = $dealTemporary->userInput;
-        $output = $dealTemporary->resultOutput;
-        $goldPrice = $dealTemporary->goldPrice;
-
+        // dd($transaction , $deal);
+        $transaction=transaction::find($deal->transaction_id);
+        $wallet = Wallet::find($transaction->wallet_id);
         $amount = 0;
         $weight = 0;
-        $wallet = Wallet::where('user_id', Auth::id())->first();
         $totalAsset = $wallet->asset;
         $totalGold = $wallet->goldWeight ?? 0;
-        $cleanOutput = (float) str_replace(',', '', $output);
-
-        if ($action == 'buy') {
-            $buyPrice = 0;
-            if ($calcBy == 'price') {
-                $amount = (float) $input;
-                $weight = $cleanOutput;
-                $buyPrice = $input;
-            } elseif ($calcBy == 'weight') {
-                $weight = (float) $input;
-                $amount = $cleanOutput;
-                $buyPrice = $amount;
-            }
-            if ($wallet->asset < $amount) {
-                return redirect()->back()->with('failure', 'موجودی کیف پول شما کافی نیست.');
-            }
+        if($transaction->type=='buy'){
+            $totalAsset = $wallet->asset - $amount;
+            $totalGold = ($wallet->goldWeight ?? 0) + $weight;
+            $wallet->update([
+                'asset' => $totalAsset,
+                'goldWeight' => $totalGold
+            ]);
         }
-
-        $totalAsset = $wallet->asset - $amount;
-        $totalGold = ($wallet->goldWeight ?? 0) + $weight;
-
-        $wallet->update([
-            'asset' => $totalAsset,
-            'goldWeight' => $totalGold
-        ]);
-        $dealTemporary = dealTemporary::where('deal_id', $deal->id)->delete();
+        $transaction->isApproved=1;
+        $deal->isApproved=1;
+        $transaction->save();
+        $deal->save();
         return to_route('deal.adminIndex');
     }
     public function cancel(Request $request)
@@ -264,7 +242,6 @@ class DealController extends Controller
         $trancsavtion->isApproved = -1;
         $trancsavtion->save();
         $deal->save();
-        dealTemporary::where('deal_id', $request->id)->delete();
         return to_route('deal.adminIndex');
     }
 }
