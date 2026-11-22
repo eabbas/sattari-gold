@@ -307,7 +307,7 @@
                             </div>
 
                             <div class="font-bold text-gray-800 text-base in-fa">
-                                {{ number_format($price->sell_price) }}
+                                {{ number_format($price?->sell_price) }}
                             </div>
 
                             <span class="text-[10px] text-gray-400">
@@ -359,7 +359,7 @@
                             </div>
 
                             <div class="font-bold text-gray-800 text-base in-fa">
-                                {{ number_format($price->buy_price) }}
+                                {{ number_format($price?->buy_price) }}
                             </div>
 
                             <span class="text-[10px] text-gray-400">
@@ -844,10 +844,10 @@
 
     <script>
         // قیمت فروش طلا به کاربر
-        let buyPricePerGram = @json((float) $price->sell_price);
+        let buyPricePerGram = @json((float) $price?->sell_price);
 
         // قیمت خرید طلا از کاربر
-        let sellPricePerGram = @json((float) $price->buy_price);
+        let sellPricePerGram = @json((float) $price?->buy_price);
 
         // موجودی کیف پول کاربر (ریال)
         let userWalletBalance = @json((float) $asset);

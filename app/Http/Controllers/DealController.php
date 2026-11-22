@@ -37,18 +37,20 @@ class DealController extends Controller
             $messages = Message::where('segment_id', $segment->id)->where('status', 1)->get();
         }
         $price = livePrice::first();
-        if ($price->difference_type == 'line') {
-            $line = priceLine::first();
-            $buyDifference = $price->buy_difference * $line->line_value;
-            $price['buy_price'] = $price->price + $buyDifference;
-            $sellDifference = $price->sell_difference * $line->line_value;
-            $price['sell_price'] = $price->price + $sellDifference;
-        }
-        if ($price->difference_type == 'percent') {
-            $buyDifference = ($price->buy_difference / 100) * $price->price;
-            $price['buy_price'] = $price->price + $buyDifference;
-            $sellDifference = ($price->sell_difference / 100) * $price->price;
-            $price['sell_price'] = $price->price + $sellDifference;
+        if ($price) {
+            if ($price->difference_type == 'line') {
+                $line = priceLine::first();
+                $buyDifference = $price->buy_difference * $line?->line_value;
+                $price['buy_price'] = $price->price + $buyDifference;
+                $sellDifference = $price->sell_difference * $line?->line_value;
+                $price['sell_price'] = $price->price + $sellDifference;
+            }
+            if ($price->difference_type == 'percent') {
+                $buyDifference = ($price->buy_difference / 100) * $price->price;
+                $price['buy_price'] = $price->price + $buyDifference;
+                $sellDifference = ($price->sell_difference / 100) * $price->price;
+                $price['sell_price'] = $price->price + $sellDifference;
+            }
         }
         return view('user.deal.create', ['asset' => $asset, 'totalGoldWeight' => $totalGoldWeight, 'logo' => $logo, "messages" => $messages, 'price' => $price]);
     }
@@ -130,7 +132,7 @@ class DealController extends Controller
             //     'userInput' => $request->userInput,
             //     'resultOutput' => $request->resultOutput,
             // ]);
-            
+
             return redirect()->back()->with('success',  "معامله شما پس از تایید مدیریت ثبت خواهد شد.");
         }
 
@@ -213,13 +215,13 @@ class DealController extends Controller
     public function confirm(deal $deal)
     {
         // dd($transaction , $deal);
-        $transaction=transaction::find($deal->transaction_id);
+        $transaction = transaction::find($deal->transaction_id);
         $wallet = Wallet::find($transaction->wallet_id);
         $amount = 0;
         $weight = 0;
         $totalAsset = $wallet->asset;
         $totalGold = $wallet->goldWeight ?? 0;
-        if($transaction->type=='buy'){
+        if ($transaction->type == 'buy') {
             $totalAsset = $wallet->asset - $amount;
             $totalGold = ($wallet->goldWeight ?? 0) + $weight;
             $wallet->update([
@@ -227,8 +229,8 @@ class DealController extends Controller
                 'goldWeight' => $totalGold
             ]);
         }
-        $transaction->isApproved=1;
-        $deal->isApproved=1;
+        $transaction->isApproved = 1;
+        $deal->isApproved = 1;
         $transaction->save();
         $deal->save();
         return to_route('deal.adminIndex');
