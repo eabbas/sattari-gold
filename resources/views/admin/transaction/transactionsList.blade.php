@@ -394,28 +394,38 @@
             </div>
 
             {{-- عملیات تراکنش --}}
-            <div id="transactionControl" class="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5"
-                data-transaction-id="">
+            <div id="transactionControl" class="w-full mt-5" data-transaction-id="">
 
-                <button onclick="transactionAct('1')"
-                    class="flex items-center justify-center gap-2 rounded-xl border border-green-200 bg-green-50 px-3 py-3 text-sm font-bold text-green-700 transition-all duration-200 hover:bg-green-600 hover:border-green-600 hover:text-white">
+                <div id="transactionActions" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
 
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4 4L19 6" />
-                    </svg>
+                    <button onclick="transactionAct('1')"
+                        class="flex items-center justify-center gap-2 rounded-xl border border-green-200 bg-green-50 px-3 py-3 text-sm font-bold text-green-700 transition-all duration-200 hover:bg-green-600 hover:border-green-600 hover:text-white">
 
-                    تایید تراکنش
-                </button>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4 4L19 6" />
+                        </svg>
 
-                <button onclick="transactionAct('-1')"
-                    class="flex items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 px-3 py-3 text-sm font-bold text-red-700 transition-all duration-200 hover:bg-red-600 hover:border-red-600 hover:text-white">
+                        تایید تراکنش
+                    </button>
 
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12" />
-                    </svg>
+                    <button onclick="transactionAct('-1')"
+                        class="flex items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 px-3 py-3 text-sm font-bold text-red-700 transition-all duration-200 hover:bg-red-600 hover:border-red-600 hover:text-white">
 
-                    رد تراکنش
-                </button>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+
+                        رد تراکنش
+                    </button>
+
+                </div>
+
+                <div id="transactionDealMessage"
+                    class="hidden rounded-xl border border-[#D6AD60] bg-[#B88A3B]/10 px-4 py-4 text-center text-sm font-bold text-[#92702F]">
+
+                    تایید یا رد این تراکنش از طریق صفحه معاملات انجام می‌شود.
+                </div>
 
             </div>
 

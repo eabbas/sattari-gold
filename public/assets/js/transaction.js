@@ -121,7 +121,7 @@ function applyDealFilters() {
 
                     <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
                         <button
-                            onclick="showTransaction('${row.wallet.user.name + ' ' + row.wallet.user.family}', '${row.wallet.user.phoneNumber}', '${row.time + ' | ' + row.date}', '${row.stateColor}', '${row.stateTitle}', '${row.type}', '${row.amount}', '${row.isApproved}', '${row.id}', '${row.card==undefined ? 'هنوز شماره کارت وارد نشده' : row.card}', '${row.shaba==undefined ? 'هنوز شماره شبا وارد نشده' : row.shaba}', '${row.receipt}')"
+                            onclick="showTransaction('${row.wallet.user.name + ' ' + row.wallet.user.family}', '${row.wallet.user.phoneNumber}', '${row.time + ' | ' + row.date}', '${row.stateColor}', '${row.stateTitle}', '${row.type}', '${row.amount}', '${row.isApproved}', '${row.id}', '${row.card == undefined ? 'هنوز شماره کارت وارد نشده' : row.card}', '${row.shaba == undefined ? 'هنوز شماره شبا وارد نشده' : row.shaba}', '${row.receipt}')"
                             class="w-full min-w-20 px-3 py-2 rounded-lg border border-[#D6AD60] bg-[#F8F5EF] text-[#B88A3B] font-medium hover:bg-[#B88A3B] hover:text-white transition-all duration-200 cursor-pointer"
                         >
                             مشاهده
@@ -155,37 +155,45 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 100)
 })
 
-function showTransaction(user, phoneNumber, dateTime, stateColor, stateTitle, type, amount, isApproved, transactionId ,card, shaba, receipt = null) {
-    console.log(card)
-    console.log(shaba)
-    transactionPopup.classList.remove('invisible', 'opacity-0')
-    transactionControl.classList.remove('hidden')
-    transactionControl.dataset.transactionId = transactionId
+function showTransaction(user, phoneNumber, dateTime, stateColor, stateTitle, type, amount, isApproved, transactionId, card, shaba, receipt = null) {
+
+    transactionPopup.classList.remove('invisible', 'opacity-0');
+
+    transactionControl.dataset.transactionId = transactionId;
+
+    let transactionActions = document.getElementById('transactionActions');
+    let transactionDealMessage = document.getElementById('transactionDealMessage');
+
+    transactionActions.classList.remove('hidden');
+    transactionDealMessage.classList.add('hidden');
+
     if (isApproved != 0) {
-        transactionControl.classList.add('hidden')
+        transactionActions.classList.add('hidden');
+    } else if (type == 'خرید' || type == 'فروش') {
+        transactionActions.classList.add('hidden');
+        transactionDealMessage.classList.remove('hidden');
     }
-    
-    document.getElementById('transactionPopupName').innerText = user
-    document.getElementById('transactionPopupPhoneNumber').innerText = phoneNumber
-    document.getElementById('transactionPopupDate').innerText = dateTime
-    document.getElementById('transactionPopupStatus').innerText = stateTitle
-    document.getElementById('transactionPopupStatus').classList.add('text-[' + stateColor + ']')
-    document.getElementById('transactionPopupType').innerText = type
-    document.getElementById('transactionPopupFee').innerText = parseInt(amount).toLocaleString('fa-IR')
-    // cardNumber.innerText = card !== "" ? card.replace(/(\d{4})(?=\d)/g, "$1 ") :'هنوز شماره کارت وارد نشده'
-    // shabaNumber.innerText = shaba !== "" ? shaba.replace(/(\d{4})(?=\d)/g, "$1 ") :'هنوز شماره شبا وارد نشده'
-    cardNumber.innerText = card !== "" ? card :'هنوز شماره کارت وارد نشده'
-    shabaNumber.innerText = shaba !== "" ? shaba :'هنوز شماره شبا وارد نشده'
-    let transactionPopupReceipt = document.getElementById('transactionPopupReceipt')
-    console.log(transactionPopupReceipt)
-    console.log(imgPath)
+
+    document.getElementById('transactionPopupName').innerText = user;
+    document.getElementById('transactionPopupPhoneNumber').innerText = phoneNumber;
+    document.getElementById('transactionPopupDate').innerText = dateTime;
+    document.getElementById('transactionPopupStatus').innerText = stateTitle;
+    document.getElementById('transactionPopupStatus').classList.add('text-[' + stateColor + ']');
+    document.getElementById('transactionPopupType').innerText = type;
+    document.getElementById('transactionPopupFee').innerText = parseInt(amount).toLocaleString('fa-IR');
+
+    cardNumber.innerText = card !== "" ? card : 'هنوز شماره کارت وارد نشده';
+    shabaNumber.innerText = shaba !== "" ? shaba : 'هنوز شماره شبا وارد نشده';
+
+    let transactionPopupReceipt = document.getElementById('transactionPopupReceipt');
+
     if (type == 'واریز') {
-        transactionPopupReceipt.classList.remove('hidden')
-        transactionPopupReceipt.classList.add('flex')
-        transactionPopupReceipt.querySelector('img').src = imgPath + receipt
+        transactionPopupReceipt.classList.remove('hidden');
+        transactionPopupReceipt.classList.add('flex');
+        transactionPopupReceipt.querySelector('img').src = imgPath + receipt;
     } else {
-        transactionPopupReceipt.classList.add('hidden')
-        transactionPopupReceipt.classList.remove('flex')
+        transactionPopupReceipt.classList.add('hidden');
+        transactionPopupReceipt.classList.remove('flex');
     }
 }
 
@@ -280,7 +288,7 @@ function transactionAct(isApproved) {
 
                         <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
                             <button
-                                onclick="showTransaction('${response.fullName}', '${response.wallet.user.phoneNumber}', '${response.time + ' | ' + response.date}', '${response.stateColor}', '${response.stateTitle}', '${response.type}', '${response.amount}', '${response.isApproved}', '${response.id}', '${response.card==undefined ? 'هنوز شماره کارت وارد نشده' : response.card}', '${response.shaba==undefined ? 'هنوز شماره شبا وارد نشده' : response.shaba}', '${response.receipt}')"
+                                onclick="showTransaction('${response.fullName}', '${response.wallet.user.phoneNumber}', '${response.time + ' | ' + response.date}', '${response.stateColor}', '${response.stateTitle}', '${response.type}', '${response.amount}', '${response.isApproved}', '${response.id}', '${response.card == undefined ? 'هنوز شماره کارت وارد نشده' : response.card}', '${response.shaba == undefined ? 'هنوز شماره شبا وارد نشده' : response.shaba}', '${response.receipt}')"
                                 class="w-full min-w-20 px-3 py-2 rounded-lg border border-[#D6AD60] bg-[#F8F5EF] text-[#B88A3B] font-medium hover:bg-[#B88A3B] hover:text-white transition-all duration-200 cursor-pointer"
                             >
                                 مشاهده

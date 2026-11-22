@@ -1,960 +1,1215 @@
 <!DOCTYPE html>
+
 <html lang="fa" dir="rtl">
 
+
+
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+    <meta charset="UTF-8">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
 
     <link rel="stylesheet" href="{{ url('assets/css/style.css') }}" type="text/css">
+
+
     <link rel="stylesheet" href="{{ url('assets/css/MultiSelect.css') }}" type="text/css">
+
+
 
     <title>@yield('title')</title>
 
+
+
+
     <script src="{{ asset('assets/js/tailwind.js') }}"></script>
+
+
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
 
-    <script>
-        let url = "{{ url('/') }}/"
-        let api = "{{ url('api/') }}/"
-        let imgPath = "{{ asset('storage/') }}/"
-        let flag = "{{ Auth::check() }}"
-        let userId = null;
-        let user = null
 
-        if (flag) {
-            userId = "{{ Auth::id() }}"
-            user = "{{ Auth::user() }}"
-        }
+
+
+    <script>
+        let url = "{{ url('/') }}/";
+
+        let api = "{{ url('api/') }}/";
+
+        let imgPath = "{{ asset('storage/') }}/";
+
+        let flag = @json(Auth::check());
+
+        let userId = @json(Auth::id());
+
+        let user = @json(Auth::user());
     </script>
 
-    <style>
-        :root {
-            --dash-bg: #f6f8fa;
-            --dash-white: #ffffff;
-            --dash-text: #263238;
-            --dash-muted: #87929e;
-            --dash-border: #edf0f2;
-            --dash-primary: #16a37a;
-            --dash-primary-light: #e9f7f1;
-            --dash-primary-dark: #11845f;
-            --dash-red: #e05252;
-            --dash-sidebar-width: 270px;
-            --dash-radius: 16px;
-            --dash-shadow: 0 4px 24px rgba(30, 50, 65, .045);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            background: var(--dash-bg);
-            color: var(--dash-text);
-            font-family: inherit;
-        }
-
-        body,
-        button,
-        input,
-        textarea,
-        select {
-            font-family: inherit;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        /* Header */
-
-        .dashboard-header {
-            height: 76px;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 32px;
-            background: var(--dash-white);
-            border-bottom: 1px solid var(--dash-border);
-            position: relative;
-            z-index: 5;
-        }
-
-        .dashboard-header-right,
-        .dashboard-header-left {
-            display: flex;
-            align-items: center;
-        }
-
-        .dashboard-header-right {
-            gap: 24px;
-        }
-
-        .dashboard-header-left {
-            gap: 18px;
-        }
-
-        .dashboard-logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 48px;
-        }
-
-        .dashboard-logo img {
-            width: 44px;
-            height: 44px;
-            object-fit: contain;
-        }
-
-        .dashboard-menu-toggle {
-            width: 40px;
-            height: 40px;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 5px;
-            border-radius: 11px;
-            cursor: pointer;
-            transition: .2s;
-        }
-
-        .dashboard-menu-toggle:hover {
-            background: var(--dash-bg);
-        }
-
-        .dashboard-menu-toggle span {
-            width: 20px;
-            height: 2px;
-            background: #34434d;
-            border-radius: 5px;
-        }
-
-        .dashboard-user {
-            position: relative;
-        }
-
-        .dashboard-user-trigger {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 9px 12px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: .2s;
-        }
-
-        .dashboard-user-trigger:hover {
-            background: var(--dash-bg);
-        }
-
-        .dashboard-user-trigger>span {
-            font-size: 13px;
-            font-weight: 600;
-            color: #34434d;
-        }
-
-        .dashboard-user-trigger svg {
-            width: 14px;
-            height: 14px;
-            fill: #87929e;
-        }
-
-        .dashboard-user-avatar {
-            width: 34px;
-            height: 34px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 11px;
-            background: var(--dash-primary-light);
-            color: var(--dash-primary);
-        }
-
-        .dashboard-user-avatar svg {
-            width: 19px;
-            height: 19px;
-            fill: currentColor;
-        }
-
-        .dashboard-user-dropdown {
-            position: absolute;
-            top: calc(100% + 10px);
-            left: 0;
-            width: 230px;
-            max-height: 0;
-            overflow: hidden;
-            opacity: 0;
-            visibility: hidden;
-            background: #fff;
-            border: 1px solid transparent;
-            border-radius: 14px;
-            box-shadow: var(--dash-shadow);
-            padding: 0 8px;
-            transition: .25s ease;
-            z-index: 20;
-        }
-
-        .dashboard-user:hover .dashboard-user-dropdown,
-        .dashboard-user-dropdown.is-open {
-            max-height: 200px;
-            opacity: 1;
-            visibility: visible;
-            padding: 8px;
-            border-color: var(--dash-border);
-        }
-
-        .dashboard-user-dropdown a {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            border-radius: 9px;
-            color: #596773;
-            font-size: 13px;
-            transition: .2s;
-        }
-
-        .dashboard-user-dropdown a:hover {
-            background: var(--dash-bg);
-            color: var(--dash-primary);
-        }
-
-        .dashboard-user-dropdown a svg {
-            width: 17px;
-            height: 17px;
-            fill: currentColor;
-            flex-shrink: 0;
-        }
-
-        .dashboard-user-dropdown .logout-link {
-            color: var(--dash-red);
-        }
-
-        .dashboard-user-dropdown .logout-link:hover {
-            background: #fff1f1;
-            color: var(--dash-red);
-        }
-
-        .dashboard-user-role {
-            margin-right: auto;
-            font-size: 10px;
-            color: #a0aab3;
-            white-space: nowrap;
-        }
-
-        .dashboard-notification {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            background: #f6f8fa;
-            border-radius: 12px;
-            color: #65727e;
-            cursor: pointer;
-        }
-
-        .dashboard-notification svg {
-            width: 19px;
-            height: 19px;
-            fill: currentColor;
-        }
-
-        .dashboard-notification-dot {
-            width: 8px;
-            height: 8px;
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: var(--dash-red);
-            border: 2px solid #f6f8fa;
-            border-radius: 50%;
-        }
-
-        /* Main layout */
-
-        .dashboard-layout {
-            width: 100%;
-            height: calc(100dvh - 76px);
-            display: flex;
-            align-items: stretch;
-            justify-content: flex-start;
-            gap: 24px;
-            padding: 24px 28px;
-        }
-
-        /* Sidebar */
-
-        .dashboard-sidebar {
-            width: var(--dash-sidebar-width);
-            min-width: var(--dash-sidebar-width);
-            height: 100%;
-            background: var(--dash-white);
-            border: 1px solid var(--dash-border);
-            border-radius: 18px;
-            padding: 14px 12px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .dashboard-sidebar-heading {
-            padding: 12px 13px 16px;
-            color: #a0aab3;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: .2px;
-        }
-
-        .dashboard-sidebar-menu {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            overflow-y: auto;
-            overflow-x: hidden;
-            padding: 0 2px 12px;
-            scrollbar-width: thin;
-            scrollbar-color: #e5e9ec transparent;
-        }
-
-        .dashboard-sidebar-menu::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .dashboard-sidebar-menu::-webkit-scrollbar-thumb {
-            background: #e5e9ec;
-            border-radius: 10px;
-        }
-
-        .dashboard-sidebar-menu a {
-            width: 100%;
-            min-height: 44px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 12px;
-            border-radius: 11px;
-            color: #687681;
-            font-size: 12.5px;
-            font-weight: 500;
-            white-space: nowrap;
-            transition: background .2s ease, color .2s ease, transform .2s ease;
-            position: relative;
-        }
-
-        .dashboard-sidebar-menu a:hover {
-            background: #f6f9f8;
-            color: var(--dash-primary);
-            transform: translateX(-2px);
-        }
-
-        .dashboard-sidebar-menu a.active {
-            background: var(--dash-primary-light);
-            color: var(--dash-primary-dark);
-            font-weight: 700;
-        }
-
-        .dashboard-sidebar-menu a.active::before {
-            content: "";
-            width: 3px;
-            height: 22px;
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--dash-primary);
-            border-radius: 5px 0 0 5px;
-        }
-
-        .dashboard-sidebar-menu a svg {
-            width: 19px;
-            height: 19px;
-            min-width: 19px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 1.8;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            transition: .2s;
-        }
-
-        .dashboard-sidebar-menu a.active svg {
-            stroke-width: 2;
-        }
-
-        .dashboard-sidebar-menu a svg.fill-icon {
-            fill: currentColor;
-            stroke: none;
-        }
-
-        .dashboard-sidebar-menu a svg .icon-fill {
-            fill: currentColor;
-            stroke: none;
-        }
-
-        .dashboard-sidebar-divider {
-            height: 1px;
-            background: var(--dash-border);
-            margin: 10px 12px;
-        }
-
-        .dashboard-sidebar-section-title {
-            padding: 12px 13px 8px;
-            color: #a0aab3;
-            font-size: 10px;
-            font-weight: 700;
-        }
-
-        /* Content */
-
-        .dashboard-content {
-            flex: 1;
-            min-width: 0;
-            height: 100%;
-            overflow-y: auto;
-            overflow-x: hidden;
-            padding: 0 2px 20px;
-            scrollbar-width: thin;
-            scrollbar-color: #dce3e7 transparent;
-        }
-
-        .dashboard-content::-webkit-scrollbar {
-            width: 5px;
-        }
-
-        .dashboard-content::-webkit-scrollbar-thumb {
-            background: #dce3e7;
-            border-radius: 10px;
-        }
-
-        .dashboard-content-inner {
-            width: 100%;
-            min-width: 0;
-        }
-
-        /* Mobile overlay */
-
-        #hamburger_menu_dashboard_item_close {
-            display: none;
-        }
-
-        #user_pup_up_item_colse {
-            display: none;
-        }
-
-        @media (max-width: 1023px) {
-            .dashboard-header {
-                height: 66px;
-                padding: 0 18px;
-            }
-
-            .dashboard-menu-toggle {
-                display: flex;
-            }
-
-            .dashboard-header-right {
-                gap: 12px;
-            }
-
-            .dashboard-layout {
-                height: calc(100dvh - 66px);
-                padding: 18px;
-                gap: 0;
-            }
-
-            .dashboard-sidebar {
-                position: fixed;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                z-index: 41;
-                width: 285px;
-                min-width: 285px;
-                height: 100dvh;
-                border-radius: 0 0 0 20px;
-                padding: 18px 13px;
-                transform: translateX(105%);
-                transition: transform .3s ease;
-                box-shadow: -8px 0 30px rgba(20, 40, 50, .08);
-            }
-
-            .dashboard-sidebar.is-open {
-                transform: translateX(0);
-            }
-
-            #hamburger_menu_dashboard_item_close {
-                display: block;
-                position: fixed;
-                inset: 0;
-                background: rgba(20, 32, 40, .35);
-                opacity: 0;
-                visibility: hidden;
-                z-index: 40;
-                transition: .3s;
-            }
-
-            #hamburger_menu_dashboard_item_close.is-open {
-                opacity: 1;
-                visibility: visible;
-            }
-
-            .dashboard-content {
-                width: 100%;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .dashboard-header {
-                height: 60px;
-                padding: 0 12px;
-            }
-
-            .dashboard-logo img {
-                width: 38px;
-                height: 38px;
-            }
-
-            .dashboard-user-trigger {
-                gap: 7px;
-                padding: 7px;
-            }
-
-            .dashboard-user-trigger>span {
-                font-size: 11px;
-            }
-
-            .dashboard-user-avatar {
-                width: 30px;
-                height: 30px;
-            }
-
-            .dashboard-header-left {
-                gap: 8px;
-            }
-
-            .dashboard-notification {
-                width: 35px;
-                height: 35px;
-            }
-
-            .dashboard-layout {
-                height: calc(100dvh - 60px);
-                /* padding: 12px 10px 80px; */
-            }
-
-            .dashboard-content {
-                padding: 0;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-
-            *,
-            *::before,
-            *::after {
-                scroll-behavior: auto !important;
-                transition-duration: .01ms !important;
-            }
-        }
-    </style>
 </head>
 
-<body>
+
+
+<body class="m-0 bg-[#f6f8fa] text-[#263238]">
+
+
 
     {{-- Header --}}
-    <header class="dashboard-header">
 
-        <div class="dashboard-header-right">
+    <header
+        class="relative z-50 flex h-[76px] w-full items-center justify-between border-b border-[#edf0f2] bg-white px-8 max-lg:h-[66px] max-lg:px-[18px] max-sm:h-[60px] max-sm:px-3">
 
-            <div class="dashboard-menu-toggle" onclick="hamburger_menu_dashboard('open')" aria-label="باز کردن منو">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
 
-            <a href="{{ route('home') }}" class="dashboard-logo">
+
+        <div class="flex items-center gap-6 max-lg:gap-3">
+
+
+
+            <button type="button" onclick="hamburger_menu_dashboard('open')" aria-label="باز کردن منو"
+                class="hidden h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-xl transition hover:bg-[#f6f8fa] max-lg:flex">
+
+
+
+                <span class="h-0.5 w-5 rounded-full bg-[#34434d]"></span>
+
+                <span class="h-0.5 w-5 rounded-full bg-[#34434d]"></span>
+
+                <span class="h-0.5 w-5 rounded-full bg-[#34434d]"></span>
+
+            </button>
+
+
+
+            <a href="{{ route('home') }}" class="flex h-12 items-center justify-center">
+
                 @if ($logo)
-                    <img src="{{ asset('storage/' . $logo->logo) }}" alt="لوگو">
+                    <img src="{{ asset('storage/' . $logo->logo) }}" alt="لوگو"
+                        class="h-11 w-11 object-contain max-sm:h-[38px] max-sm:w-[38px]">
                 @endif
+
             </a>
+
+
 
         </div>
 
-        <div class="dashboard-header-left">
 
-            <div class="dashboard-user">
 
-                <div class="dashboard-user-trigger" onclick="user_pup_up()">
+        <div class="flex items-center gap-[18px] max-sm:gap-2">
 
-                    <div class="dashboard-user-avatar">
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm0 2c-4.42 0-8 2.24-8 5v2h16v-2c0-2.76-3.58-5-8-5Z" />
+
+
+            {{-- User Dropdown --}}
+
+            <div class="relative" id="user_dropdown">
+
+
+
+                <button type="button" onclick="user_pup_up()"
+                    class="flex items-center gap-2.5 rounded-xl px-3 py-[9px] transition hover:bg-[#f6f8fa] max-sm:gap-[7px] max-sm:p-[7px]">
+
+
+
+                    <span
+                        class="flex h-[34px] w-[34px] items-center justify-center rounded-[11px] bg-[#e9f7f1] text-[#16a37a] max-sm:h-[30px] max-sm:w-[30px]">
+
+                        <svg class="h-[19px] w-[19px]" viewBox="0 0 24 24" fill="currentColor">
+
+
+                            <circle cx="12" cy="8" r="4" />
+
+
+                            <path d="M4 21a8 8 0 0 1 16 0z" />
+
+
                         </svg>
-                    </div>
 
-                    <span>{{ Auth::user()['name'] }} {{ Auth::user()['family'] }}</span>
+                    </span>
 
-                    <svg viewBox="0 0 24 24">
-                        <path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round" />
+
+
+                    <span class="text-[13px] font-semibold text-[#34434d] max-sm:text-[11px]">
+
+                        {{ Auth::user()['name'] }} {{ Auth::user()['family'] }}
+
+                    </span>
+
+
+
+                    <svg id="user_dropdown_arrow" class="h-3.5 w-3.5 text-[#87929e] transition-transform duration-200"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+
+                        <path d="m6 9 6 6 6-6" />
+
+
                     </svg>
 
-                </div>
 
-                <div class="dashboard-user-dropdown" id="user_pup_up_item">
 
-                    <a href="{{ route('user.profile') }}">
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm0 2c-4.42 0-8 2.24-8 5v2h16v-2c0-2.76-3.58-5-8-5Z" />
+                </button>
+
+
+
+                <div id="user_pup_up_item"
+                    class="invisible absolute left-0 top-[calc(100%+10px)] z-50 w-[230px] -translate-y-2 overflow-hidden rounded-[14px] border border-transparent bg-white opacity-0 shadow-[0_4px_24px_rgba(30,50,65,.08)] transition-all duration-200">
+
+
+
+                    <a href="{{ route('user.profile') }}"
+                        class="flex items-center gap-3 rounded-lg p-3 text-[13px] text-[#596773] transition hover:bg-[#f6f8fa] hover:text-[#16a37a]">
+
+
+
+                        <svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8">
+
+
+                            <circle cx="12" cy="8" r="4" />
+
+
+                            <path d="M4 21a8 8 0 0 1 16 0" />
+
+
                         </svg>
+
+
 
                         <span>حساب کاربری</span>
 
+
+
                         @if (count(Auth::user()->roles) > 0)
-                            <span class="dashboard-user-role">{{ Auth::user()->roles[0]['name'] }}</span>
+                            <span class="mr-auto whitespace-nowrap text-[10px] text-[#a0aab3]">
+
+                                {{ Auth::user()->roles[0]['name'] }}
+
+                            </span>
                         @endif
+
                     </a>
 
-                    <a href="{{ route('user.logout') }}" class="logout-link">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M10 17l5-5-5-5M15 12H3m9-9h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+
+
+                    <a href="{{ route('user.logout') }}"
+                        class="flex items-center gap-3 rounded-lg p-3 text-[13px] text-[#e05252] transition hover:bg-[#fff1f1]">
+
+
+
+                        <svg class="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+
+                            <path d="M10 17l5-5-5-5M15 12H3m9-9h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7" />
+
+
                         </svg>
+
+
+
                         <span>خروج از حساب</span>
+
                     </a>
+
+
 
                 </div>
 
-                <div id="user_pup_up_item_colse" onclick="user_pup_up('open')"></div>
+
 
             </div>
 
-            <div class="dashboard-notification">
-                <svg viewBox="0 0 24 24">
-                    <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4" fill="none"
-                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+
+
+            {{-- Notifications --}}
+
+            <button type="button" aria-label="اعلان‌ها"
+                class="relative flex h-10 w-10 items-center justify-center rounded-xl bg-[#f6f8fa] text-[#65727e] max-sm:h-[35px] max-sm:w-[35px]">
+
+
+
+                <svg class="h-[19px] w-[19px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+
+                    <path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4" />
+
+
                 </svg>
-                <span class="dashboard-notification-dot"></span>
-            </div>
+
+
+
+                <span class="absolute right-2 top-2 h-2 w-2 rounded-full border-2 border-[#f6f8fa] bg-[#e05252]"></span>
+
+            </button>
+
+
 
         </div>
 
+
+
     </header>
-    {{-- Header --}}
+
 
 
     {{-- Dashboard --}}
-    <main class="dashboard-layout">
 
-        <div id="hamburger_menu_dashboard_item_close" onclick="hamburger_menu_dashboard('close')"></div>
+    <main
+        class="flex h-[calc(100dvh-76px)] items-stretch gap-6 p-6 px-7 max-lg:h-[calc(100dvh-66px)] max-lg:gap-0 max-lg:p-[18px] max-sm:h-[calc(100dvh-60px)] max-sm:p-3">
+
+
+
+        {{-- Sidebar Overlay --}}
+
+        <div id="hamburger_menu_dashboard_item_close" onclick="hamburger_menu_dashboard('close')"
+            class="invisible fixed inset-0 z-[60] bg-[rgba(20,32,40,.35)] opacity-0 transition-all duration-300">
+
+        </div>
+
+
 
         {{-- Sidebar --}}
-        <aside class="dashboard-sidebar" id="hamburger_menu_dashboard_item">
 
-            <div class="dashboard-sidebar-heading">
+        <aside id="hamburger_menu_dashboard_item"
+            class="relative flex h-full w-[270px] min-w-[270px] flex-col overflow-hidden rounded-[18px] border border-[#edf0f2] bg-white p-3 transition-transform duration-300 max-lg:fixed max-lg:bottom-0 max-lg:right-0 max-lg:top-0 max-lg:z-[70] max-lg:h-dvh max-lg:w-[285px] max-lg:min-w-[285px] max-lg:translate-x-full max-lg:rounded-l-[20px] max-lg:rounded-r-none max-lg:p-[18px]">
+
+
+
+            <div class="px-[13px] pb-4 pt-3 text-[11px] font-bold text-[#a0aab3]">
+
                 منوی اصلی
+
             </div>
 
-            <nav class="dashboard-sidebar-menu">
 
-                <a href="{{ route('home') }}" class="@if (Route::is('home')) active @endif" title="خانه">
-                    <svg viewBox="0 0 24 24">
+
+
+            <nav
+                class="min-h-0 flex-1 flex flex-col gap-1 overflow-y-auto overflow-x-hidden px-0.5 pb-3 [scrollbar-color:#e5e9ec_transparent] [scrollbar-width:thin]">
+
+
+
+
+                {{-- Main Links --}}
+
+                <a href="{{ route('home') }}"
+                    class="flex min-h-11 items-center gap-3 rounded-[11px] px-3 py-2.5 text-[12.5px] font-medium transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('home')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                    @if (Route::is('home')) data-active="true" @endif>
+
+
+
+                    <svg class="h-[19px] w-[19px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+
                         <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10Z" />
+
+
                     </svg>
-                    <span>خانه</span>
+
+                    خانه
+
                 </a>
 
-                <a href="{{ route('product.index') }}" class="@if (Route::is('product.index')) active @endif"
-                    title="محصولات">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M6 7h12l1 14H5L6 7Z" />
-                        <path d="M9 9V6a3 3 0 0 1 6 0v3" />
-                    </svg>
-                    <span>محصولات</span>
-                </a>
 
-                <a href="{{ route('user.profile') }}" class="@if (Route::is('user.profile')) active @endif"
-                    title="پروفایل">
-                    <svg viewBox="0 0 24 24">
+
+                <a href="{{ route('user.profile') }}"
+                    class="flex min-h-11 items-center gap-3 rounded-[11px] px-3 py-2.5 text-[12.5px] font-medium transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('user.profile')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                    @if (Route::is('user.profile')) data-active="true" @endif>
+
+
+
+                    <svg class="h-[19px] w-[19px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+
                         <circle cx="12" cy="8" r="4" />
+
+
                         <path d="M4 21a8 8 0 0 1 16 0" />
+
+
                     </svg>
-                    <span>پروفایل</span>
+
+                    پروفایل
+
                 </a>
 
-                <a href="{{ route('wallet.wallet', [Auth::user()]) }}"
-                    class="@if (Route::is('wallet.wallet')) active @endif" title="کیف پول">
-                    <svg viewBox="0 0 24 24">
-                        <rect x="3" y="5" width="18" height="16" rx="3" />
-                        <path d="M3 9h18M16 15h2" />
-                        <path d="M6 5V3h12v2" />
+
+
+                {{-- Financial Management --}}
+
+                <div class="my-2 h-px bg-[#edf0f2]"></div>
+
+
+
+                <button type="button" data-submenu-toggle aria-expanded="false"
+                    class="flex min-h-11 w-full items-center gap-3 rounded-[11px] px-3 py-2.5 text-[12.5px] font-semibold text-[#596773] transition hover:bg-[#f6f9f8]">
+
+
+
+                    <svg class="h-[19px] w-[19px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+
+                        <rect x="2" y="5" width="20" height="15" rx="3" />
+
+
+                        <path d="M2 10h20M16 15h2M6 5V3h12v2" />
+
+
                     </svg>
-                    <span>کیف پول</span>
-                </a>
 
-                <a href="{{ route('wallet.userTransactions', [Auth::user()]) }}"
-                    class="@if (Route::is('wallet.userTransactions')) active @endif" title="تراکنش های من">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M3 12a9 9 0 1 0 2.5-6.2L3 8" />
-                        <path d="M3 3v5h5M12 7v5l3 2" />
+
+
+                    <span>مدیریت مالی</span>
+
+
+
+                    <svg class="mr-auto h-4 w-4 shrink-0 transition-transform duration-200" data-submenu-arrow
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+
+
+                        <path d="m6 9 6 6 6-6" />
+
+
                     </svg>
-                    <span>تراکنش های من</span>
-                </a>
 
-                <a href="{{ route('deal.create') }}" class="@if (Route::is('deal.create')) active @endif"
-                    title="شروع معامله جدید">
-                    <svg viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="9" />
-                        <path d="M12 7v10M8 10h6a2 2 0 0 1 0 4H8" />
-                    </svg>
-                    <span>شروع معامله</span>
-                </a>
+                </button>
 
-                <a href="{{ route('deal.list') }}" class="@if (Route::is('deal.list')) active @endif"
-                    title="معاملات من">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M3 12a9 9 0 1 0 2.5-6.2L3 8" />
-                        <path d="M3 3v5h5M12 7v5l3 2" />
-                    </svg>
-                    <span>معاملات من</span>
-                </a>
 
-                <a href="{{ route('order.userOrders') }}" class="@if (Route::is('order.userOrders')) active @endif"
-                    title="لیست سفارشات من">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M4 3h16v18H4z" />
-                        <path d="M8 8h8M8 12h8M8 16h5" />
-                    </svg>
-                    <span>لیست سفارشات من</span>
-                </a>
 
-                <a href="{{ route('creditCard.create') }}" class="@if (Route::is('creditCard.create')) active @endif"
-                    title="مدیریت کارت ها">
-                    <svg viewBox="0 0 24 24">
-                        <rect x="2" y="5" width="20" height="14" rx="3" />
-                        <path d="M2 10h20M6 15h4" />
-                    </svg>
-                    <span>مدیریت کارت ها</span>
-                </a>
+                <div data-submenu class="max-h-0 overflow-hidden transition-[max-height] duration-300 ease-in-out">
 
-                <div class="dashboard-sidebar-divider"></div>
 
-                <div class="dashboard-sidebar-section-title">
-                    مدیریت و تنظیمات
+
+                    <div class="mr-6 flex flex-col gap-1 border-r border-[#edf0f2] pr-3">
+
+
+
+                        <a href="{{ route('wallet.wallet', [Auth::user()]) }}"
+                            class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('wallet.wallet')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                            @if (Route::is('wallet.wallet')) data-active="true" @endif>
+
+
+
+                            <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8">
+
+
+                                <rect x="3" y="5" width="18" height="16" rx="3" />
+
+
+                                <path d="M3 9h18M16 15h2M6 5V3h12v2" />
+
+
+                            </svg>
+
+                            کیف پول
+
+                        </a>
+
+
+
+                        <a href="{{ route('wallet.userTransactions', [Auth::user()]) }}"
+                            class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('wallet.userTransactions')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                            @if (Route::is('wallet.userTransactions')) data-active="true" @endif>
+
+
+
+                            <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+
+                                <path d="M3 12a9 9 0 1 0 2.5-6.2L3 8" />
+
+
+                                <path d="M3 3v5h5M12 7v5l3 2" />
+
+
+                            </svg>
+
+                            تراکنش‌های من
+
+                        </a>
+
+
+
+                        <a href="{{ route('creditCard.create') }}"
+                            class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('creditCard.create')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                            @if (Route::is('creditCard.create')) data-active="true" @endif>
+
+
+
+                            <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8">
+
+
+                                <rect x="2" y="5" width="20" height="14" rx="3" />
+
+
+                                <path d="M2 10h20M6 15h4" />
+
+
+                            </svg>
+
+                            مدیریت کارت‌ها
+
+                        </a>
+
+
+
+                        @can('access', ['transactionsList'])
+                            <a href="{{ route('wallet.transactionsList') }}"
+                                class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('wallet.transactionsList')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                                @if (Route::is('wallet.transactionsList')) data-active="true" @endif>
+
+
+
+                                <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+
+                                    <path d="M12 3v18M7 8l5-5 5 5M7 16l5 5 5-5" />
+
+
+                                </svg>
+
+                                واریز و برداشت
+
+                            </a>
+                        @endcan
+
+
+
+
+                    </div>
+
                 </div>
 
-                @can('access', ['livePrice'])
-                    <a href="{{ route('price.create') }}" class="@if (Route::is('price.create')) active @endif"
-                        title="تنظیمات قیمت ها">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                        </svg>
-                        <span>تنظیمات قیمت ها</span>
-                    </a>
-                @endcan
 
-                @can('access', ['transactionConfirmTime'])
-                    <a href="{{ route('transactionConfirmTime.create') }}"
-                        class="@if (Route::is('transactionConfirmTime.create')) active @endif" title="زمان تایید معامله">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                        </svg>
-                        <span>زمان تایید معامله</span>
-                    </a>
-                @endcan
 
-                @can('access', ['currency'])
-                    <a href="{{ route('currencyUnit.create') }}"
-                        class="@if (Route::is('currencyUnit.create')) active @endif" title="واحد پولی">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                        </svg>
-                        <span>واحد پولی</span>
-                    </a>
-                @endcan
+                {{-- Deals --}}
 
-                @can('access', ['priceLine'])
-                    <a href="{{ route('line.create') }}" class="@if (Route::is('line.create')) active @endif"
-                        title="تعیین ارزش خط">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-                        </svg>
-                        <span>تعیین ارزش خط</span>
-                    </a>
-                @endcan
+                <button type="button" data-submenu-toggle aria-expanded="false"
+                    class="flex min-h-11 w-full items-center gap-3 rounded-[11px] px-3 py-2.5 text-[12.5px] font-semibold text-[#596773] transition hover:bg-[#f6f9f8]">
 
-                @can('access', ['transactionsList'])
-                    <a href="{{ route('wallet.transactionsList') }}"
-                        class="@if (Route::is('wallet.transactionsList')) active @endif" title="واریز و برداشت">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 3v18M7 8l5-5 5 5M7 16l5 5 5-5" />
-                        </svg>
-                        <span>واریز و برداشت</span>
-                    </a>
-                @endcan
 
-                @can('access', ['deal_index'])
-                    <a href="{{ route('deal.adminIndex') }}" class="@if (Route::is('deal.adminIndex')) active @endif"
-                        title="معاملات">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M4 7h16M4 17h16M8 3 4 7l4 4M16 13l4 4-4 4" />
-                        </svg>
-                        <span>همه معاملات</span>
-                    </a>
-                @endcan
+
+                    <svg class="h-[19px] w-[19px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+
+
+                    </svg>
+
+
+
+                    <span>معاملات</span>
+
+
+
+                    <svg class="mr-auto h-4 w-4 shrink-0 transition-transform duration-200" data-submenu-arrow
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+
+
+                        <path d="m6 9 6 6 6-6" />
+
+
+                    </svg>
+
+                </button>
+
+
+
+                <div data-submenu class="max-h-0 overflow-hidden transition-[max-height] duration-300 ease-in-out">
+
+                    <div class="mr-6 flex flex-col gap-1 border-r border-[#edf0f2] pr-3">
+
+
+
+                        <a href="{{ route('deal.create') }}"
+                            class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('deal.create')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                            @if (Route::is('deal.create')) data-active="true" @endif>
+
+
+
+                            <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8">
+
+
+                                <circle cx="12" cy="12" r="9" />
+
+
+                                <path d="M12 7v10M8 10h6a2 2 0 0 1 0 4H8" />
+
+
+                            </svg>
+
+                            شروع معامله جدید
+
+                        </a>
+
+
+
+                        <a href="{{ route('deal.list') }}"
+                            class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('deal.list')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                            @if (Route::is('deal.list')) data-active="true" @endif>
+
+
+
+                            <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8">
+
+
+                                <path d="M3 12a9 9 0 1 0 2.5-6.2L3 8" />
+
+
+                                <path d="M3 3v5h5M12 7v5l3 2" />
+
+
+                            </svg>
+
+                            معاملات من
+
+                        </a>
+
+
+
+                        @can('access', ['deal_index'])
+                            <a href="{{ route('deal.adminIndex') }}"
+                                class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('deal.adminIndex')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                                @if (Route::is('deal.adminIndex')) data-active="true" @endif>
+
+
+
+                                <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8">
+
+
+                                    <path d="M4 7h16M4 17h16M8 3 4 7l4 4M16 13l4 4-4 4" />
+
+
+                                </svg>
+
+                                همه معاملات
+
+                            </a>
+                        @endcan
+
+
+
+
+                    </div>
+
+                </div>
+
+
+
+                {{-- Store --}}
+
+                <button type="button" data-submenu-toggle aria-expanded="false"
+                    class="flex min-h-11 w-full items-center gap-3 rounded-[11px] px-3 py-2.5 text-[12.5px] font-semibold text-[#596773] transition hover:bg-[#f6f9f8]">
+
+
+
+                    <svg class="h-[19px] w-[19px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+
+                        <path d="M3 3h2l2.4 12.2a2 2 0 0 0 2 1.8h8.8a2 2 0 0 0 2-1.7L22 8H6" />
+
+
+                        <circle cx="10" cy="21" r="1" />
+
+
+                        <circle cx="18" cy="21" r="1" />
+
+
+                    </svg>
+
+
+
+                    <span>فروشگاه</span>
+
+
+
+                    <svg class="mr-auto h-4 w-4 shrink-0 transition-transform duration-200" data-submenu-arrow
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+
+
+                        <path d="m6 9 6 6 6-6" />
+
+
+                    </svg>
+
+                </button>
+
+
+
+                <div data-submenu class="max-h-0 overflow-hidden transition-[max-height] duration-300 ease-in-out">
+
+                    <div class="mr-6 flex flex-col gap-1 border-r border-[#edf0f2] pr-3">
+
+
+
+                        <a href="{{ route('product.index') }}"
+                            class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('product.index')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                            @if (Route::is('product.index')) data-active="true" @endif>
+
+
+
+                            <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8">
+
+
+                                <path d="M6 7h12l1 14H5L6 7Z" />
+
+
+                                <path d="M9 9V6a3 3 0 0 1 6 0v3" />
+
+
+                            </svg>
+
+                            محصولات
+
+                        </a>
+
+
+
+                        @can('access', ['category_show'])
+                            <a href="{{ route('category.adminIndex') }}"
+                                class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('category.adminIndex')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                                @if (Route::is('category.adminIndex')) data-active="true" @endif>
+
+
+
+                                <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8">
+
+
+                                    <path
+                                        d="M3 6a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6Z" />
+
+
+                                    <path d="M3 9h18" />
+
+
+                                </svg>
+
+                                دسته‌بندی محصولات
+
+                            </a>
+                        @endcan
+
+
+
+                        @can('access', ['product_show'])
+                            <a href="{{ route('product.adminIndex') }}"
+                                class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('product.adminIndex')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                                @if (Route::is('product.adminIndex')) data-active="true" @endif>
+
+
+
+                                <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8">
+
+
+                                    <path d="m12 3 9 5-9 5-9-5 9-5Z" />
+
+
+                                    <path d="m3 12 9 5 9-5M3 16l9 5 9-5" />
+
+
+                                </svg>
+
+                                مدیریت کالاها
+
+                            </a>
+                        @endcan
+
+
+
+                        <a href="{{ route('order.userOrders') }}"
+                            class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('order.userOrders')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                            @if (Route::is('order.userOrders')) data-active="true" @endif>
+
+
+
+                            <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.8">
+
+
+                                <rect x="4" y="3" width="16" height="18" rx="1" />
+
+
+                                <path d="M8 8h8M8 12h8M8 16h5" />
+
+
+                            </svg>
+
+                            سفارشات من
+
+                        </a>
+
+
+
+                        @can('access', ['order_show'])
+                            <a href="{{ route('order.index') }}"
+                                class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('order.index')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                                @if (Route::is('order.index')) data-active="true" @endif>
+
+
+
+                                <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8">
+
+
+                                    <rect x="5" y="3" width="14" height="18" rx="2" />
+
+
+                                    <path d="M9 8h6M9 12h6M9 16h4" />
+
+
+                                </svg>
+
+                                لیست سفارشات
+
+                            </a>
+                        @endcan
+
+
+
+
+                    </div>
+
+                </div>
+
+
+
+                {{-- User Management --}}
+
+                <div class="my-2 h-px bg-[#edf0f2]"></div>
+
+
+
+                <div class="px-[13px] pb-2 pt-3 text-[10px] font-bold text-[#a0aab3]">
+
+                    مدیریت کاربران
+
+                </div>
+
+
 
                 @can('access', ['user_index'])
-                    <a href="{{ route('user.index') }}" class="@if (Route::is('user.index')) active @endif"
-                        title="لیست کاربران">
-                        <svg viewBox="0 0 24 24">
+                    <a href="{{ route('user.index') }}"
+                        class="flex min-h-11 items-center gap-3 rounded-[11px] px-3 py-2.5 text-[12.5px] font-medium transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('user.index')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                        @if (Route::is('user.index')) data-active="true" @endif>
+
+
+
+                        <svg class="h-[19px] w-[19px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8">
+
+
                             <circle cx="9" cy="8" r="3.5" />
+
+
                             <path d="M2 20a7 7 0 0 1 14 0M16 5.5a3.5 3.5 0 0 1 0 6.8M18 15a6 6 0 0 1 4 5" />
+
+
                         </svg>
-                        <span>لیست کاربران</span>
+
+                        لیست کاربران
+
                     </a>
                 @endcan
 
-                @can('access', ['category_show'])
-                    <a href="{{ route('category.adminIndex') }}"
-                        class="@if (Route::is('category.adminIndex')) active @endif" title="دسته بندی محصولات">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M3 6a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6Z" />
-                            <path d="M3 9h18" />
-                        </svg>
-                        <span>دسته بندی محصولات</span>
-                    </a>
-                @endcan
 
-                @can('access', ['product_show'])
-                    <a href="{{ route('product.adminIndex') }}" class="@if (Route::is('product.adminIndex')) active @endif"
-                        title="مدیریت کالا">
-                        <svg viewBox="0 0 24 24">
-                            <path d="m12 3 9 5-9 5-9-5 9-5Z" />
-                            <path d="m3 12 9 5 9-5M3 16l9 5 9-5" />
-                        </svg>
-                        <span>مدیریت کالاها</span>
-                    </a>
-                @endcan
-
-                @can('access', ['message_create'])
-                    <a href="{{ route('message.create') }}" class="@if (Route::is('message.create')) active @endif"
-                        title="پیام ها">
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.9-5.5a9 9 0 0 1-.9-4A8.5 8.5 0 0 1 12.5 3h.5a8.5 8.5 0 0 1 8 8v.5Z" />
-                        </svg>
-                        <span>پیام ها</span>
-                    </a>
-                @endcan
-
-                @can('access', ['referenceSite_create'])
-                    <a href="{{ route('referenceSite.create') }}"
-                        class="@if (Route::is('referenceSite.create')) active @endif" title="سایت های مرجع">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M14 3h7v7M10 14 21 3M19 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h6" />
-                        </svg>
-                        <span>سایت های مرجع</span>
-                    </a>
-                @endcan
-
-                @can('access', ['transactionSetting'])
-                    <a href="{{ route('transactionSetting.create') }}"
-                        class="@if (Route::is('transactionSetting.create')) active @endif" title="تنظیمات تراکنش ها">
-                        <svg viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="3" />
-                            <path
-                                d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.7a8 8 0 0 1-1.7 1l-.3 1.8h-2.8l-.3-1.8a8 8 0 0 1-1.7-1l-1.7.7-1.4-2.4 1.4-1.1a8 8 0 0 1 0-2l-1.4-1.1 1.4-2.4 1.7.7a8 8 0 0 1 1.7-1l.3-1.8h2.8l.3 1.8a8 8 0 0 1 1.7 1l1.7-.7 1.4 2.4-1.4 1.1a8 8 0 0 1 0 2Z" />
-                        </svg>
-                        <span>تنظیمات تراکنش ها</span>
-                    </a>
-                @endcan
-
-                @can('access', ['header'])
-                    <a href="{{ route('header.create') }}" class="@if (Route::is('header.create')) active @endif"
-                        title="تنظیمات هدر">
-                        <svg viewBox="0 0 24 24">
-                            <rect x="3" y="4" width="18" height="16" rx="2" />
-                            <path d="M3 9h18" />
-                            <path d="M7 6.5h.01M10 6.5h.01" />
-                        </svg>
-                        <span>تنظیمات هدر</span>
-                    </a>
-                @endcan
-
-                @can('access', ['logo'])
-                    <a href="{{ route('logo.create') }}" class="@if (Route::is('logo.create')) active @endif"
-                        title="تنظیمات لوگو">
-                        <svg viewBox="0 0 24 24">
-                            <rect x="3" y="3" width="18" height="18" rx="3" />
-                            <circle cx="8.5" cy="8.5" r="1.5" />
-                            <path d="m21 15-5-5L5 21" />
-                        </svg>
-                        <span>تنظیمات لوگو</span>
-                    </a>
-                @endcan
-
-                @can('access', ['comment'])
-                    <a href="{{ route('comment.create') }}" class="@if (Route::is('comment.create')) active @endif"
-                        title="تنظیمات نظرات پیش فرض">
-                        <svg viewBox="0 0 24 24">
-                            <path
-                                d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.9-5.5a9 9 0 0 1-.9-4A8.5 8.5 0 0 1 12.5 3h.5a8.5 8.5 0 0 1 8 8v.5Z" />
-                            <path d="M8 12h8M8 8h5" />
-                        </svg>
-                        <span>تنظیمات نظرات پیش فرض</span>
-                    </a>
-                @endcan
-
-                @can('access', ['order_show'])
-                    <a href="{{ route('order.index') }}" class="@if (Route::is('order.index')) active @endif"
-                        title="لیست سفارشات">
-                        <svg viewBox="0 0 24 24">
-                            <rect x="5" y="3" width="14" height="18" rx="2" />
-                            <path d="M9 8h6M9 12h6M9 16h4" />
-                        </svg>
-                        <span>لیست سفارشات</span>
-                    </a>
-                @endcan
 
                 @can('access', ['role_create'])
-                    <a href="{{ route('role.create') }}" class="@if (Route::is('role.create')) active @endif"
-                        title="تعیین دسترسی و مجوز ها">
-                        <svg viewBox="0 0 24 24">
+                    <a href="{{ route('role.create') }}"
+                        class="flex min-h-11 items-center gap-3 rounded-[11px] px-3 py-2.5 text-[12.5px] font-medium transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('role.create')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                        @if (Route::is('role.create')) data-active="true" @endif>
+
+
+
+                        <svg class="h-[19px] w-[19px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="1.8">
+
+
                             <rect x="3" y="4" width="18" height="16" rx="2" />
+
+
                             <circle cx="8" cy="10" r="2" />
+
+
                             <path d="M5 16a3 3 0 0 1 6 0M13 9h5M13 13h5M13 17h3" />
+
+
                         </svg>
-                        <span>تعیین دسترسی و مجوز ها</span>
+
+                        تعیین دسترسی و مجوزها
+
                     </a>
                 @endcan
+
+
+
+                {{-- Settings --}}
+
+                <div class="my-2 h-px bg-[#edf0f2]"></div>
+
+
+
+                <div class="px-[13px] pb-2 pt-3 text-[10px] font-bold text-[#a0aab3]">
+
+                    تنظیمات و مدیریت سیستم
+
+                </div>
+
+
+
+                <button type="button" data-submenu-toggle aria-expanded="false"
+                    class="flex min-h-11 w-full items-center gap-3 rounded-[11px] px-3 py-2.5 text-[12.5px] font-semibold text-[#596773] transition hover:bg-[#f6f9f8]">
+
+
+
+                    <svg class="h-[19px] w-[19px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+
+
+                        <circle cx="12" cy="12" r="3" />
+
+
+                        <path
+                            d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.7a8 8 0 0 1-1.7 1l-.3 1.8h-2.8l-.3-1.8a8 8 0 0 1-1.7-1l-1.7.7-1.4-2.4 1.4-1.1a8 8 0 0 1 0-2l-1.4-1.1 1.4-2.4 1.7.7a8 8 0 0 1 1.7-1l.3-1.8h2.8l.3 1.8a8 8 0 0 1 1.7 1l1.7-.7 1.4 2.4-1.4 1.1a8 8 0 0 1 0 2Z" />
+
+
+                    </svg>
+
+
+
+                    <span>تنظیمات سیستم</span>
+
+
+
+                    <svg class="mr-auto h-4 w-4 shrink-0 transition-transform duration-200" data-submenu-arrow
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+
+
+                        <path d="m6 9 6 6 6-6" />
+
+
+                    </svg>
+
+                </button>
+
+
+
+                <div data-submenu class="max-h-0 overflow-hidden transition-[max-height] duration-300 ease-in-out">
+
+                    <div class="mr-6 flex flex-col gap-1 border-r border-[#edf0f2] pr-3">
+
+
+
+                        @can('access', ['livePrice'])
+                            <a href="{{ route('price.create') }}"
+                                class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('price.create')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                                @if (Route::is('price.create')) data-active="true" @endif>
+
+                                <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8">
+
+
+                                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+
+
+                                </svg>
+
+                                تنظیمات قیمت‌ها
+
+                            </a>
+                        @endcan
+
+
+
+                        @can('access', ['transactionConfirmTime'])
+                            <a href="{{ route('transactionConfirmTime.create') }}"
+                                class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('transactionConfirmTime.create')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                                @if (Route::is('transactionConfirmTime.create')) data-active="true" @endif>
+
+                                <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8">
+
+
+                                    <circle cx="12" cy="12" r="9" />
+
+
+                                    <path d="M12 7v5l3 2" />
+
+
+                                </svg>
+
+                                زمان تأیید معامله
+
+                            </a>
+                        @endcan
+
+
+
+                        @can('access', ['currency'])
+                            <a href="{{ route('currencyUnit.create') }}"
+                                class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('currencyUnit.create')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                                @if (Route::is('currencyUnit.create')) data-active="true" @endif>
+
+                                <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8">
+
+
+                                    <circle cx="12" cy="12" r="9" />
+
+
+                                    <path d="M12 6v12M16 9h-5a2 2 0 0 0 0 4h3a2 2 0 0 1 0 4H8" />
+
+
+                                </svg>
+
+                                واحد پولی
+
+                            </a>
+                        @endcan
+
+
+
+                        @can('access', ['priceLine'])
+                            <a href="{{ route('line.create') }}"
+                                class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('line.create')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                                @if (Route::is('line.create')) data-active="true" @endif>
+
+                                <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8">
+
+
+                                    <path d="M3 17 9 11l4 4 8-9" />
+
+
+                                    <path d="M15 6h6v6" />
+
+
+                                </svg>
+
+                                تعیین ارزش خط
+
+                            </a>
+                        @endcan
+
+
+
+                        @can('access', ['transactionSetting'])
+                            <a href="{{ route('transactionSetting.create') }}"
+                                class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('transactionSetting.create')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                                @if (Route::is('transactionSetting.create')) data-active="true" @endif>
+
+                                <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8">
+
+
+                                    <circle cx="12" cy="12" r="3" />
+
+
+                                    <path
+                                        d="M19 12a7 7 0 0 0-.1-1.2l1.4-1.1-1.4-2.4-1.7.7a7 7 0 0 0-1.7-1L15.2 5h-2.8l-.3 2a7 7 0 0 0-1.7 1l-1.7-.7-1.4 2.4 1.4 1.1a7 7 0 0 0 0 2l-1.4 1.1 1.4 2.4 1.7-.7a7 7 0 0 0 1.7 1l.3 1.9h2.8l.3-1.9a7 7 0 0 0 1.7-1l1.7.7 1.4-2.4-1.4-1.1A7 7 0 0 0 19 12Z" />
+
+
+                                </svg>
+
+                                تنظیمات تراکنش‌ها
+
+                            </a>
+                        @endcan
+
+
+
+                        @can('access', ['header'])
+                            <a href="{{ route('header.create') }}"
+                                class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('header.create')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                                @if (Route::is('header.create')) data-active="true" @endif>
+
+                                <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8">
+
+
+                                    <rect x="3" y="4" width="18" height="16" rx="2" />
+
+
+                                    <path d="M3 9h18M7 6.5h.01M10 6.5h.01" />
+
+
+                                </svg>
+
+                                تنظیمات هدر
+
+                            </a>
+                        @endcan
+
+
+
+                        @can('access', ['logo'])
+                            <a href="{{ route('logo.create') }}"
+                                class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('logo.create')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                                @if (Route::is('logo.create')) data-active="true" @endif>
+
+                                <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8">
+
+
+                                    <rect x="3" y="3" width="18" height="18" rx="3" />
+
+
+                                    <circle cx="8.5" cy="8.5" r="1.5" />
+
+
+                                    <path d="m21 15-5-5L5 21" />
+
+
+                                </svg>
+
+                                تنظیمات لوگو
+
+                            </a>
+                        @endcan
+
+
+
+                        @can('access', ['comment'])
+                            <a href="{{ route('comment.create') }}"
+                                class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('comment.create')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                                @if (Route::is('comment.create')) data-active="true" @endif>
+
+                                <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8">
+
+
+                                    <path
+                                        d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.9-5.5a9 9 0 0 1-.9-4A8.5 8.5 0 0 1 12.5 3h.5a8.5 8.5 0 0 1 8 8v.5Z" />
+
+
+                                    <path d="M8 12h8M8 8h5" />
+
+
+                                </svg>
+
+                                تنظیمات نظرات
+
+                            </a>
+                        @endcan
+
+
+
+                        @can('access', ['message_create'])
+                            <a href="{{ route('message.create') }}"
+                                class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('message.create')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                                @if (Route::is('message.create')) data-active="true" @endif>
+
+                                <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8">
+
+
+                                    <path
+                                        d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.9-5.5a9 9 0 0 1-.9-4A8.5 8.5 0 0 1 12.5 3h.5a8.5 8.5 0 0 1 8 8v.5Z" />
+
+
+                                </svg>
+
+                                پیام‌ها
+
+                            </a>
+                        @endcan
+
+
+
+                        @can('access', ['referenceSite_create'])
+                            <a href="{{ route('referenceSite.create') }}"
+                                class="flex min-h-10 items-center gap-3 rounded-lg px-3 py-2 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] @if (Route::is('referenceSite.create')) bg-[#e9f7f1] font-bold text-[#11845f] @else text-[#687681] @endif"
+                                @if (Route::is('referenceSite.create')) data-active="true" @endif>
+
+                                <svg class="h-[17px] w-[17px]" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.8">
+
+
+                                    <path
+                                        d="M14 3h7v7M10 14 21 3M19 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h6" />
+
+
+                                </svg>
+
+                                سایت‌های مرجع
+
+                            </a>
+                        @endcan
+
+
+
+
+                    </div>
+
+                </div>
+
+
+
 
             </nav>
 
+
+
         </aside>
-        {{-- Sidebar --}}
+
+
 
         {{-- Content --}}
-        <section class="dashboard-content">
-            <div class="dashboard-content-inner">
+
+        <section
+            class="h-full min-w-0 flex-1 overflow-y-auto overflow-x-hidden px-0.5 pb-5 [scrollbar-color:#dce3e7_transparent] [scrollbar-width:thin] max-sm:px-0">
+
+
+
+            <div class="w-full min-w-0">
+
                 @yield('content')
+
             </div>
+
+
+
         </section>
-        {{-- Content --}}
+
+
 
     </main>
-    {{-- Dashboard --}}
+
+
 
     @include('app.bottomMenu')
 
+
+
+
     <script src="{{ asset('assets/js/app.js') }}" defer></script>
+
+
     <script src="{{ asset('assets/js/MultiSelect.js') }}" defer></script>
 
+
+
 </body>
+
+
 
 </html>
