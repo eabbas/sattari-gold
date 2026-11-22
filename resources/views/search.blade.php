@@ -3,15 +3,15 @@
 @section('content')
     <main class="w-11/12 max-w-[1700px] mx-auto my-4 md:my-6">
         <div class="text-[#71717a] text-xs mb-[18px]">خانه / <b class="text-[#333]">جستجو</b></div>
-        @if (Route::is('search.page'))
+        
             <div
-                class="items-end justify-between gap-2.5 mb-[18px] @if (!$title) hidden @else flex @endif">
+                class="items-end justify-between gap-2.5 mb-[18px] @if(!isset($title)) hidden @endif @if (isset($title) && !$title) hidden @else flex @endif">
                 <div>
-                    <h1 id="title" class="m-0 text-[18px] md:text-[22px]">نتایج جستجو برای " {{ $title }} "</h1>
+                    <h1 id="title" class="m-0 text-[18px] md:text-[22px]">نتایج جستجو برای " {{ isset($title) && $title }} "</h1>
                     <div id="resultCount" class="text-[#71717a] text-[13px]"></div>
                 </div>
             </div>
-        @endif
+      
 
         <div class="grid grid-cols-1 md:grid-cols-10 lg:gap-7 gap-4">
             <div class="fixed w-full h-dvh bg-black/50 z-99 top-0 right-0 md:hidden invisible opacity-0 transition-all duration-300"
@@ -45,7 +45,7 @@
                 </section>
                 <section class="p-[18px]">
                     <label class="flex items-center gap-2 my-3 text-[13px] text-[#52525b]">
-                        <input id="hadDiscount" class="accent-[#c3924d] w-[17px] h-[17px]" type="checkbox">
+                        <input id="hasDiscount" class="accent-[#c3924d] w-[17px] h-[17px]" type="checkbox">
                         تخفیف خورده
                     </label>
                 </section>
@@ -58,7 +58,6 @@
             </aside>
 
             <section class="min-w-0 lg:col-span-8 col-span-7">
-                @if (Route::is('search.page'))
                     <div class="w-full flex items-center gap-3 border-1 bg-white border-gray-200 rounded-xl mb-3">
                         <input type="text" class="w-full px-3.5 py-3 outline-none" id="searchInp">
                         <svg class="w-6 h-6 text-gray-600 ml-2.5 cursor-pointer" aria-hidden="true"
@@ -68,7 +67,6 @@
                                 d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
                         </svg>
                     </div>
-                @endif
                 <div
                     class="bg-white border border-[#e4e4e7] rounded-xl p-3 md:px-[15px] flex flex-col md:flex-row md:items-center justify-between gap-3 mb-3.5">
                     <div class="flex items-center gap-2 flex-wrap">
