@@ -215,7 +215,7 @@ orderBasket.addEventListener('click', () => {
                                 class="size-full object-cover" alt="">
                         </div>
                         <div class="w-full flex flex-col gap-2">
-                            <h3 class="font-bold text-gray-800 text-sm sm:text-base truncate in-fa">${prod.title}</h3>
+                            <h3 class="w-24 lg:w-40 font-bold text-gray-800 text-sm sm:text-base truncate in-fa">${prod.title}</h3>
                             <div>
 
                                 <p class="font-bold text-gray-800 text-sm sm:text-base in-fa price">${priceText}</p>
