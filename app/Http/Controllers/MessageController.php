@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Message;
 use App\Models\segment;
 use App\Models\segment_message;
-use App\Models\Status;
 use App\Models\logo;
 
 
