@@ -14,8 +14,8 @@ let resetFilters = document.getElementById('resetFilters')
 let timeout
 let searchInp = document.getElementById('searchInp')
 let title = document.getElementById('title')
-async function getFilters() {
-    await $.ajax({
+function getFilters() {
+    $.ajax({
         url: api + 'getFilters',
         type: "POST",
         dataType: "json",
@@ -39,9 +39,7 @@ async function getFilters() {
                             alt="${product.title}" loading="lazy"
                             class="w-full aspect-square object-contain rounded-lg bg-[#f8f8f8] block mb-3.5">
                         <h3 class="m-0 mb-2.5 text-[13px] leading-[1.9] h-[50px] overflow-hidden">${product.title}</h3>
-                        <div class="flex justify-between items-center mb-2.5 text-[11px]">
-                            <span>۴٫۹ ⭐</span><span class="text-[#f59e0b]">★★★★★</span>
-                        </div>`
+                        <div class="flex justify-between items-center mb-2.5 text-[11px]">`
                     if (product.primary_price) {
                         if (product.secondary_price) {
                             elements += `
@@ -117,7 +115,7 @@ maxPrice.addEventListener('keyup', () => {
         getFilters()
     }, 500)
 })
-searchInp.addEventListener('keyup', () => {
+searchInp.addEventListener('input', () => {
     clearTimeout(timeout)
     timeout = setTimeout(() => {
         if (searchInp.value !== '') {
@@ -134,8 +132,8 @@ searchInp.addEventListener('keyup', () => {
 //     filters.keyword = searchInput.value
 //     getFilters()
 // })
-hadDiscount.addEventListener('change', () => {
-    hadDiscount.checked ? filters.hadDiscount = 1 : filters.hadDiscount = 0
+hasDiscount.addEventListener('change', () => {
+    hasDiscount.checked ? filters.hasDiscount = 1 : filters.hasDiscount = 0
     getFilters()
 })
 exists.addEventListener('change', () => {
@@ -199,7 +197,7 @@ resetFilters.addEventListener('click', () => {
     })
     // minPrice.value = 0
     // maxPrice.value = ''
-    hadDiscount.checked = false
+    hasDiscount.checked = false
     exists.checked = false
     filterBg.classList.add('invisible')
     filterBg.classList.add('opacity-0')
