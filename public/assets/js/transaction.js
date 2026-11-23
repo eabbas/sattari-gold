@@ -55,7 +55,6 @@ function applyDealFilters() {
             'filters': dealFilters
         },
         success: function (data) {
-            console.log(data);
 
             let counter = 0;
             let bodyTable = document.querySelector('tbody');
