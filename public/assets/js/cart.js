@@ -83,15 +83,17 @@ function setCount(btn) {
     let product = localProducts.find(p => String(p.id) === String(productId))
     if (!product) return
 
-    let finalPrice = product.secondary_price ? product.secondary_price : product.primary_price
+    let finalPrice = product.secondary_price ? parseInt(product.secondary_price) : parseInt(product.primary_price)
 
     if (btn.dataset.state === '+') {
         btn.parentElement.children[1].value++
         product.quantity++
         totalCartQuantity++
         if (totalPriceEl) {
-            let currentPrice = parseInt(totalPriceEl.innerText) || 0
-            totalPriceEl.innerText = currentPrice + finalPrice
+            let currentPrice = parseInt(totalPriceEl.dataset.price) || 0
+            totalPriceEl.dataset.price = currentPrice + finalPrice
+            let newPrice = currentPrice + finalPrice
+            totalPriceEl.innerText = newPrice.toLocaleString('fa-IR')
         }
     }
 
@@ -100,8 +102,10 @@ function setCount(btn) {
         product.quantity--
         totalCartQuantity--
         if (totalPriceEl) {
-            let currentPrice = parseInt(totalPriceEl.innerText) || 0
-            totalPriceEl.innerText = currentPrice - finalPrice
+            let currentPrice = parseInt(totalPriceEl.dataset.price) || 0
+            totalPriceEl.dataset.price = currentPrice - finalPrice
+            let newPrice = currentPrice - finalPrice
+            totalPriceEl.innerText = newPrice.toLocaleString('fa-IR')
         }
     }
 
@@ -153,7 +157,7 @@ function setCount(btn) {
                     if (item.dataset.productId == productId) {
                         console.log('second-condition')
                         item.remove()
-                        location.assign(url+"home")
+                        location.assign(url)
                     }
                 })
             }
