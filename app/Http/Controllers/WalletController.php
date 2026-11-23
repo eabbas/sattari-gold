@@ -159,7 +159,7 @@ class WalletController extends Controller
             'time' => $time,
             'description' => $request->description
         ]);
-        return redirect()->back()->with('success', ' مبلغ ' . number_format($request->depositFee) . ' تومان پس از تایید به کیف پول شما افزوده خواهد شد.');
+        return redirect()->back()->with('success', ' مبلغ ' . $request->textFee . ' تومان پس از تایید به کیف پول شما افزوده خواهد شد.');
     }
 
     public function withdraw($request)
@@ -202,7 +202,7 @@ class WalletController extends Controller
             'time' => $time,
             'isApproved' => 0
         ]);
-        return redirect()->back()->with('failure', ' مبلغ ' . number_format($request->withdrawFee) . ' تومان پس از تایید از کیف پول شما کسر خواهد شد. ');
+        return redirect()->back()->with('failure', ' مبلغ ' . $request->textFee . ' تومان پس از تایید از کیف پول شما کسر خواهد شد. ');
     }
 
     public function transactions(Request $request)

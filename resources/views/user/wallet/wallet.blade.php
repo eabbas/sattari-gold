@@ -326,10 +326,39 @@
         let minWithdraw
         let maxWithdraw
 
-        function checkFee(state, el) {
-            let inputValue = Number(el.children[1].value)
+        function getNumericValue(value) {
+            return Number(
+                String(value)
+                .replace(/[۰-۹]/g, digit => '۰۱۲۳۴۵۶۷۸۹'.indexOf(digit))
+                .replace(/[٠-٩]/g, digit => '٠١٢٣٤٥٦٧٨٩'.indexOf(digit))
+                .replace(/[^\d]/g, '')
+            ) || 0;
+        }
 
+        function formatNumberInput(input) {
+            const value = String(input.value)
+                .replace(/[۰-۹]/g, digit => '۰۱۲۳۴۵۶۷۸۹'.indexOf(digit))
+                .replace(/[٠-٩]/g, digit => '٠١٢٣٤٥٦٧٨٩'.indexOf(digit))
+                .replace(/[^\d]/g, '');
+
+            input.value = value ? Number(value).toLocaleString('en-US') : '';
+        }
+
+        document.getElementById('transactionMethod').addEventListener('input', function(event) {
+            if (event.target.id === 'depositFee' || event.target.id === 'withdrawFee') {
+                formatNumberInput(event.target);
+            }
+        });
+
+        let input = document.createElement('input')
+        input.setAttribute('name', 'textFee')
+        input.setAttribute('type', 'hidden')
+
+        function checkFee(state, el) {
             el.querySelector('div').children[1].innerText = ""
+            el.querySelector('div').children[0].innerText = ""
+            if (el.children[1].value == '') return
+            let inputValue = getNumericValue(el.children[1].value);
 
             minDeposit = true
             maxDeposit = true
@@ -339,13 +368,13 @@
             if (state == 'deposit') {
                 if (inputValue < setting.minDepositAmount) {
                     el.querySelector('div').children[1].innerText =
-                        `حداقل مبلغ قابل واریز ${parseInt(setting.minDepositAmount).toLocaleString('fa-IR')} ریال است.`
+                        `حداقل مبلغ قابل واریز ${Math.floor(setting.minDepositAmount / 10).num2persian()} تومان است.`
                     minDeposit = false
                 }
 
                 if (inputValue > setting.maxDepositAmount) {
                     el.querySelector('div').children[1].innerText =
-                        `حداکثر مبلغ قابل واریز ${parseInt(setting.maxDepositAmount).toLocaleString('fa-IR')} ریال است.`
+                        `حداکثر مبلغ قابل واریز ${Math.floor(setting.maxDepositAmount / 10).num2persian()} تومان است.`
                     maxDeposit = false
                 }
             }
@@ -353,25 +382,21 @@
             if (state == 'withdraw') {
                 if (inputValue < setting.minWithdrawAmount) {
                     el.querySelector('div').children[1].innerText =
-                        `حداقل مبلغ قابل برداشت ${parseInt(setting.minWithdrawAmount).toLocaleString('fa-IR')} ریال است.`
+                        `حداقل مبلغ قابل برداشت ${Math.floor(setting.minWithdrawAmount / 10).num2persian()} تومان است.`
                     minWithdraw = false
                 }
 
                 if (inputValue > setting.maxWithdrawAmount) {
                     el.querySelector('div').children[1].innerText =
-                        `حداکثر مبلغ قابل برداشت ${parseInt(setting.maxWithdrawAmount).toLocaleString('fa-IR')} ریال است.`
+                        `حداکثر مبلغ قابل برداشت ${Math.floor(setting.maxWithdrawAmount / 10).num2persian()} تومان است.`
                     maxWithdraw = false
                 }
             }
 
-            let tomanPrice = Math.floor(parseInt(el.querySelector('input').value) / 10)
-
-            if (tomanPrice != 0 && tomanPrice != NaN && el.querySelector('input').value !== '') {
-                el.querySelector('div').children[0].innerText =
-                    'معادل ' + tomanPrice.toLocaleString('fa-IR') + ' تومان'
-            } else {
-                el.querySelector('div').children[0].innerText = ''
-            }
+            let tomanPrice = Math.floor(inputValue / 10)
+            el.querySelector('div').children[0].innerText =
+                'معادل ' + tomanPrice.num2persian() + ' تومان'
+            input.value = tomanPrice.num2persian()
         }
 
         function transactionMethod(state, el) {
@@ -412,7 +437,8 @@
 
                                         <input
                                             class="mt-2 w-full rounded-xl border border-[#E7E2D9] bg-white py-3.5 pr-4 pl-14 text-sm text-[#29251F] outline-none transition-all placeholder:text-[#A8A29E] focus:border-[#B88A3B] focus:ring-4 focus:ring-[#D6AD60]/10 in-fa"
-                                            type="number"
+                                            type="text"
+                                            inputmode="numeric"
                                             name="depositFee"
                                             id="depositFee"
                                             placeholder="مبلغ را به ریال وارد کنید"
@@ -550,7 +576,8 @@
 
                                     <input
                                         class="mt-2 w-full rounded-xl border border-[#E7E2D9] bg-white py-3.5 pr-4 pl-14 text-sm text-[#29251F] outline-none transition-all placeholder:text-[#A8A29E] focus:border-[#B88A3B] focus:ring-4 focus:ring-[#D6AD60]/10 in-fa"
-                                        type="number"
+                                        type="text"
+                                        inputmode="numeric"
                                         name="withdrawFee"
                                         id="withdrawFee"
                                         placeholder="مبلغ را به ریال وارد کنید"
@@ -588,26 +615,41 @@
         }
 
         function percents() {
-            let withdrawPercents = document.querySelectorAll('input[name="withdrawPercent"]')
-            let withdrawableBalance = document.getElementById('withdrawableBalance').dataset.balance
-            let feeInput = document.getElementById('withdrawFee')
+            let withdrawPercents = document.querySelectorAll('input[name="withdrawPercent"]');
+            let withdrawableBalance = parseInt(document.getElementById('withdrawableBalance').dataset.balance);
+            let feeInput = document.getElementById('withdrawFee');
 
             withdrawPercents.forEach(percent => {
                 percent.addEventListener('change', function() {
-                    let result = (parseInt(percent.value) / 100) * parseInt(withdrawableBalance)
-                    let value = Math.round(result)
+                    let result = (parseInt(percent.value) / 100) * withdrawableBalance;
+                    let value = Math.round(result);
 
-                    feeInput.value = value
-                    checkFee('withdraw', feeInput.parentElement)
-                })
+                    feeInput.value = value;
+
+                    formatNumberInput(feeInput);
+                    checkFee('withdraw', feeInput.parentElement);
+                });
             });
         }
 
+        document.getElementById('transactionMethod').addEventListener('input', function(event) {
+            if (event.target.id === 'withdrawFee') {
+                document.querySelectorAll('input[name="withdrawPercent"]').forEach(percent => {
+                    percent.checked = false;
+                });
+            }
+        });
+
         function submitBtn(e) {
-            e.preventDefault()
+            e.preventDefault();
 
             if (minDeposit && maxDeposit && minWithdraw && maxWithdraw) {
-                document.forms[0].submit()
+                document.querySelectorAll('#depositFee, #withdrawFee').forEach(input => {
+                    input.value = input.value.replace(/,/g, '');
+                });
+                document.forms[0].append(input);
+                document.forms[0].submit();
+
             }
         }
     </script>

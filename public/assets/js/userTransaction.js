@@ -147,39 +147,59 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 100)
 })
 
+
 function showTransaction(user, phoneNumber, dateTime, stateColor, stateTitle, type, amount, isApproved, transactionId, card, shaba, receipt = null) {
-    console.log(card)
-    console.log(shaba)
-    transactionPopup.classList.remove('invisible', 'opacity-0')
-    transactionControl.classList.remove('hidden')
-    transactionControl.dataset.transactionId = transactionId
-    if (isApproved != 0) {
-        transactionControl.classList.add('hidden')
+    transactionPopup.classList.remove('invisible', 'opacity-0');
+    transactionControl.classList.remove('hidden');
+
+    transactionControl.dataset.transactionId = transactionId;
+
+    const transactionActions = document.getElementById('transactionActions');
+    const transactionDealMessage = document.getElementById('transactionDealMessage');
+
+    // بررسی نوع تراکنش
+    const isDeal = ['خرید', 'فروش', 'buy', 'sell'].includes(type);
+
+    // نمایش متن یا دکمه‌های عملیات
+    if (isDeal) {
+        transactionActions.classList.add('hidden');
+        transactionDealMessage.classList.remove('hidden');
+    } else {
+        transactionActions.classList.remove('hidden');
+        transactionDealMessage.classList.add('hidden');
     }
 
-    document.getElementById('transactionPopupName').innerText = user
-    document.getElementById('transactionPopupPhoneNumber').innerText = phoneNumber
-    document.getElementById('transactionPopupDate').innerText = dateTime
-    document.getElementById('transactionPopupStatus').innerText = stateTitle
-    document.getElementById('transactionPopupStatus').classList.add('text-[' + stateColor + ']')
-    document.getElementById('transactionPopupType').innerText = type
-    document.getElementById('transactionPopupFee').innerText = parseInt(amount).toLocaleString('fa-IR')
-    // cardNumber.innerText = card !== "" ? card.replace(/(\d{4})(?=\d)/g, "$1 ") :'هنوز شماره کارت وارد نشده'
-    // shabaNumber.innerText = shaba !== "" ? shaba.replace(/(\d{4})(?=\d)/g, "$1 ") :'هنوز شماره شبا وارد نشده'
-    cardNumber.innerText = card !== "" ? card : 'هنوز شماره کارت وارد نشده'
-    shabaNumber.innerText = shaba !== "" ? shaba : 'هنوز شماره شبا وارد نشده'
-    let transactionPopupReceipt = document.getElementById('transactionPopupReceipt')
-    console.log(transactionPopupReceipt)
-    console.log(imgPath)
+    // تراکنش‌های تعیین تکلیف شده قابل تغییر نیستند
+    if (isApproved != 0) {
+        transactionControl.classList.add('hidden');
+    }
+
+    document.getElementById('transactionPopupName').innerText = user;
+    document.getElementById('transactionPopupPhoneNumber').innerText = phoneNumber;
+    document.getElementById('transactionPopupDate').innerText = dateTime;
+
+    const statusElement = document.getElementById('transactionPopupStatus');
+    statusElement.innerText = stateTitle;
+    statusElement.style.color = stateColor;
+
+    document.getElementById('transactionPopupType').innerText = type;
+    document.getElementById('transactionPopupFee').innerText = parseInt(amount).toLocaleString('fa-IR');
+
+    cardNumber.innerText = card !== "" ? card : 'هنوز شماره کارت وارد نشده';
+    shabaNumber.innerText = shaba !== "" ? shaba : 'هنوز شماره شبا وارد نشده';
+
+    let transactionPopupReceipt = document.getElementById('transactionPopupReceipt');
+
     if (type == 'واریز') {
-        transactionPopupReceipt.classList.remove('hidden')
-        transactionPopupReceipt.classList.add('flex')
-        transactionPopupReceipt.querySelector('img').src = imgPath + receipt
+        transactionPopupReceipt.classList.remove('hidden');
+        transactionPopupReceipt.classList.add('flex');
+        transactionPopupReceipt.querySelector('img').src = imgPath + receipt;
     } else {
-        transactionPopupReceipt.classList.add('hidden')
-        transactionPopupReceipt.classList.remove('flex')
+        transactionPopupReceipt.classList.add('hidden');
+        transactionPopupReceipt.classList.remove('flex');
     }
 }
+
 
 document.addEventListener('click', (e) => {
     let openPopup = document.querySelectorAll('.openPopup')
@@ -202,6 +222,86 @@ document.addEventListener('click', (e) => {
 
 })
 
+function transactionAct(isApproved) {
+    let transactionId = transactionControl.dataset.transactionId;
+    let rows = document.querySelector('tbody').querySelectorAll('tr');
+
+    $.ajax({
+        url: api + 'submitChanges',
+        type: "POST",
+        dataType: "json",
+        data: {
+            'transactionId': transactionId,
+            'isApproved': isApproved
+        },
+        success: function (response) {
+            rows.forEach(row => {
+                if (response.id == row.dataset.transactionId) {
+
+                    let counter = row.children[0].innerText;
+
+                    row.innerHTML = `
+                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center text-[#78716C] in-fa">
+                            ${counter}
+                        </td>
+
+                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
+                            <div
+                                class="w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-bold"
+                                style="color: ${response.typeColor}; border-color: ${response.typeColor}; background-color: ${response.typeColor}12;"
+                            >
+                                ${response.type}
+                            </div>
+                        </td>
+
+                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center font-bold text-[#29251F] in-fa">
+                            ${response.amount.toLocaleString('fa-IR')}
+                        </td>
+
+                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center text-[#78716C] in-fa">
+                            ${response.deal ? response.deal.goldWeight : '-'}
+                        </td>
+
+                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center text-[#78716C] whitespace-nowrap in-fa">
+                            ${response.time + ' | ' + response.date}
+                        </td>
+
+                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
+                            <span class="inline-block px-3 py-1.5 rounded-lg border border-[#E7E2D9] bg-[#F8F5EF] text-[#B88A3B] font-bold text-xs in-fa">
+                                ${'100' + response.id}
+                            </span>
+                        </td>
+
+                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
+                            <div
+                                class="min-w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-bold"
+                                style="border-color: ${response.stateColor}; color: ${response.stateColor}; background-color: #F8F5EF;"
+                            >
+                                ${response.stateTitle}
+                            </div>
+                        </td>
+
+                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
+                            <button
+                                onclick="showTransaction('${response.fullName}', '${response.wallet.user.phoneNumber}', '${response.time + ' | ' + response.date}', '${response.stateColor}', '${response.stateTitle}', '${response.type}', '${response.amount}', '${response.isApproved}', '${response.id}', '${response.card == undefined ? 'هنوز شماره کارت وارد نشده' : response.card}', '${response.shaba == undefined ? 'هنوز شماره شبا وارد نشده' : response.shaba}', '${response.receipt}')"
+                                class="w-full min-w-20 px-3 py-2 rounded-lg border border-[#D6AD60] bg-[#F8F5EF] text-[#B88A3B] font-bold hover:bg-[#B88A3B] hover:text-white transition-all duration-200 cursor-pointer"
+                            >
+                                مشاهده
+                            </button>
+                        </td>
+                    `;
+
+                    row.className = 'item_fayle text-xs lg:text-sm bg-white text-[#29251F] text-center transition-colors duration-200 hover:bg-[#FAF7F1]';
+
+                    transactionPopup.classList.add('invisible', 'opacity-0');
+                }
+            });
+        },
+        error: function () {
+            alert('failed to load data');
+        }
+    });
+}
 
 function sort(el) {
     if (el.dataset.sort == 'desc') {
