@@ -52,7 +52,7 @@
             <div class="grid md:grid-cols-2 gap-14 items-center">
 
                 <div>
-                    <span class="text-xs tracking-widest text-[#a9823e] font-medium">
+                    <span class="text-xs tracking-widest text-[#a9823e] font-bold">
                         درباره ما | ستاری گلد
                     </span>
 

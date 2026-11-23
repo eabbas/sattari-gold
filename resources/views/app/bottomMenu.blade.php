@@ -13,7 +13,7 @@
                 <path d="M5 9.5V20h14V9.5" />
                 <path d="M9 20v-6h6v6" />
             </svg>
-            <span class="text-xs font-medium">خانه</span>
+            <span class="text-xs font-bold">خانه</span>
         </a>
 
         <!-- محصولات -->
@@ -27,7 +27,7 @@
                 <path d="M12 11v10" />
                 <path d="m8 5 8 4" />
             </svg>
-            <span class="text-xs font-medium">محصولات</span>
+            <span class="text-xs font-bold">محصولات</span>
         </a>
 
         <!-- پروفایل -->
@@ -39,7 +39,7 @@
                 <circle cx="12" cy="8" r="4" />
                 <path d="M5 21v-2a7 7 0 0 1 14 0v2" />
             </svg>
-            <span class="text-xs font-medium">پروفایل</span>
+            <span class="text-xs font-bold">پروفایل</span>
         </a>
 
         <!-- سپرده طلا -->
@@ -53,7 +53,7 @@
                 <path d="M9 13h6" />
                 <path d="M10 16h4" />
             </svg>
-            <span class="text-xs font-medium">سپرده طلا</span>
+            <span class="text-xs font-bold">سپرده طلا</span>
         </a>
 
     </div>

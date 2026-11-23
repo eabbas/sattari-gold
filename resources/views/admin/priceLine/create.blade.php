@@ -30,7 +30,7 @@
                 @enderror
             </div>
 
-            <span class="text-sm font-medium text-gray-600 whitespace-nowrap">
+            <span class="text-sm font-bold text-gray-600 whitespace-nowrap">
                 ریال
             </span>
         </div>
@@ -46,7 +46,7 @@
         </div>
 
         <button type="submit"
-            class="h-11 px-6 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium transition-all">
+            class="h-11 px-6 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-sm font-bold transition-all">
             ذخیره تغییرات
         </button>
 

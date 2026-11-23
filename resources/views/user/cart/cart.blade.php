@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <a href="{{ route('cart.checkout') }}"
-                        class="w-full block text-center bg-gray-900 hover:bg-gray-800 text-white font-medium py-3 rounded-xl transition">
+                        class="w-full block text-center bg-gray-900 hover:bg-gray-800 text-white font-bold py-3 rounded-xl transition">
                         تکمیل خرید
                     </a>
                 </div>

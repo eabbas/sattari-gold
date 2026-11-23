@@ -5,8 +5,8 @@
 
     <style>
         /* =========================================
-                           SATTARI GOLD - CUSTOMERS PAGE REDESIGN
-                        ========================================= */
+                               SATTARI GOLD - CUSTOMERS PAGE REDESIGN
+                            ========================================= */
 
         :root {
             --user-bg: #F8F5EF;
@@ -642,9 +642,9 @@
 
 
         /* =========================================
-                           USERS LIST - TABLE & MOBILE REFINEMENT
-                           Keep native table-cell layout for stable columns.
-                        ========================================= */
+                               USERS LIST - TABLE & MOBILE REFINEMENT
+                               Keep native table-cell layout for stable columns.
+                            ========================================= */
         #confirmed_pending #confirmed,
         #confirmed_pending #pending {
             min-width: 0;
@@ -1031,7 +1031,7 @@
                                     <input
                                         class="appearance-none size-5 rounded-md border-1 border-(--border-dashboard) bg-white checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] indeterminate:bg-(--primary-dark-dashboard) indeterminate:after:content-['−'] text-white flex items-center justify-center text-sm cursor-pointer"
                                         type="checkbox" id="selectAllConfirmed">
-                                    <span class="text-xs md:text-base font-medium">انتخاب همه</span>
+                                    <span class="text-xs md:text-base font-bold">انتخاب همه</span>
                                 </label>
 
                                 <span class="text-xs md:text-sm text-gray-500">
@@ -1692,7 +1692,7 @@
                                     <input
                                         class="appearance-none size-5 rounded-md border-1 border-(--border-dashboard) bg-white checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer"
                                         type="checkbox" id="selectAllPending">
-                                    <span class="text-xs md:text-base font-medium">انتخاب همه</span>
+                                    <span class="text-xs md:text-base font-bold">انتخاب همه</span>
                                 </label>
 
                                 <span class="text-xs md:text-sm text-gray-500">

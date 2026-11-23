@@ -171,7 +171,7 @@ function applyDealFilters() {
                         ${escapeHtml(row.goldWeight)} گرم
                     </td>
 
-                    <td class="border border-[#E7E2D9] px-3 py-3 font-medium in-fa">
+                    <td class="border border-[#E7E2D9] px-3 py-3 font-bold in-fa">
                         ${Math.floor(Number(row.goldPrice)).toLocaleString('fa-IR')}
                     </td>
 

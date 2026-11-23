@@ -29,7 +29,7 @@
                     <div class="flex flex-col gap-2 md:col-span-3">
                         <label for="message" class="text-sm font-bold text-[#68717D]">متن پیام</label>
                         <textarea id="message" name="message" rows="4" required placeholder="متن پیام را وارد کنید..."
-                            class="w-full resize-y rounded-xl border border-(--border) bg-[#FAFBFD] px-4 py-3 text-sm font-medium leading-7 outline-none transition focus:border-(--active) focus:bg-white focus:ring-2 focus:ring-(--active)/10">{{ old('message') }}</textarea>
+                            class="w-full resize-y rounded-xl border border-(--border) bg-[#FAFBFD] px-4 py-3 text-sm font-bold leading-7 outline-none transition focus:border-(--active) focus:bg-white focus:ring-2 focus:ring-(--active)/10">{{ old('message') }}</textarea>
                     </div>
 
                     <div class="flex flex-col gap-2 md:col-span-1">
@@ -57,7 +57,7 @@
                                 <span
                                     class="absolute left-1 top-1 size-[20px] rounded-full bg-white shadow-md transition-all duration-300 peer-checked:translate-x-[22px]"></span>
                             </label>
-                            <span class="text-sm font-medium text-[#68717D]">نمایش پیام</span>
+                            <span class="text-sm font-bold text-[#68717D]">نمایش پیام</span>
                         </div>
                     </div>
                 </div>
@@ -112,7 +112,7 @@
                                         {{ $loop->iteration }}
                                     </td>
                                     <td
-                                        class="max-w-xl whitespace-normal break-words px-4 py-4 text-right font-medium leading-7 text-[#343B45]">
+                                        class="max-w-xl whitespace-normal break-words px-4 py-4 text-right font-bold leading-7 text-[#343B45]">
                                         {{ $mess->message }}
                                     </td>
                                     <td class="px-4 py-4 text-center">
@@ -216,7 +216,7 @@
                 <div class="flex flex-col gap-2">
                     <label for="popupMessage" class="text-sm font-bold text-[#68717D]">متن پیام</label>
                     <textarea name="popupMessage" id="popupMessage" rows="4" required
-                        class="w-full resize-y rounded-xl border border-(--border) bg-[#FAFBFD] px-4 py-3 text-sm font-medium leading-7 outline-none transition focus:border-(--active) focus:bg-white focus:ring-2 focus:ring-(--active)/10"></textarea>
+                        class="w-full resize-y rounded-xl border border-(--border) bg-[#FAFBFD] px-4 py-3 text-sm font-bold leading-7 outline-none transition focus:border-(--active) focus:bg-white focus:ring-2 focus:ring-(--active)/10"></textarea>
                 </div>
 
                 <div class="flex flex-col gap-2">
@@ -241,7 +241,7 @@
                             <span
                                 class="absolute left-1 top-1 size-[20px] rounded-full bg-white shadow-md transition-all duration-300 peer-checked:translate-x-[22px]"></span>
                         </label>
-                        <span class="text-sm font-medium text-[#68717D]">نمایش پیام</span>
+                        <span class="text-sm font-bold text-[#68717D]">نمایش پیام</span>
                     </div>
                 </div>
 
