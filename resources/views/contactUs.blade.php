@@ -114,7 +114,7 @@
 
                 </div>
 
-                <form action="#" method="POST" class="space-y-6">
+                <form action="{{ route('contactUs.store') }}" method="POST" class="space-y-6">
 
                     <!-- Name + Phone -->
                     <div class="grid sm:grid-cols-2 gap-5">
