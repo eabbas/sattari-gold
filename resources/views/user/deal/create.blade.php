@@ -514,23 +514,23 @@
 
                                 <tr class="border-b border-gray-100 text-gray-500">
 
-                                    <th class="py-3 px-2 font-medium">
+                                    <th class="py-3 px-2 font-bold">
                                         نوع / زمان
                                     </th>
 
-                                    <th class="py-3 px-2 font-medium">
+                                    <th class="py-3 px-2 font-bold">
                                         وضعیت
                                     </th>
 
-                                    <th class="py-3 px-2 font-medium">
+                                    <th class="py-3 px-2 font-bold">
                                         قیمت وقت طلا
                                     </th>
 
-                                    <th class="py-3 px-2 font-medium">
+                                    <th class="py-3 px-2 font-bold">
                                         وزن
                                     </th>
 
-                                    <th class="py-3 px-2 font-medium">
+                                    <th class="py-3 px-2 font-bold">
                                         مبلغ تراکنش
                                     </th>
 
@@ -652,7 +652,7 @@
                     </p>
 
                     <button type="button"
-                        class="w-full border border-red-200 text-brand-red py-2 rounded-xl text-sm font-medium hover:bg-red-50 transition">
+                        class="w-full border border-red-200 text-brand-red py-2 rounded-xl text-sm font-bold hover:bg-red-50 transition">
 
                         مشاهده گردش حساب
 
@@ -729,14 +729,14 @@
                     <div class="flex bg-gray-100 p-1 rounded-lg gap-1">
 
                         <button id="btnByPrice" type="button"
-                            class="flex-1 py-2 text-xs font-medium rounded-md transition-all duration-300 bg-white text-brand-red shadow-sm in-fa">
+                            class="flex-1 py-2 text-xs font-bold rounded-md transition-all duration-300 bg-white text-brand-red shadow-sm in-fa">
 
                             بر اساس مبلغ (ریال)
 
                         </button>
 
                         <button id="btnByWeight" type="button"
-                            class="flex-1 py-2 text-xs font-medium rounded-md transition-all duration-300 text-gray-500 hover:text-gray-700 in-fa">
+                            class="flex-1 py-2 text-xs font-bold rounded-md transition-all duration-300 text-gray-500 hover:text-gray-700 in-fa">
 
                             بر اساس وزن (گرم)
 

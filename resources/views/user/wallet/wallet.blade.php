@@ -7,7 +7,7 @@
         <div
             class="modal fixed top-6 right-4 sm:right-6 z-[9999999999] flex items-center gap-3 rounded-2xl border border-emerald-200 bg-white px-6 py-4 shadow-xl transition-all">
             <span class="flex size-9 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">✓</span>
-            <span class="text-sm font-medium text-[#29251F]">{{ session('success') }}</span>
+            <span class="text-sm font-bold text-[#29251F]">{{ session('success') }}</span>
         </div>
     @endif
 
@@ -15,7 +15,7 @@
         <div
             class="modal fixed top-6 right-4 sm:right-6 z-[9999999999] flex items-center gap-3 rounded-2xl border border-red-200 bg-white px-6 py-4 shadow-xl transition-all">
             <span class="flex size-9 items-center justify-center rounded-full bg-red-50 text-red-500">!</span>
-            <span class="text-sm font-medium text-[#29251F]">{{ session('failure') }}</span>
+            <span class="text-sm font-bold text-[#29251F]">{{ session('failure') }}</span>
         </div>
     @endif
 
@@ -422,7 +422,7 @@
                                         <span class="absolute left-4 top-[43px] text-xs font-normal text-[#78716C]">ریال</span>
 
                                         <div class="my-2 flex flex-col gap-1">
-                                            <span class="text-xs font-medium text-[#B88A3B]"></span>
+                                            <span class="text-xs font-bold text-[#B88A3B]"></span>
                                             <span class="text-xs text-red-500"></span>
                                         </div>
                                     </label>
@@ -560,7 +560,7 @@
                                     <span class="absolute left-4 top-[43px] text-xs font-normal text-[#78716C]">ریال</span>
 
                                     <div class="my-2 flex flex-col gap-1">
-                                        <span class="text-xs font-medium text-[#B88A3B]"></span>
+                                        <span class="text-xs font-bold text-[#B88A3B]"></span>
                                         <span class="text-xs text-red-500"></span>
                                     </div>
                                 </label>

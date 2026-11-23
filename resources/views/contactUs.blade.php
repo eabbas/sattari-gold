@@ -120,7 +120,7 @@
                     <div class="grid sm:grid-cols-2 gap-5">
 
                         <div>
-                            <label class="block text-xs font-medium mb-3">
+                            <label class="block text-xs font-bold mb-3">
                                 نام و نام خانوادگی
                             </label>
 
@@ -129,7 +129,7 @@
                         </div>
 
                         <div>
-                            <label class="block text-xs font-medium mb-3">
+                            <label class="block text-xs font-bold mb-3">
                                 شماره تماس
                             </label>
 
@@ -141,7 +141,7 @@
 
                     <!-- Email -->
                     <div>
-                        <label class="block text-xs font-medium mb-3">
+                        <label class="block text-xs font-bold mb-3">
                             ایمیل
                             <span class="text-[#b7ad9d]">(اختیاری)</span>
                         </label>
@@ -152,7 +152,7 @@
 
                     <!-- Subject -->
                     <div>
-                        <label class="block text-xs font-medium mb-3">
+                        <label class="block text-xs font-bold mb-3">
                             موضوع پیام
                         </label>
 
@@ -170,7 +170,7 @@
 
                     <!-- Message -->
                     <div>
-                        <label class="block text-xs font-medium mb-3">
+                        <label class="block text-xs font-bold mb-3">
                             متن پیام
                         </label>
 

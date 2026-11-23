@@ -213,7 +213,7 @@
                         محصولات ما
                     </h2>
 
-                    <p class="text-xs font-medium text-gray-500 sm:text-sm">
+                    <p class="text-xs font-bold text-gray-500 sm:text-sm">
                         با اطمینان سرمایه‌گذاری کنید
                     </p>
                 </div>
@@ -500,7 +500,7 @@
                     نظرات کاربران
                 </h2>
 
-                <p class="mt-2 text-xs font-medium text-gray-500 sm:text-sm">
+                <p class="mt-2 text-xs font-bold text-gray-500 sm:text-sm">
                     اعتماد شما بزرگترین سرمایه ماست
                 </p>
 

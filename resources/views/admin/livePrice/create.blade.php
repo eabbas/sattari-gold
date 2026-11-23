@@ -281,7 +281,7 @@
 
 
                             <span id="referenceStatus"
-                                class="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-[9px] py-[5px] text-[11px] font-semibold {{ $price?->update_mode === 'automatic' ? 'bg-green-100 text-green-700' : 'bg-stone-100 text-stone-500' }}">
+                                class="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-[9px] py-[5px] text-[11px] font-bold {{ $price?->update_mode === 'automatic' ? 'bg-green-100 text-green-700' : 'bg-stone-100 text-stone-500' }}">
                                 <span
                                     class="size-1.5 rounded-full {{ $price?->update_mode === 'automatic' ? 'bg-green-500' : 'bg-stone-400' }}"></span>
                                 {{ $price?->update_mode === 'automatic' ? 'دریافت موفق' : 'هنوز دریافت نشده' }}
@@ -868,7 +868,7 @@
 
                     referenceStatus.className =
 
-                        'inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-[9px] py-[5px] text-[11px] font-semibold bg-green-100 text-green-700';
+                        'inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-[9px] py-[5px] text-[11px] font-bold bg-green-100 text-green-700';
 
 
 
@@ -888,7 +888,7 @@
 
                     referenceStatus.className =
 
-                        'inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-[9px] py-[5px] text-[11px] font-semibold bg-stone-100 text-stone-500';
+                        'inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-[9px] py-[5px] text-[11px] font-bold bg-stone-100 text-stone-500';
 
 
 

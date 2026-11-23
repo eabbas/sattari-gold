@@ -75,7 +75,7 @@ function applyDealFilters() {
                         ${counter}
                     </td>
 
-                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center font-medium text-[#29251F]">
+                    <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center font-bold text-[#29251F]">
                         ${row.fullName}
                     </td>
 
@@ -85,7 +85,7 @@ function applyDealFilters() {
 
                     <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
                         <div
-                            class="w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-medium"
+                            class="w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-bold"
                             style="color: ${row.typeColor}; border-color: ${row.typeColor}; background-color: ${row.typeColor}12;"
                         >
                             ${row.type}
@@ -105,14 +105,14 @@ function applyDealFilters() {
                     </td>
 
                     <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
-                        <span class="inline-block px-3 py-1.5 rounded-lg border border-[#E7E2D9] bg-[#F8F5EF] text-[#B88A3B] font-medium text-xs in-fa">
+                        <span class="inline-block px-3 py-1.5 rounded-lg border border-[#E7E2D9] bg-[#F8F5EF] text-[#B88A3B] font-bold text-xs in-fa">
                             ${'100' + row.id}
                         </span>
                     </td>
 
                     <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
                         <div
-                            class="min-w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-medium"
+                            class="min-w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-bold"
                             style="border-color: ${row.stateColor}; color: ${row.stateColor}; background-color: #F8F5EF;"
                         >
                             ${row.stateTitle}
@@ -122,7 +122,7 @@ function applyDealFilters() {
                     <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
                         <button
                             onclick="showTransaction('${row.wallet.user.name + ' ' + row.wallet.user.family}', '${row.wallet.user.phoneNumber}', '${row.time + ' | ' + row.date}', '${row.stateColor}', '${row.stateTitle}', '${row.type}', '${row.amount}', '${row.isApproved}', '${row.id}', '${row.card == undefined ? 'هنوز شماره کارت وارد نشده' : row.card}', '${row.shaba == undefined ? 'هنوز شماره شبا وارد نشده' : row.shaba}', '${row.receipt}')"
-                            class="w-full min-w-20 px-3 py-2 rounded-lg border border-[#D6AD60] bg-[#F8F5EF] text-[#B88A3B] font-medium hover:bg-[#B88A3B] hover:text-white transition-all duration-200 cursor-pointer"
+                            class="w-full min-w-20 px-3 py-2 rounded-lg border border-[#D6AD60] bg-[#F8F5EF] text-[#B88A3B] font-bold hover:bg-[#B88A3B] hover:text-white transition-all duration-200 cursor-pointer"
                         >
                             مشاهده
                         </button>
@@ -242,7 +242,7 @@ function transactionAct(isApproved) {
                             ${counter}
                         </td>
 
-                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center font-medium text-[#29251F]">
+                        <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center font-bold text-[#29251F]">
                             ${response.fullName}
                         </td>
 
@@ -252,7 +252,7 @@ function transactionAct(isApproved) {
 
                         <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
                             <div
-                                class="w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-medium"
+                                class="w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-bold"
                                 style="color: ${response.typeColor}; border-color: ${response.typeColor}; background-color: ${response.typeColor}12;"
                             >
                                 ${response.type}
@@ -272,14 +272,14 @@ function transactionAct(isApproved) {
                         </td>
 
                         <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
-                            <span class="inline-block px-3 py-1.5 rounded-lg border border-[#E7E2D9] bg-[#F8F5EF] text-[#B88A3B] font-medium text-xs in-fa">
+                            <span class="inline-block px-3 py-1.5 rounded-lg border border-[#E7E2D9] bg-[#F8F5EF] text-[#B88A3B] font-bold text-xs in-fa">
                                 ${'100' + response.id}
                             </span>
                         </td>
 
                         <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
                             <div
-                                class="min-w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-medium"
+                                class="min-w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-bold"
                                 style="border-color: ${response.stateColor}; color: ${response.stateColor}; background-color: #F8F5EF;"
                             >
                                 ${response.stateTitle}
@@ -289,7 +289,7 @@ function transactionAct(isApproved) {
                         <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
                             <button
                                 onclick="showTransaction('${response.fullName}', '${response.wallet.user.phoneNumber}', '${response.time + ' | ' + response.date}', '${response.stateColor}', '${response.stateTitle}', '${response.type}', '${response.amount}', '${response.isApproved}', '${response.id}', '${response.card == undefined ? 'هنوز شماره کارت وارد نشده' : response.card}', '${response.shaba == undefined ? 'هنوز شماره شبا وارد نشده' : response.shaba}', '${response.receipt}')"
-                                class="w-full min-w-20 px-3 py-2 rounded-lg border border-[#D6AD60] bg-[#F8F5EF] text-[#B88A3B] font-medium hover:bg-[#B88A3B] hover:text-white transition-all duration-200 cursor-pointer"
+                                class="w-full min-w-20 px-3 py-2 rounded-lg border border-[#D6AD60] bg-[#F8F5EF] text-[#B88A3B] font-bold hover:bg-[#B88A3B] hover:text-white transition-all duration-200 cursor-pointer"
                             >
                                 مشاهده
                             </button>
