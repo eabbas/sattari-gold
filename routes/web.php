@@ -21,6 +21,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PriceLineController;
 use App\Http\Controllers\ReferenceSitesController;
 use App\Http\Controllers\TransactionConfirmTimeController;
+use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\TransactionSettingController;
 use App\Http\Middleware\checkAccess;
 use App\Http\Middleware\checkIsActive;
@@ -373,6 +374,16 @@ Route::group([
 ], function () {
     Route::get('/create', 'create')->name('create');
     Route::post('/store', 'store')->name('store');
+});
+
+Route::group([
+    'as' => 'contactUs.',
+    'prefix' => 'contactUs',
+    'controller' => ContactUsController::class,
+    'middleware' => checkAccess::class
+], function () {
+    Route::post('/store', 'store')->name('store');
+    Route::get('/list', 'list')->name('list');
 });
 
 // fallback and missing
