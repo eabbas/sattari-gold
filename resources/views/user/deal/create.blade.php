@@ -398,18 +398,6 @@
 
                 </div>
 
-                <div class="bg-gray-50/70 px-4 py-2.5 flex justify-between items-center text-[10px] text-gray-400">
-
-                    <span>
-                        قیمت‌ها بر اساس هر گرم
-                    </span>
-
-                    <span>
-                        واحد محاسبه: ریال
-                    </span>
-
-                </div>
-
             </div>
 
 
@@ -421,10 +409,6 @@
                     <h3 class="font-bold text-sm text-gray-800">
                         دارایی‌های من
                     </h3>
-
-                    <span class="text-[10px] text-gray-400">
-                        موجودی حساب
-                    </span>
 
                 </div>
 
@@ -666,180 +650,165 @@
     </div>
 
     {{-- Deal Popup --}}
-    <div class="fixed inset-0 w-full h-dvh bg-black/50 backdrop-blur-[2px] transition-all duration-300 invisible opacity-0 z-999"
-        id="dealBlock">
-
-        <div class="w-full h-full relative">
-
-            <form action="{{ route('deal.store') }}" method="POST"
-                class="w-[calc(100%-24px)] max-w-xl max-h-[85dvh] overflow-y-auto absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 bg-white rounded-2xl shadow-2xl border border-gray-100"
-                id="mainBlock">
-
+    <div id="dealBlock"
+        class="fixed inset-0 z-[999] invisible pointer-events-none opacity-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300">
+        <div class="flex min-h-full w-full items-center justify-center overflow-y-auto p-3 sm:p-5">
+            <form action="{{ route('deal.store') }}" method="POST" id="mainBlock" role="dialog" aria-modal="true"
+                aria-labelledby="dealPopupTitle"
+                class="my-auto flex max-h-[calc(100dvh-24px)] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-2xl transition-all duration-300 sm:max-h-[85dvh]"
+                onclick="event.stopPropagation()">
                 @csrf
 
                 <input type="hidden" name="goldPrice" id="goldPrice">
-
                 <input type="hidden" name="action" id="actionInp">
-
                 <input type="hidden" name="calcBy" id="calcBy">
+                <input type="hidden" name="userInput" id="userInput">
+                <input type="hidden" name="resultOutput" id="resultOutput">
 
-                {{-- Popup Header --}}
+                {{-- Header --}}
                 <div
-                    class="flex justify-between items-center px-4 py-3 border-b border-gray-100 sticky top-0 bg-white z-10">
+                    class="sticky top-0 z-10 flex shrink-0 items-center justify-between border-b border-gray-100 bg-white px-4 py-3">
+                    <h2 id="dealPopupTitle" class="text-sm font-bold text-gray-800">
+                        ثبت معامله
+                    </h2>
 
-                    <button type="button"
-                        class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-50 text-gray-500 hover:bg-gray-100 transition cursor-pointer"
-                        onclick="closeBlock()">
-
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button type="button" onclick="closeBlock()" aria-label="بستن پنجره"
+                        class="flex h-9 w-9 items-center justify-center rounded-lg text-gray-400 transition hover:bg-gray-100 hover:text-gray-700">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M6 18L18 6M6 6l12 12" />
                         </svg>
-
                     </button>
-
-                    <h1 class="font-bold text-base text-gray-800" id="dealPopupTitle">
-                        فروش آبشده نقدی
-                    </h1>
-
                 </div>
 
-                <div class="p-4 flex flex-col gap-3">
+                {{-- Content --}}
+                <div class="flex flex-col gap-4 overflow-y-auto p-4">
 
                     {{-- Gold Price --}}
-                    <div class="border border-red-100 rounded-xl overflow-hidden bg-red-50/40">
-                        <div class="px-3 py-3 flex justify-between items-center">
-                            <div class="flex flex-col gap-1">
-                                <span class="text-xs text-gray-500">
-                                    قیمت هر گرم در این معامله
-                                </span>
+                    <div class="flex items-center justify-between rounded-xl border border-gray-100 bg-gray-50 px-3 py-3">
+                        <div>
+                            <p class="mb-1 text-xs text-gray-500">
+                                قمیت لحظه ای طلا
+                            </p>
 
-                                <span id="popupPricePerGram" class="font-bold text-base text-gray-800 in-fa">
-                                    -
-                                </span>
+                            <p id="popupPricePerGram" class="font-bold text-base text-gray-800 in-fa">
+                                -
+                            </p>
+                        </div>
+
+                        <span class="text-[10px] text-gray-400">
+                            ریال
+                        </span>
+                    </div>
+
+                    {{-- Balance --}}
+                    <div class="flex flex-col gap-3 rounded-xl border border-gray-100 p-3">
+                        <div class="flex items-center justify-between gap-2">
+                            <span id="balanceTitle" class="text-xs text-gray-500">
+                                موجودی کیف پول شما
+                            </span>
+
+                            <span id="balanceValue" class="text-sm font-bold text-gray-800 in-fa">
+                                -
+                            </span>
+                        </div>
+
+                        <div>
+
+                            <div class="grid grid-cols-4 gap-2">
+                                <button type="button" data-percent="25"
+                                    class="percent-btn rounded-lg border border-gray-200 py-2 text-xs font-semibold text-gray-600 transition hover:border-brand-red hover:text-brand-red">
+                                    ۲۵٪
+                                </button>
+
+                                <button type="button" data-percent="50"
+                                    class="percent-btn rounded-lg border border-gray-200 py-2 text-xs font-semibold text-gray-600 transition hover:border-brand-red hover:text-brand-red">
+                                    ۵۰٪
+                                </button>
+
+                                <button type="button" data-percent="75"
+                                    class="percent-btn rounded-lg border border-gray-200 py-2 text-xs font-semibold text-gray-600 transition hover:border-brand-red hover:text-brand-red">
+                                    ۷۵٪
+                                </button>
+
+                                <button type="button" data-percent="100"
+                                    class="percent-btn rounded-lg border border-gray-200 py-2 text-xs font-semibold text-gray-600 transition hover:border-brand-red hover:text-brand-red">
+                                    ۱۰۰٪
+                                </button>
                             </div>
+                        </div>
+                    </div>
 
-                            <span class="text-[10px] text-gray-400">
+                    {{-- Amount Input --}}
+                    <div>
+                        <label for="amountInput" class="mb-2 block text-xs font-semibold text-gray-600">
+                            مبلغ معامله
+                        </label>
+
+                        <div
+                            class="flex overflow-hidden rounded-xl border border-gray-200 bg-white transition focus-within:border-brand-red focus-within:ring-2 focus-within:ring-brand-red/10">
+                            <input type="text" id="amountInput" inputmode="numeric" autocomplete="off"
+                                placeholder="مبلغ را وارد کنید" dir="ltr"
+                                class="w-full min-w-0 bg-transparent px-3 py-3 text-left text-base font-bold text-gray-800 outline-none in-fa">
+
+                            <span
+                                class="flex shrink-0 items-center border-r border-gray-100 bg-gray-50 px-3 text-xs text-gray-500">
                                 ریال
+                            </span>
+                        </div>
+
+                        <p id="tomanEquivalent" class="mt-2 min-h-5 text-[11px] text-gray-400 in-fa"></p>
+                    </div>
+
+                    {{-- Weight Input --}}
+                    <div>
+                        <label for="weightInput" class="mb-2 block text-xs font-semibold text-gray-600">
+                            وزن طلا
+                        </label>
+
+                        <div
+                            class="flex overflow-hidden rounded-xl border border-gray-200 bg-white transition focus-within:border-brand-red focus-within:ring-2 focus-within:ring-brand-red/10">
+                            <input type="text" id="weightInput" inputmode="decimal" autocomplete="off"
+                                placeholder="وزن را وارد کنید" dir="ltr"
+                                class="w-full min-w-0 bg-transparent px-3 py-3 text-left text-base font-bold text-gray-800 outline-none in-fa">
+
+                            <span
+                                class="flex shrink-0 items-center border-r border-gray-100 bg-gray-50 px-3 text-xs text-gray-500">
+                                گرم
                             </span>
                         </div>
                     </div>
 
-                    {{-- Calculation Mode --}}
-                    <div class="flex bg-gray-100 p-1 rounded-lg gap-1">
-
-                        <button id="btnByPrice" type="button"
-                            class="flex-1 py-2 text-xs font-bold rounded-md transition-all duration-300 bg-white text-brand-red shadow-sm in-fa">
-
-                            بر اساس مبلغ (ریال)
-
-                        </button>
-
-                        <button id="btnByWeight" type="button"
-                            class="flex-1 py-2 text-xs font-bold rounded-md transition-all duration-300 text-gray-500 hover:text-gray-700 in-fa">
-
-                            بر اساس وزن (گرم)
-
-                        </button>
-
-                    </div>
-
-                    {{-- Wallet Balance --}}
-                    <div class="flex justify-between items-center px-1 text-xs">
-
-                        <span class="text-gray-500">
-                            موجودی کیف پول شما:
-                        </span>
-
-                        <span class="font-bold text-gray-700 in-fa">
-                            {{ number_format($asset) }} ریال
-                        </span>
-
-                    </div>
-
-                    {{-- Input --}}
-                    <div>
-
-                        <div id="inputContainer"
-                            class="flex border border-gray-200 rounded-lg overflow-hidden focus-within:border-brand-red focus-within:ring-1 focus-within:ring-brand-red transition bg-white">
-
-                            <input type="number" id="userInput" name="userInput" step="0.0001" min="0"
-                                placeholder="مبلغ کل (ریال)"
-                                class="w-full min-w-0 bg-transparent px-3 py-3 focus:outline-none text-left font-bold text-base in-fa"
-                                dir="ltr">
-
-                            <div id="inputUnit"
-                                class="bg-gray-50 px-3 border-r border-gray-200 text-gray-500 text-xs flex items-center justify-center in-fa">
-
-                                ریال
-
-                            </div>
-
-                        </div>
-
-                        <p id="priceBlock" class="text-xs text-gray-400 mt-1.5 in-fa"></p>
-
-                        <p id="inputError" class="text-[11px] text-red-500 mt-1.5 hidden">
-                            خطا در ورود اطلاعات
-                        </p>
-
-                    </div>
-
-                    {{-- Result --}}
-                    <div>
-
-                        <div class="flex border border-gray-200 rounded-lg overflow-hidden bg-gray-50">
-
-                            <input type="text" id="resultOutput" name="resultOutput" readonly placeholder="وزن (گرم)"
-                                class="w-full min-w-0 bg-transparent px-3 py-3 focus:outline-none text-left font-bold text-brand-red text-base in-fa"
-                                dir="ltr">
-
-                            <div id="resultUnit"
-                                class="bg-gray-100 px-3 border-r border-gray-200 text-gray-500 text-xs flex items-center justify-center in-fa">
-
-                                گرم
-
-                            </div>
-
-                        </div>
-
-                    </div>
+                    {{-- Error --}}
+                    <p id="inputError" class="hidden rounded-lg bg-red-50 px-3 py-2 text-xs leading-6 text-red-600"></p>
 
                     {{-- Limits --}}
-                    <div class="flex justify-between items-center text-[11px] text-gray-400 px-1">
-
-                        <span>
-                            حداکثر مجاز: ۲۰۰ گرم
-                        </span>
-
-                        <span>
-                            حداقل مجاز: ۰.۰۰۰۱ گرم
-                        </span>
-
+                    <div class="flex items-center justify-between gap-2 text-[10px] text-gray-400">
+                        <span>حداکثر مجاز: ۲۰۰ گرم</span>
+                        <span>حداقل مجاز: ۰.۰۰۰۱ گرم</span>
                     </div>
 
                     {{-- Description --}}
                     <div>
+                        <label for="dealDescription" class="mb-2 block text-xs font-semibold text-gray-600">
+                            توضیحات
+                            <span class="font-normal text-gray-400">(اختیاری)</span>
+                        </label>
 
-                        <textarea rows="2" placeholder="توضیحات (اختیاری)" name="description"
-                            class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition resize-none in-fa"></textarea>
-
+                        <textarea id="dealDescription" name="description" rows="2" placeholder="توضیحات خود را وارد کنید..."
+                            class="w-full resize-none rounded-xl border border-gray-200 px-3 py-2.5 text-sm outline-none transition focus:border-brand-red focus:ring-2 focus:ring-brand-red/10 in-fa"></textarea>
                     </div>
-
-                    {{-- Submit --}}
-                    <button id="submitBtn" type="submit" disabled
-                        class="w-full bg-gray-300 text-gray-500 font-bold text-sm py-3 rounded-lg cursor-not-allowed transition duration-300">
-
-                        ثبت معامله
-
-                    </button>
-
                 </div>
 
+                {{-- Footer --}}
+                <div class="shrink-0 border-t border-gray-100 bg-white p-4">
+                    <button type="submit" id="submitBtn" disabled
+                        class="w-full cursor-not-allowed rounded-xl bg-gray-200 py-3 text-sm font-bold text-gray-400 transition duration-200">
+                        ثبت معامله
+                    </button>
+                </div>
             </form>
-
         </div>
-
     </div>
 
     <script>
