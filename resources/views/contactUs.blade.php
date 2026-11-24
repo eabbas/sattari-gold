@@ -61,6 +61,11 @@
     </style>
 
 
+    <div class="fixed top-1/8 right-1/2 translate-x-1/2 px-3 py-1.5 border-1 border-gray-100 rounded-md bg-white shadow-lg @if(!session('success')) hidden @endif" id="successMessage">
+        <p class="text-sm text-[#a9823e]">پیام شما با موفقیت ارسال شد.</p>
+    </div>
+
+
     <!-- HERO -->
     <section class="contact-bg overflow-hidden">
         <div class="max-w-7xl mx-auto px-5 md:px-10 py-20 md:py-24">
@@ -115,22 +120,24 @@
                 </div>
 
                 <form action="{{ route('contactUs.store') }}" method="POST" class="space-y-6">
-
+                    @csrf
                     <!-- Name + Phone -->
                     <div class="grid sm:grid-cols-2 gap-5">
 
                         <div>
-                            <label class="block text-xs font-bold mb-3">
+                            <label class="flex text-xs font-bold mb-3">
                                 نام و نام خانوادگی
+                                <span class="text-red-500">*</span>
                             </label>
 
-                            <input type="text" name="name" placeholder="مثلاً محمد افتخاری" class="form-input"
+                            <input type="text" name="fullName" placeholder="مثلاً محمد افتخاری" class="form-input"
                                 required>
                         </div>
 
                         <div>
                             <label class="block text-xs font-bold mb-3">
                                 شماره تماس
+                                <span class="text-red-500">*</span>
                             </label>
 
                             <input type="tel" name="phone" placeholder="09xxxxxxxxx" class="form-input" dir="ltr"
@@ -157,7 +164,7 @@
                         </label>
 
                         <select name="subject" class="form-input">
-                            <option value="" disabled selected>
+                            <option value="empty" disabled selected>
                                 موضوع مورد نظر را انتخاب کنید
                             </option>
                             <option value="product">مشاوره خرید محصول</option>
@@ -172,6 +179,7 @@
                     <div>
                         <label class="block text-xs font-bold mb-3">
                             متن پیام
+                            <span class="text-red-500">*</span>
                         </label>
 
                         <textarea name="message" rows="5" placeholder="چطور می‌توانیم به شما کمک کنیم؟" class="form-input resize-none"
