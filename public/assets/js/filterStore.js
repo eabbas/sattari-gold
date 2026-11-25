@@ -39,22 +39,22 @@ function getFilters() {
                             alt="${product.title}" loading="lazy"
                             class="w-full aspect-square object-contain rounded-lg bg-[#f8f8f8] block mb-3.5">
                         <h3 class="m-0 mb-2.5 text-[13px] leading-[1.9] h-[50px] overflow-hidden">${product.title}</h3>
-                        <div class="flex justify-between items-center mb-2.5 text-[11px]">`
+                        <div class="flex flex-col mb-2.5 text-[11px]">`
                     if (product.primary_price) {
                         if (product.secondary_price) {
                             elements += `
                                     <div class="flex items-center justify-between gap-2">
-                                        <strong class="text-[15px] in-fa">${product.secondary_price}</strong>
+                                        <strong class="text-[15px] in-fa">${product.secondary_price.toLocaleString('fa-IR')}</strong>
                                         <span
                                             class="text-[10px] text-[#71717a]">ریال
                                         </span>
                                     </div>
-                                    <div class="line-through text-[#a1a1aa] text-[10px] in-fa">${product.primary_price} ریال</div>
+                                    <div class="line-through text-[#a1a1aa] text-[10px] in-fa">${product.primary_price.toLocaleString('fa-IR')} ریال</div>
                                 `
                         } else {
                             elements += `
                                 <div class= "flex items-center justify-between gap-2" >
-                                    <strong class="text-[15px] in-fa">${product.primary_price}</strong>
+                                    <strong class="text-[15px] in-fa">${product.primary_price.toLocaleString('fa-IR')}</strong>
                                     <span
                                         class="text-[10px] text-[#71717a]">ریال
                                     </span>
@@ -82,7 +82,6 @@ function getFilters() {
         }
     })
 }
-window.filters = window.filters || {}
 categories.forEach(category => {
     category.addEventListener('change', () => {
         let categoryObj = {}
@@ -122,9 +121,20 @@ searchInp.addEventListener('input', () => {
             title.parentElement.parentElement.classList.remove('hidden')
         } else {
             title.parentElement.parentElement.classList.add('hidden')
+            filters = {
+                'keyword': null,
+                'exists': null,
+                'fromPrice': 0,
+                'toPrice': null,
+                'sortType': 'desc',
+                'sortBy': 'created_at',
+                'page': 1,
+                'category': null,
+            }
         }
         title.innerText = 'نتایج جستجو برای "' + searchInp.value + '"'
         filters.keyword = searchInp.value
+        console.log()
         getFilters()
     }, 500)
 })
@@ -173,7 +183,7 @@ resetFilters.addEventListener('click', () => {
     filters = {
         'keyword': null,
         'writer': null,
-        'exists': 1,
+        'exists': null,
         'fromPrice': 0,
         'toPrice': null,
         'sortType': 'desc',

@@ -18,14 +18,14 @@ class SearchController extends Controller
     {
         $filters = $request->input('filters');
         $category = $filters['category'] ?? null;
-        $exists = $filters['exists'] ?? 1;
-        $hadDiscount = $filters['hadDiscount'] ?? 0;
+        $exists = $filters['exists'] ?? null;
+        $hasDiscount = $filters['hasDiscount'] ?? null;
         $fromPrice = $filters['fromPrice'] ?? 0;
         $toPrice = $filters['toPrice'] ?? null;
         $sortType = $filters['sortType'] ?? 'desc';
         $sortBy = $filters['sortBy'] ?? 'created_at';
         $keyword = $filters['keyword'] ?? null;
-        $products = product::where(function ($query) use ($exists, $hadDiscount, $fromPrice, $toPrice) {
+        $products = product::where(function ($query) use ($exists, $hasDiscount, $fromPrice, $toPrice) {
             if ($fromPrice && !$toPrice) {
                 $query->where('products.primary_price', '>=', $fromPrice);
             }
@@ -38,7 +38,7 @@ class SearchController extends Controller
             if ($exists == 1) {
                 $query->where('products.count', '!=', 0);
             }
-            if ($hadDiscount == 1) {
+            if ($hasDiscount == 1) {
                 $query->whereNotNull('products.secondary_price');
             }
         });
