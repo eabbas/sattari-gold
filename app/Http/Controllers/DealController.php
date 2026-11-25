@@ -22,11 +22,7 @@ class DealController extends Controller
     {
         $logo = logo::first();
         $totalGoldWeight = 0;
-        if (count(Auth::user()->deals)) {
-            foreach (Auth::user()->deals as $deal) {
-                $totalGoldWeight += $deal->goldWeight;
-            }
-        }
+        isset(Auth::user()->wallet) ? $totalGoldWeight = Auth::user()->wallet->goldWeight : $totalGoldWeight = 0;
         $asset = 0;
         if (Auth::user()->wallet) {
             $asset = Auth::user()->wallet->asset;
