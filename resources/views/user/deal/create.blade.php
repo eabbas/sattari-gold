@@ -467,8 +467,7 @@
                         </div>
 
                         <div class="font-bold text-sm text-gray-800 in-fa">
-                            {{-- {{ $totalGoldWeight }} --}}
-                            {{ Auth::user()->wallet['goldWeight'] }}
+                            {{ $totalGoldWeight }}
                         </div>
 
                         <span class="text-[10px] text-gray-400 mt-1 block">

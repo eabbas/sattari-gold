@@ -54,7 +54,6 @@ class DealController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $dateTime = explode(' ', now());
         $dateJalali = verta($dateTime[0]);
         $date = explode(' ', $dateJalali);
@@ -76,8 +75,9 @@ class DealController extends Controller
 
         $amount = 0;
         $weight = 0;
-        $totalAsset = $wallet->asset;
-        $totalGold = $wallet->goldWeight ?? 0;
+        // accept method
+        // $totalAsset = $wallet->asset;
+        // $totalGold = $wallet->goldWeight ?? 0;
 
         $cleanOutput = (float) str_replace(',', '', $output);
 
@@ -140,13 +140,15 @@ class DealController extends Controller
                 $weight = (float) $input;
                 $amount = $cleanOutput;
             }
+            // amount = final price
 
             if (($wallet->goldWeight ?? 0) < $weight) {
                 return redirect()->back()->with('failure', 'موجودی سپرده طلای شما کافی نیست.');
             }
 
-            $totalGold = ($wallet->goldWeight ?? 0) - $weight;
-            $totalAsset = $wallet->asset + $amount;
+            // accept method
+            // $totalGold = ($wallet->goldWeight ?? 0) - $weight;
+            // $totalAsset = $wallet->asset + $amount;
 
             $transaction = transaction::create([
                 'wallet_id' => $wallet->id,
@@ -169,10 +171,12 @@ class DealController extends Controller
                 'description' => $description
             ]);
 
-            $wallet->update([
-                'asset' => $totalAsset,
-                'goldWeight' => $totalGold
-            ]);
+
+            // بعد از تایید
+            // $wallet->update([
+            //     'asset' => $totalAsset,
+            //     'goldWeight' => $totalGold
+            // ]);
 
             return redirect()->back()->with('success', "$amount ریال به کیف پول شما واریز شد");
         }
