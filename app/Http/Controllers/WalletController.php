@@ -113,6 +113,7 @@ class WalletController extends Controller
 
     public function deposit($request)
     {
+        $userId = $request->userId;
         $request->validate(
             [
                 'depositFee' => ['required'],
@@ -142,10 +143,10 @@ class WalletController extends Controller
         } else {
             $receipt = null;
         }
-        $wallet = wallet::where('user_id', Auth::id())->first();
+        $wallet = wallet::where('user_id', $userId)->first();
         if (!$wallet) {
             $wallet = wallet::create([
-                'user_id' => Auth::id(),
+                'user_id' => $userId,
                 'asset' => 0
             ]);
         }
@@ -164,6 +165,7 @@ class WalletController extends Controller
 
     public function withdraw($request)
     {
+        $userId = $request->userId;
         $request->validate(
             [
                 'withdrawFee' => ['required']
@@ -186,7 +188,7 @@ class WalletController extends Controller
         $date = explode(' ', $dateJalali);
         $date = implode('/', explode('-', $date[0]));
         $time = $dateTime[1];
-        $wallet = wallet::where('user_id', Auth::id())->first();
+        $wallet = wallet::where('user_id', $userId)->first();
         $total = 0;
         if ($wallet) {
             $total = $wallet['asset'] - $request['withdrawFee'];

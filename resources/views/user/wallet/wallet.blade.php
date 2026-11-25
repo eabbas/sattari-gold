@@ -209,7 +209,7 @@
 
             <form action="{{ route('wallet.transactionRequest') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-
+                <input type="hidden" name="userId" value="{{ $user->id }}">
                 <div class="grid grid-cols-6 gap-5 p-5 md:p-6">
 
                     {{-- انتخاب نوع تراکنش --}}
