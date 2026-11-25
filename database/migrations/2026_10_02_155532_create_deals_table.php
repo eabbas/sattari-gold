@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('transaction_id');
             $table->decimal('goldWeight', 10, 5);
             $table->decimal('goldPrice', 16, 6);
-            $table->integer('buyPrice')->nullable();
+            $table->bigINteger('buyPrice')->nullable();
             $table->string('date');
             $table->string('time');
             $table->text('description')->nullable();

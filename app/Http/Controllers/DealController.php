@@ -48,7 +48,9 @@ class DealController extends Controller
                 $price['sell_price'] = $price->price + $sellDifference;
             }
         }
-        return view('user.deal.create', ['asset' => $asset, 'totalGoldWeight' => $totalGoldWeight, 'logo' => $logo, "messages" => $messages, 'price' => $price]);
+        $deals = deal::where('user_id', Auth::id())->orderBy('date', 'desc')->orderBy('time', 'desc')->get();
+        // dd($deals);
+        return view('user.deal.create', ['asset' => $asset, 'totalGoldWeight' => $totalGoldWeight, 'logo' => $logo, "messages" => $messages, 'price' => $price, 'deals'=>$deals]);
     }
 
 
@@ -219,7 +221,7 @@ class DealController extends Controller
         $wallet = Wallet::find($transaction->wallet_id);
         $amount = 0;
         $weight = 0;
-        $totalAsset = $wallet->asset;
+        $totalAsset = $wallet->asset ?? 0;
         $totalGold = $wallet->goldWeight ?? 0;
         if ($transaction->type == 'buy') {
             $totalAsset = $wallet->asset - $amount;
@@ -229,10 +231,17 @@ class DealController extends Controller
                 'goldWeight' => $totalGold
             ]);
         }
-        $transaction->isApproved = 1;
-        $deal->isApproved = 1;
-        $transaction->save();
-        $deal->save();
+        if ($transaction->type == 'sell') {
+            $totalAsset = $wallet->asset + $amount;
+            $totalGold = ($wallet->goldWeight ?? 0) - $weight;
+            $wallet->update([
+                'asset' => $totalAsset,
+                'goldWeight' => $totalGold
+            ]);
+        }
+        $transaction->update(['isApproved'=>1, 'updated_at'=>now()]);
+        $deal->update(['isApproved'=>1, 'updated_at'=>now()]);
+    
         return to_route('deal.adminIndex');
     }
     public function cancel(Request $request)

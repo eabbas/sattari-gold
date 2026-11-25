@@ -488,7 +488,7 @@
                     معاملات من در برنامه
                 </h3>
 
-                @if (count(Auth::user()->deals))
+                @if (count($deals))
                     <div class="w-full overflow-x-auto border border-gray-100 rounded-xl p-3 mb-6">
 
                         <table class="w-full min-w-[650px] text-xs">
@@ -523,7 +523,7 @@
 
                             <tbody>
 
-                                @foreach (Auth::user()->deals as $deal)
+                                @foreach ($deals as $deal)
                                     <tr class="border-b border-gray-50 last:border-0">
 
                                         {{-- Type / Date --}}
