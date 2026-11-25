@@ -49,7 +49,6 @@ class DealController extends Controller
             }
         }
         $deals = deal::where('user_id', Auth::id())->orderBy('date', 'desc')->orderBy('time', 'desc')->get();
-        // dd($deals);
         return view('user.deal.create', ['asset' => $asset, 'totalGoldWeight' => $totalGoldWeight, 'logo' => $logo, "messages" => $messages, 'price' => $price, 'deals'=>$deals]);
     }
 
@@ -196,7 +195,7 @@ class DealController extends Controller
     {
         $deals = deal::orderBy('date', 'desc')->orderBy('time', 'desc')->get();
         foreach ($deals as $deal) {
-            switch ($deal->transaction->isApproved) {
+            switch ($deal->isApproved) {
                 case -1:
                     $deal->state = 'رد شده';
                     $deal->color = '#E85D5D';
@@ -216,29 +215,29 @@ class DealController extends Controller
     }
     public function confirm(deal $deal)
     {
-        // dd($transaction , $deal);
         $transaction = transaction::find($deal->transaction_id);
+        
         $wallet = Wallet::find($transaction->wallet_id);
         $amount = 0;
         $weight = 0;
+        $amount = $deal->buyPrice;
+        $weight = $deal->goldWeight;
         $totalAsset = $wallet->asset ?? 0;
         $totalGold = $wallet->goldWeight ?? 0;
         if ($transaction->type == 'buy') {
+            
             $totalAsset = $wallet->asset - $amount;
             $totalGold = ($wallet->goldWeight ?? 0) + $weight;
-            $wallet->update([
-                'asset' => $totalAsset,
-                'goldWeight' => $totalGold
-            ]);
         }
         if ($transaction->type == 'sell') {
             $totalAsset = $wallet->asset + $amount;
             $totalGold = ($wallet->goldWeight ?? 0) - $weight;
-            $wallet->update([
-                'asset' => $totalAsset,
-                'goldWeight' => $totalGold
-            ]);
         }
+        // dd($transaction , $deal, $wallet);   
+        $wallet->update([
+            'asset' => $totalAsset,
+            'goldWeight' => $totalGold
+        ]);
         $transaction->update(['isApproved'=>1, 'updated_at'=>now()]);
         $deal->update(['isApproved'=>1, 'updated_at'=>now()]);
     
