@@ -39,18 +39,18 @@
                     <div class="font-bold text-sm mb-[15px]">محدوده قیمت</div>
                     <div class="grid grid-cols-2 gap-2">
                         <input id="minPrice" type="number" placeholder="حداقل"
-                            class="w-full border border-[#e4e4e7] rounded-lg p-[9px] outline-none text-[11px]">
+                            class="w-full border-1 border-[#e4e4e7] rounded-lg p-[9px] outline-none text-[11px]">
                         <input id="maxPrice" type="number" placeholder="حداکثر" value=""
-                            class="w-full border border-[#e4e4e7] rounded-lg p-[9px] outline-none text-[11px]">
+                            class="w-full border-1 border-[#e4e4e7] rounded-lg p-[9px] outline-none text-[11px]">
                     </div>
                 </section>
-                <section class="p-[18px]">
+                <section class="px-[18px]">
                     <label class="flex items-center gap-2 my-3 text-[13px] text-[#52525b]">
                         <input id="hasDiscount" class="accent-[#c3924d] w-[17px] h-[17px]" type="checkbox">
                         تخفیف خورده
                     </label>
                 </section>
-                <section class="p-[18px]">
+                <section class="px-[18px]">
                     <label class="flex items-center gap-2 my-3 text-[13px] text-[#52525b]">
                         <input id="exists" class="accent-[#c3924d] w-[17px] h-[17px]" type="checkbox">
                         فقط کالاهای موجود
@@ -59,7 +59,8 @@
             </aside>
 
             <section class="min-w-0 lg:col-span-8 col-span-7">
-                <div class="w-full flex items-center gap-3 border-1 bg-white border-gray-200 rounded-xl mb-3">
+
+                <div class="w-full items-center gap-3 border-1 bg-white border-gray-200 rounded-xl mb-3 @if(!Route::is('search.*')) hidden @else flex @endif">
                     <input type="text" class="w-full px-3.5 py-3 outline-none" id="searchInp">
                     <svg class="w-6 h-6 text-gray-600 ml-2.5 cursor-pointer" aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
