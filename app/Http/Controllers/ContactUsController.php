@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\contactUs;
+use App\Models\logo;
 
 class ContactUsController extends Controller
 {
@@ -17,7 +18,7 @@ class ContactUsController extends Controller
             'message' => 'required|string',
         ]);
 
-        // contactUs::create($validatedData);
+        contactUs::create($validatedData);
 
         return redirect()->back()->with('success', 'پیام شما با موفقیت ارسال شد.');
     }
@@ -25,6 +26,7 @@ class ContactUsController extends Controller
     public function list()
     {
         $messages = contactUs::all();
-        return view('contactUsList', compact('messages'));
+        $logo = logo::first();
+        return view('admin.contactus.index', ['messages'=>$messages, 'logo'=>$logo]);
     }
 }
