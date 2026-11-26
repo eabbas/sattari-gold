@@ -49,7 +49,7 @@ class DealController extends Controller
             }
         }
         $deals = deal::where('user_id', Auth::id())->orderBy('date', 'desc')->orderBy('time', 'desc')->get();
-        return view('user.deal.create', ['asset' => $asset, 'totalGoldWeight' => $totalGoldWeight, 'logo' => $logo, "messages" => $messages, 'price' => $price, 'deals'=>$deals]);
+        return view('user.deal.create', ['asset' => $asset, 'totalGoldWeight' => $totalGoldWeight, 'logo' => $logo, "messages" => $messages, 'price' => $price, 'deals' => $deals]);
     }
 
 
@@ -76,10 +76,6 @@ class DealController extends Controller
 
         $amount = 0;
         $weight = 0;
-        // accept method
-        // $totalAsset = $wallet->asset;
-        // $totalGold = $wallet->goldWeight ?? 0;
-
         $cleanOutput = (float) str_replace(',', '', $output);
 
         if ($action == 'buy') {
@@ -119,17 +115,6 @@ class DealController extends Controller
                 'time' => $time,
                 'description' => $description
             ]);
-            //حسین
-            // dealTemporary::create([
-            //     'user_id' => $userId,
-            //     'deal_id' => $id_deal,
-            //     'goldPrice' => $request->goldPrice,
-            //     'action' => $request->action,
-            //     'calcBy' => $request->calcBy,
-            //     'userInput' => $request->userInput,
-            //     'resultOutput' => $request->resultOutput,
-            // ]);
-
             return redirect()->back()->with('success',  "معامله شما پس از تایید مدیریت ثبت خواهد شد.");
         }
 
@@ -141,15 +126,9 @@ class DealController extends Controller
                 $weight = (float) $input;
                 $amount = $cleanOutput;
             }
-            // amount = final price
-
             if (($wallet->goldWeight ?? 0) < $weight) {
                 return redirect()->back()->with('failure', 'موجودی سپرده طلای شما کافی نیست.');
             }
-
-            // accept method
-            // $totalGold = ($wallet->goldWeight ?? 0) - $weight;
-            // $totalAsset = $wallet->asset + $amount;
 
             $transaction = transaction::create([
                 'wallet_id' => $wallet->id,
@@ -171,15 +150,7 @@ class DealController extends Controller
                 'time' => $time,
                 'description' => $description
             ]);
-
-
-            // بعد از تایید
-            // $wallet->update([
-            //     'asset' => $totalAsset,
-            //     'goldWeight' => $totalGold
-            // ]);
-
-            return redirect()->back()->with('success', "$amount ریال به کیف پول شما واریز شد");
+            return redirect()->back()->with('success', "معامله شما پس از تایید مدیریت ثبت خواهد شد.");
         }
 
         return redirect()->back()->with('failure', 'عملیات نامعتبر است.');
@@ -188,7 +159,8 @@ class DealController extends Controller
     public function list()
     {
         $logo = logo::first();
-        return view('user.deal.myDeals', ['logo' => $logo]);
+        $deals = deal::where('user_id', Auth::id())->orderBy('date', 'desc')->orderBy('time', 'desc')->get();
+        return view('user.deal.myDeals', ['logo' => $logo, 'deals' => $deals]);
     }
 
     public function adminIndex()
@@ -216,7 +188,7 @@ class DealController extends Controller
     public function confirm(deal $deal)
     {
         $transaction = transaction::find($deal->transaction_id);
-        
+
         $wallet = Wallet::find($transaction->wallet_id);
         $amount = 0;
         $weight = 0;
@@ -225,7 +197,7 @@ class DealController extends Controller
         $totalAsset = $wallet->asset ?? 0;
         $totalGold = $wallet->goldWeight ?? 0;
         if ($transaction->type == 'buy') {
-            
+
             $totalAsset = $wallet->asset - $amount;
             $totalGold = ($wallet->goldWeight ?? 0) + $weight;
         }
@@ -238,9 +210,9 @@ class DealController extends Controller
             'asset' => $totalAsset,
             'goldWeight' => $totalGold
         ]);
-        $transaction->update(['isApproved'=>1, 'updated_at'=>now()]);
-        $deal->update(['isApproved'=>1, 'updated_at'=>now()]);
-    
+        $transaction->update(['isApproved' => 1, 'updated_at' => now()]);
+        $deal->update(['isApproved' => 1, 'updated_at' => now()]);
+
         return to_route('deal.adminIndex');
     }
     public function cancel(Request $request)
@@ -248,9 +220,9 @@ class DealController extends Controller
         $deal = deal::find($request->id);
         $deal->isApproved = -1;
         $deal->message = $request->message;
-        $trancsavtion = transaction::find($deal->transaction_id);
-        $trancsavtion->isApproved = -1;
-        $trancsavtion->save();
+        $transaction = transaction::find($deal->transaction_id);
+        $transaction->isApproved = -1;
+        $transaction->save();
         $deal->save();
         return to_route('deal.adminIndex');
     }

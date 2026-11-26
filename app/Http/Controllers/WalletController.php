@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\deal;
+use App\Models\livePrice;
 use App\Models\logo;
+use App\Models\priceLine;
 use App\Models\transaction;
 use App\Models\transactionSetting;
 use App\Models\User;
@@ -18,7 +20,20 @@ class WalletController extends Controller
     {
         $logo = logo::first();
         $setting = transactionSetting::first();
-        return view('user.wallet.wallet', ['user' => $user, 'logo' => $logo, 'setting' => $setting]);
+        $price = livePrice::first();
+        if ($price) {
+            if ($price->difference_type == 'line') {
+                $line = priceLine::first();
+                $buyDifference = $price->buy_difference * $line?->line_value;
+                $price['buy_price'] = $price->price + $buyDifference;
+            }
+            if ($price->difference_type == 'percent') {
+                $buyDifference = ($price->buy_difference / 100) * $price->price;
+                $price['buy_price'] = $price->price + $buyDifference;
+            }
+        }
+        $goldValue = $user->wallet->goldWeight * $price?->buy_price;
+        return view('user.wallet.wallet', ['user' => $user, 'logo' => $logo, 'setting' => $setting, 'goldValue' => $goldValue]);
     }
 
     public function transactionRequest(Request $request)
@@ -39,77 +54,77 @@ class WalletController extends Controller
         }
     }
 
-    public function transactionRequestApi(Request $request)
-    {
+    // public function transactionRequestApi(Request $request)
+    // {
 
-        if ($request->transactionType == 'deposit') {
-            return $this->depositApi($request);
-        }
-        if ($request->transactionType == 'withdraw') {
-            return $this->withdrawApi($request);
-        }
-    }
+    //     if ($request->transactionType == 'deposit') {
+    //         return $this->depositApi($request);
+    //     }
+    //     if ($request->transactionType == 'withdraw') {
+    //         return $this->withdrawApi($request);
+    //     }
+    // }
 
-    public function depositApi($request)
-    {
-        $userId = $request->userId;
-        $dateTime = explode(' ', now());
-        $dateJalali = verta($dateTime[0]);
-        $date = explode(' ', $dateJalali);
-        $date = implode('/', explode('-', $date[0]));
-        $time = $dateTime[1];
-        if ($request['receipt']) {
-            $receipt = $request->file('receipt')->getClientOriginalName();
-            $receipt = $request->file('receipt')->storeAs('transactions', $receipt, 'public');
-        } else {
-            $receipt = null;
-        }
-        $wallet = wallet::where('user_id', $userId)->first();
-        if (!$wallet) {
-            $wallet = wallet::create([
-                'user_id' => $userId,
-                'asset' => 0
-            ]);
-        }
-        transaction::create([
-            'wallet_id' => $wallet['id'],
-            'amount' => $request->fee,
-            'type' => 'deposit',
-            'isApproved' => 0,
-            'receipt' => $receipt,
-            'date' => $date,
-            'time' => $time,
-            'description' => $request->description
-        ]);
-        return response()->json(['message' => ' مبلغ ' . $request->fee . ' پس از تایید به کیف پول شما افزوده خواهد شد.']);
-    }
+    // public function depositApi($request)
+    // {
+    //     $userId = $request->userId;
+    //     $dateTime = explode(' ', now());
+    //     $dateJalali = verta($dateTime[0]);
+    //     $date = explode(' ', $dateJalali);
+    //     $date = implode('/', explode('-', $date[0]));
+    //     $time = $dateTime[1];
+    //     if ($request['receipt']) {
+    //         $receipt = $request->file('receipt')->getClientOriginalName();
+    //         $receipt = $request->file('receipt')->storeAs('transactions', $receipt, 'public');
+    //     } else {
+    //         $receipt = null;
+    //     }
+    //     $wallet = wallet::where('user_id', $userId)->first();
+    //     if (!$wallet) {
+    //         $wallet = wallet::create([
+    //             'user_id' => $userId,
+    //             'asset' => 0
+    //         ]);
+    //     }
+    //     transaction::create([
+    //         'wallet_id' => $wallet['id'],
+    //         'amount' => $request->fee,
+    //         'type' => 'deposit',
+    //         'isApproved' => 0,
+    //         'receipt' => $receipt,
+    //         'date' => $date,
+    //         'time' => $time,
+    //         'description' => $request->description
+    //     ]);
+    //     return response()->json(['message' => ' مبلغ ' . $request->fee . ' پس از تایید به کیف پول شما افزوده خواهد شد.']);
+    // }
 
-    public function withdrawApi($request)
-    {
-        $userId = $request->userId;
-        $dateTime = explode(' ', now());
-        $dateJalali = verta($dateTime[0]);
-        $date = explode(' ', $dateJalali);
-        $date = implode('/', explode('-', $date[0]));
-        $time = $dateTime[1];
-        $wallet = wallet::where('user_id', $userId)->first();
-        $total = 0;
-        if ($wallet) {
-            $total = $wallet['asset'] - $request['fee'];
-        }
-        if (!$wallet || $total < 0) {
-            return response()->json(['message' => 'موجودی کیف پول شما کافی نیست.']);
-        }
-        transaction::create([
-            'wallet_id' => $wallet['id'],
-            'amount' => $request->fee,
-            'type' => 'withdraw',
-            'date' => $date,
-            'time' => $time,
-            'isApproved' => 0
-        ]);
-        return response()->json(['message' =>  ' مبلغ ' . $request->fee . ' پس از تایید از کیف پول شما کسر خواهد شد. ']);
-    }
+    // public function withdrawApi($request)
+    // {
+    //     $userId = $request->userId;
+    //     $dateTime = explode(' ', now());
+    //     $dateJalali = verta($dateTime[0]);
+    //     $date = explode(' ', $dateJalali);
+    //     $date = implode('/', explode('-', $date[0]));
+    //     $time = $dateTime[1];
+    //     $wallet = wallet::where('user_id', $userId)->first();
+    //     $total = 0;
+    //     if ($wallet) {
+    //         $total = $wallet['asset'] - $request['fee'];
+    //     }
+    //     if (!$wallet || $total < 0) {
+    //         return response()->json(['message' => 'موجودی کیف پول شما کافی نیست.']);
+    //     }
+    //     transaction::create([
+    //         'wallet_id' => $wallet['id'],
+    //         'amount' => $request->fee,
+    //         'type' => 'withdraw',
+    //         'date' => $date,
+    //         'time' => $time,
+    //         'isApproved' => 0
+    //     ]);
+    //     return response()->json(['message' =>  ' مبلغ ' . $request->fee . ' پس از تایید از کیف پول شما کسر خواهد شد. ']);
+    // }
 
     public function deposit($request)
     {

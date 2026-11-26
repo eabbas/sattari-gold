@@ -21,8 +21,6 @@
 
         <div class="mx-auto w-[94%] max-w-[1100px] sm:w-[92%]">
 
-            {{-- Heading --}}
-
             <div class="mb-7">
 
                 <h1 class="text-xl sm:text-2xl font-bold">
@@ -114,6 +112,7 @@
                             </span>
 
                         </div>
+
                         <p id="manualPriceToman" class="mt-2 text-[11px] text-[#858078]"></p>
 
                     </div>
@@ -198,6 +197,7 @@
                                     <span class="text-xs text-[#858078]">ریال</span>
 
                                 </div>
+
                                 <p id="referencePriceToman" class="mt-2 text-[11px] text-[#858078]"></p>
 
                             </div>
@@ -320,6 +320,37 @@
 
                             </div>
 
+                            {{-- Sell Calculations --}}
+
+                            <div class="mt-3 space-y-2 border-t border-[#EAE7E1] pt-3">
+
+                                <div class="flex items-center justify-between gap-2">
+
+                                    <span class="text-[11px] text-[#858078]">مبلغ اختلاف:</span>
+
+                                    <span id="sellDifferenceAmount"
+                                        class="text-[11px] font-semibold text-[#78716C] [direction:ltr]">
+
+                                        ---
+
+                                    </span>
+
+                                </div>
+
+                                <div class="flex items-center justify-between gap-2">
+
+                                    <span class="text-[11px] text-[#858078]">قیمت نهایی فروش:</span>
+
+                                    <span id="sellFinalPrice" class="text-xs font-bold text-[#29251F] [direction:ltr]">
+
+                                        ---
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
                         </div>
 
                         {{-- Buy --}}
@@ -340,7 +371,7 @@
 
                                 </div>
 
-                                <span class="text-xs font-bold text-green-700">
+                                <span class="text-xs font-bold text-[#B88A3B]">
 
                                     خرید
 
@@ -365,6 +396,37 @@
                                 <button type="button"
                                     class="price-adjust flex size-9 shrink-0 items-center justify-center rounded-lg border border-[#EAE7E1] bg-white text-xl text-[#B88A3B] transition duration-200 hover:border-[#D6AD60] hover:bg-[#FAF6ED]"
                                     data-target="buyDifference" data-action="increase">+</button>
+
+                            </div>
+
+                            {{-- Buy Calculations --}}
+
+                            <div class="mt-3 space-y-2 border-t border-[#EAE7E1] pt-3">
+
+                                <div class="flex items-center justify-between gap-2">
+
+                                    <span class="text-[11px] text-[#858078]">مبلغ اختلاف:</span>
+
+                                    <span id="buyDifferenceAmount"
+                                        class="text-[11px] font-semibold text-[#78716C] [direction:ltr]">
+
+                                        ---
+
+                                    </span>
+
+                                </div>
+
+                                <div class="flex items-center justify-between gap-2">
+
+                                    <span class="text-[11px] text-[#858078]">قیمت نهایی خرید:</span>
+
+                                    <span id="buyFinalPrice" class="text-xs font-bold text-[#29251F] [direction:ltr]">
+
+                                        ---
+
+                                    </span>
+
+                                </div>
 
                             </div>
 
@@ -414,281 +476,656 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+
             const $ = id => document.getElementById(id);
+
             const form = $('priceForm');
+
             const modeInputs = document.querySelectorAll('[name="update_mode"]');
+
             const differenceInputs = document.querySelectorAll('[name="difference_type"]');
+
             const manualSection = $('manualSection');
+
             const automaticSection = $('automaticSection');
+
             const manualPrice = $('manualPrice');
+
             const manualPriceToman = $('manualPriceToman');
+
             const referenceSource = $('referenceSource');
+
             const referencePrice = $('referencePrice');
+
             const referencePriceToman = $('referencePriceToman');
+
             const referenceStatus = $('referenceStatus');
+
             const fetchButton = $('fetchPriceBtn');
+
             const fetchButtonText = $('fetchButtonText');
+
             const fetchMessage = $('fetchMessage');
+
             const buyDifference = $('buyDifference');
+
             const sellDifference = $('sellDifference');
+
             const buyDifferenceValue = $('buyDifferenceValue');
+
             const sellDifferenceValue = $('sellDifferenceValue');
+
+            const sellDifferenceAmount = $('sellDifferenceAmount');
+
+            const buyDifferenceAmount = $('buyDifferenceAmount');
+
+            const sellFinalPrice = $('sellFinalPrice');
+
+            const buyFinalPrice = $('buyFinalPrice');
+
             const priceHidden = $('price');
+
             const saveMessage = $('saveMessage');
+
             const numberFormatter = new Intl.NumberFormat('en-US');
 
+            const lineValue = Number(@json($line?->line_value ?? 0));
+
             let currentMode = @json($price?->update_mode ?? 'manual');
+
             let differenceType = @json($price?->difference_type ?? 'line');
-            let manualPriceValue = currentMode === 'manual' ? @json((string) ($price?->price ?? '')) : '';
-            let automaticPriceValue = currentMode === 'automatic' ? Number(@json($price?->price ?? 0)) : null;
-            let buyLineDifference = differenceType === 'line' ? Number(@json($price?->buy_difference ?? 0)) : 0;
-            let sellLineDifference = differenceType === 'line' ? Number(@json($price?->sell_difference ?? 0)) : 0;
-            let buyPercentDifference = differenceType === 'percent' ? Number(@json($price?->buy_difference ?? 0)) : 0;
-            let sellPercentDifference = differenceType === 'percent' ? Number(@json($price?->sell_difference ?? 0)) : 0;
+
+            let manualPriceValue = currentMode === 'manual' ?
+
+                @json((string) ($price?->price ?? '')) : '';
+
+            let automaticPriceValue = currentMode === 'automatic' ?
+
+                Number(@json($price?->price ?? 0)) : null;
+
+            let buyLineDifference = differenceType === 'line' ?
+
+                Number(@json($price?->buy_difference ?? 0)) : 0;
+
+            let sellLineDifference = differenceType === 'line' ?
+
+                Number(@json($price?->sell_difference ?? 0)) : 0;
+
+            let buyPercentDifference = differenceType === 'percent' ?
+
+                Number(@json($price?->buy_difference ?? 0)) : 0;
+
+            let sellPercentDifference = differenceType === 'percent' ?
+
+                Number(@json($price?->sell_difference ?? 0)) : 0;
 
             const fetchedPrices = currentMode === 'automatic' && referenceSource.value ? {
+
                 [referenceSource.value]: automaticPriceValue
+
             } : {};
 
             function toEnglishNumber(value) {
+
                 return String(value)
+
                     .replace(/[۰-۹]/g, digit => '۰۱۲۳۴۵۶۷۸۹'.indexOf(digit))
+
                     .replace(/[٠-٩]/g, digit => '٠١٢٣٤٥٦٧٨٩'.indexOf(digit));
+
             }
 
             function getPriceNumber(value) {
+
                 return Number(toEnglishNumber(value).replace(/[^\d]/g, '')) || 0;
+
             }
 
             function formatNumber(value) {
+
                 const number = Number(value);
+
                 return Number.isFinite(number) ? numberFormatter.format(number) : '';
+
             }
 
             function formatPriceInput(input) {
+
                 const number = getPriceNumber(input.value);
+
                 input.value = number ? formatNumber(number) : '';
+
                 return number;
+
             }
 
             function updateTomanEquivalent(element, rialValue) {
+
                 const rial = Number(rialValue);
 
                 if (!Number.isFinite(rial) || rial <= 0) {
+
                     element.textContent = '';
+
                     return;
+
                 }
 
                 element.textContent = `${Math.floor(rial / 10).num2persian()} تومان`;
+
             }
 
             function showMessage(element, message, success = false) {
+
                 element.textContent = message;
+
                 element.classList.remove('hidden');
+
                 element.style.color = success ? '#16A34A' : '#DC2626';
+
             }
 
             function hideMessage(element) {
+
                 element.classList.add('hidden');
+
             }
 
             function getActivePrice() {
+
                 return currentMode === 'manual' ?
+
                     getPriceNumber(manualPriceValue) :
+
                     Number(automaticPriceValue) || 0;
+
             }
 
             function getBuyDifference() {
-                return differenceType === 'line' ? buyLineDifference : buyPercentDifference;
+
+                return differenceType === 'line' ?
+
+                    buyLineDifference : buyPercentDifference;
+
             }
 
             function getSellDifference() {
-                return differenceType === 'line' ? sellLineDifference : sellPercentDifference;
+
+                return differenceType === 'line' ?
+
+                    sellLineDifference : sellPercentDifference;
+
             }
 
             function getDifferenceText(value) {
+
                 return `${value > 0 ? '+' : ''}${value} ${differenceType === 'line' ? 'خط' : '%'}`;
+
+            }
+
+            // Calculate Rial difference
+
+            function getDifferenceAmount(value) {
+
+                const basePrice = getActivePrice();
+
+                if (differenceType === 'percent') {
+
+                    return Math.round(basePrice * value / 100);
+
+                }
+
+                return Math.round(value * lineValue);
+
+            }
+
+            // Update final buy and sell prices
+
+            function updateFinalPrices() {
+
+                const basePrice = getActivePrice();
+
+                if (!basePrice || basePrice <= 0) {
+
+                    sellDifferenceAmount.textContent = '---';
+                    buyDifferenceAmount.textContent = '---';
+                    sellFinalPrice.textContent = '---';
+                    buyFinalPrice.textContent = '---';
+                    [sellDifferenceAmount, buyDifferenceAmount].forEach(element => {
+                        element.classList.remove('text-[#26834A]', 'text-[#DC5555]');
+                        element.classList.add('text-[#78716C]');
+                    });
+                    return;
+
+                }
+
+                const sellAmount = getDifferenceAmount(getSellDifference());
+
+                const buyAmount = getDifferenceAmount(getBuyDifference());
+
+                const finalSellPrice = basePrice + sellAmount;
+
+                const finalBuyPrice = basePrice + buyAmount;
+
+                const formatDifference = value => {
+
+                    const sign = value > 0 ? '+' : '';
+                    return `${sign}${formatNumber(value)} ریال`;
+
+                };
+
+                const updateSignColor = (element, value) => {
+                    element.classList.remove('text-[#26834A]', 'text-[#DC5555]', 'text-[#78716C]');
+                    element.classList.add(
+                        value > 0 ? 'text-[#26834A]' :
+                        value < 0 ? 'text-[#DC5555]' :
+                        'text-[#78716C]'
+                    );
+                };
+
+                sellDifferenceAmount.textContent = formatDifference(sellAmount);
+                buyDifferenceAmount.textContent = formatDifference(buyAmount);
+                updateSignColor(sellDifferenceAmount, sellAmount);
+                updateSignColor(buyDifferenceAmount, buyAmount);
+
+                sellFinalPrice.textContent = `${formatNumber(finalSellPrice)} ریال`;
+
+                buyFinalPrice.textContent = `${formatNumber(finalBuyPrice)} ریال`;
+
             }
 
             function updateDifferenceDisplay() {
+
                 const buy = getBuyDifference();
+
                 const sell = getSellDifference();
 
                 buyDifference.value = getDifferenceText(buy);
+
                 sellDifference.value = getDifferenceText(sell);
+
                 buyDifferenceValue.value = buy;
+
                 sellDifferenceValue.value = sell;
 
                 [buyDifference, sellDifference].forEach((input, index) => {
+
                     const value = index === 0 ? buy : sell;
-                    input.classList.remove('text-green-700', 'text-red-500', 'text-[#858078]');
-                    input.classList.add(value > 0 ? 'text-green-700' : value < 0 ? 'text-red-500' :
-                        'text-[#858078]');
+
+                    input.classList.remove(
+
+                        'text-[#26834A]',
+
+                        'text-[#DC5555]',
+
+                        'text-[#78716C]'
+
+                    );
+
+                    input.classList.add(
+
+                        value > 0 ? 'text-[#26834A]' :
+
+                        value < 0 ? 'text-[#DC5555]' :
+
+                        'text-[#78716C]'
+
+                    );
+
                 });
+
+                updateFinalPrices();
+
             }
 
             function updateHiddenPrice() {
+
                 priceHidden.value = getActivePrice() || '';
+
             }
 
             function updateReferenceStatus(message, success = false) {
+
                 referenceStatus.className =
+
                     `inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-[9px] py-[5px] text-[11px] font-bold ${success ? 'bg-green-100 text-green-700' : 'bg-stone-100 text-stone-500'}`;
+
                 referenceStatus.innerHTML =
+
                     `<span class="size-1.5 rounded-full ${success ? 'bg-green-500' : 'bg-stone-400'}"></span>${message}`;
+
             }
 
             function displayReferencePrice(value) {
+
                 referencePrice.textContent = value ? formatNumber(value) : '---';
+
                 updateTomanEquivalent(referencePriceToman, value);
+
             }
 
             function changeMode(mode) {
+
                 currentMode = mode;
+
                 manualSection.classList.toggle('hidden', mode !== 'manual');
+
                 automaticSection.classList.toggle('hidden', mode !== 'automatic');
+
                 updateHiddenPrice();
+
+                updateDifferenceDisplay();
+
                 hideMessage(saveMessage);
+
             }
 
+            // Change update mode
+
             modeInputs.forEach(input => {
+
                 input.addEventListener('change', function() {
+
                     if (this.checked) changeMode(this.value);
+
                 });
+
             });
+
+            // Manual price input
 
             manualPrice.addEventListener('input', function() {
+
                 formatPriceInput(this);
+
                 manualPriceValue = this.value;
-                updateTomanEquivalent(manualPriceToman, getPriceNumber(this.value));
+
+                updateTomanEquivalent(
+
+                    manualPriceToman,
+
+                    getPriceNumber(this.value)
+
+                );
+
                 updateHiddenPrice();
+
+                updateDifferenceDisplay();
+
                 hideMessage(saveMessage);
+
             });
 
+            // Change difference type
+
             differenceInputs.forEach(input => {
+
                 input.addEventListener('change', function() {
+
                     if (!this.checked) return;
 
                     differenceType = this.value;
-                    $('line_price').classList.toggle('hidden', differenceType === 'percent');
+
+                    $('line_price').classList.toggle(
+
+                        'hidden',
+
+                        differenceType === 'percent'
+
+                    );
+
                     updateDifferenceDisplay();
+
                     hideMessage(saveMessage);
+
                 });
+
             });
 
+            // Change reference website
+
             referenceSource.addEventListener('change', function() {
+
                 const sourceId = this.value;
+
                 hideMessage(fetchMessage);
+
                 automaticPriceValue = null;
 
                 if (!sourceId) {
+
                     displayReferencePrice(null);
+
                     updateReferenceStatus('هنوز دریافت نشده');
+
                     updateHiddenPrice();
+
+                    updateDifferenceDisplay();
+
                     return;
+
                 }
 
                 if (Object.prototype.hasOwnProperty.call(fetchedPrices, sourceId)) {
+
                     automaticPriceValue = fetchedPrices[sourceId];
+
                     displayReferencePrice(automaticPriceValue);
+
                     updateReferenceStatus('دریافت موفق', true);
+
                 } else {
+
                     displayReferencePrice(null);
+
                     updateReferenceStatus('آماده دریافت');
+
                 }
 
                 updateHiddenPrice();
+
+                updateDifferenceDisplay();
+
             });
 
+            // Fetch price
+
             fetchButton.addEventListener('click', function() {
+
                 const sourceId = referenceSource.value;
-                const selectedOption = referenceSource.options[referenceSource.selectedIndex];
+
+                const selectedOption = referenceSource.options[
+
+                    referenceSource.selectedIndex
+
+                ];
+
                 hideMessage(fetchMessage);
 
                 if (!sourceId) {
+
                     showMessage(fetchMessage, 'ابتدا سایت مرجع را انتخاب کنید.');
+
                     return;
+
                 }
 
                 const testPrice = Number(selectedOption.dataset.price);
+
                 if (!testPrice || testPrice <= 0) {
+
                     showMessage(fetchMessage, 'برای این سایت قیمت آزمایشی تعریف نشده است.');
+
                     return;
+
                 }
 
                 fetchButton.disabled = true;
+
                 fetchButtonText.textContent = 'در حال دریافت...';
 
                 setTimeout(() => {
+
                     automaticPriceValue = testPrice;
+
                     fetchedPrices[sourceId] = testPrice;
+
                     displayReferencePrice(testPrice);
+
                     updateReferenceStatus('دریافت موفق', true);
+
                     updateHiddenPrice();
-                    showMessage(fetchMessage,
-                        `قیمت آزمایشی ${selectedOption.text.trim()} با موفقیت دریافت شد.`, true);
+
+                    updateDifferenceDisplay();
+
+                    showMessage(
+
+                        fetchMessage,
+
+                        `قیمت آزمایشی ${selectedOption.text.trim()} با موفقیت دریافت شد.`,
+
+                        true
+
+                    );
+
                     fetchButton.disabled = false;
+
                     fetchButtonText.textContent = 'دریافت مجدد قیمت';
+
                 }, 700);
+
             });
 
+            // Increase and decrease differences
+
             document.querySelectorAll('.price-adjust').forEach(button => {
+
                 button.addEventListener('click', function() {
+
                     const target = this.dataset.target;
+
                     const amount = this.dataset.action === 'increase' ? 1 : -1;
 
                     if (target === 'buyDifference') {
-                        if (differenceType === 'line') buyLineDifference += amount;
-                        else buyPercentDifference += amount;
+
+                        if (differenceType === 'line') {
+
+                            buyLineDifference += amount;
+
+                        } else {
+
+                            buyPercentDifference += amount;
+
+                        }
+
                     } else if (target === 'sellDifference') {
-                        if (differenceType === 'line') sellLineDifference += amount;
-                        else sellPercentDifference += amount;
+
+                        if (differenceType === 'line') {
+
+                            sellLineDifference += amount;
+
+                        } else {
+
+                            sellPercentDifference += amount;
+
+                        }
+
                     }
 
                     updateDifferenceDisplay();
+
                     hideMessage(saveMessage);
+
                 });
+
             });
 
+            // Submit form
+
             form.addEventListener('submit', function(event) {
+
                 hideMessage(saveMessage);
+
                 const price = getActivePrice();
 
                 if (!price || price <= 0) {
+
                     event.preventDefault();
-                    showMessage(saveMessage, currentMode === 'manual' ?
+
+                    showMessage(
+
+                        saveMessage,
+
+                        currentMode === 'manual' ?
+
                         'لطفاً قیمت مظنه را وارد کنید.' :
-                        'ابتدا قیمت را از سایت مرجع دریافت کنید.');
+
+                        'ابتدا قیمت را از سایت مرجع دریافت کنید.'
+
+                    );
+
                     return;
+
                 }
 
                 if (currentMode === 'automatic') {
+
                     const sourceId = referenceSource.value;
 
                     if (!sourceId) {
+
                         event.preventDefault();
+
                         showMessage(saveMessage, 'لطفاً سایت مرجع را انتخاب کنید.');
+
                         return;
+
                     }
 
-                    if (!Object.prototype.hasOwnProperty.call(fetchedPrices, sourceId) ||
-                        automaticPriceValue === null) {
+                    if (
+
+                        !Object.prototype.hasOwnProperty.call(fetchedPrices, sourceId) ||
+
+                        automaticPriceValue === null
+
+                    ) {
+
                         event.preventDefault();
+
                         showMessage(saveMessage, 'لطفاً قیمت سایت مرجع انتخاب‌شده را دریافت کنید.');
+
                         return;
+
                     }
+
                 }
 
                 updateHiddenPrice();
+
                 buyDifferenceValue.value = getBuyDifference();
+
                 sellDifferenceValue.value = getSellDifference();
+
             });
 
-            updateTomanEquivalent(manualPriceToman, getPriceNumber(manualPrice.value));
+            // Initial values
+
+            updateTomanEquivalent(
+
+                manualPriceToman,
+
+                getPriceNumber(manualPrice.value)
+
+            );
+
             displayReferencePrice(automaticPriceValue);
+
             updateDifferenceDisplay();
+
             changeMode(currentMode);
+
             updateHiddenPrice();
+
         });
     </script>
 

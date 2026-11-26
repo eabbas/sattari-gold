@@ -136,6 +136,15 @@
                         تمام معاملات خرید و فروش طلای خود را در این بخش مشاهده کنید.
                     </p>
                 </div>
+                <a href="{{ route('deal.create') }}"
+                    class="w-full sm:w-fit flex items-center justify-center gap-2 rounded-xl bg-[#B88A3B] px-5 py-3 text-xs md:text-sm font-bold text-white transition-all duration-200 hover:bg-[#9F742F]">
+
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m-7-7h14" />
+                    </svg>
+
+                    شروع معامله جدید
+                </a>
             </div>
 
             {{-- محتوای معاملات --}}
@@ -154,7 +163,7 @@
                     </div>
                 </div>
 
-                @if (count(Auth::user()->deals))
+                @if (count($deals))
                     {{-- نسخه دسکتاپ --}}
                     <div class="hidden overflow-x-auto md:block">
 
@@ -173,7 +182,7 @@
 
                             <tbody>
 
-                                @foreach (Auth::user()->deals as $deal)
+                                @foreach ($deals as $deal)
                                     <tr>
 
                                         <td>
@@ -251,7 +260,7 @@
                     {{-- نسخه موبایل --}}
                     <div class="space-y-3 p-3 md:hidden">
 
-                        @foreach (Auth::user()->deals as $deal)
+                        @foreach ($deals as $deal)
                             <div class="deal-mobile-card">
 
                                 <div class="mb-4 flex items-center justify-between gap-3">
