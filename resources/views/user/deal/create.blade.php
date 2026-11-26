@@ -503,6 +503,9 @@
 
                                     <th class="py-3 px-2 font-bold">
                                         وضعیت
+
+                                    <th class="py-3 px-2 font-bold">
+                                        علت رد
                                     </th>
 
                                     <th class="py-3 px-2 font-bold">
@@ -568,12 +571,26 @@
 
                                         </td>
 
+                                        <td>
+                                            @if ($deal->message)
+                                                <span class="text-xs text-[#bb5c52]">
+                                                    {{ $deal->message }}
+                                                </span>
+                                            @else
+                                                <span class="text-[#b4aa99]">-</span>
+                                            @endif
+                                        </td>
+
                                         {{-- Gold Price --}}
                                         <td class="py-4 px-2">
-
-                                            <span class="text-gray-600 in-fa">
-                                                {{ number_format($deal->goldPrice) }}
-                                            </span>
+                                            <div class="flex flex-col items-center gap-1">
+                                                <span class="text-gray-700 in-fa">
+                                                    {{ number_format($deal->goldPrice) }}
+                                                </span>
+                                                <span class="text-[10px] text-gray-400">
+                                                    ریال
+                                                </span>
+                                            </div>
 
                                         </td>
 

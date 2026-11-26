@@ -33,7 +33,7 @@ const numberFormat = new Intl.NumberFormat('en-US', {
 
 const weightFormat = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 0,
-    maximumFractionDigits: 4
+    maximumFractionDigits: 5
 });
 
 function getNumber(value) {
@@ -372,7 +372,7 @@ percentButtons.forEach(button => {
 
 // Close by clicking outside the form
 dealBlock.addEventListener('click', event => {
-    if (event.target === dealBlock) {
+    if (!mainBlock.contains(event.target)) {
         closeBlock();
     }
 });

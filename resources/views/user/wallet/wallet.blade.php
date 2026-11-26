@@ -188,7 +188,7 @@
                         <span class="text-xs text-white/70">ارزش تقریبی دارایی</span>
                         <div class="flex items-baseline gap-1">
                             <span class="text-sm font-bold text-[#D6AD60] in-fa">
-                                {{ number_format(($user->wallet->goldWeight ?? 0) * 25000000) }}
+                                {{ number_format($goldValue) }}
                             </span>
                             <span class="text-[10px] text-white/60">ریال</span>
                         </div>
@@ -269,13 +269,8 @@
                     {{-- دکمه‌ها --}}
                     @if (Auth::user()->isActive)
                         <button type="submit" onclick="submitBtn(event)"
-                            class="col-span-3 rounded-xl bg-[#B88A3B] py-3.5 text-sm font-bold text-white shadow-sm shadow-[#B88A3B]/20 transition-all hover:bg-[#A47A32] hover:shadow-md">
+                            class="col-span-6 rounded-xl bg-[#B88A3B] py-3.5 text-sm font-bold text-white shadow-sm shadow-[#B88A3B]/20 transition-all hover:bg-[#A47A32] hover:shadow-md">
                             ثبت درخواست
-                        </button>
-
-                        <button type="reset"
-                            class="col-span-3 rounded-xl border border-[#E7E2D9] bg-[#F8F5EF] py-3.5 text-sm font-bold text-[#78716C] transition-all hover:border-[#B88A3B] hover:text-[#29251F]">
-                            لغو عملیات
                         </button>
                     @else
                         <div class="col-span-6 flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4">

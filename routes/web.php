@@ -62,9 +62,10 @@ Route::get('/xyz', function () {
     // Schema::table('logos', function (Blueprint $table) {
     //     $table->string('logo')->nullable()->change();
     // });
-    Schema::table('deals', function (Blueprint $table) {
-        $table->bigInteger("buyPrice")->change();
-    });
+
+    // Schema::table('deals', function (Blueprint $table) {
+    //     $table->bigInteger("buyPrice")->change();
+    // });
 
 });
 
