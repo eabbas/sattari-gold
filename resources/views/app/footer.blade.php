@@ -55,7 +55,7 @@
                     </li>
 
                     <li>
-                        <a href="{{ route('aboutUs') }}" class="hover:text-[#E3BC72] transition-colors">
+                        <a href="{{ route('aboutUs.aboutUs') }}" class="hover:text-[#E3BC72] transition-colors">
                             درباره ما
                         </a>
                     </li>
