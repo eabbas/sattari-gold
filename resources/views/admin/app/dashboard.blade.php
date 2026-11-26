@@ -228,8 +228,8 @@
                         <a href="{{ route('order.userOrders') }}"
                             class="min-h-10 rounded-lg px-3 py-2.5 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] {{ Route::is('order.userOrders') ? 'bg-[#e9f7f1] font-bold text-[#11845f]' : 'text-[#687681]' }}">سفارش‌های
                             من</a>
-                        <a href="{{ route('product.index') }}"
-                            class="min-h-10 rounded-lg px-3 py-2.5 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] {{ Route::is('product.index') ? 'bg-[#e9f7f1] font-bold text-[#11845f]' : 'text-[#687681]' }}">محصولات</a>
+                        {{-- <a href="{{ route('product.index') }}"
+                            class="min-h-10 rounded-lg px-3 py-2.5 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] {{ Route::is('product.index') ? 'bg-[#e9f7f1] font-bold text-[#11845f]' : 'text-[#687681]' }}">محصولات</a> --}}
                     </div>
                 </details>
 

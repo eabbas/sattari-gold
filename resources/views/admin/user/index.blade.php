@@ -5,8 +5,8 @@
 
     <style>
         /* =========================================
-                               SATTARI GOLD - CUSTOMERS PAGE REDESIGN
-                            ========================================= */
+                                           SATTARI GOLD - CUSTOMERS PAGE REDESIGN
+                                        ========================================= */
 
         :root {
             --user-bg: #F8F5EF;
@@ -642,9 +642,9 @@
 
 
         /* =========================================
-                               USERS LIST - TABLE & MOBILE REFINEMENT
-                               Keep native table-cell layout for stable columns.
-                            ========================================= */
+                                           USERS LIST - TABLE & MOBILE REFINEMENT
+                                           Keep native table-cell layout for stable columns.
+                                        ========================================= */
         #confirmed_pending #confirmed,
         #confirmed_pending #pending {
             min-width: 0;
@@ -1188,24 +1188,31 @@
                                                 class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2 text-center">
                                                 قلک طلا
                                             </td>
-                                            <td class="relative p-1 md:px-3 md:py-2 text-center user-tools-cell w-full grid grid-cols-2 gap-2">
-                                                {{-- @can('access', 'user_wallet') --}}
+                                            <td
+                                                class="relative p-1 md:px-3 md:py-2 text-center user-tools-cell w-full grid grid-cols-2 gap-2">
+                                                @can('access', 'user_profile')
                                                     <a href="{{ route('user.profile', $user->id) }}"
                                                         class="w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-3 py-2 cursor-pointer flex justify-center items-center walletBtn">
-                                                        <svg class="w-[29px] h-[29px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                            <path stroke="currentColor" stroke-width="1.5" d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                                        <svg class="w-[29px] h-[29px]" aria-hidden="true"
+                                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            fill="none" viewBox="0 0 24 24">
+                                                            <path stroke="currentColor" stroke-width="1.5"
+                                                                d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                                         </svg>
 
                                                     </a>
-
-                                                {{-- @endcan --}}
+                                                @endcan
 
                                                 @can('access', 'user_edit')
                                                     <button
                                                         class="open-popup-edited w-full text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-1 py-2 cursor-pointer flex items-center justify-center"
                                                         onclick="openEditPopup(this)" style="margin: 0 !important;">
-                                                        <svg class="w-[29px] h-[29px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
+                                                        <svg class="w-[29px] h-[29px]" aria-hidden="true"
+                                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                            fill="none" viewBox="0 0 24 24">
+                                                            <path stroke="currentColor" stroke-linecap="round"
+                                                                stroke-linejoin="round" stroke-width="1.5"
+                                                                d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
                                                         </svg>
 
                                                     </button>
