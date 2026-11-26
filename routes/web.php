@@ -31,25 +31,6 @@ use App\Http\Middleware\checklogin;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use App\Models\logo;
-use App\Models\curren;
-
-Route::get('/z', function () {
-    $logo = logo::first();
-    return view('user.user.account', ['logo' => $logo]);
-});
-
-Route::get('/p', function () {
-    $logo = logo::first();
-    return view('admin.product.managing_product', ['logo' => $logo]);
-});
-
-Route::get('/u', function () {
-    $logo = logo::first();
-    return view('admin.user.category_user', ['logo' => $logo]);
-});
 
 Route::get('/xyz', function () {
     // Schema::table('deals', function (Blueprint $table) {
@@ -378,29 +359,31 @@ Route::group([
     Route::post('/store', 'store')->name('store');
 });
 
+// contact us routes
 Route::group([
     'as' => 'contactUs.',
     'prefix' => 'contactUs',
     'controller' => ContactUsController::class,
-    'middleware' => checkAccess::class
+    // 'middleware' => checkAccess::class
 ], function () {
     Route::post('/store', 'store')->name('store');
     Route::get('/list', 'list')->name('list');
 });
 
+// about us routes
+Route::group([
+    'prefix' => 'aboutUs',
+    'as' => 'aboutUs.',
+    'controller' => AboutUscontroller::class,
+    // 'middleware' => checkAccess::class . ":transactionConfirmTime"
+], function () {
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+    Route::get('/edit/{id}', 'edit')->name('edit');
+    Route::post('/delete', 'delete')->name('delete');
+    Route::get('/about-us', 'aboutUs')->name('aboutUs');
+});
+
 // fallback and missing
 Route::fallback([HomeController::class, 'pageNotFound'])->name('fallback');
 Route::get('/missing', [HomeController::class, 'pageNotFound'])->name('missing');
-
-Route::group([
-    'prefix' => 'aboutUs',
-    'as'=> 'aboutUs.',
-    'controller' => AboutUscontroller::class ,
-    'middleware' => checkAccess::class . ":transactionConfirmTime"
-], function(){
-    Route::get('/create' , 'create')->name('create');
-    Route::post('/store' , 'store')->name('store');
-    Route::get('/edit/{id}' , 'edit')->name('edit');
-    Route::post('/delete' , 'delete')->name('delete');
-    Route::get('/about-us', 'aboutUs')->name('aboutUs');
-});
