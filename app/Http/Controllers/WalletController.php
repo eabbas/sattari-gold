@@ -113,6 +113,7 @@ class WalletController extends Controller
 
     public function deposit($request)
     {
+        $userId = $request->userId;
         $request->validate(
             [
                 'depositFee' => ['required'],
@@ -142,10 +143,10 @@ class WalletController extends Controller
         } else {
             $receipt = null;
         }
-        $wallet = wallet::where('user_id', Auth::id())->first();
+        $wallet = wallet::where('user_id', $userId)->first();
         if (!$wallet) {
             $wallet = wallet::create([
-                'user_id' => Auth::id(),
+                'user_id' => $userId,
                 'asset' => 0
             ]);
         }
@@ -159,11 +160,12 @@ class WalletController extends Controller
             'time' => $time,
             'description' => $request->description
         ]);
-        return redirect()->back()->with('success', ' مبلغ ' . number_format($request->depositFee) . ' تومان پس از تایید به کیف پول شما افزوده خواهد شد.');
+        return redirect()->back()->with('success', ' مبلغ ' . $request->textFee . ' تومان پس از تایید به کیف پول شما افزوده خواهد شد.');
     }
 
     public function withdraw($request)
     {
+        $userId = $request->userId;
         $request->validate(
             [
                 'withdrawFee' => ['required']
@@ -186,7 +188,7 @@ class WalletController extends Controller
         $date = explode(' ', $dateJalali);
         $date = implode('/', explode('-', $date[0]));
         $time = $dateTime[1];
-        $wallet = wallet::where('user_id', Auth::id())->first();
+        $wallet = wallet::where('user_id', $userId)->first();
         $total = 0;
         if ($wallet) {
             $total = $wallet['asset'] - $request['withdrawFee'];
@@ -202,7 +204,7 @@ class WalletController extends Controller
             'time' => $time,
             'isApproved' => 0
         ]);
-        return redirect()->back()->with('failure', ' مبلغ ' . number_format($request->withdrawFee) . ' تومان پس از تایید از کیف پول شما کسر خواهد شد. ');
+        return redirect()->back()->with('failure', ' مبلغ ' . $request->textFee . ' تومان پس از تایید از کیف پول شما کسر خواهد شد. ');
     }
 
     public function transactions(Request $request)

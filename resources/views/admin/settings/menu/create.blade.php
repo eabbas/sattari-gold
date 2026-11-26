@@ -93,22 +93,22 @@
                 <div class="w-full shadow-md [&::-webkit-scrollbar]:hidden lg:overflow-visible overflow-x-auto">
                     <div class="w-full min-w-[550px] h-120 max-h-120 overflow-auto">
                         <div class="w-full grid grid-cols-10 divide-x divide-slate-400 sticky top-0 z-1">
-                            <div class="py-3 text-center text-xs font-medium text-gray-600 bg-gray-100">
+                            <div class="py-3 text-center text-xs font-bold text-gray-600 bg-gray-100">
                                 <span class="w-10 lg:w-full">ردیف</span>
                             </div>
-                            <div class="py-3 text-center text-xs font-medium text-gray-600 bg-gray-100 col-span-2">
+                            <div class="py-3 text-center text-xs font-bold text-gray-600 bg-gray-100 col-span-2">
                                 <span class="w-20 lg:w-full">عنوان</span>
                             </div>
-                            <div class="py-3 text-center text-xs font-medium text-gray-600 bg-gray-100 col-span-2">
+                            <div class="py-3 text-center text-xs font-bold text-gray-600 bg-gray-100 col-span-2">
                                 <span class="w-20 lg:w-full">لینک</span>
                             </div>
-                            <div class="py-3 text-center text-xs font-medium text-gray-600 bg-gray-100 col-span-2">
+                            <div class="py-3 text-center text-xs font-bold text-gray-600 bg-gray-100 col-span-2">
                                 <span class="w-30 lg:w-full">منوی والد</span>
                             </div>
-                            <div class="py-3 text-center text-xs font-medium text-gray-600 bg-gray-100">
+                            <div class="py-3 text-center text-xs font-bold text-gray-600 bg-gray-100">
                                 <span class="w-30 lg:w-full">وضعیت</span>
                             </div>
-                            <div class="py-3 text-center text-xs font-medium text-gray-600 bg-gray-100 col-span-2">
+                            <div class="py-3 text-center text-xs font-bold text-gray-600 bg-gray-100 col-span-2">
                                 <span class="w-[180px] lg:w-full">عملیات</span>
                             </div>
                         </div>

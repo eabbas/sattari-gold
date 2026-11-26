@@ -123,7 +123,7 @@
                 <div>
                     <div class="mb-2 flex items-center gap-2">
                         <span class="h-2 w-2 rounded-full bg-[#b68b43]"></span>
-                        <span class="text-xs font-medium text-[#9b702d]">
+                        <span class="text-xs font-bold text-[#9b702d]">
                             گزارش حساب کاربری
                         </span>
                     </div>
@@ -219,7 +219,7 @@
                                         </td>
 
                                         <td>
-                                            <span class="font-medium text-[#65563f] in-fa">
+                                            <span class="font-bold text-[#65563f] in-fa">
                                                 {{ number_format($deal->goldPrice) }}
                                             </span>
                                             <span class="mr-1 text-[10px] text-[#a39783]">ریال</span>

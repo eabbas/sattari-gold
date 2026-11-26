@@ -42,7 +42,7 @@
                 <form action="{{ route('role.roleStore') }}" class="space-y-4" method="POST">
                     @csrf
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1.5" for="name">عنوان نقش</label>
+                        <label class="block text-sm font-bold text-slate-700 mb-1.5" for="name">عنوان نقش</label>
                         <input type="text" id="name" name="name" placeholder="مثلاً: مدیر فروش"
                             class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm">
                         @error('name')
@@ -50,7 +50,7 @@
                         @enderror
                     </div>
                     <button type="submit"
-                        class="w-full bg-indigo-400 text-white font-medium py-2.5 rounded-xl transition-colors shadow-sm shadow-primary/30 flex justify-center items-center gap-2 cursor-pointer">
+                        class="w-full bg-indigo-400 text-white font-bold py-2.5 rounded-xl transition-colors shadow-sm shadow-primary/30 flex justify-center items-center gap-2 cursor-pointer">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7">
                             </path>
@@ -120,7 +120,7 @@
 
                 <div class="mt-6 flex justify-end">
                     <button type="button" onclick="setPermissions()"
-                        class="bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-2.5 px-8 rounded-xl transition-colors shadow-sm shadow-emerald-500/30 flex items-center gap-2 cursor-pointer">
+                        class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2.5 px-8 rounded-xl transition-colors shadow-sm shadow-emerald-500/30 flex items-center gap-2 cursor-pointer">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4">

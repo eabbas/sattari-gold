@@ -17,76 +17,6 @@ let weight = document.getElementById('weight')
 let price = document.getElementById('price')
 let dealId = document.getElementById('dealId')
 
-// function applyDealFilters() {
-//     $.ajax({
-//         url: api + 'getDealFilter',
-//         type: "POST",
-//         dataType: "json",
-//         data: {
-//             'filters': dealFilters
-//         },
-//         success: function (data) {
-//             console.log(data)
-//             let counter = 0;
-//             let bodyTable = document.querySelector('tbody')
-//             bodyTable.innerHTML = ''
-//             data.forEach(row=>{
-//                 let parentRow = document.createElement('tr')
-//                 parentRow.classList = 'item_fayle text-xs lg:text-base'
-//                 counter++
-//                 let html = `
-//                     <td class="border-1border-(--color-border) p-1 md:px-3 md:py-2 text-center in-fa">
-//                         ${ counter }
-//                     </td>
-//                     <td class="p-1 md:px-3 md:py-2 flex items-center justify-around">
-//                         <div class="w-18 px-2 py-1 ${ row.transaction.type == 'sell' ? ' border-2 border-(--color-danger) text-(--color-danger) ' : ' border-2 border-(--color-success) text-(--color-success) ' } rounded-lg text-center">
-//                         ${ row.transaction.type == 'sell' ? 'فروش' : 'خرید' }
-//                         </div>
-//                         <div class="w-fit">
-//                         ${ row.user.name+' '+row.user.family }
-//                         </div>
-//                     </td>
-//                     <td class="border-1border-(--color-border) p-1 md:px-3 md:py-2 text-center">
-//                         شمش نقره
-//                     </td>
-//                     <td class="border-1border-(--color-border) p-1 md:px-3 md:py-2 text-center in-fa">
-//                         ${ row.goldWeight } گرم
-//                     </td>
-//                     <td class="border-1border-(--color-border) p-1 md:px-3 md:py-2 text-center in-fa">
-//                         ${ Math.floor(row.goldPrice).toLocaleString('fa-IR') }
-//                     </td>
-//                     <td class="border-1border-(--color-border) p-1 md:px-3 md:py-2 text-center in-fa">
-//                         ${ row.buyPrice ? row.buyPrice.toLocaleString('fa-IR') : '-' }
-//                     </td>
-//                     <td class="border-1border-(--color-border) p-1 md:px-3 md:py-2 text-center in-fa">
-//                         ${ row.message ? row.message : '-' }
-//                     </td>
-//                     <td class="border-1border-(--color-border) p-1 md:px-3 md:py-2 text-center">
-//                         <span class="px-3 py-1.5 text-(--color-warning) rounded-md border-1 border-(--color-warning) p-1 cursor-pointer in-fa">
-//                             ${ '100'+row.id }
-//                         </span>
-//                     </td>
-//                     <td class="border-1border-(--color-border) p-1 md:px-3 md:py-2 text-center">
-//                         <span class="w-5/12 text-right in-fa">${ row.time }</span>
-//                         <span class="w-2/12 text-right mx-2">|</span>
-//                         <span class="w-5/12 text-left in-fa">${ row.date }</span>
-//                     </td>
-//                     <td class="border-1border-(--color-border) p-1 md:px-3 md:py-2 text-center">
-//                         <span class="px-3 py-1.5 bg-[${ row.color}]/20 text-[${ row.color }] rounded-md border-1 border-[${ row.color }] p-1 cursor-default">
-//                         ${ row.state }
-//                         </span>
-//                     </td>`
-//                 parentRow.innerHTML = html
-//                 bodyTable.append(parentRow)
-//             })
-//         },
-//         error: function () {
-//             console.log('error')
-//         }
-//     })
-// }
-
-
 function escapeHtml(value) {
     return String(value ?? '').replace(/[&<>"']/g, char => ({
         '&': '&amp;',
@@ -109,8 +39,6 @@ function applyDealFilters() {
         },
 
         success: function (data) {
-
-            console.log(data);
 
             let counter = 0;
             const bodyTable = document.getElementById('dealsTableBody');
@@ -171,7 +99,7 @@ function applyDealFilters() {
                         ${escapeHtml(row.goldWeight)} گرم
                     </td>
 
-                    <td class="border border-[#E7E2D9] px-3 py-3 font-medium in-fa">
+                    <td class="border border-[#E7E2D9] px-3 py-3 font-bold in-fa">
                         ${Math.floor(Number(row.goldPrice)).toLocaleString('fa-IR')}
                     </td>
 

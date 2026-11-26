@@ -1,6 +1,6 @@
 @extends('admin.app.dashboard')
 
-@section('title', 'ستاری گلد | واریز و برداشت ها')
+@section('title', 'ستاری گلد | تراکنش های من')
 
 @section('content')
 
@@ -206,7 +206,7 @@
 
                                 <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
                                     <div style="color: {{ $transaction->typeColor }}; border-color: {{ $transaction->typeColor }}; background-color: {{ $transaction->typeColor }}12;"
-                                        class="w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-medium">
+                                        class="w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-bold">
                                         {{ $transaction->type }}
                                     </div>
                                 </td>
@@ -227,14 +227,14 @@
 
                                 <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
                                     <span
-                                        class="inline-block px-3 py-1.5 rounded-lg border border-[#E7E2D9] bg-[#F8F5EF] text-[#B88A3B] font-medium text-xs in-fa">
+                                        class="inline-block px-3 py-1.5 rounded-lg border border-[#E7E2D9] bg-[#F8F5EF] text-[#B88A3B] font-bold text-xs in-fa">
                                         {{ '100' . $transaction->id }}
                                     </span>
                                 </td>
 
                                 <td class="border-b border-[#E7E2D9] p-2 md:px-3 md:py-3 text-center">
                                     <div style="border-color: {{ $transaction->stateColor }}; color: {{ $transaction->stateColor }}; background-color: #F8F5EF;"
-                                        class="min-w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-medium">
+                                        class="min-w-20 mx-auto px-2 py-1.5 rounded-lg border text-center text-xs font-bold">
                                         {{ $transaction->stateTitle }}
                                     </div>
                                 </td>
@@ -244,7 +244,7 @@
 
                                         <button
                                             onclick="showTransaction('{{ $transaction->wallet->user->name . ' ' . $transaction->wallet->user->family }}', '{{ $transaction->wallet->user->phoneNumber }}', '{{ $transaction->time . ' | ' . $transaction->date }}', '{{ $transaction->stateColor }}', '{{ $transaction->stateTitle }}', '{{ $transaction->type }}', '{{ $transaction->amount }}', '{{ $transaction->isApproved }}', '{{ $transaction->id }}', '{{ $transaction->card }}', '{{ $transaction->shaba }}', '{{ $transaction->receipt }}')"
-                                            class="w-full min-w-20 px-3 py-2 rounded-lg border border-[#D6AD60] bg-[#F8F5EF] text-[#B88A3B] font-medium hover:bg-[#B88A3B] hover:text-white transition-all duration-200 cursor-pointer">
+                                            class="w-full min-w-20 px-3 py-2 rounded-lg border border-[#D6AD60] bg-[#F8F5EF] text-[#B88A3B] font-bold hover:bg-[#B88A3B] hover:text-white transition-all duration-200 cursor-pointer">
 
                                             مشاهده
 
@@ -373,28 +373,38 @@
             </div>
 
             {{-- عملیات تراکنش --}}
-            <div id="transactionControl" class="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5"
-                data-transaction-id="">
+            <div id="transactionControl" class="w-full mt-5" data-transaction-id="">
 
-                <button onclick="transactionAct('1')"
-                    class="flex items-center justify-center gap-2 rounded-xl border border-green-200 bg-green-50 px-3 py-3 text-sm font-bold text-green-700 transition-all duration-200 hover:bg-green-600 hover:border-green-600 hover:text-white">
+                <div id="transactionActions" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
 
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4 4L19 6" />
-                    </svg>
+                    <button onclick="transactionAct('1')"
+                        class="flex items-center justify-center gap-2 rounded-xl border border-green-200 bg-green-50 px-3 py-3 text-sm font-bold text-green-700 transition-all duration-200 hover:bg-green-600 hover:border-green-600 hover:text-white">
 
-                    تایید تراکنش
-                </button>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 12 4 4L19 6" />
+                        </svg>
 
-                <button onclick="transactionAct('-1')"
-                    class="flex items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 px-3 py-3 text-sm font-bold text-red-700 transition-all duration-200 hover:bg-red-600 hover:border-red-600 hover:text-white">
+                        تایید تراکنش
+                    </button>
 
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12" />
-                    </svg>
+                    <button onclick="transactionAct('-1')"
+                        class="flex items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 px-3 py-3 text-sm font-bold text-red-700 transition-all duration-200 hover:bg-red-600 hover:border-red-600 hover:text-white">
 
-                    رد تراکنش
-                </button>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+
+                        رد تراکنش
+                    </button>
+
+                </div>
+
+                <div id="transactionDealMessage"
+                    class="hidden rounded-xl border border-[#D6AD60] bg-[#B88A3B]/10 px-4 py-4 text-center text-sm font-bold text-[#92702F]">
+
+                    تایید یا رد این تراکنش از طریق صفحه معاملات انجام می‌شود.
+                </div>
 
             </div>
 

@@ -60,8 +60,8 @@ if (localStorage.getItem('products')) {
         }
         let totalPriceEl = totalBlock.querySelector('#totalPriceEl')
 
-        totalPriceEl.dataset.price = priceSum
+        totalPriceEl.dataset.price = parseInt(priceSum)
 
-        totalPriceEl.innerText = priceSum
+        totalPriceEl.innerText = parseInt(priceSum).toLocaleString('fa-IR')
     })
 }

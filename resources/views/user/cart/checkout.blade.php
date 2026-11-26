@@ -30,27 +30,26 @@
                 <input type="hidden" name="packs" id="packsInput">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium mb-2">نام <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-bold mb-2">نام <span class="text-red-500">*</span></label>
                         <input type="text" name="name" value="{{ Auth::check() ? Auth::user()->name : '' }}"
                             class="w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none"
                             required>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2">نام خانوادگی <span
-                                class="text-red-500">*</span></label>
+                        <label class="block text-sm font-bold mb-2">نام خانوادگی <span class="text-red-500">*</span></label>
                         <input type="text" name="family" value="{{ Auth::check() ? Auth::user()->family : '' }}"
                             class="w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none"
                             required>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2">کد ملی <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-bold mb-2">کد ملی <span class="text-red-500">*</span></label>
                         <input type="number" name="nationalCode" dir="ltr"
                             value="{{ Auth::check() ? Auth::user()->nationalCode : '' }}"
                             class="w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none in-fa"
                             required>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2">شماره تلفن <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-bold mb-2">شماره تلفن <span class="text-red-500">*</span></label>
                         <input type="number" name="phoneNumber" dir="ltr"
                             value="{{ Auth::check() ? Auth::user()->phoneNumber : '' }}"
                             class="w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none in-fa"
@@ -58,7 +57,7 @@
                     </div>
                     @if (!Auth::check())
                         <div class="parentPass">
-                            <label class="block text-sm font-medium mb-2"> رمز عبور <span
+                            <label class="block text-sm font-bold mb-2"> رمز عبور <span
                                     class="text-red-500">*</span></label>
                             <input type="password" name="password" placeholder="رمز عبور خود را وارد کنید " id="password"
                                 class="in-fa w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none">
@@ -67,7 +66,7 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-medium mb-2">استان <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-bold mb-2">استان <span class="text-red-500">*</span></label>
                         <div class="relative">
                             <select id="province"
                                 class="w-full bg-gray-100 border-none rounded-lg p-3 appearance-none focus:ring-2 focus:ring-yellow-500 outline-none cursor-pointer">
@@ -87,7 +86,7 @@
                         </div>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2">شهر <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-bold mb-2">شهر <span class="text-red-500">*</span></label>
                         <div class="relative">
                             <select name="cityId" id="city"
                                 class="w-full bg-gray-100 border-none rounded-lg p-3 appearance-none focus:ring-2 focus:ring-yellow-500 outline-none cursor-pointer">
@@ -108,7 +107,7 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium mb-2">جزئیات آدرس <span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-bold mb-2">جزئیات آدرس <span class="text-red-500">*</span></label>
                     <input type="text" name="address"
                         value="{{ Auth::check() ? (count(Auth::user()->addresses) ? Auth::user()->addresses[0]->address : '') : '' }}"
                         placeholder="نام خیابان و پلاک خانه"
@@ -116,7 +115,7 @@
                         required>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium mb-2">کد پستی (اختیاری)</label>
+                    <label class="block text-sm font-bold mb-2">کد پستی (اختیاری)</label>
                     <input type="text" name="postalCode"
                         value="{{ Auth::check() ? (count(Auth::user()->addresses) ? Auth::user()->addresses[0]->postalCode : '') : '' }}"
                         class="in-fa w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none"
@@ -124,14 +123,14 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium mb-2">آدرس ایمیل (اختیاری)</label>
+                    <label class="block text-sm font-bold mb-2">آدرس ایمیل (اختیاری)</label>
                     <input type="email" name="email" value="{{ Auth::check() ? Auth::user()->email : '' }}"
                         class="w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none"
                         dir="ltr">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium mb-2">توضیحات تکمیلی</label>
+                    <label class="block text-sm font-bold mb-2">توضیحات تکمیلی</label>
                     <textarea rows="4" name="description"
                         placeholder="یادداشت‌ها درباره سفارش شما، برای مثال نکات مهم درباره نحوه تحویل سفارش."
                         class="in-fa w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none resize-none"></textarea>
@@ -201,7 +200,7 @@
                                             شماره
                                             کارت</p>
                                         <div
-                                            class="card-number text-base sm:text-lg md:text-xl font-medium text-white/95 drop-shadow-sm">
+                                            class="card-number text-base sm:text-lg md:text-xl font-bold text-white/95 drop-shadow-sm">
                                             6063 7311 2068 4353
                                         </div>
                                     </div>
@@ -222,7 +221,7 @@
                                             شماره
                                             شبا</p>
                                         <div
-                                            class="sheba-number flex flex-row-reverse items-center gap-1 text-[11px] sm:text-sm md:text-base font-medium text-white/95">
+                                            class="sheba-number flex flex-row-reverse items-center gap-1 text-[11px] sm:text-sm md:text-base font-bold text-white/95">
                                             <span class="text-white/70 font-sans">IR</span>
                                             <span class="text-sm">67 0600 2002 7001 1408 8140 01</span>
                                         </div>
@@ -242,13 +241,13 @@
                                     <div>
                                         <p class="text-[9px] sm:text-[10px] text-white/50 uppercase tracking-wider">به نام
                                         </p>
-                                        <p class="text-sm sm:text-base font-medium text-white/90 tracking-wide">عباس ملکی
+                                        <p class="text-sm sm:text-base font-bold text-white/90 tracking-wide">عباس ملکی
                                         </p>
                                     </div>
                                     <div class="text-left">
                                         <p class="text-[9px] sm:text-[10px] text-white/50 uppercase tracking-wider">تاریخ
                                             انقضا</p>
-                                        <p class="text-sm sm:text-base font-medium text-white/90 tracking-wider">۱۲/۲۸</p>
+                                        <p class="text-sm sm:text-base font-bold text-white/90 tracking-wider">۱۲/۲۸</p>
                                     </div>
                                     <div class="flex items-center gap-1 opacity-80">
                                         <div
@@ -270,7 +269,7 @@
 
                     </div>
                     <div>
-                        <label class="block text-sm font-medium mb-2">رسید پرداخت <span
+                        <label class="block text-sm font-bold mb-2">رسید پرداخت <span
                                 class="text-red-500">*</span></label>
                         <input type="file" dir="ltr" name="receipt"
                             class="w-full bg-gray-100 cursor-pointer border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none"

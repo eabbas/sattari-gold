@@ -99,7 +99,7 @@
                     </div>
                     <p class="text-sm text-gray-500 mb-6">معامله‌ای یافت نشد</p>
                     <button
-                        class="w-full border border-red-200 text-brand-red py-2 rounded-xl text-sm font-medium hover:bg-red-50 transition">
+                        class="w-full border border-red-200 text-brand-red py-2 rounded-xl text-sm font-bold hover:bg-red-50 transition">
                         مشاهده گردش حساب
                     </button>
                 @endif

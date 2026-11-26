@@ -246,7 +246,7 @@
                                     {{ $deal->goldWeight }} گرم
                                 </td>
 
-                                <td class="border border-[#E7E2D9] px-3 py-3 font-medium in-fa">
+                                <td class="border border-[#E7E2D9] px-3 py-3 font-bold in-fa">
                                     {{ number_format($deal->goldPrice) }}
                                 </td>
 
@@ -273,7 +273,7 @@
 
                                 <td class="border border-[#E7E2D9] px-3 py-3">
 
-                                    @if ($deal->state != 'تایید شده')
+                                    @if ($deal->state == 'در انتظار')
                                         @can('access', 'deal_confirm')
                                             <span onclick="deal('open', {{ Js::from($deal) }})"
                                                 style="background-color: {{ $deal->color }}20; color: {{ $deal->color }}; border-color: {{ $deal->color }};"

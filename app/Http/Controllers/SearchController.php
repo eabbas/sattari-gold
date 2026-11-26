@@ -18,14 +18,14 @@ class SearchController extends Controller
     {
         $filters = $request->input('filters');
         $category = $filters['category'] ?? null;
-        $exists = $filters['exists'] ?? 1;
-        $hadDiscount = $filters['hadDiscount'] ?? 0;
+        $exists = $filters['exists'] ?? null;
+        $hasDiscount = $filters['hasDiscount'] ?? null;
         $fromPrice = $filters['fromPrice'] ?? 0;
         $toPrice = $filters['toPrice'] ?? null;
         $sortType = $filters['sortType'] ?? 'desc';
         $sortBy = $filters['sortBy'] ?? 'created_at';
         $keyword = $filters['keyword'] ?? null;
-        $products = product::where(function ($query) use ($exists, $hadDiscount, $fromPrice, $toPrice) {
+        $products = product::where(function ($query) use ($exists, $hasDiscount, $fromPrice, $toPrice) {
             if ($fromPrice && !$toPrice) {
                 $query->where('products.primary_price', '>=', $fromPrice);
             }
@@ -38,7 +38,7 @@ class SearchController extends Controller
             if ($exists == 1) {
                 $query->where('products.count', '!=', 0);
             }
-            if ($hadDiscount == 1) {
+            if ($hasDiscount == 1) {
                 $query->whereNotNull('products.secondary_price');
             }
         });
@@ -157,8 +157,24 @@ class SearchController extends Controller
         $sortType = $filters['sortType'] ?? 'desc';
         if ($number) {
             $dealId = substr($number, 3);
-            $deals = deal::find($dealId);
-            return response()->json([$deals]);
+            $deal = deal::find($dealId);
+            $deal->user;
+            $deal->transaction;
+            switch ($deal->transaction->isApproved) {
+                case -1:
+                    $deal->state = 'رد شده';
+                    $deal->color = '#E85D5D';
+                    break;
+                case 0:
+                    $deal->state = 'در انتظار';
+                    $deal->color = '#F5A623';
+                    break;
+                case 1:
+                    $deal->state = 'تایید شده';
+                    $deal->color = '#18A878';
+                    break;
+            }
+            return response()->json([$deal]);
         }
 
         if ($dealType == ['all']) {
@@ -195,7 +211,6 @@ class SearchController extends Controller
         })->whereHas('transaction', function ($query) use ($dealType) {
             $query->whereIn('transactions.type', $dealType);
         })->with(['transaction', 'user']);
-
         if ($fullName) {
             $deals->with(['user' => function ($query) use ($fullName) {
                 $query->where('name', 'like', '%' . $fullName . '%')->orWhere('family', 'like', '%' . $fullName . '%');
@@ -234,8 +249,50 @@ class SearchController extends Controller
         $sortType = $filters['sortType'] ?? 'desc';
         if ($number) {
             $transactionId = substr($number, 3);
-            $transactions = transaction::find($transactionId);
-            return response()->json($transactions);
+            $transaction = transaction::find($transactionId);
+            $transaction->fullName = $transaction->wallet->user->name . ' ' . $transaction->wallet->user->family;
+            $transaction->phoneNumber = $transaction->wallet->user->phoneNumber;
+            switch ($transaction->type) {
+                case 'deposit':
+                    $transaction->type = 'واریز';
+                    $transaction->typeColor = '#3aae3f';
+                    break;
+                case 'withdraw':
+                    $transaction->type = 'برداشت';
+                    $transaction->typeColor = '#d23334';
+                    break;
+                case 'buy':
+                    $transaction->type = 'خرید';
+                    $transaction->typeColor = '#0867d5';
+                    break;
+                case 'sell':
+                    $transaction->type = 'فروش';
+                    $transaction->typeColor = '#e57200';
+                    break;
+            }
+            switch ($transaction->isApproved) {
+                case -1:
+                    $transaction->stateTitle = 'رد شده';
+                    $transaction->stateColor = '#d23334';
+                    break;
+                case 0:
+                    $transaction->stateTitle = 'در انتظار';
+                    $transaction->stateColor = '#6a6a6a';
+                    break;
+                case 1:
+                    $transaction->stateTitle = 'تایید شده';
+                    $transaction->stateColor = '#3aae3f';
+                    break;
+            }
+            if(count($transaction->wallet->user->creditCards)>0){
+                foreach($transaction->wallet->user->creditCards as $creditCard){
+                    if($creditCard->default == 1){
+                        $transaction->card = implode(' ', str_split($creditCard->card_number, 4));
+                        $transaction->shaba = implode(' ', str_split($creditCard->shaba_number, 4));
+                    }
+                }
+            }
+            return response()->json([$transaction]);
         }
         if ($type == ['all']) {
             $type = [];
@@ -339,8 +396,50 @@ class SearchController extends Controller
         $sortType = $filters['sortType'] ?? 'desc';
         if ($number) {
             $transactionId = substr($number, 3);
-            $transactions = transaction::find($transactionId);
-            return response()->json($transactions);
+            $transaction = transaction::find($transactionId);
+            $transaction->fullName = $transaction->wallet->user->name . ' ' . $transaction->wallet->user->family;
+            $transaction->phoneNumber = $transaction->wallet->user->phoneNumber;
+           switch ($transaction->type) {
+                case 'deposit':
+                    $transaction->type = 'واریز';
+                    $transaction->typeColor = '#3aae3f';
+                    break;
+                case 'withdraw':
+                    $transaction->type = 'برداشت';
+                    $transaction->typeColor = '#d23334';
+                    break;
+                case 'buy':
+                    $transaction->type = 'خرید';
+                    $transaction->typeColor = '#0867d5';
+                    break;
+                case 'sell':
+                    $transaction->type = 'فروش';
+                    $transaction->typeColor = '#e57200';
+                    break;
+            }
+            switch ($transaction->isApproved) {
+                case -1:
+                    $transaction->stateTitle = 'رد شده';
+                    $transaction->stateColor = '#d23334';
+                    break;
+                case 0:
+                    $transaction->stateTitle = 'در انتظار';
+                    $transaction->stateColor = '#6a6a6a';
+                    break;
+                case 1:
+                    $transaction->stateTitle = 'تایید شده';
+                    $transaction->stateColor = '#3aae3f';
+                    break;
+            }
+            if(count($transaction->wallet->user->creditCards)>0){
+                foreach($transaction->wallet->user->creditCards as $creditCard){
+                    if($creditCard->default == 1){
+                        $transaction->card = implode(' ', str_split($creditCard->card_number, 4));
+                        $transaction->shaba = implode(' ', str_split($creditCard->shaba_number, 4));
+                    }
+                }
+            }
+            return response()->json([$transaction]);
         }
         if ($type == ['all']) {
             $type = [];

@@ -1,485 +1,408 @@
+const dealBlock = document.getElementById('dealBlock');
+const mainBlock = document.getElementById('mainBlock');
 
-let dealBlock = document.getElementById('dealBlock');
-let mainBlock = document.getElementById('mainBlock');
+const amountInput = document.getElementById('amountInput');
+const weightInput = document.getElementById('weightInput');
 
-let btnByPrice = document.getElementById('btnByPrice');
-let btnByWeight = document.getElementById('btnByWeight');
+const hiddenUserInput = document.getElementById('userInput');
+const hiddenResultOutput = document.getElementById('resultOutput');
+const calcBy = document.getElementById('calcBy');
+const actionInp = document.getElementById('actionInp');
+const goldPrice = document.getElementById('goldPrice');
 
-let userInput = document.getElementById('userInput');
-let inputUnit = document.getElementById('inputUnit');
+const popupPricePerGram = document.getElementById('popupPricePerGram');
+const balanceTitle = document.getElementById('balanceTitle');
+const balanceValue = document.getElementById('balanceValue');
+const tomanEquivalent = document.getElementById('tomanEquivalent');
+const inputError = document.getElementById('inputError');
+const submitBtn = document.getElementById('submitBtn');
 
-let resultOutput = document.getElementById('resultOutput');
-let resultUnit = document.getElementById('resultUnit');
+const percentButtons = document.querySelectorAll('.percent-btn');
 
-let inputError = document.getElementById('inputError');
-let priceBlock = document.getElementById('priceBlock');
+const MIN_WEIGHT = 0.0001;
+const MAX_WEIGHT = 200;
 
-let submitBtn = document.getElementById('submitBtn');
-
-let buyBox = document.getElementById('buyBox');
-let sellBox = document.getElementById('sellBox');
-
-let actionInp = document.getElementById('actionInp');
-let calcBy = document.getElementById('calcBy');
-let dealPopupTitle = document.getElementById('dealPopupTitle');
-
-let goldPrice = document.getElementById('goldPrice');
-let popupPricePerGram = document.getElementById('popupPricePerGram');
-
-
-// ---------------------------------------------------------
-// تنظیمات معاملات
-// ---------------------------------------------------------
-
-const maxWeight = 200;
-const minWeight = 0.0001;
-
-let currentMode = 'price';
 let currentAction = 'buy';
+let selectedPercent = null;
+let isFormattingAmount = false;
+let isFormattingWeight = false;
 
+const numberFormat = new Intl.NumberFormat('en-US', {
+    maximumFractionDigits: 0
+});
 
-// ---------------------------------------------------------
-// تبدیل موجودی‌ها به عدد
-// ---------------------------------------------------------
+const weightFormat = new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 4
+});
 
-const cleanWalletBalance = Number(userWalletBalance) || 0;
-const cleanGoldBalance = Number(userGoldBalance) || 0;
+function getNumber(value) {
+    if (!value) return 0;
 
+    const normalized = String(value)
+        .replace(/[۰-۹]/g, digit => '۰۱۲۳۴۵۶۷۸۹'.indexOf(digit))
+        .replace(/[٠-٩]/g, digit => '٠١٢٣٤٥٦٧٨٩'.indexOf(digit))
+        .replace(/,/g, '')
+        .trim();
 
-// ---------------------------------------------------------
-// فرمت اعداد
-// ---------------------------------------------------------
+    const number = parseFloat(normalized);
 
-function formatNumber(num) {
-    return Math.round(num).toLocaleString('en-US');
+    return Number.isFinite(number) ? number : 0;
 }
 
-function formatWeight(num) {
-    if (Number.isInteger(num)) {
-        return num.toString();
+function formatAmount(value) {
+    return numberFormat.format(Math.round(value));
+}
+
+function formatWeight(value) {
+    return weightFormat.format(value);
+}
+
+function formatToman(value) {
+    const toman = Math.floor(value / 10);
+
+    if (!toman) return '';
+
+    if (typeof num2persian === 'function') {
+        return `معادل ${num2persian(toman)} تومان`;
     }
 
-    return parseFloat(num.toFixed(5)).toString();
+    return 'معادل تومان';
 }
 
-function formatPersianNumber(num) {
-    return Math.round(num).toLocaleString('fa-IR');
+function getCurrentPrice() {
+    return currentAction === 'buy'
+        ? buyPricePerGram
+        : sellPricePerGram;
 }
 
-
-// ---------------------------------------------------------
-// تغییر قیمت بر اساس نوع معامله
-// ---------------------------------------------------------
-
-function updateTradePrice() {
-
-    pricePerGram = currentAction === 'buy'
-        ? Number(buyPricePerGram)
-        : Number(sellPricePerGram);
-
-    goldPrice.value = pricePerGram;
-
-    popupPricePerGram.innerText = formatNumber(pricePerGram);
+function getCurrentBalance() {
+    return currentAction === 'buy'
+        ? userWalletBalance
+        : userGoldBalance;
 }
 
-
-// ---------------------------------------------------------
-// باز کردن پاپ آپ
-// ---------------------------------------------------------
-
-function openBlock(el) {
-
-    if (el.id === 'buyBox') {
-
-        currentAction = 'buy';
-
-        dealPopupTitle.innerText = 'خرید آبشده نقدی';
-
-        actionInp.value = 'buy';
-
-    } else if (el.id === 'sellBox') {
-
-        currentAction = 'sell';
-
-        dealPopupTitle.innerText = 'فروش آبشده نقدی';
-
-        actionInp.value = 'sell';
-
+function updateBalance() {
+    if (currentAction === 'buy') {
+        balanceTitle.textContent = 'موجودی کیف پول شما';
+        balanceValue.textContent = `${formatAmount(userWalletBalance)} ریال`;
     } else {
+        balanceTitle.textContent = 'موجودی طلای شما';
+        balanceValue.textContent = `${formatWeight(userGoldBalance)} گرم`;
+    }
+}
+
+function updatePrice() {
+    pricePerGram = getCurrentPrice();
+
+    popupPricePerGram.textContent = formatAmount(pricePerGram);
+    goldPrice.value = pricePerGram;
+}
+
+function clearPercentSelection() {
+    selectedPercent = null;
+
+    percentButtons.forEach(button => {
+        button.classList.remove(
+            'border-brand-red',
+            'bg-red-50',
+            'text-brand-red'
+        );
+
+        button.classList.add(
+            'border-gray-200',
+            'text-gray-600'
+        );
+    });
+}
+
+function selectPercent(button) {
+    clearPercentSelection();
+
+    selectedPercent = Number(button.dataset.percent);
+
+    button.classList.remove(
+        'border-gray-200',
+        'text-gray-600'
+    );
+
+    button.classList.add(
+        'border-brand-red',
+        'bg-red-50',
+        'text-brand-red'
+    );
+
+    const percentage = selectedPercent / 100;
+    const balance = getCurrentBalance();
+
+    if (currentAction === 'buy') {
+        const amount = Math.floor(balance * percentage);
+
+        amountInput.value = formatAmount(amount);
+        calculateByAmount();
+    } else {
+        const weight = balance * percentage;
+
+        weightInput.value = formatWeight(weight);
+        calculateByWeight();
+    }
+}
+
+function showError(message = '') {
+    inputError.textContent = message;
+    inputError.classList.toggle('hidden', !message);
+}
+
+function updateSubmitButton(isValid) {
+    submitBtn.disabled = !isValid;
+
+    submitBtn.classList.toggle('bg-gray-200', !isValid);
+    submitBtn.classList.toggle('text-gray-400', !isValid);
+    submitBtn.classList.toggle('cursor-not-allowed', !isValid);
+
+    submitBtn.classList.toggle('bg-brand-red', isValid);
+    submitBtn.classList.toggle('text-white', isValid);
+    submitBtn.classList.toggle('hover:opacity-90', isValid);
+    submitBtn.classList.toggle('cursor-pointer', isValid);
+}
+
+function validateDeal(amount, weight) {
+    if (!amount || !weight || !Number.isFinite(amount) || !Number.isFinite(weight)) {
+        showError();
+        updateSubmitButton(false);
+        return false;
+    }
+
+    if (weight < MIN_WEIGHT) {
+        showError('حداقل وزن معامله باید ۰.۰۰۰۱ گرم باشد.');
+        updateSubmitButton(false);
+        return false;
+    }
+
+    if (weight > MAX_WEIGHT) {
+        showError('حداکثر وزن مجاز برای معامله ۲۰۰ گرم است.');
+        updateSubmitButton(false);
+        return false;
+    }
+
+    if (currentAction === 'buy' && amount > userWalletBalance) {
+        showError('موجودی کیف پول شما برای این معامله کافی نیست.');
+        updateSubmitButton(false);
+        return false;
+    }
+
+    if (currentAction === 'sell' && weight > userGoldBalance) {
+        showError('موجودی طلای شما برای این معامله کافی نیست.');
+        updateSubmitButton(false);
+        return false;
+    }
+
+    showError();
+    updateSubmitButton(true);
+
+    return true;
+}
+
+function updateHiddenInputs(amount, weight, mode) {
+    hiddenUserInput.value = mode === 'price' ? amount : weight;
+    hiddenResultOutput.value = mode === 'price' ? weight : amount;
+
+    calcBy.value = mode;
+    goldPrice.value = getCurrentPrice();
+}
+
+function calculateByAmount() {
+    const amount = getNumber(amountInput.value);
+    const price = getCurrentPrice();
+
+    weightInput.value = '';
+    tomanEquivalent.textContent = '';
+
+    if (!amount || !price || amount <= 0) {
+        updateHiddenInputs(0, 0, 'price');
+        showError();
+        updateSubmitButton(false);
         return;
     }
 
-    // تنظیم قیمت مربوط به معامله
-    updateTradePrice();
+    const weight = amount / price;
 
-    // بازگشت فرم به حالت اولیه
-    switchMode('price');
+    weightInput.value = formatWeight(weight);
+    tomanEquivalent.textContent = formatToman(amount);
 
-    // نمایش پاپ آپ
-    dealBlock.classList.remove('invisible', 'opacity-0');
-
-    mainBlock.classList.remove('scale-95');
-    mainBlock.classList.add('scale-100');
+    updateHiddenInputs(amount, weight, 'price');
+    validateDeal(amount, weight);
 }
 
+function calculateByWeight() {
+    const weight = getNumber(weightInput.value);
+    const price = getCurrentPrice();
 
-// ---------------------------------------------------------
-// بستن پاپ آپ
-// ---------------------------------------------------------
+    amountInput.value = '';
+    tomanEquivalent.textContent = '';
+
+    if (!weight || !price || weight <= 0) {
+        updateHiddenInputs(0, 0, 'weight');
+        showError();
+        updateSubmitButton(false);
+        return;
+    }
+
+    const amount = Math.round(weight * price);
+
+    amountInput.value = formatAmount(amount);
+    tomanEquivalent.textContent = formatToman(amount);
+
+    updateHiddenInputs(amount, weight, 'weight');
+    validateDeal(amount, weight);
+}
+
+function openBlock(element) {
+    currentAction = element.dataset.state;
+
+    if (currentAction !== 'buy' && currentAction !== 'sell') return;
+
+    mainBlock.reset();
+
+    amountInput.value = '';
+    weightInput.value = '';
+    tomanEquivalent.textContent = '';
+
+    hiddenUserInput.value = '';
+    hiddenResultOutput.value = '';
+    calcBy.value = '';
+
+    selectedPercent = null;
+    clearPercentSelection();
+    showError();
+    updateSubmitButton(false);
+
+    document.getElementById('dealPopupTitle').textContent =
+        currentAction === 'buy'
+            ? 'خرید آبشده نقدی'
+            : 'فروش آبشده نقدی';
+
+    actionInp.value = currentAction;
+
+    updateBalance();
+    updatePrice();
+
+    dealBlock.classList.remove(
+        'invisible',
+        'opacity-0',
+        'pointer-events-none'
+    );
+
+    dealBlock.classList.add(
+        'opacity-100',
+        'pointer-events-auto'
+    );
+
+    document.body.classList.add('overflow-hidden');
+
+    setTimeout(() => {
+        if (currentAction === 'buy') {
+            amountInput.focus();
+        } else {
+            weightInput.focus();
+        }
+    }, 100);
+}
 
 function closeBlock() {
+    dealBlock.classList.remove(
+        'opacity-100',
+        'pointer-events-auto'
+    );
 
-    dealBlock.classList.add('invisible', 'opacity-0');
+    dealBlock.classList.add(
+        'opacity-0',
+        'pointer-events-none'
+    );
 
-    mainBlock.classList.remove('scale-100');
-    mainBlock.classList.add('scale-95');
+    document.body.classList.remove('overflow-hidden');
 
-    // پاکسازی اطلاعات فرم
-    switchMode('price');
-
+    setTimeout(() => {
+        dealBlock.classList.add('invisible');
+    }, 300);
 }
 
+// Amount input
+amountInput.addEventListener('input', () => {
+    if (isFormattingAmount) return;
 
-// ---------------------------------------------------------
-// بستن پاپ آپ با کلیک روی فضای بیرونی
-// ---------------------------------------------------------
+    clearPercentSelection();
 
-dealBlock.addEventListener('click', function (e) {
+    const value = getNumber(amountInput.value);
 
-    if (e.target === dealBlock) {
+    isFormattingAmount = true;
+    amountInput.value = value ? formatAmount(value) : '';
+    isFormattingAmount = false;
+
+    calculateByAmount();
+});
+
+// Weight input
+weightInput.addEventListener('input', () => {
+    if (isFormattingWeight) return;
+
+    clearPercentSelection();
+
+    const value = getNumber(weightInput.value);
+
+    isFormattingWeight = true;
+    weightInput.value = value ? formatWeight(value) : '';
+    isFormattingWeight = false;
+
+    calculateByWeight();
+});
+
+// Percentage buttons
+percentButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        if (getCurrentBalance() <= 0) {
+            showError('موجودی شما برای انجام معامله کافی نیست.');
+            updateSubmitButton(false);
+            return;
+        }
+
+        selectPercent(button);
+    });
+});
+
+// Close by clicking outside the form
+dealBlock.addEventListener('click', event => {
+    if (event.target === dealBlock) {
         closeBlock();
     }
-
 });
 
-
-// بستن با کلید Escape
-document.addEventListener('keydown', function (e) {
-
-    if (e.key === 'Escape' &&
-        !dealBlock.classList.contains('invisible')) {
-
+// Close with Escape
+document.addEventListener('keydown', event => {
+    if (
+        event.key === 'Escape' &&
+        !dealBlock.classList.contains('invisible')
+    ) {
         closeBlock();
     }
-
 });
 
+// Prevent invalid form submission
+mainBlock.addEventListener('submit', event => {
+    const amount = getNumber(hiddenUserInput.value);
+    const result = getNumber(hiddenResultOutput.value);
 
-// ---------------------------------------------------------
-// تغییر حالت محاسبه
-// ---------------------------------------------------------
+    const weight = calcBy.value === 'price' ? result : amount;
+    const finalAmount = calcBy.value === 'price' ? amount : result;
 
-function switchMode(mode) {
-
-    currentMode = mode;
-
-    userInput.value = '';
-    resultOutput.value = '';
-
-    priceBlock.innerText = '';
-
-    inputError.innerText = '';
-    inputError.classList.add('hidden');
-
-    userInput.classList.remove('border-brand-red');
-
-    disableSubmitButton();
-
-    if (mode === 'price') {
-
-        btnByPrice.className =
-            'flex-1 py-2 text-xs font-medium rounded-md transition-all duration-300 bg-white text-brand-red shadow-sm';
-
-        btnByWeight.className =
-            'flex-1 py-2 text-xs font-medium rounded-md transition-all duration-300 text-gray-500 hover:text-gray-700';
-
-        calcBy.value = 'price';
-
-        userInput.placeholder = 'مبلغ کل (ریال)';
-        inputUnit.innerText = 'ریال';
-
-        resultOutput.placeholder = 'وزن (گرم)';
-        resultUnit.innerText = 'گرم';
-
-    } else {
-
-        btnByWeight.className =
-            'flex-1 py-2 text-xs font-medium rounded-md transition-all duration-300 bg-white text-brand-red shadow-sm';
-
-        btnByPrice.className =
-            'flex-1 py-2 text-xs font-medium rounded-md transition-all duration-300 text-gray-500 hover:text-gray-700';
-
-        calcBy.value = 'weight';
-
-        userInput.placeholder = 'وزن (گرم)';
-        inputUnit.innerText = 'گرم';
-
-        resultOutput.placeholder = 'مبلغ کل (ریال)';
-        resultUnit.innerText = 'ریال';
-
-    }
-
-}
-
-
-// ---------------------------------------------------------
-// دکمه‌های تغییر حالت
-// ---------------------------------------------------------
-
-btnByPrice.addEventListener('click', function () {
-    switchMode('price');
-});
-
-btnByWeight.addEventListener('click', function () {
-    switchMode('weight');
-});
-
-
-// ---------------------------------------------------------
-// محاسبات ورودی کاربر
-// ---------------------------------------------------------
-
-userInput.addEventListener('input', function () {
-
-    let value = Number(this.value);
-
-    inputError.classList.add('hidden');
-    inputError.innerText = '';
-
-    this.classList.remove('border-brand-red');
-
-    resultOutput.value = '';
-    priceBlock.innerText = '';
-
-    // بررسی ورودی نامعتبر
-    if (!Number.isFinite(value) || value <= 0) {
-
-        disableSubmitButton();
+    if (!validateDeal(finalAmount, weight)) {
+        event.preventDefault();
         return;
-
     }
 
-
-    // =====================================================
-    // حالت اول: محاسبه بر اساس مبلغ
-    // =====================================================
-
-    if (currentMode === 'price') {
-
-        let price = value;
-
-        let weight = price / pricePerGram;
-
-        // نمایش معادل مبلغ به تومان
-        priceBlock.innerText =
-            'معادل ' +
-            formatPersianNumber(price / 10) +
-            ' تومان';
-
-
-        // بررسی حداقل وزن
-        if (weight < minWeight) {
-
-            showError('مبلغ وارد شده بسیار کم است (کمتر از ۰.۰۰۰۱ گرم).');
-
-            disableSubmitButton();
-            return;
-
-        }
-
-
-        // بررسی حداکثر وزن
-        if (weight > maxWeight) {
-
-            showError('حداکثر وزن مجاز برای هر معامله ۲۰۰ گرم است.');
-
-            disableSubmitButton();
-            return;
-
-        }
-
-
-        // بررسی موجودی کیف پول در خرید
-        if (
-            currentAction === 'buy' &&
-            price > cleanWalletBalance
-        ) {
-
-            showError('مبلغ وارد شده از موجودی کیف پول شما بیشتر است.');
-
-            disableSubmitButton();
-            return;
-
-        }
-
-
-        // بررسی موجودی طلا در فروش
-        if (
-            currentAction === 'sell' &&
-            weight > cleanGoldBalance
-        ) {
-
-            showError('وزن محاسبه شده از موجودی طلایی سپرده شما بیشتر است.');
-
-            disableSubmitButton();
-            return;
-
-        }
-
-
-        // نمایش وزن نهایی
-        resultOutput.value = formatWeight(weight);
-
-        enableSubmitButton();
-
+    if (!calcBy.value || !actionInp.value || !goldPrice.value) {
+        event.preventDefault();
+        showError('لطفاً اطلاعات معامله را کامل وارد کنید.');
+        updateSubmitButton(false);
     }
-
-
-    // =====================================================
-    // حالت دوم: محاسبه بر اساس وزن
-    // =====================================================
-
-    else {
-
-        let weight = value;
-
-        // بررسی حداقل وزن
-        if (weight < minWeight) {
-
-            showError('حداقل وزن مجاز ۰.۰۰۰۱ گرم است.');
-
-            disableSubmitButton();
-            return;
-
-        }
-
-
-        // بررسی حداکثر وزن
-        if (weight > maxWeight) {
-
-            showError('حداکثر وزن مجاز برای هر معامله ۲۰۰ گرم است.');
-
-            disableSubmitButton();
-            return;
-
-        }
-
-
-        // محاسبه مبلغ
-        let price = weight * pricePerGram;
-
-
-        // بررسی موجودی کیف پول در خرید
-        if (
-            currentAction === 'buy' &&
-            price > cleanWalletBalance
-        ) {
-
-            showError('مبلغ محاسبه شده از موجودی کیف پول شما بیشتر است.');
-
-            disableSubmitButton();
-            return;
-
-        }
-
-
-        // بررسی موجودی طلا در فروش
-        if (
-            currentAction === 'sell' &&
-            weight > cleanGoldBalance
-        ) {
-
-            showError('وزن وارد شده از موجودی طلایی سپرده شما بیشتر است.');
-
-            disableSubmitButton();
-            return;
-
-        }
-
-
-        // نمایش مبلغ نهایی
-        resultOutput.value = formatNumber(price);
-
-        // نمایش معادل مبلغ به تومان
-        priceBlock.innerText =
-            'معادل ' +
-            formatPersianNumber(price / 10) +
-            ' تومان';
-
-        enableSubmitButton();
-
-    }
-
 });
-
-
-// ---------------------------------------------------------
-// نمایش خطا
-// ---------------------------------------------------------
-
-function showError(message) {
-
-    inputError.innerText = message;
-
-    inputError.classList.remove('hidden');
-
-    userInput.classList.add('border-brand-red');
-
-}
-
-
-// ---------------------------------------------------------
-// غیرفعال کردن دکمه ثبت
-// ---------------------------------------------------------
-
-function disableSubmitButton() {
-
-    submitBtn.disabled = true;
-
-    submitBtn.classList.add(
-        'bg-gray-300',
-        'text-gray-500',
-        'cursor-not-allowed'
-    );
-
-    submitBtn.classList.remove(
-        'bg-red-500',
-        'text-white',
-        'hover:bg-red-700',
-        'cursor-pointer'
-    );
-
-}
-
-
-// ---------------------------------------------------------
-// فعال کردن دکمه ثبت
-// ---------------------------------------------------------
-
-function enableSubmitButton() {
-
-    submitBtn.disabled = false;
-
-    submitBtn.classList.remove(
-        'bg-gray-300',
-        'text-gray-500',
-        'cursor-not-allowed'
-    );
-
-    submitBtn.classList.add(
-        'bg-red-500',
-        'text-white',
-        'hover:bg-red-700',
-        'cursor-pointer'
-    );
-
-}
-
-
-// ---------------------------------------------------------
-// مقداردهی اولیه
-// ---------------------------------------------------------
-
-updateTradePrice();
-
-switchMode('price');
