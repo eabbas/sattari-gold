@@ -18,6 +18,12 @@
             <span class="text-sm in-fa">{{ session('failure') }}</span>
         </div>
     @endif
+    @if (session('clearStorage'))
+        <div
+            class="modal fixed top-25 right-10 z-[5000] flex items-center justify-center rounded-xl border border-red-200 bg-red-100 px-8 py-5 text-red-800 shadow-lg transition-all duration-300">
+            <span class="text-sm in-fa">محصولات با موفقیت به سبد خرید افزوده شد</span>
+        </div>
+    @endif
 
     @session('clearStorage')
         <script>
