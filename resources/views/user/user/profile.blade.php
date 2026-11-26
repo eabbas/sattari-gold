@@ -301,7 +301,7 @@
 
                     <div class="flex items-center gap-2 w-full sm:w-auto">
 
-                        <input id="referralCode" type="text" value="REF-2024-XYZ789" readonly dir="ltr"
+                        <input id="referralCode" type="text" value="{{ $user->referral_code }}" readonly dir="ltr"
                             class="gold-input text-center font-mono tracking-widest text-sm sm:w-64">
 
                         <button id="copyBtn" onclick="copyCode()"

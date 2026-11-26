@@ -44,9 +44,9 @@ Route::get('/xyz', function () {
     //     $table->string('logo')->nullable()->change();
     // });
 
-    // Schema::table('deals', function (Blueprint $table) {
-    //     $table->bigInteger("buyPrice")->change();
-    // });
+    Schema::table('users', function (Blueprint $table) {
+        $table->string("password")->nullable()->change();
+    });
 
 });
 

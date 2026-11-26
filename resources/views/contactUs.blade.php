@@ -61,8 +61,9 @@
     </style>
 
 
-    <div class="fixed top-1/8 right-1/2 translate-x-1/2 px-3 py-1.5 border-1 border-gray-100 rounded-md bg-white shadow-lg @if(!session('success')) hidden @endif" id="successMessage">
-        <p class="text-sm text-[#a9823e]">پیام شما با موفقیت ارسال شد.</p>
+    <div
+        class="modal fixed top-10 right-0 sm:right-5 z-[9999999999]  items-center justify-center rounded-xl border border-green-200 bg-green-100 px-8 py-5 text-green-800 shadow-lg transition-all duration-300 in-fa @if(!session('success')) hidden @else flex @endif" id="successMessage">
+        <span class="text-sm in-fa">پیام شما با موفقیت ارسال شد</span>
     </div>
 
 
@@ -342,4 +343,13 @@
             </div>
         </div>
     </section>
+
+    <script>
+        let successMessage = document.getElementById('successMessage')
+        if(!successMessage.classList.contains('hidden')){
+            setTimeout(() => {
+                successMessage.classList.add('hidden')
+            }, 3000)
+        }
+    </script>
 @endsection
