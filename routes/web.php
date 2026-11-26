@@ -23,6 +23,7 @@ use App\Http\Controllers\ReferenceSitesController;
 use App\Http\Controllers\TransactionConfirmTimeController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\TransactionSettingController;
+use App\Http\Controllers\AboutUscontroller;
 use App\Http\Middleware\checkAccess;
 use App\Http\Middleware\checkIsActive;
 use App\Http\Middleware\checkIsApproved;
@@ -72,7 +73,6 @@ Route::group([
     'controller' => HomeController::class,
 ], function () {
     Route::get('/', 'index')->name('home');
-    Route::get('/about-us', 'aboutUs')->name('aboutUs');
     Route::get('/contact-us', 'contactUs')->name('contactUs');
 });
 
@@ -390,3 +390,16 @@ Route::group([
 // fallback and missing
 Route::fallback([HomeController::class, 'pageNotFound'])->name('fallback');
 Route::get('/missing', [HomeController::class, 'pageNotFound'])->name('missing');
+
+Route::group([
+    'prefix' => 'aboutUs',
+    'as'=> 'aboutUs.',
+    'controller' => AboutUscontroller::class ,
+    'middleware' => checkAccess::class . ":transactionConfirmTime"
+], function(){
+    Route::get('/create' , 'create')->name('create');
+    Route::post('/store' , 'store')->name('store');
+    Route::get('/edit/{id}' , 'edit')->name('edit');
+    Route::post('/delete' , 'delete')->name('delete');
+    Route::get('/about-us', 'aboutUs')->name('aboutUs');
+});

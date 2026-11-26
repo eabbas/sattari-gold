@@ -181,7 +181,7 @@
                     و با خیالی آسوده مسیر سرمایه‌گذاری خود را دنبال کنید.
                 </p>
 
-                <a href="{{ route('aboutUs') }}"
+                <a href="{{ route('aboutUs.aboutUs') }}"
                     class="group flex w-fit items-center gap-2 rounded-full bg-gradient-to-b from-[#e3ab5a] to-[#a56920] px-5 py-3 text-xs font-bold text-white shadow-lg shadow-[#a56920]/15 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#a56920]/20 sm:text-sm">
 
                     آشنایی بیشتر با ما
