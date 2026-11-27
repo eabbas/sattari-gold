@@ -178,7 +178,9 @@ class CategoryController extends Controller
         }
         foreach ($request->categories as $category_id) {
             $category = category::find($category_id);
-            Storage::disk('public')->delete($category['image']);
+            if ($category['image']) {
+                Storage::disk('public')->delete($category['image']);
+            }
             $category->delete();
         }
         return redirect()->back();
