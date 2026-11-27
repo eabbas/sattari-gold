@@ -5,6 +5,7 @@ use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\WalletController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -47,3 +48,5 @@ Route::get('/order/showItems/{order}', [OrdersController::class, 'showItems']);
 
 Route::get('/findProduct/{product}', [ProductController::class, 'findProduct']);
 Route::post('/cities', [CartsController::class, 'showCities']);
+Route::post('/sendValidationCode', [ContactUsController::class, 'sendValidationCode']);
+Route::post('/checkContactCode', [ContactUsController::class, 'checkContactCode']);

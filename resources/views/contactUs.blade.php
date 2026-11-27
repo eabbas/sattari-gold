@@ -66,6 +66,10 @@
         <span class="text-sm in-fa">پیام شما با موفقیت ارسال شد</span>
     </div>
 
+    <div class="fixed top-10 right-0 invisible opacity-0 sm:right-5 z-[9999999999]  items-center justify-center rounded-xl border border-red-200 bg-red-100 px-8 py-5 text-red-800 shadow-lg transition-all duration-300 in-fa"
+        id="message"></div>
+
+
 
     <!-- HERO -->
     <section class="contact-bg overflow-hidden">
@@ -120,7 +124,7 @@
 
                 </div>
 
-                <form action="{{ route('contactUs.store') }}" method="POST" class="space-y-6">
+                <form action="{{ route('contactUs.store') }}" method="POST" class="space-y-6" id="contactForm">
                     @csrf
                     <!-- Name + Phone -->
                     <div class="grid sm:grid-cols-2 gap-5">
@@ -131,7 +135,7 @@
                                 <span class="text-red-500">*</span>
                             </label>
 
-                            <input type="text" name="fullName" placeholder="مثلاً محمد افتخاری" class="form-input"
+                            <input type="text" name="fullName" id="fullName" placeholder="مثلاً محمد افتخاری" class="form-input"
                                 required>
                         </div>
 
@@ -141,7 +145,7 @@
                                 <span class="text-red-500">*</span>
                             </label>
 
-                            <input type="tel" name="phone" placeholder="09xxxxxxxxx" class="form-input" dir="ltr"
+                            <input type="tel" name="phone" id="phoneNumber" placeholder="09xxxxxxxxx" class="form-input" dir="ltr"
                                 required>
                         </div>
 
@@ -154,7 +158,7 @@
                             <span class="text-[#b7ad9d]">(اختیاری)</span>
                         </label>
 
-                        <input type="email" name="email" placeholder="example@email.com" class="form-input"
+                        <input type="email" name="email" id="email" placeholder="example@email.com" class="form-input"
                             dir="ltr">
                     </div>
 
@@ -164,7 +168,7 @@
                             موضوع پیام
                         </label>
 
-                        <select name="subject" class="form-input">
+                        <select name="subject" id="subject" class="form-input">
                             <option value="empty" disabled selected>
                                 موضوع مورد نظر را انتخاب کنید
                             </option>
@@ -187,10 +191,20 @@
                             required></textarea>
                     </div>
 
+                    <div class="w-full flex items-center gap-3 lg:gap-5">
+                        
+                        <input type="text" name="code" id="code" class="form-input w-1/2 lg:w-3/4"
+                        dir="ltr">
+                        <button type="button" id="countDown" class="block w-1/2 lg:w-1/3 text-xs py-4 font-bold h-full rounded-md text-center cursor-pointer gold-gradient text-white" onclick="sendCode(this)">
+                            ارسال کد تایید  
+                            
+                        </button>
+                    </div>
+
                     <!-- Submit -->
                     <button type="submit"
-                        class="w-full gold-gradient text-white rounded-xl py-4 text-sm font-bold hover:opacity-90 transition shadow-lg shadow-[#b68b43]/15 flex items-center justify-center gap-3">
-
+                        class="w-full gold-gradient text-white rounded-xl py-4 text-sm font-bold opacity-50 transition shadow-lg shadow-[#b68b43]/15 flex items-center justify-center gap-3 cursor-no-drop" disabled id="submitBtn" onclick="submitButton(event)">
+                            {{-- hover:opacity-90 --}}
                         ارسال پیام
 
                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
@@ -344,12 +358,188 @@
         </div>
     </section>
 
+    <div id="loader"
+            class="w-full h-full bg-black/50 fixed top-0 right-0 z-999 flex items-center justify-center transition-all duration-300 invisible opacity-0">
+            <div class="p-5 bg-white shadow-xl rounded-lg flex flex-col items-center gap-10">
+                <span
+                    class="w-15 md:w-20 h-15 md:h-20 animate-spin rounded-full border-4 border-yellow-100 border-t-yellow-600"></span>
+                <p class="text-gray-600 font-bold text-sm md:text-xl">در حال بارگذاری لطفا شکیبا باشید....</p>
+            </div>
+        </div>
+
     <script>
         let successMessage = document.getElementById('successMessage')
         if(!successMessage.classList.contains('hidden')){
             setTimeout(() => {
                 successMessage.classList.add('hidden')
             }, 3000)
+        }
+
+
+        let message = document.getElementById('message')
+        let submitBtn = document.getElementById('submitBtn')
+       
+        let phoneNumber = document.getElementById('phoneNumber')
+        
+        let code = document.getElementById('code')
+        let contactForm = document.getElementById('contactForm')
+       
+
+        function loader(status) {
+            if (status === 'open') {
+                document.getElementById('loader').classList.remove('invisible', 'opacity-0')
+            }
+            if (status === 'close') {
+                document.getElementById('loader').classList.add('invisible', 'opacity-0')
+            }
+        }
+
+        code.addEventListener('input', ()=>{
+            if(code.value != ''){
+                submitBtn.classList.remove('opacity-50', 'cursor-no-drop')
+                submitBtn.classList.add('cursor-pointer', 'hover:opacity-90')
+                submitBtn.disabled = false
+            } else {
+                submitBtn.classList.remove('cursor-pointer', 'hover:opacity-90')
+                submitBtn.classList.add('opacity-50', 'cursor-no-drop')
+                submitBtn.disabled = true
+            }
+        })
+
+        function sendCode(el) {
+            el.innerHTML =
+                "<div class='size-4 mx-auto border-2 border-white border-t-[#eb3153]/0 rounded-full animate-spin'></div>"
+            if (phoneNumber.value == '') {
+                el.innerHTML = 'ارسال کد'
+                openMessage('وارد کردن شماره تلفن الزامی است')
+                setTimeout(function() {
+                    closeMessage()
+                }, 2000)
+            } else {
+                $.ajax({
+                    url: api + "sendValidationCode",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        'phoneNumber': phoneNumber.value
+                    },
+                    success: function(response) {
+                            console.log(response)
+                            openMessage('پیام ارسال شد')
+                            setTimeout(function() {
+                                closeMessage()
+                            }, 2000)
+                        
+                            counter()
+                        
+                    },
+                    error: function() {
+                        openMessage('خطا در دریافت داده!')
+                        setTimeout(function() {
+                            closeMessage()
+                        }, 2000)
+                    }
+                })
+                setTimeout(()=>{
+                   counter()
+                }, 1500)
+            }
+        }
+
+        function counter() {
+            let phoneNumber = document.getElementById('phoneNumber')
+            countDown.classList.add('cursor-no-drop')
+            countDown.classList.remove('cursor-pointer')
+            countDown.classList.remove('hover:bg-purple-500')
+            countDown.classList.add('hover:bg-purple-500/50')
+            countDown.classList.remove('bg-purple-500')
+            countDown.classList.add('bg-purple-500/50')
+            countDown.setAttribute('disabled', true)
+            countDown.setAttribute('dir', 'ltr')
+            let count = 120
+            let result = setInterval(() => {
+                let minute = Math.floor(count / 60)
+                let seconds = count % 60
+                count -= 1
+                if (count < 0) {
+
+                  
+                    $.ajax({
+                        url: api + 'removeActivationCode',
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            'phoneNumber': phoneNumber.value
+                        },
+                        success: function(data) {
+                            console.log(data)
+                            countDown.classList.remove('cursor-no-drop')
+                            countDown.classList.add('bg-purple-500')
+                            countDown.classList.remove('bg-purple-500/50')
+                            countDown.classList.add('cursor-pointer')
+                            countDown.classList.add('hover:bg-purple-500')
+                            countDown.classList.remove('hover:bg-purple-500/50')
+                            countDown.removeAttribute('disabled')
+                            countDown.removeAttribute('dir')
+                            countDown.innerText = "ارسال مجدد"
+                        },
+                        error: function() {
+                            showMessage('open')
+                            element.innerHTML = `
+                                <span>❌</span>
+                                <span class="text-shadw-lg">خطا در دریافت اطلاعات!</span>
+                            `
+                            message.children[0].appendChild(element)
+                            setTimeout(() => {
+                                showMessage('close')
+                            }, 2500)
+                        }
+                    })
+                    clearInterval(result)
+                }
+                countDown.innerText = minute.toString().padStart(2, "0") + " : " + seconds.toString().padStart(2,
+                    "0");
+            }, 1000)
+        }
+        function openMessage(content) {
+            message.innerHTML = ''
+            let element = document.createElement('div')
+            element.classList = 'flex items-center justify-center'
+            element.innerHTML = content
+            message.appendChild(element)
+            message.classList.remove('invisible')
+            message.classList.remove('opacity-0')
+        }
+
+        function closeMessage() {
+            message.classList.add('invisible')
+            message.classList.add('opacity-0')
+        }
+        
+
+        function submitButton(e){
+            loader('open')
+            e.preventDefault()
+            $.ajax({
+                url: api+'checkContactCode',
+                type: "POST",
+                dataType: "json",
+                data: {'code': code.value, 'phoneNumber': phoneNumber.value},
+                success: function(response){
+                    loader('close')
+                    if(response){
+                        contactForm.submit()
+                    } else {
+                        openMessage('کد وارد شده نامعتبر!')
+                        setTimeout(function() {
+                            closeMessage()
+                        }, 2000)
+                    }
+                },
+                error: function(){
+                    console.error('failed to load data')
+                }
+            })
         }
     </script>
 @endsection
