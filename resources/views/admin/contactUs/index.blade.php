@@ -45,10 +45,7 @@
 
                                         <td class="px-5 py-4">
                                             <div class="flex items-center gap-3">
-                                                <div
-                                                    class="w-10 h-10 shrink-0 rounded-xl bg-[#F6F1E9] flex items-center justify-center text-[#B88A3B]">
-                                                    <i data-lucide="user-round" class="w-5 h-5"></i>
-                                                </div>
+                                               
                                                 <div>
                                                     <p class="font-bold text-[#29251F]">{{ $message->fullName }}</p>
                                                     <p class="text-xs text-[#9B8E7E] mt-1">{{ $message->phoneNumber }}</p>
@@ -61,8 +58,8 @@
                                         </td>
 
                                         <td class="px-5 py-4">
-                                            <p class="text-[#786B5A] max-w-[240px] truncate">
-                                                {{ $message->message }}
+                                            <p class="text-[#786B5A] max-w-[100px] truncate">
+                                               {{ $message->message }}
                                             </p>
                                         </td>
 
@@ -99,10 +96,7 @@
 
                             <div class="flex items-start justify-between gap-3">
                                 <div class="flex items-center gap-3">
-                                    <div
-                                        class="w-11 h-11 rounded-xl bg-[#F6F1E9] flex items-center justify-center text-[#B88A3B] shrink-0">
-                                        <i data-lucide="user-round" class="w-5 h-5"></i>
-                                    </div>
+                                   
                                     <div>
 
                                         <p class="font-bold text-[#29251F]">{{ $message->fullName }}</p>
@@ -121,7 +115,7 @@
 
                                 <p class="text-sm font-bold text-[#29251F]">{{ $message->subject }}</p>
 
-                                <p class="text-xs text-[#786B5A] leading-6">
+                                <p class="text-xs text-[#786B5A] leading-6 w-full truncate">
                                     {{ $message->message }}
                                 </p>
                             </div>
