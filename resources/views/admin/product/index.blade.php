@@ -49,7 +49,7 @@
                     <div
                         class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-(--border-dashboard) px-4 py-4">
                         <label for="all"
-                            class="flex items-center gap-3 cursor-pointer text-sm font-medium text-(--text-dashboard)">
+                            class="flex items-center gap-3 cursor-pointer text-sm font-bold text-(--text-dashboard)">
                             <input type="checkbox" id="all" onchange="checkAll()"
                                 class="size-4 cursor-pointer accent-(--primary-dashboard)">
                             انتخاب همه محصولات
@@ -92,7 +92,7 @@
                                                 <input type="checkbox" name="products[]" value="{{ $product->id }}"
                                                     class="check size-4 cursor-pointer accent-(--primary-dashboard)">
                                             @endcan
-                                            <span class="font-medium text-(--muted-dashboard)">{{ $i }}</span>
+                                            <span class="font-bold text-(--muted-dashboard)">{{ $i }}</span>
                                         </div>
                                     </td>
 
@@ -126,7 +126,7 @@
                                         <div class="flex max-w-64 flex-wrap items-center justify-center gap-1.5">
                                             @forelse ($product['categories'] as $category)
                                                 <span
-                                                    class="rounded-lg bg-(--primary-dashboard)/5 px-2.5 py-1.5 text-xs font-medium text-(--text-dashboard)">
+                                                    class="rounded-lg bg-(--primary-dashboard)/5 px-2.5 py-1.5 text-xs font-bold text-(--text-dashboard)">
                                                     {{ $category['title'] }}
                                                 </span>
                                             @empty

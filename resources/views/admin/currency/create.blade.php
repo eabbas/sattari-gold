@@ -30,14 +30,14 @@
                         class="flex items-center gap-3 px-5 py-4 rounded-xl border border-gray-200 bg-gray-50 cursor-pointer hover:border-[#b89b5e] transition-all has-[:checked]:border-[#b89b5e] has-[:checked]:bg-[#f8f6f1]">
                         <input type="radio" name="currency" value="rial"
                             @if ($currency?->unit == 'rial') checked @endif class="size-4 accent-[#a88b4f] cursor-pointer">
-                        <span class="text-sm font-semibold text-gray-700">ریال</span>
+                        <span class="text-sm font-bold text-gray-700">ریال</span>
                     </label>
 
                     <label
                         class="flex items-center gap-3 px-5 py-4 rounded-xl border border-gray-200 bg-gray-50 cursor-pointer hover:border-[#b89b5e] transition-all has-[:checked]:border-[#b89b5e] has-[:checked]:bg-[#f8f6f1]">
                         <input type="radio" name="currency" value="toman"
                             @if ($currency?->unit == 'toman') checked @endif class="size-4 accent-[#a88b4f] cursor-pointer">
-                        <span class="text-sm font-semibold text-gray-700">تومان</span>
+                        <span class="text-sm font-bold text-gray-700">تومان</span>
                     </label>
                 </div>
 

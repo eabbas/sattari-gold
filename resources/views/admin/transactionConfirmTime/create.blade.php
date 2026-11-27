@@ -32,7 +32,7 @@
                                 @if ($t == $time?->time) checked @endif>
 
                             <div
-                                class="h-12 flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-gray-50 text-sm font-semibold text-gray-600 peer-checked:border-[#b89b5e] peer-checked:bg-[#f8f6f1] peer-checked:text-[#927642] hover:border-[#b89b5e] transition-all">
+                                class="h-12 flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-gray-50 text-sm font-bold text-gray-600 peer-checked:border-[#b89b5e] peer-checked:bg-[#f8f6f1] peer-checked:text-[#927642] hover:border-[#b89b5e] transition-all">
                                 <span
                                     class="size-4 rounded-full border border-gray-300 flex items-center justify-center peer-checked:border-[#a88b4f]">
                                     <span
