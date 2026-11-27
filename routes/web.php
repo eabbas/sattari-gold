@@ -300,7 +300,7 @@ Route::group([
     'as' => 'cart.'
 ], function () {
     Route::get('/', 'list')->name('list');
-    Route::get('/checkout', 'checkout')->name('checkout');
+    Route::get('/checkout', 'checkout')->name('checkout')->middleware([checklogin::class]);
 });
 
 // message routes

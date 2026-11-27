@@ -23,37 +23,18 @@ class OrdersController extends Controller
     {
         $receipt = $request->file('receipt')->getClientOriginalName();
         $path = $request->file('receipt')->storeAs('receipts', $receipt, 'public');
-        $name = $request->input('name');
-        $family = $request->input('family');
+        
         $cityId = $request->input('cityId');
         $addressText = $request->input('address');
         $postalCode = $request->input('postalCode');
         $phoneNumber = $request->input('phoneNumber');
-        $nationalCode = $request->input('nationalCode');
+       
         $descriptoin = $request->input('descriptoin');
-        $password = $request->input('password');
-        $password = isset($password) ? Hash::make($password) : false;
+        
         $products = json_decode($request->products);
-        // dd($request->all(), $password);
-        if ($password) {
-            User::upsert([
-                'name' => $name,
-                'family' => $family,
-                'phoneNumber' => $phoneNumber,
-                'nationalCode' => $nationalCode,
-                'password' => $password,
-            ], ['phoneNumber'], ['name', 'family', 'nationalCode', 'password']);
-        } else {
-            User::upsert([
-                'name' => $name,
-                'family' => $family,
-                'phoneNumber' => $phoneNumber,
-                'nationalCode' => $nationalCode,
-            ], ['phoneNumber'], ['name', 'family', 'nationalCode']);
-        }
+        
 
         $user = User::where('phoneNumber', $phoneNumber)->first();
-
         if (count($user->roles) > 0) {
             $userRoleIds = $user->roles->pluck('id')->toArray();
             if (!in_array(1, $userRoleIds)) {

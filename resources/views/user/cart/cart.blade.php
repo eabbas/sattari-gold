@@ -1,6 +1,9 @@
 @extends('app.document')
 @section('title', 'سبد خرید')
 @section('content')
+
+<div class="fixed top-10 right-0 invisible opacity-0 sm:right-5 z-[9999999999]  items-center justify-center rounded-xl border border-red-200 bg-red-100 px-8 py-5 text-red-800 shadow-lg transition-all duration-300 in-fa"
+id="message"></div>
     <main class="max-w-5xl mx-auto px-4 py-4 lg:py-8">
         <h1 class="text-lg lg:text-2xl font-bold text-gray-800 mb-3 lg:mb-6">سبد خرید</h1>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -23,7 +26,7 @@
                             <p class="text-xs text-gray-400">ریال</p>
                         </div>
                     </div>
-                    <a href="{{ route('cart.checkout') }}"
+                    <a href="{{ route('cart.checkout') }}" @if(!Auth::check()) onclick="loginFirst(event)" @endif
                         class="w-full block text-center bg-gray-900 hover:bg-gray-800 text-white font-bold py-3 rounded-xl transition">
                         تکمیل خرید
                     </a>
@@ -33,6 +36,31 @@
     </main>
     <script>
         window.currentPage = 'cart'
+
+        function openMessage(content) {
+            message.innerHTML = ''
+            let element = document.createElement('div')
+            element.classList = 'flex items-center justify-center'
+            element.innerHTML = content
+            message.appendChild(element)
+            message.classList.remove('invisible')
+            message.classList.remove('opacity-0')
+        }
+
+        function closeMessage() {
+            message.classList.add('invisible')
+            message.classList.add('opacity-0')
+        }
+
+
+        function loginFirst(e){
+            e.preventDefault()
+            openMessage('ابتدا وارد شوید')
+            setTimeout(() => {
+                closeMessage()
+                location.assign(url+'user/login')
+            }, 3000);
+        }
     </script>
     <script src="{{ asset('assets/js/cartPage.js') }}"></script>
 @endsection
