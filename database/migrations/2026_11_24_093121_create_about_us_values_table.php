@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('about_us_values', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('description');
-            $table->string('image');
+            $table->string('title')->nullable();
+            $table->longText('description')->nullable();
+            $table->string('image')->nullable();
             $table->integer('aboutUs_id');
             $table->timestamps();
         });

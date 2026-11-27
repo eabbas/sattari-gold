@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('about_us', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('description');
-            $table->string('ourStory');
-            $table->string('video');
+            $table->longText('description')->nullable();
+            $table->longText('ourStory')->nullable();
+            $table->string('video')->nullable();
             $table->timestamps();
         });
     }

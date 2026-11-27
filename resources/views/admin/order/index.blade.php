@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    <div class="2xl:container w-full mx-auto flex flex-col gap-3 bg-(#f6f7fc) pb-5">
+    <div class=" w-full mx-auto flex flex-col gap-3 bg-(#f6f7fc) pb-5 overflow-x-auto">
         <div class="w-full flex flex-row items-center justify-between">
             <div class="flex flex-col gap-1.5">
                 <h2 class="text-md font-bold text-(--primary-text-color)">لیست سفارشات</h2>
@@ -51,7 +51,7 @@
             </button>
         </div>
   
-        <table class="w-full border-collapse border-1 border-(--border-dashboard) text-sm">
+        <table class="w-full border-collapse border-1 border-(--border-dashboard) text-sm pb-5">
             <thead>
                 <tr class="bg-gray-100 text-xs lg:text-base">
                     <th class="border-1 border-(--border-dashboard) p-1 md:px-3 md:py-2">
@@ -178,15 +178,15 @@
     {{-- loader --}}
 
     <div id="receiptBlock"
-        class="fixed w-full h-dvh bg-black/50 top-0 right-0 flex justify-center items-center z-9 invisible opacity-0 transition-all duration-300">
-        <div class="w-11/12 lg:w-1/2 p-5 flex justify-center items-center rounded-lg bg-white relative max-h-[calc(100vh-100px)] overflow-y-auto">
+        class="fixed w-full h-dvh bg-black/50 top-0 right-0 flex justify-center items-center z-999 invisible opacity-0 transition-all duration-300">
+        <div class="w-11/12 lg:w-1/2 p-5 flex justify-center items-center rounded-lg bg-white relative max-h-[calc(100vh-200px)] overflow-y-auto  mt-3 pt-3">
             <span class="absolute top-3 right-6 cursor-pointer" onclick="closeReceipt()">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 fill-gray-600" viewBox="0 0 384 512">
                     <path
                         d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z" />
                 </svg>
             </span>
-            <img src="" class="w-full mt-6" alt="">
+            <img src="" class="w-full h-full" alt="">
         </div>
     </div>
 
@@ -215,6 +215,18 @@
                 loader.classList.add('invisible', 'opacity-0')
             }
         }
+
+        receiptBlock.addEventListener('click', (e)=>{
+            if(!receiptBlock.children[0].contains(e.target)){
+                closeReceipt()
+            }
+        })
+
+        orderBlock.addEventListener('click', (e)=>{
+            if(!orderBlock.children[0].children[0].contains(e.target)){
+                hideItems()
+            }
+        })
 
         function showItems(el, orderId) {
             el.disabled = true

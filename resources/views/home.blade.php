@@ -20,8 +20,8 @@
     @endif
     @if (session('clearStorage'))
         <div
-            class="modal fixed top-25 right-10 z-[5000] flex items-center justify-center rounded-xl border border-red-200 bg-red-100 px-8 py-5 text-red-800 shadow-lg transition-all duration-300">
-            <span class="text-sm in-fa">محصولات با موفقیت به سبد خرید افزوده شد</span>
+            class="modal fixed top-25 right-10 z-[5000] flex items-center justify-center rounded-xl border border-green-200 bg-green-100 px-8 py-5 text-green-800 shadow-lg transition-all duration-300">
+            <span class="text-sm in-fa">محصولات با موفقیت در سفارشات شما ثبت شد</span>
         </div>
     @endif
 

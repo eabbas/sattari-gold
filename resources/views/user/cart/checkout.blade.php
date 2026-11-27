@@ -29,25 +29,8 @@
                 <input type="hidden" name="products" id="productsInput">
                 <input type="hidden" name="packs" id="packsInput">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-bold mb-2">نام <span class="text-red-500">*</span></label>
-                        <input type="text" name="name" value="{{ Auth::check() ? Auth::user()->name : '' }}"
-                            class="w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none"
-                            required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold mb-2">نام خانوادگی <span class="text-red-500">*</span></label>
-                        <input type="text" name="family" value="{{ Auth::check() ? Auth::user()->family : '' }}"
-                            class="w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none"
-                            required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold mb-2">کد ملی <span class="text-red-500">*</span></label>
-                        <input type="number" name="nationalCode" dir="ltr"
-                            value="{{ Auth::check() ? Auth::user()->nationalCode : '' }}"
-                            class="w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none in-fa"
-                            required>
-                    </div>
+                    
+           
                     <div>
                         <label class="block text-sm font-bold mb-2">شماره تلفن <span class="text-red-500">*</span></label>
                         <input type="number" name="phoneNumber" dir="ltr"
@@ -55,14 +38,7 @@
                             class="w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none in-fa"
                             required>
                     </div>
-                    @if (!Auth::check())
-                        <div class="parentPass">
-                            <label class="block text-sm font-bold mb-2"> رمز عبور <span
-                                    class="text-red-500">*</span></label>
-                            <input type="password" name="password" placeholder="رمز عبور خود را وارد کنید " id="password"
-                                class="in-fa w-full bg-gray-100 border-none rounded-lg p-3 focus:ring-2 focus:ring-(--bg-dark-green) outline-none">
-                        </div>
-                    @endif
+     
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
