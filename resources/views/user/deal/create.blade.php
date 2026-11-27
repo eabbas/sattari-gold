@@ -733,22 +733,22 @@
 
                             <div class="grid grid-cols-4 gap-2">
                                 <button type="button" data-percent="25"
-                                    class="percent-btn rounded-lg border border-gray-200 py-2 text-xs font-semibold text-gray-600 transition hover:border-brand-red hover:text-brand-red">
+                                    class="percent-btn rounded-lg border border-gray-200 py-2 text-xs font-bold text-gray-600 transition hover:border-brand-red hover:text-brand-red">
                                     ۲۵٪
                                 </button>
 
                                 <button type="button" data-percent="50"
-                                    class="percent-btn rounded-lg border border-gray-200 py-2 text-xs font-semibold text-gray-600 transition hover:border-brand-red hover:text-brand-red">
+                                    class="percent-btn rounded-lg border border-gray-200 py-2 text-xs font-bold text-gray-600 transition hover:border-brand-red hover:text-brand-red">
                                     ۵۰٪
                                 </button>
 
                                 <button type="button" data-percent="75"
-                                    class="percent-btn rounded-lg border border-gray-200 py-2 text-xs font-semibold text-gray-600 transition hover:border-brand-red hover:text-brand-red">
+                                    class="percent-btn rounded-lg border border-gray-200 py-2 text-xs font-bold text-gray-600 transition hover:border-brand-red hover:text-brand-red">
                                     ۷۵٪
                                 </button>
 
                                 <button type="button" data-percent="100"
-                                    class="percent-btn rounded-lg border border-gray-200 py-2 text-xs font-semibold text-gray-600 transition hover:border-brand-red hover:text-brand-red">
+                                    class="percent-btn rounded-lg border border-gray-200 py-2 text-xs font-bold text-gray-600 transition hover:border-brand-red hover:text-brand-red">
                                     ۱۰۰٪
                                 </button>
                             </div>
@@ -757,7 +757,7 @@
 
                     {{-- Amount Input --}}
                     <div>
-                        <label for="amountInput" class="mb-2 block text-xs font-semibold text-gray-600">
+                        <label for="amountInput" class="mb-2 block text-xs font-bold text-gray-600">
                             مبلغ معامله
                         </label>
 
@@ -778,7 +778,7 @@
 
                     {{-- Weight Input --}}
                     <div>
-                        <label for="weightInput" class="mb-2 block text-xs font-semibold text-gray-600">
+                        <label for="weightInput" class="mb-2 block text-xs font-bold text-gray-600">
                             وزن طلا
                         </label>
 
@@ -806,7 +806,7 @@
 
                     {{-- Description --}}
                     <div>
-                        <label for="dealDescription" class="mb-2 block text-xs font-semibold text-gray-600">
+                        <label for="dealDescription" class="mb-2 block text-xs font-bold text-gray-600">
                             توضیحات
                             <span class="font-normal text-gray-400">(اختیاری)</span>
                         </label>
