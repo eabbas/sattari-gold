@@ -8,6 +8,7 @@ use App\Models\logo;
 use App\Models\product;
 use App\Models\product_attribute;
 use App\Models\product_media;
+use App\Models\productFAQs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -26,14 +27,14 @@ class ProductController extends Controller
         $validated = $request->validate(
             [
                 'title' => ['required'],
-                'mainImage' => ['max:100'],
-                'gallery.*' => ['max:500'],
+                // 'mainImage' => ['max:100'],
+                // 'gallery.*' => ['max:500'],
                 'category_ids' => ['required'],
             ],
             [
                 'title.required' => 'پر کردن این فیلد الزامی است.',
-                'mainImage.max' => 'حجم فایل نباید بیشتر از 100 کیلوبایت باشد.',
-                'gallery.*.max' => 'حجم کل فایل ها نباید بیشتر از 500 کیلوبایت باشد.',
+                // 'mainImage.max' => 'حجم فایل نباید بیشتر از 100 کیلوبایت باشد.',
+                // 'gallery.*.max' => 'حجم کل فایل ها نباید بیشتر از 500 کیلوبایت باشد.',
                 'category_ids.required' => 'پر کردن این فیلد الزامی است.',
             ]
         );
@@ -60,6 +61,15 @@ class ProductController extends Controller
                     'product_id' => $product['id'],
                     'attribute_key' => $key,
                     'attribute_value' => $request['attributes']['attribute_value'][$index]
+                ]);
+            }
+        }
+        if (isset($request['faqs'])) {
+            foreach ($request['faqs']['question'] as $index => $key) {
+                productFAQs::create([
+                    'product_id' => $product['id'],
+                    'question' => $key,
+                    'answer' => $request['faqs']['answer'][$index]
                 ]);
             }
         }
@@ -112,7 +122,7 @@ class ProductController extends Controller
     public function edit(Request $request)
     {
         $catIds = product::find($request['id'])->categories->pluck('id');
-        $product = product::find($request['id'])->load('attributes')->load('categories');
+        $product = product::find($request['id'])->load('attributes')->load('faqs')->load('categories');
         $categories = category::select(['id', 'title'])->get();
         if ($product->media->isNotEmpty()) {
             foreach ($product->media as $media) {
@@ -127,12 +137,12 @@ class ProductController extends Controller
         $validated = $request->validate(
             [
                 'title' => ['required'],
-                'gallery.*' => ['max:500'],
+                // 'gallery.*' => ['max:500'],
                 'category_ids' => ['required'],
             ],
             [
                 'title.required' => 'پر کردن فیلد عنوان الزامی است.',
-                'gallery.*.max' => 'حجم کل فایل ها نباید بیشتر از 500 کیلوبایت باشد.',
+                // 'gallery.*.max' => 'حجم کل فایل ها نباید بیشتر از 500 کیلوبایت باشد.',
                 'category_ids.required' => 'حداقل یک دسته بندی برای محصول انتخاب کنید.',
             ]
         );
@@ -155,6 +165,11 @@ class ProductController extends Controller
         if (isset($request['removedAttrs'])) {
             foreach ($request['removedAttrs'] as $attrId) {
                 product_attribute::find($attrId)->delete();
+            }
+        }
+        if (isset($request['removedFaqs'])) {
+            foreach ($request['removedFaqs'] as $faqId) {
+                productFAQs::find($faqId)->delete();
             }
         }
         if (isset($request['removedImgs'])) {
@@ -216,6 +231,25 @@ class ProductController extends Controller
                 }
             }
         }
+        if (isset($request['faqs'])) {
+            if (isset($request['faqs']['oldFaqs'])) {
+                foreach ($request['faqs']['oldFaqs']['question'] as $id => $key) {
+                    $oldProFAQ = productFAQs::find($id);
+                    $oldProFAQ->question = $key;
+                    $oldProFAQ->answer = $request['faqs']['oldFaqs']['answer'][$id];
+                    $oldProFAQ->save();
+                }
+            }
+            if (isset($request['faqs']['newFaqs'])) {
+                foreach ($request['faqs']['newFaqs']['question'] as $index => $key) {
+                    productFAQs::create([
+                        'product_id' => $product['id'],
+                        'question' => $key,
+                        'answer' => $request['faqs']['newFaqs']['answer'][$index]
+                    ]);
+                }
+            }
+        }
         $product->save();
         return to_route('product.adminIndex')->with('message', ' محصول ' . $title . ' به روز رسانی شد. ');
     }
@@ -229,6 +263,7 @@ class ProductController extends Controller
             }
             $product->media()->delete();
             $product->attributes()->delete();
+            $product->faqs()->delete();
             $product->categories()->detach();
             $product->delete();
         } else {
@@ -251,6 +286,7 @@ class ProductController extends Controller
             }
             $product->media()->delete();
             $product->attributes()->delete();
+            $product->faqs()->delete();
             $product->categories()->detach();
             $product->delete();
         }

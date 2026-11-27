@@ -4,9 +4,10 @@
     @if (session('message'))
         <div
             class="modal py-5 px-8 rounded-lg shadow-lg bg-slate-100 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
-            <span class="font-bold text-sm text-slate-500"> {{ session('message') }} </span>
+            <span class="font-bold text-sm text-slate-500">{{ session('message') }}</span>
         </div>
     @endif
+
     <div class="w-full h-full pb-10">
         <h2 class="text-3xl text-center font-bold py-5 text-[#425A8B]">فرم ایجاد محصول</h2>
         <div class="w-full mx-auto border border-[#D5DFE4] rounded-[10px] text-[#425A8B] p-5 bg-white">
@@ -26,6 +27,7 @@
                                 <span class="text-xs text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
+
                         <div class="w-full flex flex-col mt-5">
                             <label for="description" class="mb-2">توضیحات محصول:</label>
                             <textarea name="description" class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-xl focus:bg-[#f1f1f4]" rows="4"
@@ -34,6 +36,7 @@
                                 <span class="text-xs text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
+
                         <div class="w-full flex flex-col mt-5">
                             <label for="summary" class="mb-2">خلاصه محصول:</label>
                             <textarea class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-xl focus:bg-[#f1f1f4]" rows="4" placeholder="خلاصه"
@@ -42,6 +45,7 @@
                                 <span class="text-xs text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
+
                         <div class="w-full flex flex-col gap-3 mt-5">
                             <label for="category_ids" class="mb-2 flex flex-row items-center">
                                 <span>دسته بندی :</span>
@@ -51,21 +55,34 @@
                                 class="w-full bg-[#F9F9F9] py-3 pr-5 rounded-[10px]" multiple size="1">
                                 @foreach ($categories as $category)
                                     <option value="{{ $category->id }}" @if (in_array($category->id, old('category_ids', []))) selected @endif>
-                                        {{ $category->title }}</option>
+                                        {{ $category->title }}
+                                    </option>
                                 @endforeach
                             </select>
                             @error('category_ids')
                                 <span class="text-xs text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
+
                         <div class="w-full flex flex-col gap-5 mt-5">
-                            <div class=""></div>
+                            <div class="font-bold text-base">ویژگی‌های محصول</div>
+                            <div id="attributesContainer" class="w-full flex flex-col gap-4"></div>
                             <button type="button" onclick="addAttribute(this, 'create')"
                                 class="w-30 mx-auto p-2 text-sm rounded-md bg-[#1B84FF] hover:bg-[#056EE9] text-white cursor-pointer">
                                 افزودن ویژگی +
                             </button>
                         </div>
+
+                        <div class="w-full flex flex-col gap-5 mt-5">
+                            <div class="font-bold text-base">سؤالات متداول</div>
+                            <div id="faqsContainer" class="w-full flex flex-col gap-4"></div>
+                            <button type="button" onclick="addFaq(this)"
+                                class="w-36 mx-auto p-2 text-sm rounded-md bg-[#1B84FF] hover:bg-[#056EE9] text-white cursor-pointer">
+                                افزودن سؤال +
+                            </button>
+                        </div>
                     </div>
+
                     <div class="w-full md:w-1/3 space-y-8">
                         <div class="w-full flex flex-col gap-6 mt-5">
                             <div class="flex items-center gap-4">
@@ -80,8 +97,9 @@
                                         class="size-[20px] rounded-full bg-white absolute top-1 left-1 peer-checked:translate-x-[22px] transition-all duration-300 shadow-md"></span>
                                 </label>
                             </div>
+
                             <div class="flex items-center gap-4">
-                                <label class="mb-2"> تعداد :</label>
+                                <label class="mb-2">تعداد :</label>
                                 <div class="flex">
                                     <div class="bg-[#F9F9F9] rounded-xl focus:bg-[#f1f1f4] flex flex-row items-center">
                                         <button type="button"
@@ -97,6 +115,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="w-full mt-3 lg:mt-5 flex flex-col">
                             <label for="mainImage" class="mb-2">عکس اصلی:</label>
                             <input type="file"
@@ -106,6 +125,7 @@
                                 <span class="text-xs text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
+
                         <div class="w-full mt-3 lg:mt-5 flex flex-col">
                             <label for="gallery" class="mb-2">گالری تصاویر :</label>
                             <input type="file"
@@ -116,6 +136,7 @@
                                 <span class="text-xs text-red-500">{{ $message }}</span>
                             @enderror
                         </div>
+
                         <div class="w-full flex flex-col gap-3 md:gap-5 mt-3 lg:mt-5">
                             <div class="w-full flex flex-col gap-3">
                                 <label for="primary_price" class="flex items-center gap-2">
@@ -124,30 +145,35 @@
                                         <span
                                             class="size-4 text-xs bg-[#ededed] border border-[#6f6f6f] rounded-full p-2 flex justify-center items-center cursor-pointer">?</span>
                                         <span
-                                            class="w-70 py-4 text-center rounded-xl text-xs absolute bottom-5 left-5 bg-[#F9F9F9] border border-slate-300 invisible opacity-0 transition-all duration-300 group-hover:visible group-hover:opacity-100">در
-                                            صورتی که مایلید برای استعلام قیمت تماس گرفته شود این فیلد را خالی
-                                            بگذارید.</span>
+                                            class="w-70 py-4 text-center rounded-xl text-xs absolute bottom-5 left-5 bg-[#F9F9F9] border border-slate-300 invisible opacity-0 transition-all duration-300 group-hover:visible group-hover:opacity-100">
+                                            در صورتی که مایلید برای استعلام قیمت تماس گرفته شود این فیلد را خالی بگذارید.
+                                        </span>
                                     </div>
                                 </label>
                                 <input type="number"
                                     class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-xl focus:bg-[#f1f1f4]"
                                     name="primary_price" id="primary_price" value="{{ old('primary_price') }}">
                             </div>
+
                             <div class="w-full flex flex-col gap-3">
-                                <label for="secondary_price"> قیمت ویژه :</label>
+                                <label for="secondary_price">قیمت ویژه :</label>
                                 <input type="number"
                                     class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-xl focus:bg-[#f1f1f4]"
                                     name="secondary_price" id="secondary_price" value="{{ old('secondary_price') }}">
                             </div>
                         </div>
+
                         <div class="mt-5 text-center">
                             <button type="submit"
-                                class="py-3 px-10 rounded-[10px] bg-[#1B84FF] hover:bg-[#056EE9] text-white cursor-pointer">ثبت</button>
+                                class="py-3 px-10 rounded-[10px] bg-[#1B84FF] hover:bg-[#056EE9] text-white cursor-pointer">
+                                ثبت
+                            </button>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+
     <script src="{{ url('assets/js/attribute.js') }}"></script>
 @endsection

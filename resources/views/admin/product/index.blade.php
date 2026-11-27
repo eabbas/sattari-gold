@@ -6,15 +6,13 @@
 
     @if (session('message'))
         <div
-            class="fixed top-5 right-5 z-[100] flex items-center gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm font-bold text-emerald-700 shadow-lg">
+            class="modal fixed top-5 right-5 z-[100] flex items-center gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm font-bold text-emerald-700 shadow-lg">
             <span class="flex size-7 items-center justify-center rounded-full bg-emerald-100">✓</span>
             {{ session('message') }}
         </div>
     @endif
 
     <div class="w-full flex flex-col gap-5">
-
-        {{-- Header --}}
         <section
             class="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-(--border-dashboard) bg-(--secondary-dashboard) p-4 md:p-5">
             <div class="flex items-center gap-3">
@@ -43,9 +41,7 @@
             @endcan
         </section>
 
-        {{-- Products Table --}}
         <section class="w-full overflow-hidden rounded-xl border border-(--border-dashboard) bg-(--secondary-dashboard)">
-
             <form action="{{ route('product.deleteAll') }}" method="post">
                 @csrf
 
@@ -90,7 +86,6 @@
 
                             @forelse ($products as $product)
                                 <tr class="text-xs lg:text-sm transition-colors hover:bg-(--primary-dashboard)/5">
-
                                     <td class="px-4 py-3 text-center">
                                         <div class="flex items-center justify-center gap-3">
                                             @can('access', 'product_delete')
@@ -102,9 +97,7 @@
                                     </td>
 
                                     <td class="px-4 py-3 text-center">
-                                        <span class="font-bold text-(--text-dashboard)">
-                                            {{ $product->title }}
-                                        </span>
+                                        <span class="font-bold text-(--text-dashboard)">{{ $product->title }}</span>
                                     </td>
 
                                     <td class="px-4 py-3">
@@ -144,7 +137,6 @@
 
                                     <td class="px-4 py-3">
                                         <div class="flex items-center justify-center gap-2">
-
                                             @can('access', 'product_edit')
                                                 <button type="button" onclick="editForm('open', {{ $product->id }})"
                                                     class="rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-xs font-bold text-blue-600 transition-all hover:bg-blue-100">
@@ -159,7 +151,6 @@
                                                     حذف
                                                 </button>
                                             @endcan
-
                                         </div>
                                     </td>
                                 </tr>
@@ -176,7 +167,7 @@
                                                 <svg class="size-7" fill="none" stroke="currentColor" stroke-width="1.5"
                                                     viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M4 7h16M4 7l2-3h12l2 3M5 7v12h14V7" />
+                                                        d="M4 7h16M4 7l-2-3h12l2 3M5 7v12h14V7" />
                                                 </svg>
                                             </div>
                                             <p class="font-bold text-(--text-dashboard)">محصولی ثبت نشده است</p>
@@ -200,11 +191,10 @@
 
             <div
                 class="relative z-10 w-full max-w-md rounded-2xl border border-(--border-dashboard) bg-(--secondary-dashboard) p-6 shadow-2xl">
-
                 <div class="mx-auto mb-4 flex size-14 items-center justify-center rounded-full bg-red-50 text-red-500">
                     <svg class="size-7" fill="currentColor" viewBox="0 0 448 512">
                         <path
-                            d="M170.5 51.6L151.5 80h145l-19-28.4c-1.5-2.2-4-3.6-6.7-3.6H177.1c-2.7 0-5.2 1.3-6.7 3.6zM80 128V432c0 17.7 14.3 32 32 32H336c17.7 0 32-14.3 32-32V128H80z" />
+                            d="M170.5 51.6L151.5 80h145l-19-28.4c-1.5-2.2-4-3.6-6.7-3.6zM80 128V432c0 17.7 14.3 32 32 32H336c17.7 0 32-14.3 32-32V128H80z" />
                     </svg>
                 </div>
 
@@ -249,12 +239,10 @@
     {{-- Edit Popup --}}
     <div id="editFormPopup" class="fixed inset-0 z-[60] invisible opacity-0 transition-all duration-300">
         <div class="relative flex size-full items-center justify-center p-3 md:p-6">
-
             <div class="absolute inset-0 bg-slate-950/50" onclick="editForm('close')"></div>
 
             <div
                 class="relative z-10 flex max-h-[92dvh] w-full max-w-6xl flex-col overflow-hidden rounded-2xl border border-(--border-dashboard) bg-(--secondary-dashboard) shadow-2xl">
-
                 <div class="flex shrink-0 items-center justify-between border-b border-(--border-dashboard) px-5 py-4">
                     <div>
                         <h3 class="font-bold text-(--text-dashboard)">ویرایش محصول</h3>
@@ -275,15 +263,12 @@
                         <input type="hidden" name="product_id" id="product_id">
 
                         <div class="grid grid-cols-1 gap-6 p-5 lg:grid-cols-3">
-
                             {{-- Main Information --}}
                             <div class="flex flex-col gap-5 lg:col-span-2">
-
                                 <div class="flex flex-col gap-2">
                                     <label for="title" class="text-sm font-bold text-(--text-dashboard)">
                                         نام محصول <span class="text-red-500">*</span>
                                     </label>
-
                                     <input type="text" name="title" id="title"
                                         placeholder="نام محصول را وارد کنید"
                                         class="w-full rounded-xl border border-(--border-dashboard) bg-(--primary-dashboard)/5 px-4 py-3 text-sm text-(--text-dashboard) outline-none transition-all focus:border-(--primary-dashboard) focus:ring-2 focus:ring-(--primary-dashboard)/10">
@@ -292,7 +277,6 @@
                                 <div class="flex flex-col gap-2">
                                     <label for="description" class="text-sm font-bold text-(--text-dashboard)">توضیحات
                                         محصول</label>
-
                                     <textarea name="description" id="description" rows="4" placeholder="توضیحات محصول را وارد کنید"
                                         class="w-full resize-y rounded-xl border border-(--border-dashboard) bg-(--primary-dashboard)/5 px-4 py-3 text-sm text-(--text-dashboard) outline-none transition-all focus:border-(--primary-dashboard) focus:ring-2 focus:ring-(--primary-dashboard)/10"></textarea>
                                 </div>
@@ -300,7 +284,6 @@
                                 <div class="flex flex-col gap-2">
                                     <label for="summary" class="text-sm font-bold text-(--text-dashboard)">خلاصه
                                         محصول</label>
-
                                     <textarea name="summary" id="summary" rows="3" placeholder="خلاصه محصول را وارد کنید"
                                         class="w-full resize-y rounded-xl border border-(--border-dashboard) bg-(--primary-dashboard)/5 px-4 py-3 text-sm text-(--text-dashboard) outline-none transition-all focus:border-(--primary-dashboard) focus:ring-2 focus:ring-(--primary-dashboard)/10"></textarea>
                                 </div>
@@ -309,11 +292,9 @@
                                     <label for="category_ids" class="text-sm font-bold text-(--text-dashboard)">
                                         دسته‌بندی‌ها <span class="text-red-500">*</span>
                                     </label>
-
                                     <select name="category_ids[]" id="category_ids" multiple size="4"
                                         class="w-full rounded-xl border border-(--border-dashboard) bg-(--primary-dashboard)/5 px-4 py-3 text-sm text-(--text-dashboard) outline-none transition-all focus:border-(--primary-dashboard)">
                                     </select>
-
                                     <span class="text-xs text-(--muted-dashboard)">برای انتخاب چند دسته‌بندی، کلید Ctrl را
                                         نگه دارید.</span>
                                 </div>
@@ -328,33 +309,44 @@
 
                                     <div id="attributesContainer" class="flex flex-col gap-3"></div>
 
-                                    <button type="button" onclick="addAttribute(this,'edit')"
+                                    <button type="button" onclick="addAttribute(this, 'edit')"
                                         class="mx-auto flex w-fit items-center justify-center gap-2 rounded-lg bg-(--primary-dashboard)/10 px-5 py-2.5 text-xs font-bold text-(--primary-dashboard) transition-all hover:bg-(--primary-dashboard)/20">
                                         <span class="text-base">+</span>
                                         افزودن ویژگی
+                                    </button>
+                                </div>
+
+                                {{-- FAQs --}}
+                                <div class="flex flex-col gap-4 rounded-xl border border-(--border-dashboard) p-4">
+                                    <div class="flex items-center justify-between">
+                                        <h4 class="text-sm font-bold text-(--text-dashboard)">سؤالات متداول</h4>
+                                        <span
+                                            class="rounded-lg bg-(--primary-dashboard)/5 px-3 py-1 text-xs text-(--muted-dashboard)">پرسش
+                                            و پاسخ</span>
+                                    </div>
+
+                                    <div id="faqsContainer" class="flex flex-col gap-3"></div>
+
+                                    <button type="button" onclick="addFaq(this, 'edit')"
+                                        class="mx-auto flex w-fit items-center justify-center gap-2 rounded-lg bg-(--primary-dashboard)/10 px-5 py-2.5 text-xs font-bold text-(--primary-dashboard) transition-all hover:bg-(--primary-dashboard)/20">
+                                        <span class="text-base">+</span>
+                                        افزودن سؤال
                                     </button>
                                 </div>
                             </div>
 
                             {{-- Sidebar Information --}}
                             <div class="flex flex-col gap-5">
-
-                                {{-- Home and Count --}}
                                 <div class="flex flex-col gap-5 rounded-xl border border-(--border-dashboard) p-4">
-
                                     <div class="flex items-center justify-between gap-3">
-                                        <label for="show_in_home" class="text-sm font-bold text-(--text-dashboard)">
-                                            نمایش در صفحه اصلی
-                                        </label>
-
+                                        <label for="show_in_home" class="text-sm font-bold text-(--text-dashboard)">نمایش
+                                            در صفحه اصلی</label>
                                         <label for="show_in_home"
                                             class="relative flex h-7 w-12 cursor-pointer items-center">
                                             <input type="checkbox" name="show_in_home" value="1" id="show_in_home"
                                                 class="peer sr-only">
-
                                             <span
                                                 class="absolute inset-0 rounded-full bg-gray-300 transition-all peer-checked:bg-(--primary-dashboard)"></span>
-
                                             <span
                                                 class="absolute left-1 size-5 rounded-full bg-white shadow-md transition-all peer-checked:translate-x-5"></span>
                                         </label>
@@ -363,56 +355,39 @@
                                     <div class="flex flex-col gap-2">
                                         <label for="count" class="text-sm font-bold text-(--text-dashboard)">تعداد
                                             موجودی</label>
-
                                         <div class="flex items-center gap-2">
                                             <button type="button"
                                                 class="flex size-9 items-center justify-center rounded-lg bg-(--primary-dashboard) text-white transition-all hover:opacity-80"
-                                                onclick="calculate('+')">
-                                                +
-                                            </button>
-
+                                                onclick="calculate('+')">+</button>
                                             <input type="number" min="1" name="count" id="count"
                                                 dir="ltr"
                                                 class="min-w-0 flex-1 rounded-lg border border-(--border-dashboard) bg-(--primary-dashboard)/5 px-3 py-2 text-center text-sm text-(--text-dashboard) outline-none focus:border-(--primary-dashboard)">
-
                                             <button type="button"
                                                 class="flex size-9 items-center justify-center rounded-lg bg-(--primary-dashboard) text-white transition-all hover:opacity-80"
-                                                onclick="calculate('-')">
-                                                −
-                                            </button>
+                                                onclick="calculate('-')">−</button>
                                         </div>
                                     </div>
                                 </div>
 
-                                {{-- Main Image --}}
                                 <div class="flex flex-col gap-3 rounded-xl border border-(--border-dashboard) p-4">
                                     <label for="mainImage" class="text-sm font-bold text-(--text-dashboard)">تصویر اصلی
                                         محصول</label>
-
                                     <input type="file" name="mainImage" id="mainImage" accept="image/*"
                                         class="w-full rounded-xl border border-(--border-dashboard) bg-(--primary-dashboard)/5 p-2 text-xs text-(--text-dashboard) file:ml-2 file:rounded-lg file:border-0 file:bg-(--primary-dashboard)/10 file:px-3 file:py-2 file:font-bold file:text-(--primary-dashboard)">
-
                                     <div id="mainImgContainer" class="relative flex flex-wrap items-center gap-3"></div>
                                 </div>
 
-                                {{-- Gallery --}}
                                 <div class="flex flex-col gap-3 rounded-xl border border-(--border-dashboard) p-4">
                                     <label for="gallery" class="text-sm font-bold text-(--text-dashboard)">گالری
                                         تصاویر</label>
-
                                     <input type="file" name="gallery[]" id="gallery" multiple accept="image/*"
                                         class="w-full rounded-xl border border-(--border-dashboard) bg-(--primary-dashboard)/5 p-2 text-xs text-(--text-dashboard) file:ml-2 file:rounded-lg file:border-0 file:bg-(--primary-dashboard)/10 file:px-3 file:py-2 file:font-bold file:text-(--primary-dashboard)">
-
-                                    <span class="text-xs leading-5 text-rose-500">
-                                        حجم کل فایل‌ها نباید بیشتر از 500 کیلوبایت باشد.
-                                    </span>
-
+                                    <span class="text-xs leading-5 text-rose-500">حجم کل فایل‌ها نباید بیشتر از 500
+                                        کیلوبایت باشد.</span>
                                     <div id="galleryContainer" class="flex items-center gap-3 overflow-x-auto pb-2"></div>
                                 </div>
 
-                                {{-- Prices --}}
                                 <div class="flex flex-col gap-4 rounded-xl border border-(--border-dashboard) p-4">
-
                                     <div class="flex flex-col gap-2">
                                         <label for="primary_price"
                                             class="flex items-center gap-2 text-sm font-bold text-(--text-dashboard)">
@@ -420,7 +395,6 @@
                                             <div class="relative group">
                                                 <span
                                                     class="flex size-5 cursor-pointer items-center justify-center rounded-full border border-(--border-dashboard) bg-(--primary-dashboard)/5 text-xs text-(--muted-dashboard)">؟</span>
-
                                                 <span
                                                     class="invisible absolute bottom-7 left-0 z-30 w-56 rounded-xl border border-(--border-dashboard) bg-(--secondary-dashboard) p-3 text-center text-xs leading-6 text-(--text-dashboard) opacity-0 shadow-xl transition-all group-hover:visible group-hover:opacity-100">
                                                     در صورتی که مایلید برای استعلام قیمت تماس گرفته شود این فیلد را خالی
@@ -428,7 +402,6 @@
                                                 </span>
                                             </div>
                                         </label>
-
                                         <input type="number" name="primary_price" id="primary_price"
                                             class="w-full rounded-xl border border-(--border-dashboard) bg-(--primary-dashboard)/5 px-4 py-3 text-sm text-(--text-dashboard) outline-none transition-all focus:border-(--primary-dashboard)">
                                     </div>
@@ -436,16 +409,13 @@
                                     <div class="flex flex-col gap-2">
                                         <label for="secondary_price"
                                             class="text-sm font-bold text-(--text-dashboard)">قیمت ویژه</label>
-
                                         <input type="number" name="secondary_price" id="secondary_price"
                                             class="w-full rounded-xl border border-(--border-dashboard) bg-(--primary-dashboard)/5 px-4 py-3 text-sm text-(--text-dashboard) outline-none transition-all focus:border-(--primary-dashboard)">
                                     </div>
                                 </div>
-
                             </div>
                         </div>
 
-                        {{-- Submit --}}
                         <div
                             class="sticky bottom-0 flex justify-end border-t border-(--border-dashboard) bg-(--secondary-dashboard) px-5 py-4">
                             <button type="submit"
@@ -459,12 +429,12 @@
         </div>
     </div>
 
-    {{-- Scripts --}}
     <script>
         function editForm(state, id) {
             let editFormPopup = document.getElementById('editFormPopup')
 
             if (state == 'open') {
+                let editFormElement = document.getElementById('editForm')
                 let product_id = document.getElementById('product_id')
                 let title = document.getElementById('title')
                 let description = document.getElementById('description')
@@ -477,8 +447,8 @@
                 let secondary_price = document.getElementById('secondary_price')
                 let category_ids = document.getElementById('category_ids')
                 let attributesContainer = document.getElementById('attributesContainer')
+                let faqsContainer = document.getElementById('faqsContainer')
 
-                // Reset previous product data
                 product_id.value = ''
                 title.value = ''
                 description.value = ''
@@ -491,6 +461,11 @@
                 galleryContainer.innerHTML = ''
                 category_ids.innerHTML = ''
                 attributesContainer.innerHTML = ''
+                faqsContainer.innerHTML = ''
+
+                editFormElement.querySelectorAll(
+                    'input[name="removedAttrs[]"], input[name="removedFaqs[]"], input[name^="removedImgs"]').forEach(
+                    input => input.remove())
 
                 $.ajaxSetup({
                     headers: {
@@ -506,23 +481,21 @@
                         'id': id,
                     },
                     success: function(data) {
+                        product_id.value = data.product.id
+                        title.value = data.product.title
+                        description.value = data.product.description || ''
+                        summary.value = data.product.summary || ''
+                        count.value = data.product.count
+                        primary_price.value = data.product.primary_price
+                        secondary_price.value = data.product.secondary_price
 
-                        product_id.value = data['product'].id
-                        title.value = data['product'].title
-                        description.value = data['product'].description || ''
-                        summary.value = data['product'].summary || ''
-                        count.value = data['product'].count
-                        primary_price.value = data['product'].primary_price
-                        secondary_price.value = data['product'].secondary_price
-
-                        // Home page status
                         show_in_home.checked = Boolean(data.product.show_in_home)
 
                         // Images
-                        data['product'].media.forEach(media => {
+                        data.product.media.forEach(media => {
                             if (media.is_main) {
                                 let div = document.createElement('div')
-                                div.classList = 'relative'
+                                div.className = 'relative'
 
                                 let img = document.createElement('img')
                                 img.src = media.media_path
@@ -541,10 +514,9 @@
                                 div.appendChild(img)
                                 div.appendChild(removeBtn)
                                 mainImgContainer.appendChild(div)
-
                             } else {
                                 let div = document.createElement('div')
-                                div.classList = 'relative shrink-0'
+                                div.className = 'relative shrink-0'
 
                                 let img = document.createElement('img')
                                 img.src = media.media_path
@@ -567,7 +539,7 @@
                         })
 
                         // Categories
-                        data['cats'].forEach(category => {
+                        data.cats.forEach(category => {
                             let option = document.createElement('option')
                             option.value = category.id
                             option.innerText = category.title
@@ -580,9 +552,8 @@
                         })
 
                         // Attributes
-                        data['product'].attributes.forEach(attribute => {
+                        data.product.attributes.forEach(attribute => {
                             let div = document.createElement('div')
-
                             div.className =
                                 'flex flex-col sm:flex-row items-center gap-3 rounded-xl border border-(--border-dashboard) bg-(--primary-dashboard)/5 p-3'
 
@@ -621,9 +592,54 @@
 
                             div.appendChild(fields)
                             div.appendChild(removeBtn)
-
                             attributesContainer.appendChild(div)
                         })
+
+                        // FAQs
+                        if (data.product.faqs) {
+                            data.product.faqs.forEach(faq => {
+                                let div = document.createElement('div')
+                                div.className =
+                                    'flex flex-col sm:flex-row items-center gap-3 rounded-xl border border-(--border-dashboard) bg-(--primary-dashboard)/5 p-3'
+
+                                let fields = document.createElement('div')
+                                fields.className = 'flex w-full flex-col sm:flex-row gap-3'
+
+                                let questionInput = document.createElement('input')
+                                questionInput.type = 'text'
+                                questionInput.name = `faqs[oldFaqs][question][${faq.id}]`
+                                questionInput.value = faq.question
+                                questionInput.placeholder = 'سؤال'
+                                questionInput.required = true
+                                questionInput.className =
+                                    'w-full min-w-0 rounded-lg border border-(--border-dashboard) bg-(--secondary-dashboard) px-3 py-3 text-sm text-(--text-dashboard) outline-none focus:border-(--primary-dashboard)'
+
+                                let answerInput = document.createElement('input')
+                                answerInput.type = 'text'
+                                answerInput.name = `faqs[oldFaqs][answer][${faq.id}]`
+                                answerInput.value = faq.answer
+                                answerInput.placeholder = 'جواب'
+                                answerInput.required = true
+                                answerInput.className =
+                                    'w-full min-w-0 rounded-lg border border-(--border-dashboard) bg-(--secondary-dashboard) px-3 py-3 text-sm text-(--text-dashboard) outline-none focus:border-(--primary-dashboard)'
+
+                                fields.appendChild(questionInput)
+                                fields.appendChild(answerInput)
+
+                                let removeBtn = document.createElement('button')
+                                removeBtn.type = 'button'
+                                removeBtn.className =
+                                    'shrink-0 rounded-lg bg-red-50 px-4 py-2.5 text-xs font-bold text-red-500 transition-all hover:bg-red-100'
+                                removeBtn.innerText = 'حذف'
+                                removeBtn.onclick = function() {
+                                    removeFaq(removeBtn, faq.id)
+                                }
+
+                                div.appendChild(fields)
+                                div.appendChild(removeBtn)
+                                faqsContainer.appendChild(div)
+                            })
+                        }
                     },
                     error: function() {
                         alert('خطا در دریافت اطلاعات محصول')
@@ -645,17 +661,17 @@
 
             if (type == 'mainImg') {
                 let input = document.createElement('input')
-                input.setAttribute("type", 'hidden')
-                input.setAttribute("name", "removedImgs[mainImg]")
-                input.setAttribute("value", result)
+                input.type = 'hidden'
+                input.name = 'removedImgs[mainImg]'
+                input.value = result
                 editForm.appendChild(input)
             }
 
             if (type == 'gallery') {
                 let input = document.createElement('input')
-                input.setAttribute("type", 'hidden')
-                input.setAttribute("name", "removedImgs[gallery][]")
-                input.setAttribute("value", result)
+                input.type = 'hidden'
+                input.name = 'removedImgs[gallery][]'
+                input.value = result
                 editForm.appendChild(input)
             }
 
@@ -667,7 +683,6 @@
 
             if (state == 'open') {
                 let yes = document.getElementById('yes')
-
                 yes.setAttribute('href', `{{ url('product/delete') }}/${id}`)
 
                 let confirmDeleteProName = document.getElementById('confirmDeleteProName')
@@ -681,7 +696,6 @@
             }
         }
 
-        // Close popups with Escape
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 editForm('close')

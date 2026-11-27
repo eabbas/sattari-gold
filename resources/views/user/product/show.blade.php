@@ -286,22 +286,24 @@
                 </div>
 
                 <div class="mt-4 divide-y divide-zinc-100" id="faq-list">
-                    <div class="faq-item">
-                        <button type="button" aria-expanded="false"
-                            class="faq-question w-full flex items-center justify-between gap-3 py-4 text-right cursor-pointer">
-                            <span class="text-sm font-bold text-(--color-text)">
-                                آیا محصول دارای ضمانت اصالت است؟
-                            </span>
-                            <svg class="faq-icon size-4 shrink-0 fill-none stroke-(--color-text-secondary) transition-transform duration-300"
-                                viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="m6 9 6 6 6-6" />
-                            </svg>
-                        </button>
+                    @foreach ($product->faqs as $faq)
+                        <div class="faq-item">
+                            <button type="button" aria-expanded="false"
+                                class="faq-question w-full flex items-center justify-between gap-3 py-4 text-right cursor-pointer">
+                                <span class="text-sm font-bold text-(--color-text)">
+                                    {{ $faq->question }}
+                                </span>
+                                <svg class="faq-icon size-4 shrink-0 fill-none stroke-(--color-text-secondary) transition-transform duration-300"
+                                    viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m6 9 6 6 6-6" />
+                                </svg>
+                            </button>
 
-                        <div class="faq-answer hidden pb-4 pr-1 text-sm text-(--color-text-secondary) leading-7">
-                            بله، محصولات ارائه‌شده در ستاری گلد با ضمانت اصالت کالا عرضه می‌شوند.
+                            <div class="faq-answer hidden pb-4 pr-1 text-sm text-(--color-text-secondary) leading-7">
+                                {{ $faq->answer }}
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>

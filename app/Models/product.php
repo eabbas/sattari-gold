@@ -27,4 +27,8 @@ class product extends Model
     {
         return $this->hasMany(product_attribute::class);
     }
+    public function faqs()
+    {
+        return $this->hasMany(productFAQs::class);
+    }
 }
