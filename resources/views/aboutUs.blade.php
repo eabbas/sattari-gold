@@ -5,9 +5,6 @@
 @section('content')
 
   <style>
-    * {
-      font-family: 'Vazirmatn', sans-serif;
-    }
 
     body {
       background: #fcf5ec;
@@ -93,13 +90,15 @@
 <!-- HERO -->
 <section class="relative max-w-[1400px] mx-auto px-5 md:px-12 pt-10">
 
-  <div class="grid md:grid-cols-2 gap-8 items-center">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
 
       <!-- HERO IMAGE -->
-      <div class="relative h-[300px] md:h-[400px] overflow-hidden hero-image">
-  
-        <video src="{{asset('storage/' . $aboutUs->video)}}" controls autoplay  loop playsinline></video>
-  
+      <div class="relative flex justify-center items-center w-full h-[200px] md:h-[400px] overflow-hidden rounded-md">
+        @if(isset($aboutUs) && $aboutUs->video)
+          <video class="max-h-full" src="{{asset('storage/' . $aboutUs->video)}}" controls autoplay loop playsinline></video>
+        @else
+          <img class="max-h-full" src="{{asset('storage/gold-default.png')}}">
+        @endif
         <!-- <div class="absolute inset-0 bg-gradient-to-l from-transparent to-[#68401d]/10"></div> -->
   
       </div>
@@ -112,11 +111,11 @@
         <div class="gold-line max-w-20"></div>
       </div>
 
-      <h1 class="text-4xl md:text-5xl font-extrabold leading-[1.7] mb-5">
-      {{$aboutUs->title}}
+      <h1 class="text-md md:text-2xl font-extrabold leading-[1.7] mb-5">
+      {{$aboutUs->title ?? 'درباره ما'}}
       </h1>
-      <p class="text-base md:text-lg leading-9 text-[#604b36] max-w-md mx-auto mb-7">
-        {{$aboutUs->description}}
+      <p class="text-sm w-full text-justify md:text-base leading-5 lg:leading-9 text-[#604b36] mx-auto mb-7">
+        {{$aboutUs->description ?? 'توضیحات'}}
       </p>
 
     </div>
@@ -128,6 +127,7 @@
 
 
 <!-- VIDEO AND WORKSHOP -->
+@if(isset($aboutUs) && count($aboutUs->gallery) > 0)
 <section class="max-w-[1400px] mx-auto px-5 md:px-12 py-5">
 
   <div class="grid md:grid-cols-2 gap-4">
@@ -150,110 +150,56 @@
   </div>
 
 </section>
+@endif
 
 
 <!-- OUR STORY -->
 <section id="story" class="relative max-w-[1400px] mx-auto px-5 md:px-12 py-12">
 
-  <div class="grid md:grid-cols-3 gap-10 items-center">
+  <div class="grid grid-cols-1 items-center">
 
     <!-- STORY TEXT -->
-    <div class="md:col-span-2">
+    <div>
 
       <div class="section-title mb-8">
         <div class="gold-line"></div>
-        <h2 class="text-3xl font-bold">داستان ما</h2>
+        <h2 class="lg:text-2xl font-bold">داستان ما</h2>
         <div class="gold-line"></div>
       </div>
 
-      <div class="text-center space-y-4 text-base md:text-lg leading-9 text-[#604b36]">
+      <div class="text-center space-y-4 text-sm leading-5 md:text-lg md:leading-9 text-[#604b36]">
           <p>
-            {{$aboutUs->ourStory}}
+            {{$aboutUs->ourStory ?? 'داستان ما'}}
           </p>
       </div>
 
-      <div class="text-center mt-8">
+      <div class="text-center mt-4 lg:mt-8">
         <a href="#"
-           class="inline-block gold-bg text-white rounded-full px-8 py-3 transition">
+           class="inline-block gold-bg text-white rounded-full text-sm lg:text-base px-4 py-1.5 lg:px-8 lg:py-3 transition">
           ← درباره مسیر ما بیشتر بدانید
         </a>
       </div>
 
     </div>
 
-
-    <!-- TIMELINE -->
-    <div class="relative py-5">
-
-      <div class="absolute right-[29px] top-12 bottom-12 story-line"></div>
-
-      <div class="space-y-8">
-
-        <div class="relative flex items-center gap-5">
-
-          <div class="relative z-10 w-[60px] h-[60px] shrink-0 rounded-full border border-[#e7c9a5] bg-[#fff7ed] flex items-center justify-center text-3xl gold">
-            ♢
-          </div>
-
-          <div>
-            <h3 class="font-bold text-lg mb-1">آغاز یک رؤیا</h3>
-            <p class="text-sm text-[#80664c]">شروع راه ما با علاقه به هنر</p>
-          </div>
-
-        </div>
-
-        <div class="relative flex items-center gap-5">
-
-          <div class="relative z-10 w-[60px] h-[60px] shrink-0 rounded-full border border-[#e7c9a5] bg-[#fff7ed] flex items-center justify-center text-3xl gold">
-            ☆
-          </div>
-
-          <div>
-            <h3 class="font-bold text-lg mb-1">رشد و پیشرفت</h3>
-            <p class="text-sm text-[#80664c]">با تکیه بر اعتماد شما</p>
-          </div>
-
-        </div>
-
-        <div class="relative flex items-center gap-5">
-
-          <div class="relative z-10 w-[60px] h-[60px] shrink-0 rounded-full border border-[#e7c9a5] bg-[#fff7ed] flex items-center justify-center text-3xl gold">
-            ♡
-          </div>
-
-          <div>
-            <h3 class="font-bold text-lg mb-1">همراهی همیشگی</h3>
-            <p class="text-sm text-[#80664c]">در مسیر درخشش</p>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
   </div>
-
 </section>
 
 
-
-
+@if(isset($aboutUs) && $aboutUs->value)
 <!-- OUR VALUES -->
-<section class="max-w-[1400px] mx-auto px-5 md:px-12 py-16">
+<section class="max-w-[1400px] mx-auto px-5 md:px-12 py-8 lg:py-16">
 
   <!-- TITLE -->
   <div class="section-title mb-5">
     <div class="gold-line"></div>
-    <h2 class="text-2xl md:text-3xl font-bold">
-      ارزش‌های ما
+    <h2 class="md:text-2xl font-bold">
+      ارزش های پیشنهادی
     </h2>
     <div class="gold-line"></div>
   </div>
 
-  <p class="text-center text-[#80664c] mb-12 leading-8">
-    آنچه ما را متمایز می‌کند، باورهایی است که در تمام مسیر همراه ما هستند.
-  </p>
+
 
   <!-- VALUES CARDS -->
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -262,10 +208,10 @@
      @foreach($aboutUs->value as $value)
     <div class="group bg-[#fffaf3] border border-[#ead8c0] rounded-2xl p-7 text-center transition duration-300 hover:-translate-y-2 hover:shadow-xl">
       <div class="min-w-20 max-w-20 h-20 mx-auto mb-5 rounded-full bg-[#f4e6d2] flex items-center justify-center text-3xl gold">
-          <img class="" src="{{asset('storage/' . $value->image)}}" alt="">
+          <img class="rounded-full" src="{{ $value->image ? asset('storage/' . $value->image) : asset('storage/gold-default.png')}}" alt="">
       </div>
 
-      <h3 class="text-lg font-bold mb-3">
+      <h3 class="lg:text-lg font-bold mb-3">
         {{$value->title}}
       </h3>
 
@@ -278,23 +224,19 @@
   </div>
 
 </section>
+@endif
 
-
-
+@if(isset($aboutUs) && count($aboutUs->gallery) > 0)
 <!-- PORTFOLIO -->
 <section class="max-w-[1400px] mx-auto px-5 md:px-12 py-10">
 
   <div class="section-title mb-4">
     <div class="gold-line"></div>
-    <h2 class="text-2xl md:text-3xl font-bold">
-      آثار ما، امضای هنر ما
+    <h2 class="tmd:text-2xl font-bold">
+     گالری تصاویر
     </h2>
     <div class="gold-line"></div>
   </div>
-
-  <p class="text-center text-[#80664c] mb-8">
-    نگاهی به مجموعه‌ای از طراحی‌ها و نمونه‌کارهای ما
-  </p>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
   @foreach($aboutUs->gallery as $gallery)
@@ -311,9 +253,9 @@
   </div>
 
 </section>
+@endif
 
-
-<!-- TESTIMONIALS -->
+{{-- <!-- TESTIMONIALS -->
 <section class="max-w-[1200px] mx-auto px-5 md:px-12 py-12 mb-16">
 
   <div class="section-title mb-8">
@@ -382,7 +324,7 @@
 
   </div>
 
-</section>
+</section> --}}
 
 
 

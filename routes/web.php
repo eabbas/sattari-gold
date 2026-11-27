@@ -44,9 +44,13 @@ Route::get('/xyz', function () {
     //     $table->string('logo')->nullable()->change();
     // });
 
-    Schema::table('users', function (Blueprint $table) {
-        $table->string("password")->nullable()->change();
+    Schema::table('about_us', function (Blueprint $table) {
+        $table->longText("ourStory")->nullable()->change();
+        $table->longText("description")->nullable()->change();
     });
+    // Schema::table('users', function (Blueprint $table) {
+    //     $table->string("password")->nullable()->change();
+    // });
 
 });
 
@@ -378,7 +382,7 @@ Route::group([
     Route::post('/store', 'store')->name('store');
     Route::get('/edit/{id}', 'edit')->name('edit');
     Route::post('/delete', 'delete')->name('delete');
-    Route::get('/about-us', 'aboutUs')->name('aboutUs');
+    Route::get('/', 'aboutUs')->name('aboutUs');
 });
 
 // fallback and missing
