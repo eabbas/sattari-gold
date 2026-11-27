@@ -329,7 +329,7 @@
                                     <span class="text-[11px] text-[#858078]">مبلغ اختلاف:</span>
 
                                     <span id="sellDifferenceAmount"
-                                        class="text-[11px] font-semibold text-[#78716C] [direction:ltr]">
+                                        class="text-[11px] font-bold text-[#78716C] [direction:ltr]">
 
                                         ---
 
@@ -408,7 +408,7 @@
                                     <span class="text-[11px] text-[#858078]">مبلغ اختلاف:</span>
 
                                     <span id="buyDifferenceAmount"
-                                        class="text-[11px] font-semibold text-[#78716C] [direction:ltr]">
+                                        class="text-[11px] font-bold text-[#78716C] [direction:ltr]">
 
                                         ---
 

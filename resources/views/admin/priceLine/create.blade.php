@@ -30,7 +30,7 @@
                         <input type="text" inputmode="numeric" name="line_value" id="line_value"
                             value="{{ $priceLine?->line_value ? number_format($priceLine->line_value) : '' }}"
                             placeholder="مثلاً 100,000"
-                            class="w-full h-12 px-4 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:bg-white focus:border-[#b89b5e] focus:ring-2 focus:ring-[#b89b5e]/10 transition-all text-gray-700 text-sm font-semibold">
+                            class="w-full h-12 px-4 rounded-xl border border-gray-200 bg-gray-50 outline-none focus:bg-white focus:border-[#b89b5e] focus:ring-2 focus:ring-[#b89b5e]/10 transition-all text-gray-700 text-sm font-bold">
 
                         <p id="line_value_preview" class="text-xs text-gray-400 mt-3 min-h-5"></p>
 

@@ -52,7 +52,7 @@
                     <div
                         class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-(--border-dashboard) px-4 py-4">
                         <label for="all"
-                            class="flex items-center gap-3 cursor-pointer text-sm font-medium text-(--text-dashboard)">
+                            class="flex items-center gap-3 cursor-pointer text-sm font-bold text-(--text-dashboard)">
                             <input type="checkbox" id="all" onchange="checkAll()"
                                 class="size-4 cursor-pointer accent-(--primary-dashboard)">
                             انتخاب همه دسته‌بندی‌ها
@@ -95,7 +95,7 @@
                                                 <input type="checkbox" name="categories[]" value="{{ $category->id }}"
                                                     class="check size-4 cursor-pointer accent-(--primary-dashboard)">
                                             @endcan
-                                            <span class="font-medium text-(--muted-dashboard)">{{ $i }}</span>
+                                            <span class="font-bold text-(--muted-dashboard)">{{ $i }}</span>
                                         </div>
                                     </td>
 
