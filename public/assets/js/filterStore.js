@@ -1,7 +1,6 @@
 let categories = document.querySelectorAll('.categories')
 let minPrice = document.getElementById('minPrice')
 let maxPrice = document.getElementById('maxPrice')
-let searchInput = document.getElementById('searchInput')
 let exists = document.getElementById('exists')
 // let searchButton = document.getElementById('searchButton')
 let sortBtn = document.querySelectorAll('.sort-btn')
@@ -12,7 +11,6 @@ let filterBg = document.getElementById('filterBg')
 let chips = document.getElementById('chips')
 let resetFilters = document.getElementById('resetFilters')
 let timeout
-let searchInp = document.getElementById('searchInp')
 let title = document.getElementById('title')
 function getFilters() {
     $.ajax({
@@ -114,34 +112,6 @@ maxPrice.addEventListener('keyup', () => {
         getFilters()
     }, 500)
 })
-searchInp.addEventListener('input', () => {
-    clearTimeout(timeout)
-    timeout = setTimeout(() => {
-        if (searchInp.value !== '') {
-            title.parentElement.parentElement.classList.remove('hidden')
-        } else {
-            title.parentElement.parentElement.classList.add('hidden')
-            filters = {
-                'keyword': null,
-                'exists': null,
-                'fromPrice': 0,
-                'toPrice': null,
-                'sortType': 'desc',
-                'sortBy': 'created_at',
-                'page': 1,
-                'category': null,
-            }
-        }
-        title.innerText = 'نتایج جستجو برای "' + searchInp.value + '"'
-        filters.keyword = searchInp.value
-        console.log()
-        getFilters()
-    }, 500)
-})
-// searchButton.addEventListener('click', ()=>{
-//     filters.keyword = searchInput.value
-//     getFilters()
-// })
 hasDiscount.addEventListener('change', () => {
     hasDiscount.checked ? filters.hasDiscount = 1 : filters.hasDiscount = 0
     getFilters()

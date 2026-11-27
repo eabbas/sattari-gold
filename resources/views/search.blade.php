@@ -4,15 +4,16 @@
     <main class="w-11/12 max-w-[1700px] mx-auto my-4 md:my-6">
         <div class="text-[#71717a] text-xs mb-[18px]">خانه / <b class="text-[#333]">جستجو</b></div>
 
+        @if(isset($title))
         <div
-            class="items-end justify-between gap-2.5 mb-[18px] @if (!isset($title)) hidden @endif @if (isset($title) && !$title) hidden @else flex @endif">
+            class="flex items-end justify-between gap-2.5 mb-[18px]">
             <div>
-                <h1 id="title" class="m-0 text-[18px] md:text-[22px]">نتایج جستجو برای " {{ isset($title) && $title }} "
+                <h1 id="title" class="m-0 text-[18px] md:text-[22px]">نتایج جستجو برای " {{ $title }} "
                 </h1>
                 <div id="resultCount" class="text-[#71717a] text-[13px]"></div>
             </div>
         </div>
-
+        @endif
 
         <div class="grid grid-cols-1 md:grid-cols-10 lg:gap-7 gap-4">
             <div class="fixed w-full h-dvh bg-black/50 z-99 top-0 right-0 md:hidden invisible opacity-0 transition-all duration-300"
@@ -60,14 +61,7 @@
 
             <section class="min-w-0 lg:col-span-8 col-span-7">
 
-                <div class="w-full items-center gap-3 border-1 bg-white border-gray-200 rounded-xl mb-3 @if(!Route::is('search.*')) hidden @else flex @endif">
-                    <input type="text" class="w-full px-3.5 py-3 outline-none" id="searchInp">
-                    <svg class="w-6 h-6 text-gray-600 ml-2.5 cursor-pointer" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
-                            d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
-                    </svg>
-                </div>
+              
                 <div
                     class="bg-white border border-[#e4e4e7] rounded-xl p-3 md:px-[15px] flex flex-col md:flex-row md:items-center justify-between gap-3 mb-3.5">
                     <div class="flex items-center gap-2 flex-wrap">
@@ -107,7 +101,7 @@
                             <div class="w-full h-2/3 bg-[#f8f8f8] flex justify-center items-center">
                                 <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->title }}"
                                     loading="lazy"
-                                    class="min-w-9/12 min-h-9/12 max-w-full max-md:max-h-50 aspect-square rounded-lg">
+                                    class="min-w-9/12 min-h-9/12 max-w-full max-md:max-h-50 rounded-lg object-contain">
 
                             </div>
                             <h3 class="mb-2 text-[13px] leading-[1.9] overflow-hidden">{{ $product->title }}
