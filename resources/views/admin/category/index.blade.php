@@ -1,351 +1,399 @@
 @extends('admin.app.dashboard')
+
 @section('title', 'ستاری گلد | همه دسته بندی ها')
+
 @section('content')
+
     @if (session('message'))
         <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-slate-100 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
-            <span class="font-bold text-sm text-slate-500"> {{ session('message') }} </span>
+            class="fixed top-5 right-5 z-[100] flex items-center gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm font-bold text-emerald-700 shadow-lg">
+            <span class="flex size-7 items-center justify-center rounded-full bg-emerald-100">✓</span>
+            {{ session('message') }}
         </div>
     @endif
 
-    <div class="w-full flex flex-col gap-3 justify-start items-center">
-        <!-- لیست مشتریان / هدر -->
+    <div class="w-full flex flex-col gap-5">
+
+        {{-- Header --}}
         <section
-            class="w-full mx-auto bg-(--secondary-dashboard) flex items-center justify-between border-1 border-(--border-dashboard) p-2 2 rounded-md">
-            <h2 class="text-base md:text-xl font-bold"> لیست دسته بندی ها</h2>
+            class="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-(--border-dashboard) bg-(--secondary-dashboard) p-4 md:p-5">
+            <div class="flex items-center gap-3">
+                <div
+                    class="size-11 flex items-center justify-center rounded-xl bg-(--primary-dashboard)/10 text-(--primary-dashboard)">
+                    <svg class="size-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M4 4h7v7H4V4zm9 0h7v7h-7V4zM4 13h7v7H4v-7zm9 0h7v7h-7v-7z" />
+                    </svg>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <h2 class="text-base md:text-lg font-bold text-(--text-dashboard)">دسته‌بندی محصولات</h2>
+                    <span class="text-xs text-(--muted-dashboard)">مدیریت و مشاهده دسته‌بندی‌های فروشگاه</span>
+                </div>
+            </div>
+
             @can('access', 'category_create')
                 <a href="{{ route('category.create') }}"
-                    class="w-fit bg-(--info-dashboard) text-xs md:text-base text-(--color-surface-dashboard) rounded-md px-3 py-2 cursor-pointer flex items-center justify-center">
-                    <span class="">
-                        <svg class="size-3 md:size-5" fill="currentColor" xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 448 512">
-                            <path
-                                d="M248 72c0-13.3-10.7-24-24-24s-24 10.7-24 24V232H40c-13.3 0-24 10.7-24 24s10.7 24 24 24H200V440c0 13.3 10.7 24 24 24s24-10.7 24-24V280H408c13.3 0 24-10.7 24-24s-10.7-24-24-24H248V72z">
-                            </path>
-                        </svg>
-                    </span>
-                    <div class="">دسته بندی جدید</div>
+                    class="w-full sm:w-fit flex items-center justify-center gap-2 rounded-lg bg-(--info-dashboard) px-4 py-2.5 text-sm font-bold text-(--color-surface-dashboard) transition-all hover:opacity-90">
+                    <svg class="size-4" fill="currentColor" viewBox="0 0 448 512">
+                        <path
+                            d="M248 72c0-13.3-10.7-24-24-24s-24 10.7-24 24V232H40c-13.3 0-24 10.7-24 24s10.7 24 24 24H200V440c0 13.3 10.7 24 24 24s24-10.7 24-24V280H408c13.3 0 24-10.7 24-24s-10.7-24-24-24H248V72z" />
+                    </svg>
+                    دسته‌بندی جدید
                 </a>
             @endcan
-
         </section>
-        <!-- لیست مشتریان / لسیت -->
-        <section id="confirmed_pending"
-            class="w-full mx-auto rounded-md border-1 border-(--border-dashboard) mt-5 overflow-hidden">
 
+        {{-- Categories Table --}}
+        <section class="w-full overflow-hidden rounded-xl border border-(--border-dashboard) bg-(--secondary-dashboard)">
 
+            <form action="{{ route('category.deleteAll') }}" method="post">
+                @csrf
 
-            <div id="confirmed" class="w-full">
+                @can('access', 'category_delete')
+                    <div
+                        class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-(--border-dashboard) px-4 py-4">
+                        <label for="all"
+                            class="flex items-center gap-3 cursor-pointer text-sm font-medium text-(--text-dashboard)">
+                            <input type="checkbox" id="all" onchange="checkAll()"
+                                class="size-4 cursor-pointer accent-(--primary-dashboard)">
+                            انتخاب همه دسته‌بندی‌ها
+                        </label>
 
-                <form class="w-full " action="{{ route('category.deleteAll') }}" method="post">
-                    @can('access', 'category_delete')
-                        <div class="w-full flex justify-between items-center px-4 py-3">
-                            <div class="flex items-center justify-start gap-2">
-                                <div class="min-w-23 md:min-w-28  flex items-center justify-center gap-2">
-                                    <input
-                                        class="appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer"
-                                        type="checkbox" id="all" onchange="checkAll()">
-                                    <label class="text-xs md:text-base" for="selectAll">
-                                        انتخاب همه
-                                    </label>
-                                </div>
-                            </div>
-                            <button
-                                class="w-fit flex flex-row items-center justify-center bg-red-500 hover:bg-red-600 p-1 rounded-sm cursor-pointer"
-                                title="حذف">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 448 512">
-                                    <path fill="white"
-                                        d="M170.5 51.6L151.5 80h145l-19-28.4c-1.5-2.2-4-3.6-6.7-3.6H177.1c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80H368h48 8c13.3 0 24 10.7 24 24s-10.7 24-24 24h-8V432c0 44.2-35.8 80-80 80H112c-44.2 0-80-35.8-80-80V128H24c-13.3 0-24-10.7-24-24S10.7 80 24 80h8H80 93.8l36.7-55.1C140.9 9.4 158.4 0 177.1 0h93.7c18.7 0 36.2 9.4 46.6 24.9zM80 128V432c0 17.7 14.3 32 32 32H336c17.7 0 32-14.3 32-32V128H80zm80 64V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16z" />
-                                </svg>
-                            </button>
-                        </div>
-                    @endcan
-                    <div class="max-w-full w-full  overflow-x-auto">
-                        <table class="w-full border-collapse border-1 border-(--border-dashboard) text-sm text-nowrap">
-                            <thead class="w-full">
-                                <tr class="w-full bg-gray-100 text-xs lg:text-base">
-                                    <th class="border-1 border-(--border-dashboard) p-3 md:px-3 md:py-2">
-                                        ردیف
-                                    </th>
-                                    <th class="border-1 border-(--border-dashboard) p-3 md:px-3 md:py-2">
-                                        تصویر
-                                    </th>
-                                    <th class="border-1 border-(--border-dashboard) p-3 md:px-3 md:py-2">
-                                        عنوان
-                                    </th>
-                                    <th class="border-1 border-(--border-dashboard) p-3 md:px-3 md:py-2">
-                                        زیر دسته ها
-                                    </th>
-                                    <th class="border-1 border-(--border-dashboard) p-3 md:px-3 md:py-2">
-                                        عملیات
-                                    </th>
+                        <button type="submit" onclick="return confirm('آیا از حذف دسته‌بندی‌های انتخاب شده اطمینان دارید؟')"
+                            class="flex items-center justify-center gap-2 rounded-lg bg-red-50 px-4 py-2 text-xs font-bold text-red-600 transition-all hover:bg-red-100">
+                            <svg class="size-4" fill="currentColor" viewBox="0 0 448 512">
+                                <path
+                                    d="M170.5 51.6L151.5 80h145l-19-28.4c-1.5-2.2-4-3.6-6.7-3.6H177.1c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80H368h48 8c13.3 0 24 10.7 24 24s-10.7 24-24 24h-8V432c0 44.2-35.8 80-80 80H112c-44.2 0-80-35.8-80-80V128H24c-13.3 0-24-10.7-24-24S10.7 80 24 80h8H80 93.8l36.7-55.1C140.9 9.4 158.4 0 177.1 0h93.7c18.7 0 36.2 9.4 46.6 24.9zM80 128V432c0 17.7 14.3 32 32 32H336c17.7 0 32-14.3 32-32V128H80z" />
+                            </svg>
+                            حذف انتخاب‌شده‌ها
+                        </button>
+                    </div>
+                @endcan
 
-                                </tr>
-                            </thead>
+                <div class="w-full overflow-x-auto">
+                    <table class="w-full min-w-[750px] border-collapse text-sm text-nowrap">
+                        <thead>
+                            <tr class="bg-(--primary-dashboard)/5 text-xs font-bold text-(--text-dashboard)">
+                                <th class="border-b border-(--border-dashboard) px-4 py-4">ردیف</th>
+                                <th class="border-b border-(--border-dashboard) px-4 py-4">تصویر</th>
+                                <th class="border-b border-(--border-dashboard) px-4 py-4">عنوان دسته‌بندی</th>
+                                <th class="border-b border-(--border-dashboard) px-4 py-4">زیر دسته‌ها</th>
+                                <th class="border-b border-(--border-dashboard) px-4 py-4">عملیات</th>
+                            </tr>
+                        </thead>
 
-                            <tbody>
-                                @php
-                                    $i = 1;
-                                @endphp
-                                @foreach ($categories as $category)
-                                    <tr class=" text-xs lg:text-base">
-                                        <td class="p-1 md:px-3 md:py-2 in-fa">
-                                            <div class=" flex items-center justify-center gap-2">
+                        <tbody class="divide-y divide-(--border-dashboard)">
+                            @php
+                                $i = 1;
+                            @endphp
+
+                            @forelse ($categories as $category)
+                                <tr class="text-xs lg:text-sm transition-colors hover:bg-(--primary-dashboard)/5">
+
+                                    <td class="px-4 py-3 text-center">
+                                        <div class="flex items-center justify-center gap-3">
+                                            @can('access', 'category_delete')
                                                 <input type="checkbox" name="categories[]" value="{{ $category->id }}"
-                                                    class="check appearance-none size-5 rounded-md border-1 border-(--border-dashboard) checked:bg-(--primary-dark-dashboard) checked:after:content-['✓'] text-white flex items-center justify-center text-sm cursor-pointer">
-                                                <span class="in-fa">{{ $i }}</span>
-                                            </div>
-                                        </td>
-                                        <td class="p-1 md:px-3 md:py-2  in-fa">
-                                            <div class="flex items-center justify-center gap-2">
-                                                @if (isset($category['image']))
-                                                    <img class="max-w-[60px] max-h-[60px] mx-auto size-15 object-cover rounded-md"
-                                                        src={{ asset('storage/' . $category->image) }}>
-                                                @else
-                                                    <p class=" text-center">بدون تصویر</p>
-                                                @endif
-                                            </div>
-                                        </td>
-                                        <td class="p-1 md:px-3 md:py-2  in-fa">
-                                            <div class="flex items-center justify-center gap-2">
-                                                {{ $category->title }}
-                                            </div>
-                                        </td>
-                                        <td class="p-1 md:px-3 md:py-2  in-fa">
-                                            <div class="flex items-center justify-center gap-2 relative">
-                                                @if (count($category->children))
-                                                    <span
-                                                        class="block w-30 lg:w-full font-bold text-blue-500 hover:text-blue-600 cursor-pointer subCats">مشاهده</span>
-                                                    <ul
-                                                        class="absolute w-full top-0 bg-white right-0 max-h-0 transition-all duration-300 flex flex-col items-center divide-y divide-gray-300 opacity-0 invisible border border-gray-300 rounded-sm z-555">
-                                                        <div class="w-full overflow-auto max-h-60">
-                                                            @foreach ($category->children as $child)
-                                                                <li class="w-full py-2">{{ $child->title }}</li>
-                                                            @endforeach
-                                                        </div>
-                                                    </ul>
-                                                @else
-                                                    <span
-                                                        class="block w-30 lg:w-full font-bold text-blue-500 hover:text-blue-600 cursor-pointer">-</span>
-                                                @endif
-                                            </div>
-                                        </td>
-                                        <td class="p-1 md:px-3 md:py-2  in-fa">
-                                            <div class="flex items-center justify-center gap-2">
+                                                    class="check size-4 cursor-pointer accent-(--primary-dashboard)">
+                                            @endcan
+                                            <span class="font-medium text-(--muted-dashboard)">{{ $i }}</span>
+                                        </div>
+                                    </td>
+
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center justify-center">
+                                            @if ($category->image)
+                                                <img class="size-12 rounded-lg border border-(--border-dashboard) object-cover"
+                                                    src="{{ asset('storage/' . $category->image) }}"
+                                                    alt="{{ $category->title }}">
+                                            @else
+                                                <div
+                                                    class="flex size-12 items-center justify-center rounded-lg bg-(--primary-dashboard)/5 text-xs text-(--muted-dashboard)">
+                                                    بدون تصویر
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </td>
+
+                                    <td class="px-4 py-3 text-center font-bold text-(--text-dashboard)">
+                                        {{ $category->title }}
+                                    </td>
+
+                                    <td class="px-4 py-3 text-center">
+                                        @if (count($category->children))
+                                            <div class="relative flex justify-center">
+                                                <button type="button"
+                                                    class="subCats flex items-center justify-center gap-2 rounded-lg bg-blue-50 px-4 py-2 font-bold text-blue-600 transition-all hover:bg-blue-100">
+                                                    <span>مشاهده</span>
+                                                    <svg class="size-3 transition-transform" fill="none"
+                                                        stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="m6 9 6 6 6-6" />
+                                                    </svg>
+                                                </button>
+
                                                 <ul
-                                                    class="max-lg:text-sm max-sm:text-xs rounded-sm flex items-center gap-4">
-                                                    @can('access', 'category_show')
-                                                        <li class="flex justify-center">
-                                                            <span
-                                                                class="font-bold text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-4 py-2 cursor-pointer walletBtn"
-                                                                title="مشاهده" onclick="show('open', {{ $category['id'] }})">
-                                                                مشاهده
-                                                            </span>
-                                                        </li>
-                                                    @endcan
-                                                    @can('access', 'category_edit')
-                                                        <li class="flex justify-center">
-                                                            <span
-                                                                class="font-bold text-(--primary-dashboard) border-1 border-(--primary-dashboard) rounded-md px-4 py-2 cursor-pointer walletBtn"
-                                                                title="ویرایش"
-                                                                onclick="editForm('open', {{ $category['id'] }})">
-                                                                ویرایش
-                                                            </span>
-                                                        </li>
-                                                    @endcan
-                                                    @can('access', 'category_delete')
-                                                        <li class="flex justify-center">
-                                                            <span
-                                                                class="font-bold text-red-500 border-1 border-red-500 rounded-md px-4 py-2 cursor-pointer walletBtn"
-                                                                title="حذف"
-                                                                onclick="deleteCat('open', {{ $category['id'] }}, '{{ $category['title'] }}')">
-                                                                حذف
-                                                            </span>
-                                                        </li>
-                                                    @endcan
+                                                    class="absolute right-1/2 top-full z-30 mt-2 hidden w-52 translate-x-1/2 overflow-hidden rounded-xl border border-(--border-dashboard) bg-(--secondary-dashboard) text-(--text-dashboard) shadow-xl">
+                                                    <div
+                                                        class="max-h-60 overflow-y-auto divide-y divide-(--border-dashboard)">
+                                                        @foreach ($category->children as $child)
+                                                            <li
+                                                                class="px-4 py-3 text-center text-xs transition-colors hover:bg-(--primary-dashboard)/5">
+                                                                {{ $child->title }}
+                                                            </li>
+                                                        @endforeach
+                                                    </div>
                                                 </ul>
                                             </div>
-                                        </td>
+                                        @else
+                                            <span class="text-(--muted-dashboard)">—</span>
+                                        @endif
+                                    </td>
 
+                                    <td class="px-4 py-3">
+                                        <div class="flex items-center justify-center gap-2">
 
+                                            @can('access', 'category_show')
+                                                <button type="button" onclick="show('open', {{ $category->id }})"
+                                                    class="rounded-lg border border-(--primary-dashboard)/30 bg-(--primary-dashboard)/5 px-3 py-2 text-xs font-bold text-(--primary-dashboard) transition-all hover:bg-(--primary-dashboard)/10">
+                                                    مشاهده
+                                                </button>
+                                            @endcan
 
-                                    </tr>
-                                    @php
-                                        $i++;
-                                    @endphp
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </form>
-            </div>
+                                            @can('access', 'category_edit')
+                                                <button type="button" onclick="editForm('open', {{ $category->id }})"
+                                                    class="rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-xs font-bold text-blue-600 transition-all hover:bg-blue-100">
+                                                    ویرایش
+                                                </button>
+                                            @endcan
 
+                                            @can('access', 'category_delete')
+                                                <button type="button"
+                                                    onclick="deleteCat('open', {{ $category->id }}, {{ Js::from($category->title) }})"
+                                                    class="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs font-bold text-red-500 transition-all hover:bg-red-100">
+                                                    حذف
+                                                </button>
+                                            @endcan
 
+                                        </div>
+                                    </td>
+                                </tr>
 
-
-
+                                @php
+                                    $i++;
+                                @endphp
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="px-4 py-16 text-center">
+                                        <div class="flex flex-col items-center gap-3">
+                                            <div
+                                                class="flex size-14 items-center justify-center rounded-full bg-(--primary-dashboard)/5 text-(--muted-dashboard)">
+                                                <svg class="size-7" fill="none" stroke="currentColor" stroke-width="1.5"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M4 5h16v14H4zM8 9h8M8 13h5" />
+                                                </svg>
+                                            </div>
+                                            <p class="font-bold text-(--text-dashboard)">دسته‌بندی‌ای ثبت نشده است</p>
+                                            <span class="text-xs text-(--muted-dashboard)">در حال حاضر دسته‌بندی‌ای برای
+                                                نمایش وجود ندارد.</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </form>
         </section>
     </div>
 
+    {{-- Show Popup --}}
+    <div id="showSinglePopup" class="fixed inset-0 z-[60] invisible opacity-0 transition-all duration-300">
+        <div class="relative flex size-full items-center justify-center p-3 md:p-6">
+            <div class="absolute inset-0 bg-slate-950/50" onclick="show('close')"></div>
 
-    {{-- start showSingle popup --}}
-    <div id="showSinglePopup" class="w-full h-dvh fixed top-0 left-0 z-5 invisible opacity-0 transition-all duration-400">
-        <div class="size-full relative">
-            <div class="size-full bg-black/40 absolute top-0 left-0" onclick="show('close')"></div>
             <div
-                class="w-10/12 2xl:container 2xl:w-10/12 sm:w-8/12 mx-auto border border-[#D5DFE4] rounded-[10px] text-[#425A8B] p-5 bg-white absolute right-1/2 translate-x-1/2 top-1/2 -translate-y-1/2">
-                <div class="relative">
-                    <button class="absolute -top-4 -left-4 size-6 flex flex-col justify-center items-center cursor-pointer"
-                        onclick="show('close')">
-                        <span class="w-full h-0.5 rounded-full bg-slate-500 rotate-45 translate-y-1/2"></span>
-                        <span class="w-full h-0.5 rounded-full bg-slate-500 -rotate-45 -translate-y-1/2"></span>
+                class="relative z-10 max-h-[90dvh] w-full max-w-3xl overflow-hidden rounded-2xl border border-(--border-dashboard) bg-(--secondary-dashboard) shadow-2xl">
+                <div class="flex items-center justify-between border-b border-(--border-dashboard) px-5 py-4">
+                    <div>
+                        <h3 class="font-bold text-(--text-dashboard)">اطلاعات دسته‌بندی</h3>
+                        <p class="mt-1 text-xs text-(--muted-dashboard)">مشاهده جزئیات دسته‌بندی انتخاب‌شده</p>
+                    </div>
+                    <button type="button" onclick="show('close')"
+                        class="flex size-9 items-center justify-center rounded-lg bg-(--primary-dashboard)/5 text-(--muted-dashboard) hover:bg-red-50 hover:text-red-500">
+                        ✕
                     </button>
                 </div>
-                <div class="w-full flex flex-col items-start gap-10 p-5 max-h-130 overflow-auto">
-                    <div class="w-full flex flex-col sm:flex-row items-center gap-10">
-                        <div class="w-full sm:w-1/2 bg-slate-100 rounded-xl px-5 py-2">
-                            <h2 class="font-bold text-slate-700 mb-4">عنوان : </h2>
-                            <p id="singleTitle"></p>
+
+                <div class="max-h-[75dvh] overflow-y-auto p-5">
+                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div class="rounded-xl border border-(--border-dashboard) bg-(--primary-dashboard)/5 p-4">
+                            <h4 class="mb-3 text-xs font-bold text-(--muted-dashboard)">عنوان دسته‌بندی</h4>
+                            <p id="singleTitle" class="font-bold text-(--text-dashboard)"></p>
                         </div>
-                        <div class="w-full sm:w-1/2 bg-slate-100 rounded-xl px-5 py-2">
-                            <h2 class="font-bold text-slate-700 mb-4">دسته والد : </h2>
-                            <p id="singleParent"></p>
+
+                        <div class="rounded-xl border border-(--border-dashboard) bg-(--primary-dashboard)/5 p-4">
+                            <h4 class="mb-3 text-xs font-bold text-(--muted-dashboard)">دسته والد</h4>
+                            <p id="singleParent" class="font-bold text-(--text-dashboard)"></p>
                         </div>
-                    </div>
-                    <div class="w-full flex flex-col sm:flex-row items-center gap-10">
-                        <div class="w-full sm:w-1/2 bg-slate-100 rounded-xl px-5 py-2">
-                            <h2 class="font-bold text-slate-700 mb-4">توضیحات : </h2>
-                            <div id="singleDesc" class="h-30 overflow-auto"></div>
+
+                        <div class="rounded-xl border border-(--border-dashboard) bg-(--primary-dashboard)/5 p-4">
+                            <h4 class="mb-3 text-xs font-bold text-(--muted-dashboard)">توضیحات</h4>
+                            <div id="singleDesc"
+                                class="max-h-32 overflow-y-auto text-sm leading-7 text-(--text-dashboard)"></div>
                         </div>
-                        <div class="w-full sm:w-1/2 bg-slate-100 rounded-xl px-5 py-2">
-                            <h2 class="font-bold text-slate-700 mb-4">زیر دسته ها : </h2>
-                            <p id="singleChildren" class="h-30 overflow-auto"></p>
+
+                        <div class="rounded-xl border border-(--border-dashboard) bg-(--primary-dashboard)/5 p-4">
+                            <h4 class="mb-3 text-xs font-bold text-(--muted-dashboard)">زیر دسته‌ها</h4>
+                            <div id="singleChildren"
+                                class="max-h-32 overflow-y-auto text-sm leading-7 text-(--text-dashboard)"></div>
                         </div>
-                    </div>
-                    <div class="w-full bg-slate-100 rounded-xl px-5 py-2">
-                        <h2 class="font-bold text-slate-700 mb-4">تصویر : </h2>
-                        <div id="singleImg"></div>
+
+                        <div
+                            class="rounded-xl border border-(--border-dashboard) bg-(--primary-dashboard)/5 p-4 sm:col-span-2">
+                            <h4 class="mb-3 text-xs font-bold text-(--muted-dashboard)">تصویر دسته‌بندی</h4>
+                            <div id="singleImg" class="flex justify-center"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {{-- end showSingle popup --}}
-    {{-- start editForm popup --}}
+
+    {{-- Edit Errors --}}
     @error('title')
         <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-100 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
-            <span class="font-bold text-sm text-red-500"> {{ $message }} </span>
+            class="fixed right-5 top-5 z-[100] rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-sm font-bold text-red-600 shadow-lg">
+            {{ $message }}
         </div>
     @enderror
+
     @error('image')
         <div
-            class="modal py-5 px-8 rounded-lg shadow-lg bg-red-100 fixed top-10 right-10 z-5 flex justify-center items-center transition-all duration-300">
-            <span class="font-bold text-sm text-red-500"> {{ $message }} </span>
+            class="fixed right-5 top-5 z-[100] rounded-xl border border-red-200 bg-red-50 px-5 py-4 text-sm font-bold text-red-600 shadow-lg">
+            {{ $message }}
         </div>
     @enderror
-    <div id="editFormPopup" class="w-full h-dvh fixed top-0 left-0 z-5 invisible opacity-0 transition-all duration-400">
-        <div class="size-full relative">
-            <div class="size-full bg-black/40 absolute top-0 left-0" onclick="editForm('close')"></div>
+
+    {{-- Edit Popup --}}
+    <div id="editFormPopup" class="fixed inset-0 z-[60] invisible opacity-0 transition-all duration-300">
+        <div class="relative flex size-full items-center justify-center p-3 md:p-6">
+            <div class="absolute inset-0 bg-slate-950/50" onclick="editForm('close')"></div>
+
             <div
-                class="w-8/12 2xl:container 2xl:w-8/12 mx-auto border border-[#D5DFE4] rounded-[10px] text-[#425A8B] p-5 bg-white absolute right-1/2 translate-x-1/2 top-1/2 -translate-y-1/2">
-                <div class="relative">
-                    <button class="absolute -top-4 -left-4 size-6 flex flex-col justify-center items-center cursor-pointer"
-                        onclick="editForm('close')">
-                        <span class="w-full h-0.5 rounded-full bg-slate-500 rotate-45 translate-y-1/2"></span>
-                        <span class="w-full h-0.5 rounded-full bg-slate-500 -rotate-45 -translate-y-1/2"></span>
+                class="relative z-10 w-full max-w-3xl overflow-hidden rounded-2xl border border-(--border-dashboard) bg-(--secondary-dashboard) shadow-2xl">
+                <div class="flex items-center justify-between border-b border-(--border-dashboard) px-5 py-4">
+                    <div>
+                        <h3 class="font-bold text-(--text-dashboard)">ویرایش دسته‌بندی</h3>
+                        <p class="mt-1 text-xs text-(--muted-dashboard)">اطلاعات دسته‌بندی را ویرایش کنید</p>
+                    </div>
+                    <button type="button" onclick="editForm('close')"
+                        class="flex size-9 items-center justify-center rounded-lg bg-(--primary-dashboard)/5 text-(--muted-dashboard) hover:bg-red-50 hover:text-red-500">
+                        ✕
                     </button>
                 </div>
-                <div id="popupContent" class="max-h-130 overflow-auto">
+
+                <div id="popupContent" class="max-h-[80dvh] overflow-y-auto">
                     <form action="{{ route('category.update') }}" method="post" enctype="multipart/form-data"
-                        class="p-5 flex flex-col gap-10" id="editForm">
+                        class="flex flex-col gap-5 p-5" id="editForm">
                         @csrf
                         <input type="hidden" name="cat_id" id="cat_id">
-                        <div class="w-full flex flex-col">
-                            <label for="catTitle" class="mb-2 flex flex-row items-center">
-                                <span>
-                                    عنوان دسته بندی:
-                                    <span class="text-rose-500">*</span>
-                                </span>
+
+                        <div class="flex flex-col gap-2">
+                            <label for="catTitle" class="text-sm font-bold text-(--text-dashboard)">
+                                عنوان دسته‌بندی <span class="text-red-500">*</span>
                             </label>
-                            <input type="text"
-                                class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]"
-                                name="title" id="catTitle" placeholder="نام دسته را وارد کنید">
-                            @error('title')
-                                <span class="text-xs text-red-500">{{ $message }}</span>
-                            @enderror
+                            <input type="text" name="title" id="catTitle" placeholder="نام دسته را وارد کنید"
+                                class="w-full rounded-xl border border-(--border-dashboard) bg-(--primary-dashboard)/5 px-4 py-3 text-sm text-(--text-dashboard) outline-none transition-all focus:border-(--primary-dashboard) focus:ring-2 focus:ring-(--primary-dashboard)/10">
                         </div>
-                        <div class="w-full flex flex-col mt-5">
-                            <label for="cat_desc" class="mb-2">توضیحات دسته بندی:</label>
-                            <input type="text"
-                                class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]"
-                                placeholder="توضیحات" name="description" id="cat_desc">
+
+                        <div class="flex flex-col gap-2">
+                            <label for="cat_desc" class="text-sm font-bold text-(--text-dashboard)">توضیحات
+                                دسته‌بندی</label>
+                            <input type="text" name="description" id="cat_desc" placeholder="توضیحات دسته‌بندی"
+                                class="w-full rounded-xl border border-(--border-dashboard) bg-(--primary-dashboard)/5 px-4 py-3 text-sm text-(--text-dashboard) outline-none transition-all focus:border-(--primary-dashboard) focus:ring-2 focus:ring-(--primary-dashboard)/10">
                         </div>
-                        <div class="flex flex-col md:flex-row gap-5 md:gap-10 mt-5">
-                            <div class="md:w-1/3 flex flex-col">
-                                <label for="parent_id" class="mb-2">دسته والد:</label>
-                                <select name="parent_id" id="parent_id" class="bg-[#F9F9F9] py-3 pr-5 rounded-[10px]">
+
+                        <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+                            <div class="flex flex-col gap-2">
+                                <label for="parent_id" class="text-sm font-bold text-(--text-dashboard)">دسته والد</label>
+                                <select name="parent_id" id="parent_id"
+                                    class="w-full rounded-xl border border-(--border-dashboard) bg-(--primary-dashboard)/5 px-4 py-3 text-sm text-(--text-dashboard) outline-none focus:border-(--primary-dashboard)">
                                     <option value="0">بدون والد</option>
                                 </select>
                             </div>
-                            <div class="md:w-1/3 flex flex-col">
-                                <label for="image" class="mb-2">عکس دسته بندی:</label>
-                                <input type="file"
-                                    class="outline-none pr-5 py-3 bg-[#F9F9F9] rounded-[12px] focus:bg-[#f1f1f4]"
-                                    name="image" id="image">
-                                @error('image')
-                                    <span class="text-xs text-red-500">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="md:w-1/3 relative" id="cat_img">
+
+                            <div class="flex flex-col gap-2">
+                                <label for="image" class="text-sm font-bold text-(--text-dashboard)">تصویر
+                                    دسته‌بندی</label>
+                                <input type="file" name="image" id="image"
+                                    class="w-full rounded-xl border border-(--border-dashboard) bg-(--primary-dashboard)/5 p-2 text-xs text-(--text-dashboard) file:ml-3 file:rounded-lg file:border-0 file:bg-(--primary-dashboard)/10 file:px-3 file:py-2 file:font-bold file:text-(--primary-dashboard)">
                             </div>
                         </div>
-                        <div class="mt-5 text-center">
+
+                        <div id="cat_img" class="relative w-fit max-w-full"></div>
+
+                        <div class="flex justify-end border-t border-(--border-dashboard) pt-5">
                             <button type="submit"
-                                class="py-3 px-10 rounded-[10px] bg-[#1B84FF] hover:bg-[#056EE9] text-white cursor-pointer">ثبت</button>
+                                class="rounded-xl bg-(--info-dashboard) px-8 py-3 text-sm font-bold text-(--color-surface-dashboard) transition-all hover:opacity-90">
+                                ثبت تغییرات
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    {{-- end editForm popup --}}
-    {{-- start confirmDelete popup --}}
-    <div id="confirmDeletePopup"
-        class="w-full h-dvh fixed top-0 left-0 z-5 invisible opacity-0 transition-all duration-400">
-        <div class="size-full relative">
-            <div class="size-full bg-black/40 absolute top-0 left-0" onclick="deleteCat('close')"></div>
+
+    {{-- Delete Popup --}}
+    <div id="confirmDeletePopup" class="fixed inset-0 z-[70] invisible opacity-0 transition-all duration-300">
+        <div class="relative flex size-full items-center justify-center p-4">
+            <div class="absolute inset-0 bg-slate-950/50" onclick="deleteCat('close')"></div>
+
             <div
-                class="w-11/12 md:w-1/2 xl:w-1/3 2xl:container 2xl:w-1/3 mx-auto border border-[#D5DFE4] rounded-[10px] text-[#425A8B] p-5 bg-white absolute right-1/2 translate-x-1/2 top-1/2 -translate-y-1/2">
-                <div class="relative">
-                    <button class="absolute -top-4 -left-4 size-6 flex flex-col justify-center items-center cursor-pointer"
-                        onclick="deleteCat('close')">
-                        <span class="w-full h-0.5 rounded-full bg-slate-500 rotate-45 translate-y-1/2"></span>
-                        <span class="w-full h-0.5 rounded-full bg-slate-500 -rotate-45 -translate-y-1/2"></span>
-                    </button>
+                class="relative z-10 w-full max-w-md rounded-2xl border border-(--border-dashboard) bg-(--secondary-dashboard) p-6 shadow-2xl">
+                <div class="mx-auto mb-4 flex size-14 items-center justify-center rounded-full bg-red-50 text-red-500">
+                    <svg class="size-7" fill="currentColor" viewBox="0 0 448 512">
+                        <path
+                            d="M170.5 51.6L151.5 80h145l-19-28.4c-1.5-2.2-4-3.6-6.7-3.6H177.1c-2.7 0-5.2 1.3-6.7 3.6zM80 128V432c0 17.7 14.3 32 32 32H336c17.7 0 32-14.3 32-32V128H80z" />
+                    </svg>
                 </div>
-                <div class="">
-                    <p>آیا از حذف دسته بندی <span id="confirmDeleteCatName" class="font-bold"> </span> اطمینان دارید؟ </p>
-                    <div class="flex items-center justify-center gap-5 mt-10">
-                        <a id="yes" class="py-2 px-4 bg-green-200 text-green-500 rounded-xl shadow-lg">بله</a>
-                        <span class="py-2 px-4 bg-red-200 text-red-500 rounded-xl shadow-lg cursor-pointer"
-                            onclick="deleteCat('close')">خیر</span>
-                    </div>
+
+                <h3 class="text-center font-bold text-(--text-dashboard)">حذف دسته‌بندی</h3>
+                <p class="mt-3 text-center text-sm leading-7 text-(--muted-dashboard)">
+                    آیا از حذف دسته‌بندی
+                    <span id="confirmDeleteCatName" class="font-bold text-red-500"></span>
+                    اطمینان دارید؟
+                </p>
+
+                <div class="mt-7 flex items-center justify-center gap-3">
+                    <a id="yes"
+                        class="rounded-xl bg-red-500 px-8 py-2.5 text-sm font-bold text-white transition-all hover:bg-red-600">
+                        بله، حذف شود
+                    </a>
+                    <button type="button" onclick="deleteCat('close')"
+                        class="rounded-xl border border-(--border-dashboard) px-8 py-2.5 text-sm font-bold text-(--text-dashboard) transition-all hover:bg-(--primary-dashboard)/5">
+                        انصراف
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-    {{-- end confirmDelete popup --}}
+
     <script>
         function deleteCat(state, id, catTitle) {
             let confirmDeletePopup = document.getElementById('confirmDeletePopup')
+
             if (state == 'open') {
                 let yes = document.getElementById('yes')
                 yes.setAttribute('href', `{{ url('category/delete') }}/${id}`)
+
                 let confirmDeleteCatName = document.getElementById('confirmDeleteCatName')
                 confirmDeleteCatName.innerText = catTitle
+
                 confirmDeletePopup.classList.remove('invisible', 'opacity-0')
             }
+
             if (state == 'close') {
                 confirmDeletePopup.classList.add('invisible', 'opacity-0')
             }
@@ -353,17 +401,20 @@
 
         function editForm(state, id) {
             let editFormPopup = document.getElementById('editFormPopup')
+
             if (state == 'open') {
                 let catTitle = document.getElementById('catTitle')
                 let cat_desc = document.getElementById('cat_desc')
                 let parent_id = document.getElementById('parent_id')
                 let cat_img = document.getElementById('cat_img')
                 let cat_id = document.getElementById('cat_id')
+
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': "{{ csrf_token() }}"
                     }
                 })
+
                 $.ajax({
                     url: "{{ route('category.edit') }}",
                     type: "POST",
@@ -372,48 +423,62 @@
                         'id': id,
                     },
                     success: function(data) {
-                        console.log(data);
                         catTitle.value = data['cat'].title
                         cat_desc.value = data['cat'].description
                         cat_id.value = data['cat'].id
+
                         cat_img.innerHTML = ''
+
                         if (data['cat'].image) {
                             let img = document.createElement('img')
-                            img.classList = 'w-full h-30'
+                            img.classList = 'size-32 rounded-xl border border-(--border-dashboard) object-cover'
                             img.setAttribute('src', data['cat'].image)
                             cat_img.appendChild(img)
-                            let deleteImgBtn = document.createElement('span')
-                            deleteImgBtn.setAttribute('onclick', `removeImg(this, "${data['cat'].image}")`)
-                            deleteImgBtn.classList = "absolute top-0 left-0 cursor-pointer"
-                            deleteImgBtn.innerText = '❌'
+
+                            let deleteImgBtn = document.createElement('button')
+                            deleteImgBtn.setAttribute('type', 'button')
+                            deleteImgBtn.setAttribute('onclick',
+                                `removeImg(this, ${JSON.stringify(data['cat'].image)})`)
+                            deleteImgBtn.classList =
+                                "absolute -top-2 -right-2 flex size-7 items-center justify-center rounded-full bg-red-500 text-white shadow-lg"
+                            deleteImgBtn.innerText = '×'
                             cat_img.appendChild(deleteImgBtn)
                         }
+
                         parent_id.innerHTML = ''
+
                         let withoutParent = document.createElement('option')
                         withoutParent.value = 0
                         withoutParent.innerText = 'بدون والد'
+
                         data['cats'].forEach(category => {
                             if (data['cat'].id != category.id) {
                                 let option = document.createElement('option')
                                 option.value = category.id
                                 option.innerText = category.title
+
                                 if (category.id == data['cat'].parent_id) {
                                     option.setAttribute('selected', true)
                                 }
-                                if (data['cat'].parent_id == 0) {
+
+                                if (data['cat'].parent_id == 0 || data['cat'].parent_id == null) {
                                     withoutParent.setAttribute('selected', true)
                                 }
-                                parent_id.prepend(withoutParent)
+
                                 parent_id.appendChild(option)
                             }
-                        });
+                        })
+
+                        parent_id.prepend(withoutParent)
                     },
                     error: function() {
-                        alert('error')
+                        alert('خطا در دریافت اطلاعات دسته‌بندی')
                     }
                 })
+
                 editFormPopup.classList.remove('invisible', 'opacity-0')
             }
+
             if (state == 'close') {
                 editFormPopup.classList.add('invisible', 'opacity-0')
             }
@@ -422,23 +487,33 @@
         function removeImg(el, file) {
             let index = file.indexOf('categoryImgs')
             let result = file.slice(index)
+
             let editForm = document.getElementById('editForm')
+            let oldInput = editForm.querySelector('input[name="removedImg"]')
+
+            if (oldInput) {
+                oldInput.remove()
+            }
+
             let input = document.createElement('input')
             input.setAttribute("type", 'hidden')
             input.setAttribute("name", "removedImg")
             input.setAttribute("value", result)
+
             editForm.appendChild(input)
             el.parentElement.remove()
         }
 
         function show(state, id) {
             let showSinglePopup = document.getElementById('showSinglePopup')
+
             if (state == 'open') {
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': "{{ csrf_token() }}"
                     }
                 })
+
                 $.ajax({
                     url: "{{ route('category.adminShow') }}",
                     type: "POST",
@@ -448,55 +523,71 @@
                     },
                     success: function(data) {
                         document.getElementById('singleTitle').innerText = data.title
-                        document.getElementById('singleDesc').innerText = data.description
+                        document.getElementById('singleDesc').innerText = data.description ||
+                            'توضیحاتی ثبت نشده است'
+
                         if (data.parent) {
                             document.getElementById('singleParent').innerText = data.parent.title
                         } else {
                             document.getElementById('singleParent').innerText = 'بدون والد'
                         }
-                        document.getElementById('singleChildren').innerHTML = data.subCats
+
+                        document.getElementById('singleChildren').innerHTML = data.subCats ||
+                            'زیر دسته‌ای ثبت نشده است'
+
                         let singleImg = document.getElementById('singleImg')
                         singleImg.innerHTML = ''
+
                         if (data.image) {
                             let img = document.createElement('img')
-                            img.classList = 'w-full h-50'
+                            img.classList = 'max-h-64 max-w-full rounded-xl object-contain'
                             img.setAttribute('src', data.image)
                             singleImg.appendChild(img)
+                        } else {
+                            singleImg.innerText = 'تصویری ثبت نشده است'
                         }
                     },
                     error: function() {
-                        alert('error')
+                        alert('خطا در دریافت اطلاعات دسته‌بندی')
                     }
                 })
+
                 showSinglePopup.classList.remove('opacity-0', 'invisible')
             }
+
             if (state == 'close') {
                 showSinglePopup.classList.add('opacity-0', 'invisible')
             }
         }
 
-        let subCats = document.querySelectorAll('.subCats')
-        subCats.forEach((item) => {
+        // Subcategories dropdown
+        document.querySelectorAll('.subCats').forEach((item) => {
             item.addEventListener('click', () => {
-                if (item.nextElementSibling.classList.contains('max-h-0')) {
-                    subCats.forEach((element) => {
-                        element.nextElementSibling.classList.remove('max-h-100')
-                        element.nextElementSibling.classList.add('max-h-0')
-                        element.nextElementSibling.classList.add('opacity-0')
-                        element.nextElementSibling.classList.add('invisible')
-                    })
-                    item.nextElementSibling.classList.remove('max-h-0')
-                    item.nextElementSibling.classList.remove('opacity-0')
-                    item.nextElementSibling.classList.remove('invisible')
-                    item.nextElementSibling.classList.add('max-h-100')
-                } else {
-                    item.nextElementSibling.classList.remove('max-h-100')
-                    item.nextElementSibling.classList.add('max-h-0')
-                    item.nextElementSibling.classList.add('opacity-0')
-                    item.nextElementSibling.classList.add('invisible')
+                let menu = item.nextElementSibling
+                let isOpen = !menu.classList.contains('hidden')
+
+                document.querySelectorAll('.subCats').forEach((element) => {
+                    element.nextElementSibling.classList.add('hidden')
+                    element.querySelector('svg')?.classList.remove('rotate-180')
+                })
+
+                if (!isOpen) {
+                    menu.classList.remove('hidden')
+                    item.querySelector('svg')?.classList.add('rotate-180')
                 }
             })
         })
+
+        // Close popups with Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                show('close')
+                editForm('close')
+                deleteCat('close')
+            }
+        })
     </script>
+
     <script src="{{ asset('assets/js/checkAll.js') }}"></script>
+
 @endsection

@@ -171,14 +171,6 @@ class CategoryController extends Controller
             'categories' => $cats,
         ]);
     }
-    public function show(category $category)
-    {
-        $cats = category::all();
-        return view('user.category.show', [
-            'categories' => $cats,
-            'category' => $category,
-        ]);
-    }
     public function deleteAll(Request $request)
     {
         if (!isset($request->categories)) {
@@ -186,6 +178,7 @@ class CategoryController extends Controller
         }
         foreach ($request->categories as $category_id) {
             $category = category::find($category_id);
+            Storage::disk('public')->delete($category['image']);
             $category->delete();
         }
         return redirect()->back();
