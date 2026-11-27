@@ -66,7 +66,7 @@
         <span class="text-sm in-fa">پیام شما با موفقیت ارسال شد</span>
     </div>
 
-    <div class="absolute -top-5 invisible opacity-0 right-1/2 translate-x-1/2 w-2/3 z-999999 transition-all duration-500 ease-in-out"
+    <div class="fixed top-10 right-0 invisible opacity-0 sm:right-5 z-[9999999999]  items-center justify-center rounded-xl border border-red-200 bg-red-100 px-8 py-5 text-red-800 shadow-lg transition-all duration-300 in-fa"
         id="message"></div>
 
 
@@ -124,7 +124,7 @@
 
                 </div>
 
-                <form action="{{ route('contactUs.store') }}" method="POST" class="space-y-6">
+                <form action="{{ route('contactUs.store') }}" method="POST" class="space-y-6" id="contactForm">
                     @csrf
                     <!-- Name + Phone -->
                     <div class="grid sm:grid-cols-2 gap-5">
@@ -203,7 +203,7 @@
 
                     <!-- Submit -->
                     <button type="submit"
-                        class="w-full gold-gradient text-white rounded-xl py-4 text-sm font-bold opacity-50 transition shadow-lg shadow-[#b68b43]/15 flex items-center justify-center gap-3 cursor-no-drop" disabled id="submitBtn">
+                        class="w-full gold-gradient text-white rounded-xl py-4 text-sm font-bold opacity-50 transition shadow-lg shadow-[#b68b43]/15 flex items-center justify-center gap-3 cursor-no-drop" disabled id="submitBtn" onclick="submitButton(event)">
                             {{-- hover:opacity-90 --}}
                         ارسال پیام
 
@@ -358,6 +358,15 @@
         </div>
     </section>
 
+    <div id="loader"
+            class="w-full h-full bg-black/50 fixed top-0 right-0 z-999 flex items-center justify-center transition-all duration-300 invisible opacity-0">
+            <div class="p-5 bg-white shadow-xl rounded-lg flex flex-col items-center gap-10">
+                <span
+                    class="w-15 md:w-20 h-15 md:h-20 animate-spin rounded-full border-4 border-yellow-100 border-t-yellow-600"></span>
+                <p class="text-gray-600 font-bold text-sm md:text-xl">در حال بارگذاری لطفا شکیبا باشید....</p>
+            </div>
+        </div>
+
     <script>
         let successMessage = document.getElementById('successMessage')
         if(!successMessage.classList.contains('hidden')){
@@ -373,6 +382,7 @@
         let phoneNumber = document.getElementById('phoneNumber')
         
         let code = document.getElementById('code')
+        let contactForm = document.getElementById('contactForm')
        
 
         function loader(status) {
@@ -453,11 +463,7 @@
                 count -= 1
                 if (count < 0) {
 
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                        }
-                    })
+                  
                     $.ajax({
                         url: api + 'removeActivationCode',
                         type: "POST",
@@ -495,30 +501,45 @@
                     "0");
             }, 1000)
         }
-
         function openMessage(content) {
             message.innerHTML = ''
             let element = document.createElement('div')
-            element.classList = 'bg-white rounded-md flex items-center justify-center shadow-md'
-            element.innerHTML = `
-            <div class="p-3">
-                <svg xmlns="http://www.w3.org/2000/svg" class="size-4 fill-gray-800 cursor-pointer" onclick="closeMessage()" viewBox="0 0 384 512">
-                    <path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"/>
-                </svg>
-            </div>
-            <span class="text-sm text-red-500 py-3 pl-3 pr-0 inline-block">${content}</span>`
+            element.classList = 'flex items-center justify-center'
+            element.innerHTML = content
             message.appendChild(element)
-            message.classList.remove('-top-5')
             message.classList.remove('invisible')
             message.classList.remove('opacity-0')
-            message.classList.add('top-10')
         }
 
         function closeMessage() {
-            message.classList.remove('top-10')
-            message.classList.add('-top-5')
             message.classList.add('invisible')
             message.classList.add('opacity-0')
+        }
+        
+
+        function submitButton(e){
+            loader('open')
+            e.preventDefault()
+            $.ajax({
+                url: api+'checkContactCode',
+                type: "POST",
+                dataType: "json",
+                data: {'code': code.value, 'phoneNumber': phoneNumber.value},
+                success: function(response){
+                    loader('close')
+                    if(response){
+                        contactForm.submit()
+                    } else {
+                        openMessage('کد وارد شده نامعتبر!')
+                        setTimeout(function() {
+                            closeMessage()
+                        }, 2000)
+                    }
+                },
+                error: function(){
+                    console.error('failed to load data')
+                }
+            })
         }
     </script>
 @endsection

@@ -28,6 +28,26 @@ class ContactUsController extends Controller
     {
         $messages = contactUs::all();
         $logo = logo::first();
+        foreach($messages as $message){
+            switch($message->subject){
+                case "product":
+                    $message->subject = 'مشاوره خرید محصول';
+                    break;
+                case "order":
+                    $message->subject = 'پیگیری سفارش';
+                    break;
+                case "price":
+                    $message->subject = 'استعلام قیمت';
+                    break;
+                case "support":
+                    $message->subject = 'پشتیبانی';
+                    break;
+                case "other":
+                    $message->subject = 'سایر موارد';
+                    break;
+                
+            }
+        }
         return view('admin.contactus.index', ['messages'=>$messages, 'logo'=>$logo]);
     }
 
@@ -55,5 +75,16 @@ class ContactUsController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
         $response = curl_exec($ch);
         return response()->json($response);
+    }
+
+    public function checkContactCode(Request $request){
+        $code = $request->input('code');
+        $phoneNumber = $request->input('phoneNumber');
+        $validate = PhoneCode::where('phoneNumber', $phoneNumber)->where('code', $code)->first();
+        $flag = false;
+        if($validate){
+            $flag = true;
+        }
+        return response()->json($flag);
     }
 }

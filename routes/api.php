@@ -49,3 +49,4 @@ Route::get('/order/showItems/{order}', [OrdersController::class, 'showItems']);
 Route::get('/findProduct/{product}', [ProductController::class, 'findProduct']);
 Route::post('/cities', [CartsController::class, 'showCities']);
 Route::post('/sendValidationCode', [ContactUsController::class, 'sendValidationCode']);
+Route::post('/checkContactCode', [ContactUsController::class, 'checkContactCode']);
