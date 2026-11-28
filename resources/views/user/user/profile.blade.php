@@ -453,7 +453,7 @@
 
                     </a>
 
-                    <a href="{{ route('deal.create') }}" class="gold-action">
+                    <a href="{{ route('deal.create', [$user]) }}" class="gold-action">
 
                         <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.8">
@@ -464,7 +464,7 @@
 
                     </a>
 
-                    <a href="{{ route('deal.list') }}" class="gold-action">
+                    <a href="{{ route('deal.list', [$user]) }}" class="gold-action">
 
                         <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.8">
@@ -476,7 +476,7 @@
 
                     </a>
 
-                    <a href="{{ route('creditCard.create') }}" class="gold-action">
+                    <a href="{{ route('creditCard.create', [$user]) }}" class="gold-action">
 
                         <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.8">

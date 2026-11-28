@@ -218,12 +218,12 @@ Route::group([
     'controller' => DealController::class,
     'as' => 'deal.'
 ], function () {
-    Route::get('/create', 'create')->middleware(checkIsApproved::class)->name('create');
+    Route::get('/create/{user?}', 'create')->middleware(checkIsApproved::class)->name('create');
     Route::get('/confirm/{deal}', 'confirm')->middleware(checkAccess::class . ":deal_confirm")->name('confirm');
     Route::post('/cancel', 'cancel')->middleware(checkAccess::class . ":deal_confirm")->name('cancel');
     Route::post('/store', 'store')->middleware(checkIsActive::class)->name('store');
     Route::post('/storeTemporary', 'storeTemporary')->middleware(checkIsActive::class)->name('storeTemporary');
-    Route::get('/list', 'list')->middleware(checkIsApproved::class)->name('list');
+    Route::get('/list/{user?}', 'list')->middleware(checkIsApproved::class)->name('list');
     Route::get('/adminIndex', 'adminIndex')->middleware(checkAccess::class . ":deal_index")->name('adminIndex');
 });
 
@@ -234,11 +234,12 @@ Route::group([
     'middleware' => checkIsApproved::class,
     'as' => 'creditCard.'
 ], function () {
-    Route::get('/create', 'create')->name('create');
+    Route::get('/create/{user?}', 'create')->name('create');
     Route::post('/store', 'store')->name('store');
     Route::post('/edit', 'edit')->name('edit');
     Route::post('/update', 'update')->name('update');
     Route::get('/delete/{creditCard}', 'delete')->name('delete');
+    Route::get('/list', 'index')->middleware(checkAccess::class . ":all_creditCards")->name('index');
 });
 
 // reference sites routes

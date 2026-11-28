@@ -195,8 +195,8 @@
                             class="min-h-10 rounded-lg px-3 py-2.5 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] {{ Route::is('wallet.userTransactions') ? 'bg-[#e9f7f1] font-bold text-[#11845f]' : 'text-[#687681]' }}">تراکنش‌های
                             من</a>
                         <a href="{{ route('creditCard.create') }}"
-                            class="min-h-10 rounded-lg px-3 py-2.5 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] {{ Route::is('creditCard.create') ? 'bg-[#e9f7f1] font-bold text-[#11845f]' : 'text-[#687681]' }}">مدیریت
-                            کارت‌ها</a>
+                            class="min-h-10 rounded-lg px-3 py-2.5 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] {{ Route::is('creditCard.create') ? 'bg-[#e9f7f1] font-bold text-[#11845f]' : 'text-[#687681]' }}">کارت
+                            های بانکی من</a>
                     </div>
                 </details>
 
@@ -237,7 +237,7 @@
                 <div class="shrink-0 px-[13px] pb-2 pt-1 text-[10px] font-bold text-[#a0aab3]">مدیریت سیستم</div>
 
                 {{-- مدیریت معاملات --}}
-                @if (Auth::user()->can('access', ['deal_index']) || Auth::user()->can('access', ['order_show']))
+                @if (Auth::user()->can('access', ['deal_index', 'order_show']))
                     <details data-submenu class="group" @if (Route::is('deal.adminIndex', 'order.index')) open @endif>
                         <summary
                             class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-2 rounded-[11px] px-3 py-2.5 text-xs font-bold text-[#687681] transition hover:bg-[#f6f9f8] hover:text-[#16a37a] [&::-webkit-details-marker]:hidden {{ Route::is('deal.adminIndex', 'order.index') ? 'bg-[#e9f7f1] font-bold text-[#11845f]' : '' }}">
@@ -270,19 +270,23 @@
                 @endif
 
                 {{-- مدیریت مالی --}}
-                @if (Auth::user()->can('access', ['livePrice']) ||
-                        Auth::user()->can('access', ['transactionConfirmTime']) ||
-                        Auth::user()->can('access', ['currency']) ||
-                        Auth::user()->can('access', ['priceLine']) ||
-                        Auth::user()->can('access', ['transactionsList']) ||
-                        Auth::user()->can('access', ['transactionSetting']))
+                @if (Auth::user()->can('access', [
+                        'livePrice',
+                        'transactionConfirmTime',
+                        'currency',
+                        'priceLine',
+                        'transactionsList',
+                        'transactionSetting',
+                        'all_creditCards',
+                    ]))
                     <details data-submenu class="group" @if (Route::is(
                             'price.create',
                             'transactionConfirmTime.create',
                             'currencyUnit.create',
                             'line.create',
                             'wallet.transactionsList',
-                            'transactionSetting.create')) open @endif>
+                            'transactionSetting.create',
+                            'creditCard.index')) open @endif>
                         <summary
                             class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-2 rounded-[11px] px-3 py-2.5 text-xs font-bold text-[#687681] transition hover:bg-[#f6f9f8] hover:text-[#16a37a] [&::-webkit-details-marker]:hidden {{ Route::is('price.create', 'transactionConfirmTime.create', 'currencyUnit.create', 'line.create', 'wallet.transactionsList', 'transactionSetting.create') ? 'bg-[#e9f7f1] font-bold text-[#11845f]' : '' }}">
                             <span class="flex items-center gap-3">
@@ -329,12 +333,17 @@
                                     class="min-h-10 rounded-lg px-3 py-2.5 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] {{ Route::is('transactionSetting.create') ? 'bg-[#e9f7f1] font-bold text-[#11845f]' : 'text-[#687681]' }}">تنظیمات
                                     تراکنش‌ها</a>
                             @endcan
+                            @can('access', ['all_creditCards'])
+                                <a href="{{ route('creditCard.index') }}"
+                                    class="min-h-10 rounded-lg px-3 py-2.5 text-xs transition hover:bg-[#f6f9f8] hover:text-[#16a37a] {{ Route::is('creditCard.index') ? 'bg-[#e9f7f1] font-bold text-[#11845f]' : 'text-[#687681]' }}">همه
+                                    کارت های بانکی</a>
+                            @endcan
                         </div>
                     </details>
                 @endif
 
                 {{-- مدیریت محصولات --}}
-                @if (Auth::user()->can('access', ['category_show']) || Auth::user()->can('access', ['product_show']))
+                @if (Auth::user()->can('access', ['category_show', 'product_show']))
                     <details data-submenu class="group" @if (Route::is('category.adminIndex', 'product.adminIndex')) open @endif>
                         <summary
                             class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-2 rounded-[11px] px-3 py-2.5 text-xs font-bold text-[#687681] transition hover:bg-[#f6f9f8] hover:text-[#16a37a] [&::-webkit-details-marker]:hidden {{ Route::is('category.adminIndex', 'product.adminIndex') ? 'bg-[#e9f7f1] font-bold text-[#11845f]' : '' }}">
@@ -368,7 +377,7 @@
                 @endif
 
                 {{-- مدیریت کاربران --}}
-                @if (Auth::user()->can('access', ['user_index']) || Auth::user()->can('access', ['role_create']))
+                @if (Auth::user()->can('access', ['user_index', 'role_create']))
                     <details data-submenu class="group" @if (Route::is('user.index', 'role.create')) open @endif>
                         <summary
                             class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-2 rounded-[11px] px-3 py-2.5 text-xs font-bold text-[#687681] transition hover:bg-[#f6f9f8] hover:text-[#16a37a] [&::-webkit-details-marker]:hidden {{ Route::is('user.index', 'role.create') ? 'bg-[#e9f7f1] font-bold text-[#11845f]' : '' }}">
@@ -402,11 +411,7 @@
                 @endif
 
                 {{-- مدیریت محتوای سایت --}}
-                @if (Auth::user()->can('access', ['message_create']) ||
-                        Auth::user()->can('access', ['referenceSite_create']) ||
-                        Auth::user()->can('access', ['header']) ||
-                        Auth::user()->can('access', ['logo']) ||
-                        Auth::user()->can('access', ['comment']))
+                @if (Auth::user()->can('access', ['message_create', 'referenceSite_create', 'header', 'logo', 'comment']))
                     <details data-submenu class="group" @if (Route::is('message.create', 'referenceSite.create', 'header.create', 'logo.create', 'comment.create')) open @endif>
                         <summary
                             class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-2 rounded-[11px] px-3 py-2.5 text-xs font-bold text-[#687681] transition hover:bg-[#f6f9f8] hover:text-[#16a37a] [&::-webkit-details-marker]:hidden {{ Route::is('message.create', 'referenceSite.create', 'header.create', 'logo.create', 'comment.create') ? 'bg-[#e9f7f1] font-bold text-[#11845f]' : '' }}">
