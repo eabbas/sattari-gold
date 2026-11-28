@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Auth;
 
 class CreditCardController extends Controller
 {
-    public function create()
+    public function create(User $user)
     {
         $logo = logo::first();
-        $creditCards = creditCard::where('user_id', Auth::id())->get();
+        $creditCards = creditCard::where('user_id', $user->id ?? Auth::id())->get();
         return view('user.creditCard.create', ['logo' => $logo, 'creditCards' => $creditCards]);
     }
     public function store(Request $request)
@@ -79,5 +79,9 @@ class CreditCardController extends Controller
     {
         $creditCard->delete();
         return redirect()->back()->with('failure', 'شماره کارت و اطلاعات آن حذف شد.');
+    }
+    public function index()
+    {
+        return view('admin.creditCard.create');
     }
 }

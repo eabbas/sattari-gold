@@ -18,14 +18,15 @@ use Log;
 
 class DealController extends Controller
 {
-    public function create()
+    public function create(?User $user = null)
     {
+        $user = $user ?? Auth::user();
         $logo = logo::first();
         $totalGoldWeight = 0;
-        isset(Auth::user()->wallet) ? $totalGoldWeight = Auth::user()->wallet->goldWeight : $totalGoldWeight = 0;
+        isset($user->wallet) ? $totalGoldWeight = $user->wallet->goldWeight : $totalGoldWeight = 0;
         $asset = 0;
-        if (Auth::user()->wallet) {
-            $asset = Auth::user()->wallet->asset;
+        if ($user->wallet) {
+            $asset = $user->wallet->asset;
         }
         $segment = segment::where('en_name', 'deal_create')->first();
         $messages = [];
@@ -48,7 +49,7 @@ class DealController extends Controller
                 $price['sell_price'] = $price->price + $sellDifference;
             }
         }
-        $deals = deal::where('user_id', Auth::id())->orderBy('date', 'desc')->orderBy('time', 'desc')->get();
+        $deals = deal::where('user_id', $user->id)->orderBy('date', 'desc')->orderBy('time', 'desc')->get();
         return view('user.deal.create', ['asset' => $asset, 'totalGoldWeight' => $totalGoldWeight, 'logo' => $logo, "messages" => $messages, 'price' => $price, 'deals' => $deals]);
     }
 
@@ -156,10 +157,10 @@ class DealController extends Controller
         return redirect()->back()->with('failure', 'عملیات نامعتبر است.');
     }
 
-    public function list()
+    public function list(User $user)
     {
         $logo = logo::first();
-        $deals = deal::where('user_id', Auth::id())->orderBy('date', 'desc')->orderBy('time', 'desc')->get();
+        $deals = deal::where('user_id', $user->id ?? Auth::id())->orderBy('date', 'desc')->orderBy('time', 'desc')->get();
         return view('user.deal.myDeals', ['logo' => $logo, 'deals' => $deals]);
     }
 

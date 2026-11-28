@@ -422,6 +422,98 @@
 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
+                                    {{-- حساب‌های بانکی مقصد --}}
+                                    <div class="col-span-6 rounded-2xl border border-[#E7E2D9] bg-white p-4 md:p-5 space-y-4">
+
+                                        <div class="flex items-center gap-3">
+                                            <div class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-[#F8F5EF] text-[#B88A3B]">
+                                                <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+                                                    <rect x="3" y="9" width="18" height="11" rx="2"/>
+                                                    <path d="M3 13h18M7 17h2M12 17h2"/>
+                                                    <path d="m12 3 9 4H3l9-4Z"/>
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <h3 class="text-sm font-bold text-[#29251F]">حساب‌های بانکی مقصد</h3>
+                                                <p class="mt-1 text-xs text-[#78716C]">یکی از حساب‌های زیر را برای واریز انتخاب کنید.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="grid grid-cols-1 gap-3">
+
+                                            @forelse ($creditCard as $card)
+                                                <label class="relative block cursor-pointer">
+
+                                                    <input
+                                                        type="radio"
+                                                        name="creditCardId"
+                                                        value="{{ $card->id }}"
+                                                        class="peer sr-only"
+                                                        @if ($loop->first) checked @endif
+                                                        required
+                                                    >
+
+                                                    <div class="rounded-xl border border-[#E7E2D9] bg-[#FDFCFA] p-4 transition-all peer-checked:border-[#B88A3B] peer-checked:bg-[#F8F5EF] hover:border-[#D6AD60]">
+
+                                                        <div class="flex items-center justify-between gap-2">
+
+                                                            <div class="flex items-center gap-2">
+                                                                <span class="size-4 rounded-full border border-[#B8B0A4] flex items-center justify-center peer-checked:border-[#B88A3B]">
+                                                                    <span class="size-2 rounded-full bg-[#B88A3B] opacity-0 peer-checked:opacity-100"></span>
+                                                                </span>
+
+                                                                <span class="text-sm font-bold text-[#29251F]">
+                                                                    {{ $card->name }}
+                                                                </span>
+                                                            </div>
+
+                                                            @if ($card->default)
+                                                                <span class="rounded-lg bg-[#D6AD60]/15 px-2.5 py-1 text-[10px] font-bold text-[#B88A3B]">
+                                                                    حساب پیش‌فرض
+                                                                </span>
+                                                            @endif
+
+                                                        </div>
+
+                                                        <div class="mt-4 space-y-3">
+
+                                                            <div>
+                                                                <p class="text-[10px] text-[#78716C]">شماره کارت</p>
+                                                                <p dir="ltr" class="mt-1 text-sm font-bold tracking-wider text-[#29251F] text-right">
+                                                                    {{ $card->card_number }}
+                                                                </p>
+                                                            </div>
+
+                                                            <div class="border-t border-[#E7E2D9] pt-3">
+                                                                <p class="text-[10px] text-[#78716C]">شماره حساب</p>
+                                                                <p dir="ltr" class="mt-1 text-sm font-bold tracking-wider text-[#29251F] text-right">
+                                                                    {{ $card->account_number }}
+                                                                </p>
+                                                            </div>
+
+                                                            <div class="border-t border-[#E7E2D9] pt-3">
+                                                                <p class="text-[10px] text-[#78716C]">شماره شبا</p>
+                                                                <p dir="ltr" class="mt-1 break-all text-sm font-bold tracking-wider text-[#29251F] text-right">
+                                                                    {{ $card->shaba_number }}
+                                                                </p>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                </label>
+
+                                            @empty
+                                                <div class="rounded-xl border border-amber-200 bg-amber-50 p-4 text-center">
+                                                    <p class="text-xs font-bold text-amber-700">
+                                                        در حال حاضر حساب بانکی فعالی برای واریز ثبت نشده است.
+                                                    </p>
+                                                </div>
+                                            @endforelse
+
+                                        </div>
+                                    </div>
+
                                     {{-- مبلغ واریزی --}}
                                     <label class="relative block text-sm font-bold text-[#29251F]"
                                         for="depositFee"

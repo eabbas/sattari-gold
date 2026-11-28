@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\creditCard;
 use App\Models\deal;
 use App\Models\livePrice;
 use App\Models\logo;
@@ -21,6 +22,7 @@ class WalletController extends Controller
         $logo = logo::first();
         $setting = transactionSetting::first();
         $price = livePrice::first();
+        $creditCard = CreditCard::orderByDesc('default')->get();
         if ($price) {
             if ($price->difference_type == 'line') {
                 $line = priceLine::first();
@@ -33,7 +35,7 @@ class WalletController extends Controller
             }
         }
         $goldValue = $user->wallet->goldWeight * $price?->buy_price;
-        return view('user.wallet.wallet', ['user' => $user, 'logo' => $logo, 'setting' => $setting, 'goldValue' => $goldValue]);
+        return view('user.wallet.wallet', ['user' => $user, 'logo' => $logo, 'setting' => $setting, 'goldValue' => $goldValue, 'creditCard' => $creditCard]);
     }
 
     public function transactionRequest(Request $request)
