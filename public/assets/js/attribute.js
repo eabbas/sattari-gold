@@ -1,121 +1,183 @@
 
-function addAttribute(el, state) {
-    if (state === 'create') {
-        let div = document.createElement('div')
-        div.className = 'flex flex-row items-center justify-between gap-4 mt-4 border border-slate-300 rounded-xl p-2'
+function createInput({ name, placeholder, type = 'text', className = '' }) {
+    const input = document.createElement('input');
 
-        div.innerHTML = `
-            <div class="w-full flex flex-col sm:flex-row items-center gap-4">
-                <input type="text"
-                    class="w-full outline-none pr-3 py-3 bg-[#F9F9F9] rounded-xl focus:bg-[#f1f1f4]"
-                    placeholder="ویژگی" name="attributes[attribute_key][]" required>
-                <input type="text"
-                    class="w-full outline-none pr-3 py-3 bg-[#F9F9F9] rounded-xl focus:bg-[#f1f1f4]"
-                    placeholder="مقدار ویژگی" name="attributes[attribute_value][]" required>
-            </div>
-            <button type="button"
-                class="p-3 text-sm rounded-md bg-rose-500 hover:bg-rose-600 text-white cursor-pointer"
-                onclick="remove(this)">حذف</button>
-        `
+    input.type = type;
+    input.name = name;
+    input.placeholder = placeholder;
+    input.className = className;
 
-        el.previousElementSibling.appendChild(div)
-    }
+    return input;
+}
 
-    if (state === 'edit') {
-        let div = document.createElement('div')
-        div.className = 'flex flex-row items-center justify-between gap-4 mt-4 border border-slate-300 rounded-xl p-2'
+function createButton(text, onClick) {
+    const button = document.createElement('button');
 
-        div.innerHTML = `
-            <div class="w-full flex flex-col sm:flex-row items-center gap-4">
-                <input type="text"
-                    class="w-full outline-none pr-3 py-3 bg-[#F9F9F9] rounded-xl focus:bg-[#f1f1f4]"
-                    placeholder="ویژگی" name="attributes[newAttrs][attribute_key][]" required>
-                <input type="text"
-                    class="w-full outline-none pr-3 py-3 bg-[#F9F9F9] rounded-xl focus:bg-[#f1f1f4]"
-                    placeholder="مقدار ویژگی" name="attributes[newAttrs][attribute_value][]" required>
-            </div>
-            <button type="button"
-                class="p-3 text-sm rounded-md bg-rose-500 hover:bg-rose-600 text-white cursor-pointer"
-                onclick="remove(this)">حذف</button>
-        `
+    button.type = 'button';
+    button.textContent = text;
+    button.className = 'shrink-0 rounded-lg border border-rose-200 bg-rose-50 px-3 py-2.5 text-sm font-bold text-rose-600 transition-all hover:bg-rose-100';
+    button.addEventListener('click', onClick);
 
-        el.previousElementSibling.appendChild(div)
-    }
+    return button;
+}
+
+function createRow(className = '') {
+    const row = document.createElement('div');
+
+    row.className = className;
+
+    return row;
+}
+
+function addAttribute(el, state = 'create') {
+    const container = el.previousElementSibling;
+
+    if (!container) return;
+
+    const prefix = state === 'edit'
+        ? 'attributes[newAttrs]'
+        : 'attributes';
+
+    const row = createRow(
+        'flex flex-col sm:flex-row sm:items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm'
+    );
+
+    row.dataset.attributeRow = '';
+
+    const inputClass = 'w-full min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 outline-none transition-all focus:border-[#425A8B] focus:ring-2 focus:ring-[#425A8B]/10';
+
+    const keyInput = createInput({
+        name: `${prefix}[attribute_key][]`,
+        placeholder: 'عنوان ویژگی',
+        className: inputClass
+    });
+
+    const valueInput = createInput({
+        name: `${prefix}[attribute_value][]`,
+        placeholder: 'مقدار ویژگی',
+        className: inputClass
+    });
+
+    const deleteButton = createButton('حذف', () => {
+        remove(deleteButton);
+    });
+
+    row.append(keyInput, valueInput, deleteButton);
+    container.appendChild(row);
 }
 
 function addFaq(el, state = 'create') {
-    let div = document.createElement('div')
-    div.className = 'flex flex-row items-center justify-between gap-4 mt-4 border border-slate-300 rounded-xl p-2'
+    const container = el.previousElementSibling;
 
-    let questionName = state === 'edit'
-        ? 'faqs[newFaqs][question][]'
-        : 'faqs[question][]'
+    if (!container) return;
 
-    let answerName = state === 'edit'
-        ? 'faqs[newFaqs][answer][]'
-        : 'faqs[answer][]'
+    const prefix = state === 'edit'
+        ? 'faqs[newFaqs]'
+        : 'faqs';
 
-    div.innerHTML = `
-        <div class="w-full flex flex-col sm:flex-row items-center gap-4">
-            <input type="text"
-                class="w-full outline-none pr-3 py-3 bg-[#F9F9F9] rounded-xl focus:bg-[#f1f1f4]"
-                placeholder="سؤال" name="${questionName}" required>
-            <input type="text"
-                class="w-full outline-none pr-3 py-3 bg-[#F9F9F9] rounded-xl focus:bg-[#f1f1f4]"
-                placeholder="جواب" name="${answerName}" required>
-        </div>
-        <button type="button"
-            class="p-3 text-sm rounded-md bg-rose-500 hover:bg-rose-600 text-white cursor-pointer"
-            onclick="remove(this)">حذف</button>
-    `
+    const row = createRow(
+        'flex flex-col gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4 shadow-sm'
+    );
 
-    el.previousElementSibling.appendChild(div)
+    row.dataset.faqRow = '';
+
+    const inputClass = 'w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 outline-none transition-all focus:border-[#425A8B] focus:ring-2 focus:ring-[#425A8B]/10';
+
+    const questionInput = createInput({
+        name: `${prefix}[question][]`,
+        placeholder: 'سؤال را وارد کنید',
+        className: inputClass
+    });
+
+    const answerInput = document.createElement('textarea');
+
+    answerInput.name = `${prefix}[answer][]`;
+    answerInput.placeholder = 'پاسخ سؤال را وارد کنید';
+    answerInput.rows = 3;
+    answerInput.className = `${inputClass} resize-y`;
+
+    const deleteButton = createButton('حذف سؤال', () => {
+        removeFaq(deleteButton);
+    });
+
+    row.append(questionInput, answerInput, deleteButton);
+    container.appendChild(row);
 }
 
-function remove(el, id) {
-    if (id) {
-        let editForm = document.getElementById('editForm')
-        let input = document.createElement('input')
+function remove(el, id = null) {
+    if (!el) return;
 
-        input.type = 'hidden'
-        input.name = 'removedAttrs[]'
-        input.value = id
-
-        editForm.appendChild(input)
+    if (id !== null && id !== undefined) {
+        addRemovedItem('removedAttrs[]', id);
     }
 
-    el.parentElement.remove()
+    const row = el.closest('[data-attribute-row]') || el.parentElement;
+
+    row?.remove();
 }
 
-function removeFaq(el, id) {
-    if (id) {
-        let editForm = document.getElementById('editForm')
-        let input = document.createElement('input')
+function removeFaq(el, id = null) {
+    if (!el) return;
 
-        input.type = 'hidden'
-        input.name = 'removedFaqs[]'
-        input.value = id
-
-        editForm.appendChild(input)
+    if (id !== null && id !== undefined) {
+        addRemovedItem('removedFaqs[]', id);
     }
 
-    el.parentElement.remove()
+    const row = el.closest('[data-faq-row]') || el.parentElement;
+
+    row?.remove();
 }
 
-let count = document.getElementById('count')
+function addRemovedItem(name, id) {
+    const form = document.getElementById('editForm');
 
-function calculate(state) {
-    if (state === '+') {
-        count.value++
-    }
+    if (!form) return;
 
-    if (state === '-' && count.value > 1) {
-        count.value--
+    const alreadyExists = [...form.querySelectorAll(`input[name="${name}"]`)]
+        .some(input => input.value === String(id));
+
+    if (alreadyExists) return;
+
+    const input = document.createElement('input');
+
+    input.type = 'hidden';
+    input.name = name;
+    input.value = id;
+
+    form.appendChild(input);
+}
+
+function calculate(operation) {
+    const countInput = document.getElementById('count');
+
+    if (!countInput) return;
+
+    const currentCount = Math.max(1, parseInt(countInput.value, 10) || 1);
+
+    if (operation === '+') {
+        countInput.value = currentCount + 1;
+    } else if (operation === '-') {
+        countInput.value = Math.max(1, currentCount - 1);
     }
 }
 
-modals.forEach((modal) => {
-    setTimeout(() => {
-        modal.classList.add('opacity-0', 'invisible');
-    }, 5000);
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.querySelector('.modal');
+
+    if (modal) {
+        setTimeout(() => {
+            modal.classList.add('opacity-0', 'invisible');
+        }, 5000);
+    }
+
+    const countInput = document.getElementById('count');
+
+    if (countInput) {
+        countInput.addEventListener('change', () => {
+            countInput.value = Math.max(
+                1,
+                parseInt(countInput.value, 10) || 1
+            );
+        });
+    }
 });

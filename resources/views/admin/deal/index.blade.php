@@ -275,11 +275,17 @@
 
                                     @if ($deal->state == 'در انتظار')
                                         @can('access', 'deal_confirm')
-                                            <span onclick="deal('open', {{ Js::from($deal) }})"
-                                                style="background-color: {{ $deal->color }}20; color: {{ $deal->color }}; border-color: {{ $deal->color }};"
-                                                class="inline-flex cursor-pointer rounded-lg border px-3 py-1.5 font-bold whitespace-nowrap">
-                                                {{ $deal->state }}
-                                            </span>
+                                            <div class="transaction-status flex flex-col items-center gap-2"
+                                                data-start-at="2026-11-27T21:26:00" data-expires-at="2026-11-27T21:31:00">
+                                                <span onclick="deal('open', {{ Js::from($deal) }})"
+                                                    style="background-color: {{ $deal->color }}20; color: {{ $deal->color }}; border-color: {{ $deal->color }};"
+                                                    class="inline-flex cursor-pointer rounded-lg border px-3 py-1.5 font-bold whitespace-nowrap">
+                                                    {{ $deal->state }}
+                                                </span>
+                                                <div class="h-1.5 w-24 overflow-hidden rounded-full bg-slate-200">
+                                                    <div class="progress-bar h-full w-0 rounded-full bg-amber-500"></div>
+                                                </div>
+                                            </div>
                                         @endcan
                                     @else
                                         <span
@@ -380,6 +386,84 @@
             </div>
         </div>
     </div>
+
+    {{--  --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // پیدا کردن تمام معاملات در انتظار تأیید
+            const transactions = document.querySelectorAll('.transaction-status');
+
+            transactions.forEach(function(transaction) {
+
+                const progressBar = transaction.querySelector('.progress-bar');
+
+                const startAt = new Date(transaction.dataset.startAt).getTime();
+                const expiresAt = new Date(transaction.dataset.expiresAt).getTime();
+
+                const totalTime = expiresAt - startAt;
+
+                // بررسی معتبر بودن زمان
+                if (totalTime <= 0) {
+                    rejectTransaction(transaction);
+                    return;
+                }
+
+                // بروزرسانی نوار پیشرفت
+                function updateProgress() {
+
+                    const currentTime = Date.now();
+
+                    // محاسبه زمان سپری شده
+                    const elapsedTime = currentTime - startAt;
+
+                    // محاسبه درصد پیشرفت
+                    let percentage = (elapsedTime / totalTime) * 100;
+
+                    // جلوگیری از کمتر یا بیشتر شدن درصد
+                    percentage = Math.min(Math.max(percentage, 0), 100);
+
+                    progressBar.style.width = percentage + '%';
+
+                    // بررسی پایان زمان
+                    if (currentTime >= expiresAt) {
+                        clearInterval(timer);
+                        rejectTransaction(transaction);
+                    }
+                }
+
+                // اجرای اولیه
+                updateProgress();
+
+                // بروزرسانی هر یک ثانیه
+                const timer = setInterval(updateProgress, 1000);
+
+            });
+
+            // تغییر وضعیت معامله به رد شده
+            function rejectTransaction(transaction) {
+
+                const statusLabel = transaction.querySelector('.status-label');
+                const progressBar = transaction.querySelector('.progress-bar');
+
+                // پر شدن کامل نوار
+                progressBar.style.width = '100%';
+
+                // تغییر متن وضعیت
+                statusLabel.textContent = 'رد شده';
+
+                // تغییر رنگ وضعیت
+                statusLabel.classList.remove('bg-amber-50', 'text-amber-600');
+                statusLabel.classList.add('bg-red-50', 'text-red-600');
+
+                // تغییر رنگ نوار
+                progressBar.classList.remove('bg-amber-500');
+                progressBar.classList.add('bg-red-500');
+            }
+
+        });
+    </script>
+    {{--  --}}
 
     <script>
         // پاپ‌آپ گزارش معامله

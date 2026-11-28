@@ -162,15 +162,6 @@ class CategoryController extends Controller
         $category = category::find($request['catId'])->load('children');
         return response()->json($category);
     }
-    public function index()
-    {
-        $products = product::all();
-        $cats = category::all();
-        return view('user.category.index', [
-            'products' => $products,
-            'categories' => $cats,
-        ]);
-    }
     public function deleteAll(Request $request)
     {
         if (!isset($request->categories)) {

@@ -157,7 +157,6 @@ Route::group([
     Route::post('/update', 'update')->middleware(checkAccess::class . ":category_edit")->name('update');
     Route::get('/delete/{id}', 'delete')->middleware(checkAccess::class . ":category_delete")->name('delete');
     Route::post('/admin/deleteAll', 'deleteAll')->middleware(checkAccess::class . ":category_delete")->name('deleteAll');
-    Route::get('/list', 'index')->withoutMiddleware(checkAccess::class)->name('index');
     Route::post('/showSubCategories', 'showSubCats')->withoutMiddleware(checkAccess::class)->name('showSubCats');
 });
 
